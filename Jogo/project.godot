@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Novo Projeto de Jogo"
-run/main_scene="res://word/word_01.tscn"
+run/main_scene="uid://cnjbb4bg0ygn4"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [display]

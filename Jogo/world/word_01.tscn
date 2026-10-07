@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://cnjbb4bg0ygn4"]
 
-[ext_resource type="Script" uid="uid://bylmy53qahum7" path="res://word/Scripts/player.gd" id="1_g5kcq"]
+[ext_resource type="Script" uid="uid://bylmy53qahum7" path="res://world/Scripts/player.gd" id="1_g5kcq"]
 [ext_resource type="Texture2D" uid="uid://25effnqps35y" path="res://Sunny-land-files/assets/player/Foxy/idle/sprites/f-01.png" id="1_nep7h"]
 [ext_resource type="Texture2D" uid="uid://cx6l2qtk3liv8" path="res://Sunny-land-files/assets/environment/Background/back.png" id="1_xwb36"]
 [ext_resource type="Texture2D" uid="uid://liwvx12p8yqj" path="res://Sunny-land-files/assets/environment/Background/middle.png" id="2_3h8fj"]
@@ -50,6 +50,7 @@
 [ext_resource type="Texture2D" uid="uid://c6ysx3g8vp3b0" path="res://Sunny-land-files/assets/Characters/Foxy/run/sprites/f-05.png" id="48_v30cb"]
 [ext_resource type="Texture2D" uid="uid://c6j6dhvuv3u3s" path="res://Sunny-land-files/assets/Characters/Foxy/run/sprites/f-06.png" id="49_ih451"]
 [ext_resource type="PackedScene" uid="uid://s3fmwvekpr7" path="res://prefabs/item.tscn" id="50_1qgdh"]
+[ext_resource type="PackedScene" uid="uid://bimukbyh104tq" path="res://world/skank.tscn" id="51_34xhl"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_g5kcq"]
 tile_data = PackedInt32Array(0, 983040, 14, 1, 1114112, 14, 2, 1245184, 14)
@@ -832,7 +833,7 @@ texture = ExtResource("30_73pml")
 
 [sub_resource type="TileSet" id="TileSet_6ukyq"]
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 2
+physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_ew8ki")
 sources/2 = SubResource("TileSetAtlasSource_6aem8")
 sources/3 = SubResource("TileSetAtlasSource_xvewm")
@@ -1009,3 +1010,6 @@ texture_filter = 1
 position = Vector2(1, -5)
 sprite_frames = SubResource("SpriteFrames_6ukyq")
 animation = &"fall"
+
+[node name="Skank" parent="." unique_id=1434251554 instance=ExtResource("51_34xhl")]
+position = Vector2(191, 28)

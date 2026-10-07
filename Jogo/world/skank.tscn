@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bimukbyh104tq"]
+
+[ext_resource type="Script" uid="uid://bfb1jak82h1w6" path="res://world/skank.gd" id="1_8s08c"]
+[ext_resource type="Texture2D" uid="uid://cg5mquglydrli" path="res://Sunny-land-files/assets/Characters/Opossum/spritesheet.png" id="1_tgkx5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0i88t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8s08c"]
+atlas = ExtResource("1_tgkx5")
+region = Rect2(0, 0, 36, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rf085"]
+atlas = ExtResource("1_tgkx5")
+region = Rect2(36, 0, 36, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rm32"]
+atlas = ExtResource("1_tgkx5")
+region = Rect2(72, 0, 36, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g13o"]
+atlas = ExtResource("1_tgkx5")
+region = Rect2(108, 0, 36, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uky15"]
+atlas = ExtResource("1_tgkx5")
+region = Rect2(144, 0, 36, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd7e7"]
+atlas = ExtResource("1_tgkx5")
+region = Rect2(180, 0, 36, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ckb4l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8s08c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rf085")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rm32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g13o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uky15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd7e7")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Skank" type="CharacterBody2D" unique_id=1434251554]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_8s08c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=615309900]
+position = Vector2(4, -7)
+shape = SubResource("CircleShape2D_0i88t")
+
+[node name="anim" type="AnimatedSprite2D" parent="." unique_id=786165676]
+position = Vector2(7, -10)
+sprite_frames = SubResource("SpriteFrames_ckb4l")
+autoplay = "default"
+frame_progress = 0.7434417
+flip_h = true
+
+[node name="timer" type="Timer" parent="." unique_id=1444670762]
+wait_time = 3.0
+autostart = true
