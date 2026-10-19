@@ -1,0 +1,16 @@
+URUBU DE TERNO — quadros de animação
+
+Todos os PNGs têm 72 x 96 pixels e transparência RGBA, olhando à esquerda.
+Usar textura Nearest. Não alterar escala entre os quadros.
+O centro visual da gravata fica perto de x=28, y=49, como no sprite principal.
+A última linha opaca dos pés é y=91 em todos os quadros (bbox termina em 92).
+
+Voo: urubu_fly_1.png (asas altas), urubu_fly_2.png (asas médias),
+urubu_fly_3.png (asas baixas). Sequência recomendada em loop: 1,2,3,2 a 8 fps.
+
+Dano: urubu_hurt_1.png (impacto, olhos fechados),
+urubu_hurt_2.png (recuo, expressão tensa). Reproduzir 1,2 sem loop a 8–10 fps.
+
+Modo de criação: imagegen integrado, edição do urubu_boss.png aprovado.
+Prompts exatos: PROMPTS-URUBU-ANIMACOES.txt.
+Fonte, GIFs e exportador reproduzível ficam em outputs/Praia-arte no workspace.

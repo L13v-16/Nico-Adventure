@@ -1,0 +1,7 @@
+Mode: built-in imagegen, transparent_background=true. New Oliver model uses the old design as identity reference and Nico/NPC game art as style references. Original alpha retained; standard crop, nearest-neighbor reduction and integer placement only.
+
+Use case: style-transfer.
+Asset: Oliver Gancho small square pixel-art portrait for Nico Adventure's Collection screen and shop.
+Identity reference image1: the NEW Oliver sprite, same blue-gray rat fur, large round pink ears, pointed cream muzzle, small salmon nose and whiskers, burgundy tied bandanna, dark eyepatch over the far eye on IMAGE RIGHT, visible warm amber eye on image left, ochre vest and off-white shirt. Match this new identity precisely. Image2 Nico's small portrait style: chunky dark navy outlines, expressive readable eye, simple shaded pixel clusters.
+Primary request: one HEAD-AND-SHOULDERS portrait of the friendly rat merchant Oliver, three-quarter view facing RIGHT, smile with closed mouth. Big readable head, no full body or extra pose. Deliberately low-resolution 16-bit pixel art intended to become32x32 pixels; 2-3 shades per material, blocky contour stair steps, compact palette. Avoid the old smooth storybook cartoon, fine painted fur, gloss, gradients or realistic shading. Keep bandanna, full ears, eyepatch, muzzle and a little vest visible.
+Composition: single centered portrait on genuine transparent alpha, square, small transparent margins, nothing cropped. No background disk, frame, scenery, counter, shadow, glow, text, labels or watermark.

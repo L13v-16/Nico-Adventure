@@ -1,0 +1,16 @@
+Mode: built-in imagegen; transparent_background=true. Character identity references inspected before generation.
+
+Use case: stylized-concept.
+Asset type: matching pixel-art ACTION / CARRY spritesheet for the wolf villain in Nico Adventure.
+Reference image: use the newly generated eight-frame walking sheet as the STRICT model sheet. Same wolf face, cheek ruff, golden eyes, long pointed muzzle, gray swept-back ears, navy suit, burgundy tie, white shirt, gold rectangular lapel badge, dark gray gloves and black-brown shoes, pale bushy tail. Match the head size, torso, colors and proportions EXACTLY. The action poses will intercut with that walking sheet.
+Layout: FOUR columns by TWO rows, landscape 1536x1024, equal cells384x512. Transparent alpha, no labels. All characters face LEFT; game flips them to the right. Feet at cell y460, pelvis x192. Full body visible, all sprites at same scale. Full standing wolf height about370 pixels, avoid long kicking strides or stretched limbs.
+Top row four individual action poses:
+1 NEUTRAL REST, feet close naturally, knees straight, arms relaxed, stern face, tail behind on right.
+2 COMMAND, same standing stance, near arm points decisively to LEFT at chest height, other hand at side, no sideways body lean.
+3 PICK UP, bends at knees and hips slightly toward LEFT, back intact and head same size, both arms reaching down and forward to pick up a small friend; hands about knee height. No captured character is drawn.
+4 LIFT / PLACE, standing with both elbows bent, EMPTY cupped hands forward to LEFT at lower chest height as if holding or placing a small round friend. No object or other character drawn. Keep hands at same level as the bottom row carrying poses, since the game will animate the carried friend independently.
+Bottom row four successive SLOW CARRY WALK poses, same torso and hands FIXED forward to LEFT at lower chest height, as if securely holding a small friend (again empty hands). Only legs alternate and tail slightly moves. 5 modest contact A with NEAR shoe forward and FAR shoe back; 6 passing A with near supporting leg straight below hip and far foot passing low, no high knee; 7 contact B with FAR shoe forward (darker far leg) and NEAR shoe back; 8 passing B with far support leg straight under hip and near foot passing LOW. Both feet use same ground line on contact; planted support shoe on same ground during passing. Body/head stay nearly still. No arm swings in carrying row. No extreme split stance.
+Style: crisp 16-bit pixel-art sprite with dark navy outline, bold readable pixel clusters, compact shaded colors, no anti-aliased painting. Intended final height80 pixels. Uniform character scale, no squash/stretch, no swinging badge or flickering features.
+Background: actual transparent alpha, no scenery, ground, shadows, glows, circles or squares. No text, no frames, no numbers, no watermark. Do not add a prisoner or props into the artwork.
+
+Preparation: grid crop, uniform nearest-neighbor resizing, fixed integer cell registration. Wolf size remains fixed in-game; no procedural stretch. Original alpha retained. Each extracted sprite is 112x96, feet at y92, badge anchored at x50. Pickup preserves changing crouch height with one shared scale, so the wolf rises without stretching. Raw source files and alignment metadata accompany the art pack.

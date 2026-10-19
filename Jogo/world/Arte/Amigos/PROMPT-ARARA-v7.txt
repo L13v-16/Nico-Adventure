@@ -1,0 +1,12 @@
+Modo: imagegen integrado, edição com referência local, fundo transparente.
+Referência: outputs/Arara-Minas-e-amigos/arara-reference.png
+Fonte gerada: arara-source.png
+Exportação: seis PNGs 64x64; recortes, escala nearest e registro de âncoras em export_sprites.py e export-report.json. Sem pintura manual.
+
+Use case: precise-object-edit.
+Asset type: production pixel-art sprite animation sheet for the existing Godot platform game Nico Adventure.
+Input image: edit target / character identity and pose reference. Keep the same friendly Arara Minas blue-and-yellow macaw: bright blue back/wings/tail, golden yellow chest and wing underside, cream cheek, charcoal curved beak, round expressive dark eye, small charcoal feet. All six macaws face RIGHT.
+Primary request: repair the sheet into clean, crisp true pixel art, completely remove ALL navy background, blue halos, golden glow, matte and soft gradients, replacing the background with genuinely transparent alpha. Preserve the same six poses and overall visual identity.
+Composition: a perfectly regular 3-column by 2-row sheet with six separate sprites in equal square cells, generous fully transparent gutters. Read order: top-left idle open eye, top-middle idle blink with exactly the same body/feet/tail alignment, top-right flying wings high, bottom-left flying wings level, bottom-middle flying wings low, bottom-right flying wings level rising. Four flying poses keep the exact same head, chest and back/body anchor and proportions, changing only wing angle, slight feather overlap and curled feet. The bird's back must remain stable so a passenger can sit on it in a game. Every sprite must stay completely inside its own cell, including long tails and wing tips.
+Style: genuine 16-bit console pixel-art sprite, intentionally small pixel grid around 64x64 per cell, crisp stepped pixel outlines in dark navy, flat limited color clusters and 3-tone shading, no smoothing or antialias, no outlines around empty cells, no floor shadows, no text, no borders or grid lines.
+Constraints: keep the macaw recognizable and friendly, do not add clothing, objects, labels, scenery or extra characters. Actual transparent background. Avoid painterly brushwork, blur, glow and translucent edge residue.

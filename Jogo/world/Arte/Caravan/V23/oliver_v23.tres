@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://world/Arte/Caravan/V23/oliver_idle_v23.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="Idle_1"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Idle_2"]
+atlas = ExtResource("1")
+region = Rect2(32, 0, 32, 48)
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("Idle_1")}, {"duration": 0.25, "texture": SubResource("Idle_2")}], "loop": true, "name": &"idle", "speed": 1.7}]

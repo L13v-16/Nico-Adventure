@@ -1,0 +1,14 @@
+Modo: imagegen integrado; geração de atlas com referência de estilo Nico idle_1.png; alpha transparente.
+Fonte gerada: equipment-source.png
+Arquivo original: C:/Users/LEO/.codex/generated_images/01a14b73-b279-7fb2-a063-4e4754010b99/exec-acfc127b-16fe-4e60-9926-102a69d7f00b.png
+Exportação: export_equipment.py recorta os 11 itens, preserva alpha e usa nearest-neighbor para 11 ícones32x32 e 11 overlays nativos. Não houve pintura manual.
+
+Use case: stylized-concept.
+Asset type: one production pixel-art equipment inventory sprite atlas, for the existing tiny 33x32 right-facing fox-raccoon hero Nico Adventure. Input image is STYLE AND SCALE reference only; do not draw the hero itself.
+Primary request: one clean transparent 3-column by 4-row sprite sheet, exactly eleven individual equipment items, each centered in an equal square cell with generous transparent margin; final bottom-right cell empty. Items in reading order, left to right:
+Row 1: (1) three short shiny silver metal hand claws attached to a tiny dark fingerless glove, side view pointing right; (2) a pair of small red-and-cream explorer sneakers in side view, toes pointing right; (3) a protective green leaf brooch with gold stem, tiny pin.
+Row 2: (4) a purple açaí bowl with dark purple berries, frost crystals and ice cubes; (5) a pale cyan ice crystal amulet in a small silver setting and short cord; (6) a golden woven straw hat, wide elliptical brim, narrow brown band, low crown, side profile.
+Row 3: (7) a pair of black sunglasses, two small dark square lenses joined with a bridge, seen from slight right side view; (8) a flowing red superhero cape, side view: narrow gold clasp at top-right, cloth flowing down-left, one fold and pointed hem, no logo; (9) a violet pajama outfit: simple long-sleeve shirt with tiny pale yellow stars and matching pants, seen flat in slight right-facing side view, NO head or limbs.
+Row 4: (10) a teal winter coat with cream fur collar and cuffs, a small ivory front fastening and dark trousers underneath, flat side profile, NO head or limbs; (11) a short curved rainbow tail accessory or ribbon: six clear bands red/orange/yellow/green/cyan/violet, curving to the left, simple pixel silhouette; (12) EMPTY transparent cell.
+Style/medium: authentic crisp 16-bit pixel art, limited palette, flat pixel clusters, strong single-pixel navy outline, shapes readable at 16 or 32 pixels, intentionally blocky contour steps. These icons will also be scaled down as real worn sprite overlays on a tiny hero, so keep construction simple and silhouettes distinct.
+Constraints: actual transparent alpha outside the items, no shadows, no matte, no gradient background, no glow, no grids, no cell borders, no labels or text, no watermark, no extra items, no full character. All objects completely inside their own cell, never overlap cells. Match Nico's dark navy outlines and warm, soft adventure-game colors.
