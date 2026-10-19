@@ -9,20 +9,25 @@ extends Node
 
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
-const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2"]
+const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3"]
 const MAX_CHERRY_BALANCE := 9223372036854775807
 const RANK_ORDER := ["D", "C", "B", "A", "S"]
 const FIRST_LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_LEVEL_SCENE := "res://world/beach_02.tscn"
+const MAGIC_LEVEL_SCENE := "res://world/magic_03.tscn"
 
 ## Guardado no arquivo: id da fase -> dicionário de resultados.
 var _levels: Dictionary = {}
 var _seen_intro := false
 var _fullscreen := false
+var _camera_shake := true
 var _campaign_started := false
 var _cherry_balance := 0
 ## Transitório (não vai para o disco): o menu pede à fase para pular a abertura.
 var _pending_skip_intro := false
+var _free_mode := false
+var _collected_cherries: Dictionary = {}
+var _legacy_cherry_locks: Dictionary = {}
 
 
 func _ready() -> void:
@@ -69,6 +74,41 @@ func add_cherries(amount: int) -> bool:
 	return true
 
 
+func is_free_mode() -> bool:
+	return _free_mode
+
+
+func has_collected_cherry(level_id: String, cherry_id: String) -> bool:
+	return _legacy_cherry_locks.has(level_id) or _collected_cherries.get(level_id,{}).has(cherry_id)
+
+
+func is_legacy_cherry_history(level_id: String) -> bool:
+	return _legacy_cherry_locks.has(level_id)
+
+
+## History and wallet are committed together. A failed write cannot spend a
+## collectible, and free-mode reloads cannot grant the same cherry twice.
+func collect_level_cherry(level_id: String, cherry_id: String) -> bool:
+	if level_id not in CAMPAIGN_LEVEL_IDS or cherry_id.is_empty():return false
+	if _free_mode and has_collected_cherry(level_id,cherry_id):return false
+	if _cherry_balance >= MAX_CHERRY_BALANCE:return false
+	var previous:Dictionary=_collected_cherries.get(level_id,{}).duplicate()
+	var previously_present:=_collected_cherries.has(level_id)
+	var previously_started:=_campaign_started
+	var collected:=previous.duplicate()
+	collected[cherry_id]=true
+	_collected_cherries[level_id]=collected
+	_cherry_balance+=1
+	_campaign_started=true
+	if not _save():
+		_cherry_balance-=1
+		_campaign_started=previously_started
+		if previously_present:_collected_cherries[level_id]=previous
+		else:_collected_cherries.erase(level_id)
+		return false
+	return true
+
+
 ## Nunca debita parcialmente: inclusive uma falha de disco preserva o saldo.
 func try_spend_cherries(amount: int) -> bool:
 	if amount <= 0 or amount > _cherry_balance:
@@ -89,9 +129,11 @@ func completed_count() -> int:
 	return _levels.size()
 
 
-## A próxima ilha é a praia depois do encontro com Arara Minas.
+## Retoma o resgate seguinte sem apagar as ilhas nem a carteira existentes.
 func get_continue_scene() -> String:
-	if is_level_completed("fase_1") or is_level_completed("fase_2"):
+	if is_level_completed("fase_2") or is_level_completed("fase_3"):
+		return MAGIC_LEVEL_SCENE
+	if is_level_completed("fase_1"):
 		return BEACH_LEVEL_SCENE
 	return FIRST_LEVEL_SCENE
 
@@ -118,6 +160,9 @@ func mark_level_complete(level_id: String, stats: Dictionary) -> Dictionary:
 
 func reset_progress() -> void:
 	_levels.clear()
+	_collected_cherries.clear()
+	_legacy_cherry_locks.clear()
+	_free_mode=false
 	_seen_intro = false
 	_campaign_started = false
 	_cherry_balance = 0
@@ -139,8 +184,9 @@ func set_seen_intro() -> void:
 
 
 ## O menu chama isto antes de carregar a fase.
-func request_play(skip_intro: bool) -> void:
+func request_play(skip_intro: bool, free_mode: bool = false) -> void:
 	_pending_skip_intro = skip_intro
+	_free_mode=free_mode and is_game_completed()
 	if not _campaign_started:
 		_campaign_started = true
 		_save()
@@ -157,6 +203,15 @@ func consume_skip_intro() -> bool:
 
 func is_fullscreen() -> bool:
 	return _fullscreen
+
+
+func is_camera_shake_enabled() -> bool:
+	return _camera_shake
+
+
+func set_camera_shake_enabled(value: bool) -> void:
+	_camera_shake = value
+	_save()
 
 
 func set_fullscreen(value: bool) -> void:
@@ -208,14 +263,19 @@ func _load() -> void:
 	_levels.clear()
 	_seen_intro = false
 	_fullscreen = false
+	_camera_shake = true
 	_campaign_started = false
 	_cherry_balance = 0
 	_pending_skip_intro = false
+	_free_mode=false
+	_collected_cherries.clear()
+	_legacy_cherry_locks.clear()
 	var config := ConfigFile.new()
 	if config.load(SAVE_PATH) != OK:
 		return
 	_seen_intro = bool(config.get_value("progress", "seen_intro", false))
 	_fullscreen = bool(config.get_value("video", "fullscreen", false))
+	_camera_shake = bool(config.get_value("video", "camera_shake", true))
 	var saved_balance: Variant = config.get_value("wallet", "cherries", 0)
 	if saved_balance is int:
 		_cherry_balance = maxi(saved_balance, 0)
@@ -238,6 +298,23 @@ func _load() -> void:
 			"total_enemies": int(config.get_value(section, "total_enemies", 0)),
 			"total_secrets": int(config.get_value(section, "total_secrets", 3)),
 		}
+	if config.get_value("cherry_history","version",0)==1:
+		for level_id in CAMPAIGN_LEVEL_IDS:
+			var stored:Variant=config.get_value("cherry_history",level_id,[])
+			if not (stored is Array or stored is PackedStringArray):continue
+			var collected:Dictionary={}
+			for cherry_id in stored:
+				if cherry_id is String and not cherry_id.is_empty():collected[cherry_id]=true
+			_collected_cherries[level_id]=collected
+		var legacy:Variant=config.get_value("cherry_history","legacy_completed",[])
+		if legacy is Array or legacy is PackedStringArray:
+			for level_id in legacy:
+				if level_id in CAMPAIGN_LEVEL_IDS:_legacy_cherry_locks[level_id]=true
+	else:
+		# Older saves know the best count, but not the individual locations.
+		# Protect completed islands from extra credits without touching the wallet.
+		for level_id in CAMPAIGN_LEVEL_IDS:
+			if is_level_completed(level_id):_legacy_cherry_locks[level_id]=true
 
 
 func _save() -> bool:
@@ -252,6 +329,11 @@ func _save() -> bool:
 	config.set_value("wallet", "cherries", _cherry_balance)
 	config.set_value("progress", "levels", _levels.keys())
 	config.set_value("video", "fullscreen", _fullscreen)
+	config.set_value("video", "camera_shake", _camera_shake)
+	config.set_value("cherry_history","version",1)
+	config.set_value("cherry_history","legacy_completed",_legacy_cherry_locks.keys())
+	for level_id in CAMPAIGN_LEVEL_IDS:
+		config.set_value("cherry_history",level_id,_collected_cherries.get(level_id,{}).keys())
 	for level_id in _levels.keys():
 		var section := "level_%s" % str(level_id)
 		var stats: Dictionary = _levels[level_id]

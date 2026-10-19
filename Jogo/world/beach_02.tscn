@@ -170,7 +170,7 @@ par_time = 180.0
 secret_count = 3
 finish_floor_y = 64.0
 finale_script = ExtResource("finale")
-next_level_scene = ""
+next_level_scene = "res://world/magic_03.tscn"
 intro_title = "COSTA DAS MARÉS"
 intro_act = 2
 

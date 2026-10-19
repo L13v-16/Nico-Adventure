@@ -70,6 +70,14 @@ func get_speed_multiplier() -> float:
 	return 1.1 if is_equipped("sneakers") else 1.0
 
 
+func get_attack_cooldown_multiplier() -> float:
+	return 0.85 if is_equipped("swift_gloves") else 1.0
+
+
+func get_jump_multiplier() -> float:
+	return 1.1 if is_equipped("jump_brooch") else 1.0
+
+
 func get_freeze_duration() -> float:
 	return 2.0 + (2.0 if _frost_left > 0.0 else 0.0) + (2.0 if is_equipped("lasting_ice") else 0.0)
 
@@ -82,10 +90,10 @@ func buy_item(item_id: String) -> Dictionary:
 	if _transaction_busy or not Catalog.ITEMS.has(item_id) or _player.is_dead():
 		return _result(false, "Não foi possível comprar este item agora.")
 	var item: Dictionary = Catalog.ITEMS[item_id]
-	if owns(item_id) and item_id != "frozen_acai":
+	if owns(item_id) and not Catalog.is_consumable(item_id):
 		return _result(false, "Você já tem este item. Equipe ou retire pela mochila [I].")
-	if item_id == "frozen_acai" and get_quantity(item_id) >= 3:
-		return _result(false, "A mochila já tem 3 açaís congelantes.")
+	if Catalog.is_consumable(item_id) and get_quantity(item_id) >= 3:
+		return _result(false, "Limite de 3 unidades deste suprimento na mochila.")
 	var price := int(item["price"])
 	if _player.get_cherry_balance() < price:
 		return _result(false, "Cerejas insuficientes. Escolha outro item antes de seguir viagem.")
@@ -94,17 +102,29 @@ func buy_item(item_id: String) -> Dictionary:
 		_transaction_busy = false
 		return _result(false, "Saldo insuficiente para esta compra.")
 	_owned[item_id] = get_quantity(item_id) + 1
-	if item_id != "frozen_acai":
+	if not Catalog.is_consumable(item_id):
 		_equipped[item["slot"]] = item_id
 	changed.emit()
 	_transaction_busy = false
-	return _result(true, "%s %s" % [item["name"], "guardado na mochila [I]. Use quando precisar." if item_id == "frozen_acai" else "comprado e equipado! Troque pela mochila [I]."])
+	return _result(true, "%s %s" % [item["name"], "guardado na mochila [I]. Use quando precisar." if Catalog.is_consumable(item_id) else "comprado e equipado! Troque pela mochila [I]."])
 
 
 func toggle_item(item_id: String) -> Dictionary:
 	if not Catalog.ITEMS.has(item_id) or not owns(item_id) or _player.is_dead():
 		return _result(false, "Você não tem este item na mochila.")
 	var item: Dictionary = Catalog.ITEMS[item_id]
+	if item_id == "honey_biscuit":
+		if not _player.heal_one(): return _result(false, "Vida cheia! O biscoito continua na mochila.")
+		_owned[item_id] = get_quantity(item_id) - 1
+		changed.emit()
+		return _result(true, "Biscoito de Mel: 1 coração recuperado!")
+	if item_id == "travel_acai":
+		var level := _player.get_parent()
+		if not level.has_method("buy_acai_power") or not level.buy_acai_power():
+			return _result(false, "Não é possível usar o açaí agora. Ele continua na mochila.")
+		_owned[item_id] = get_quantity(item_id) - 1
+		changed.emit()
+		return _result(true, "Açaí de Viagem ativo! Proteção e ataque dobrado por 12 s.")
 	if item_id == "frozen_acai":
 		_owned[item_id] = get_quantity(item_id) - 1
 		_frost_left = FROST_DURATION

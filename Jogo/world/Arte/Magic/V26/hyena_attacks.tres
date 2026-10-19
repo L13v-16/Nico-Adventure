@@ -1,0 +1,71 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Magic/V26/hyena_attacks.png" id="1"]
+[sub_resource type="AtlasTexture" id="f0"]
+atlas=ExtResource("1")
+region=Rect2(66,48,284,279)
+margin=Rect2(82.0,105,164,105)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f1"]
+atlas=ExtResource("1")
+region=Rect2(363,48,403,279)
+margin=Rect2(22.5,105,45,105)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f2"]
+atlas=ExtResource("1")
+region=Rect2(764,45,392,282)
+margin=Rect2(28.0,102,56,102)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f3"]
+atlas=ExtResource("1")
+region=Rect2(1222,48,293,279)
+margin=Rect2(77.5,105,155,105)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f4"]
+atlas=ExtResource("1")
+region=Rect2(60,376,303,286)
+margin=Rect2(72.5,98,145,98)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f5"]
+atlas=ExtResource("1")
+region=Rect2(446,337,315,325)
+margin=Rect2(66.5,59,133,59)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f6"]
+atlas=ExtResource("1")
+region=Rect2(763,410,390,252)
+margin=Rect2(29.0,132,58,132)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f7"]
+atlas=ExtResource("1")
+region=Rect2(1170,405,359,257)
+margin=Rect2(44.5,127,89,127)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f8"]
+atlas=ExtResource("1")
+region=Rect2(79,685,243,308)
+margin=Rect2(102.5,76,205,76)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f9"]
+atlas=ExtResource("1")
+region=Rect2(377,689,365,304)
+margin=Rect2(41.5,80,83,80)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f10"]
+atlas=ExtResource("1")
+region=Rect2(831,708,290,285)
+margin=Rect2(79.0,99,158,99)
+filter_clip=true
+[sub_resource type="AtlasTexture" id="f11"]
+atlas=ExtResource("1")
+region=Rect2(1201,685,289,308)
+margin=Rect2(79.5,76,159,76)
+filter_clip=true
+[resource]
+animations=[{"name":&"guard","loop":true,"speed":3.0,"frames":[{"duration":1.0,"texture":SubResource("f0")},{"duration":1.0,"texture":SubResource("f3")}]},
+{"name":&"punch","loop":false,"speed":9.0,"frames":[{"duration":1.0,"texture":SubResource("f0")},{"duration":1.0,"texture":SubResource("f1")},{"duration":1.0,"texture":SubResource("f2")},{"duration":1.0,"texture":SubResource("f3")}]},
+{"name":&"throw_hold","loop":false,"speed":3.0,"frames":[{"duration":1.0,"texture":SubResource("f4")},{"duration":1.0,"texture":SubResource("f5")}]},
+{"name":&"throw","loop":false,"speed":5.0,"frames":[{"duration":1.0,"texture":SubResource("f6")},{"duration":1.0,"texture":SubResource("f7")}]},
+{"name":&"kick_windup","loop":false,"speed":6.0,"frames":[{"duration":1.0,"texture":SubResource("f8")}]},
+{"name":&"kick","loop":false,"speed":6.0,"frames":[{"duration":1.0,"texture":SubResource("f9")}]},
+{"name":&"block","loop":true,"speed":4.0,"frames":[{"duration":1.0,"texture":SubResource("f10")}]},
+{"name":&"taunt","loop":true,"speed":4.0,"frames":[{"duration":1.0,"texture":SubResource("f11")}]}]

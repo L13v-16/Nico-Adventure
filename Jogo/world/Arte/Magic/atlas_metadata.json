@@ -1,0 +1,623 @@
+{
+  "hyena": {
+    "0": {
+      "region": [
+        46,
+        28,
+        250,
+        273
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "1": {
+      "region": [
+        345,
+        37,
+        258,
+        264
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "2": {
+      "region": [
+        639,
+        25,
+        267,
+        276
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "3": {
+      "region": [
+        972,
+        31,
+        243,
+        270
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "4": {
+      "region": [
+        29,
+        362,
+        280,
+        242
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "5": {
+      "region": [
+        336,
+        352,
+        285,
+        253
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "6": {
+      "region": [
+        645,
+        349,
+        286,
+        259
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "7": {
+      "region": [
+        949,
+        357,
+        287,
+        248
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "8": {
+      "region": [
+        32,
+        708,
+        273,
+        202
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "9": {
+      "region": [
+        335,
+        631,
+        292,
+        283
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "10": {
+      "region": [
+        627,
+        643,
+        293,
+        231
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "11": {
+      "region": [
+        945,
+        706,
+        282,
+        208
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "12": {
+      "region": [
+        42,
+        950,
+        247,
+        271
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "13": {
+      "region": [
+        329,
+        952,
+        275,
+        269
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "14": {
+      "region": [
+        640,
+        1006,
+        300,
+        215
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "15": {
+      "region": [
+        940,
+        1095,
+        305,
+        134
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    }
+  },
+  "beetle": {
+    "0": {
+      "region": [
+        23,
+        119,
+        279,
+        195
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "1": {
+      "region": [
+        327,
+        119,
+        277,
+        195
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "2": {
+      "region": [
+        638,
+        120,
+        273,
+        194
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "3": {
+      "region": [
+        949,
+        120,
+        276,
+        194
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "4": {
+      "region": [
+        25,
+        314,
+        280,
+        303
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "5": {
+      "region": [
+        330,
+        314,
+        292,
+        303
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "6": {
+      "region": [
+        667,
+        314,
+        262,
+        311
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "7": {
+      "region": [
+        960,
+        314,
+        267,
+        313
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    }
+  },
+  "moth": {
+    "8": {
+      "region": [
+        39,
+        645,
+        238,
+        289
+      ],
+      "canvas": [
+        314,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "9": {
+      "region": [
+        337,
+        685,
+        258,
+        253
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "10": {
+      "region": [
+        635,
+        771,
+        293,
+        163
+      ],
+      "canvas": [
+        313,
+        313
+      ],
+      "bottom_anchor": true
+    },
+    "12": {
+      "region": [
+        28,
+        998,
+        286,
+        211
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "13": {
+      "region": [
+        314,
+        967,
+        312,
+        242
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "14": {
+      "region": [
+        654,
+        1012,
+        257,
+        187
+      ],
+      "canvas": [
+        313,
+        314
+      ],
+      "bottom_anchor": true
+    },
+    "15": {
+      "region": [
+        949,
+        1097,
+        283,
+        116
+      ],
+      "canvas": [
+        314,
+        314
+      ],
+      "bottom_anchor": true
+    }
+  },
+  "props": {
+    "0": {
+      "region": [
+        62,
+        118,
+        265,
+        223
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "1": {
+      "region": [
+        442,
+        193,
+        276,
+        148
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "2": {
+      "region": [
+        828,
+        45,
+        261,
+        296
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "3": {
+      "region": [
+        1207,
+        118,
+        265,
+        223
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "4": {
+      "region": [
+        89,
+        341,
+        214,
+        342
+      ],
+      "canvas": [
+        384,
+        342
+      ],
+      "bottom_anchor": true
+    },
+    "5": {
+      "region": [
+        439,
+        341,
+        297,
+        342
+      ],
+      "canvas": [
+        384,
+        342
+      ],
+      "bottom_anchor": true
+    },
+    "6": {
+      "region": [
+        818,
+        341,
+        281,
+        342
+      ],
+      "canvas": [
+        384,
+        342
+      ],
+      "bottom_anchor": true
+    },
+    "7": {
+      "region": [
+        1225,
+        341,
+        255,
+        342
+      ],
+      "canvas": [
+        384,
+        342
+      ],
+      "bottom_anchor": true
+    },
+    "8": {
+      "region": [
+        20,
+        683,
+        364,
+        318
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "9": {
+      "region": [
+        407,
+        683,
+        359,
+        318
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "10": {
+      "region": [
+        777,
+        683,
+        363,
+        318
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    },
+    "11": {
+      "region": [
+        1183,
+        683,
+        330,
+        318
+      ],
+      "canvas": [
+        384,
+        341
+      ],
+      "bottom_anchor": true
+    }
+  },
+  "remi": {
+    "0": {
+      "region": [
+        28,
+        67,
+        356,
+        394
+      ],
+      "canvas": [
+        384,
+        512
+      ],
+      "bottom_anchor": true
+    },
+    "1": {
+      "region": [
+        384,
+        73,
+        381,
+        388
+      ],
+      "canvas": [
+        384,
+        512
+      ],
+      "bottom_anchor": true
+    },
+    "2": {
+      "region": [
+        783,
+        73,
+        369,
+        388
+      ],
+      "canvas": [
+        384,
+        512
+      ],
+      "bottom_anchor": true
+    },
+    "3": {
+      "region": [
+        1152,
+        69,
+        371,
+        393
+      ],
+      "canvas": [
+        384,
+        512
+      ],
+      "bottom_anchor": true
+    }
+  }
+}

@@ -2,7 +2,6 @@ extends Area2D
 ## Açaí: proteção, dano dobrado e golpes congelantes por 12 segundos, sem curar.
 ## Cada fruto é consumido uma vez. Outro fruto renova o efeito sem acumular.
 
-const UiStyle := preload("res://world/Scripts/ui_style.gd")
 const ART_PATH := "res://world/Arte/Beach/acai.png"
 const PROTECTION_REFRESH := 0.1
 
@@ -16,9 +15,6 @@ var _player: Node2D
 var _sprite: Sprite2D
 var _texture: Texture2D
 var _aura: Node2D
-var _hud_layer: CanvasLayer
-var _hud_canvas: Control
-var _timer_label: Label
 
 
 func _ready() -> void:
@@ -78,7 +74,7 @@ func activate_for(body: Node2D) -> bool:
 			body.connect(signal_name, _on_player_reset)
 	_apply_effect()
 	_make_aura()
-	_make_hud()
+	if _player.has_method("set_acai_power"):_player.set_acai_power(self)
 	var sfx: Node = get_node_or_null("/root/Sfx")
 	if sfx != null and sfx.has_method("secret"):
 		sfx.call("secret")
@@ -107,9 +103,6 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(_aura):
 		_aura.global_position = _player.global_position + Vector2(0, -4)
 		_aura.queue_redraw()
-	if is_instance_valid(_hud_canvas):
-		_timer_label.text = "%ds" % int(ceilf(_time_left))
-		_hud_canvas.queue_redraw()
 
 
 func _apply_effect() -> void:
@@ -131,6 +124,7 @@ func _deactivate() -> void:
 	_time_left = 0.0
 	if is_instance_valid(_player):
 		_player.set("attack_damage", 1)
+		if _player.has_method("set_acai_power"):_player.set_acai_power(null)
 		# Preserva a invulnerabilidade maior da bandeira e de um impacto anterior.
 		if float(_player.get("_invulnerability_timer")) <= PROTECTION_REFRESH + 0.001:
 			_player.set("_invulnerability_timer", 0.0)
@@ -140,12 +134,7 @@ func _deactivate() -> void:
 	_player = null
 	if is_instance_valid(_aura):
 		_aura.queue_free()
-	if is_instance_valid(_hud_layer):
-		_hud_layer.queue_free()
 	_aura = null
-	_hud_layer = null
-	_hud_canvas = null
-	_timer_label = null
 
 
 func _exit_tree() -> void:
@@ -160,28 +149,6 @@ func _make_aura() -> void:
 	add_child(_aura)
 	_aura.global_position = _player.global_position + Vector2(0, -4)
 	_aura.queue_redraw()
-
-
-func _make_hud() -> void:
-	_hud_layer = CanvasLayer.new()
-	_hud_layer.name = "AcaiTimer"
-	_hud_layer.layer = 24
-	add_child(_hud_layer)
-	_hud_canvas = Control.new()
-	_hud_canvas.position = Vector2(12, 60)
-	_hud_canvas.size = Vector2(132, 20)
-	_hud_canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_hud_canvas.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_hud_canvas.draw.connect(_draw_hud)
-	_hud_layer.add_child(_hud_canvas)
-	var title: Label = UiStyle.shadowed_label("AÇAÍ · 2×", 9, Color(0.94, 0.83, 1.0), HORIZONTAL_ALIGNMENT_LEFT)
-	title.position = Vector2(22, 0)
-	title.size = Vector2(81, 13)
-	_hud_canvas.add_child(title)
-	_timer_label = UiStyle.shadowed_label("%ds" % int(ceilf(_time_left)), 10, Color(1.0, 0.91, 1.0), HORIZONTAL_ALIGNMENT_RIGHT)
-	_timer_label.position = Vector2(104, 0)
-	_timer_label.size = Vector2(22, 14)
-	_hud_canvas.add_child(_timer_label)
 
 
 func _draw() -> void:
@@ -204,16 +171,3 @@ func _draw_aura() -> void:
 		_aura.draw_rect(Rect2(at.round(), Vector2(2, 2)), Color(0.83, 0.54, 1.0, 0.56))
 
 
-func _draw_hud() -> void:
-	if not _active or not is_instance_valid(_hud_canvas):
-		return
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.045, 0.055, 0.12, 0.94)
-	style.border_color = Color(0.42, 0.28, 0.61, 0.9)
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(4)
-	_hud_canvas.draw_style_box(style, Rect2(0, 0, 132, 20))
-	if _texture != null:
-		_hud_canvas.draw_texture_rect(_texture, Rect2(3, 2, 16, 16), false)
-	_hud_canvas.draw_rect(Rect2(22, 14, 102, 3), Color(0.22, 0.16, 0.32))
-	_hud_canvas.draw_rect(Rect2(22, 14, 102 * clampf(_time_left / duration, 0.0, 1.0), 3), Color(0.68, 0.35, 0.88))

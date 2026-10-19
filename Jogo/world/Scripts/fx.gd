@@ -8,9 +8,12 @@ extends Node
 const EFFECT_SCRIPT: GDScript = preload("res://world/Scripts/fx_layer.gd")
 const HITSTOP_FRAMES := 4
 const HITSTOP_LIMIT := 6
+const HITSTOP_SCALE := 0.08
+const HITSTOP_FRAME_USEC := 1_000_000.0 / 60.0
 
 var _layer
-var _hitstop_frames: int = 0
+var _hitstop_until_usec: int = 0
+var _resume_time_scale := 1.0
 
 
 func _ready() -> void:
@@ -20,10 +23,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if _hitstop_frames > 0:
-		_hitstop_frames -= 1
-		if _hitstop_frames <= 0:
-			Engine.time_scale = 1.0
+	if _hitstop_until_usec > 0 and Time.get_ticks_usec() >= _hitstop_until_usec:
+		cancel_hitstop()
 
 
 func _layer_node():
@@ -105,13 +106,20 @@ func popup(origin: Vector2, label: String, color: Color = Color.WHITE, font_size
 
 # --- Hit-stop ----------------------------------------------------------------
 
-## Congela o jogo por alguns quadros para dar peso a um impacto.
+## Desacelera o impacto sem entregar um passo de física igual a zero.
+## O prazo usa tempo real: não depende do FPS nem do relógio desacelerado.
 func hitstop(frames: int = HITSTOP_FRAMES) -> void:
-	_hitstop_frames = clampi(maxi(_hitstop_frames, frames), 0, HITSTOP_LIMIT)
-	Engine.time_scale = 0.0
+	if frames <= 0 or get_tree().paused:
+		return
+	if _hitstop_until_usec == 0:
+		_resume_time_scale = Engine.time_scale if Engine.time_scale > 0.0 else 1.0
+	var duration := int(clampi(frames, 1, HITSTOP_LIMIT) * HITSTOP_FRAME_USEC)
+	_hitstop_until_usec = maxi(_hitstop_until_usec, Time.get_ticks_usec() + duration)
+	Engine.time_scale = minf(_resume_time_scale, HITSTOP_SCALE)
 
 
 ## Devolve o tempo normal imediatamente (usar ao pausar, reiniciar ou concluir).
 func cancel_hitstop() -> void:
-	_hitstop_frames = 0
-	Engine.time_scale = 1.0
+	if _hitstop_until_usec > 0:
+		Engine.time_scale = _resume_time_scale
+	_hitstop_until_usec = 0

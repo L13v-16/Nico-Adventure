@@ -21,6 +21,7 @@ const MENU_SCENE := "res://world/main_menu.tscn"
 @export_file("*.tscn") var next_level_scene := "res://world/beach_02.tscn"
 @export var intro_title := "VALE DAS COPAS"
 @export var intro_act := 1
+@export var pause_on_focus_loss := true
 
 var completed := false
 var intro_active := true
@@ -54,8 +55,21 @@ var _finale: CanvasLayer
 @onready var notice: Label = $HUD/Notice
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and is_node_ready() and pause_on_focus_loss:
+		if not intro_active and not completed and not get_tree().paused and is_instance_valid(pause_menu) and pause_menu.can_open:
+			player._cancel_attack()
+			pause_menu.open()
+
+
 func _ready() -> void:
 	total_gems = $items.get_child_count()
+	if Save.is_free_mode():
+		for item in $items.get_children():
+			if item.collected:player.gems+=1
+		if Save.is_legacy_cherry_history(level_id):
+			player.gems=clampi(int(Save.get_level_stats(level_id).get("cherries",0)),0,total_gems)
+		_gems_last=player.gems
 	_polish_terrain()
 	_spawn_fragments()
 	_setup_enemies()
@@ -68,7 +82,7 @@ func _ready() -> void:
 		checkpoint.body_entered.connect(_on_checkpoint_entered.bind(checkpoint))
 	$Finish.body_entered.connect(_on_finish_entered)
 	_setup_pause_menu()
-	_update_gems(0)
+	_update_gems(player.gems)
 	_update_health(player.health, player.MAX_HEALTH)
 	game_hud.configure_intro(intro_title, intro_act)
 	_start_sequence()
@@ -324,7 +338,7 @@ func _next_level() -> void:
 		return
 	Fx.cancel_hitstop()
 	get_tree().paused = false
-	Save.request_play(true)
+	Save.request_play(true,Save.is_free_mode())
 	get_tree().change_scene_to_file(next_level_scene)
 
 
@@ -337,7 +351,7 @@ func _to_menu() -> void:
 func _restart() -> void:
 	Fx.cancel_hitstop()
 	get_tree().paused = false
-	Save.request_play(true)
+	Save.request_play(true,Save.is_free_mode())
 	get_tree().reload_current_scene()
 
 

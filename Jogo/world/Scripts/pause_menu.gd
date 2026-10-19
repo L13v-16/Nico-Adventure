@@ -39,6 +39,8 @@ func open() -> void:
 	if _open:
 		return
 	_open = true
+	var player := get_tree().get_first_node_in_group("player")
+	if is_instance_valid(player): player.call("_cancel_attack")
 	Fx.cancel_hitstop()
 	Sfx.menu()
 	get_tree().paused = true

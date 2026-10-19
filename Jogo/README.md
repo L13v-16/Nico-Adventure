@@ -12,14 +12,14 @@ A chegada tem uma casa de madeira construída entre os galhos de uma árvore, co
 |---|---|---|
 | Nico | Guaxinim com lenço verde e mochila | `world/Arte/Nico/` |
 | Arara Minas | Arara azul e amarela, bico forte, companheira de viagem | `world/Arte/Amigos/arara_minas.tres` |
-| Remi | Mico pequeno, marrom-claro, cauda enrolada e orelhas claras | `world/Arte/Amigos/remi.tres` |
+| Remi | Esquilo castanho, cauda fofa e lenço azul | `world/Arte/Magic/remi.tres` |
 | José | Tatu-bola com casco segmentado e orelhas pequenas | `world/Arte/Amigos/jose.tres` |
 | Urso | Urso-pardo grande, gentil e de olhar cansado | `world/Arte/Amigos/urso.tres` |
 | Tartaruga | Companheira idosa, de olhar sereno e casco marcado pelas travessias | `world/Arte/Tartaruga/turtle.tres` |
 | Urus, o Urubu | Executivo de terno que mantém a tartaruga presa no cais | `world/Arte/Beach/urus.tres` |
 | Mico-leão-dourado | Pelagem dourada, juba e cauda longa | `world/Arte/Amigos/mico_leao_dourado.tres` |
 
-As descrições seguem o grupo apresentado na história e no Prompt 3 de `PROMPTS-ARTE.txt`. As novas artes aparecem na abertura e no mapa do resgate durante a cutscene final.
+Remi foi atualizado para esquilo conforme a direção atual da história; sua nova arte também aparece no prólogo, no mapa e na Coleção. As novas artes aparecem na abertura e no mapa do resgate durante a cutscene final.
 
 ## Fase 2 — Costa das Marés
 
@@ -44,7 +44,7 @@ O painel da loja usa madeira escura, verde-oliva e detalhes dourados, com uma no
 | Açaí | 7 | Renova 12 segundos de proteção e golpes fortes. |
 | Escudo | 10 | Absorve três golpes; não acumula com outro escudo. |
 
-Os suprimentos acima continuam disponíveis. Os novos itens entram na mochila; equipamentos e roupas são equipados ao comprar. Na mochila, **Equipar** e **Retirar** trocam a aparência e os bônus sem gastar mais cerejas. **Usar** consome um Açaí Congelante na hora escolhida.
+Os suprimentos acima continuam disponíveis. Os novos itens entram na mochila; equipamentos e roupas são equipados ao comprar. Na mochila, **Equipar** e **Retirar** trocam a aparência e os bônus sem gastar mais cerejas. **Usar** consome a provisão selecionada na hora escolhida. Biscoitos não são consumidos com a vida cheia.
 
 | Equipamento | Cerejas | Efeito |
 |---|---:|---|
@@ -60,7 +60,7 @@ Estilo: **Chapéu de Palha (5)**, **Óculos Escuros (5)**, **Capa de Super-heró
 
 Depois do primeiro encontro, a caravana avisa que seguirá viagem e parte ao Nico se afastar **mais de 300 pixels na horizontal**, para qualquer lado. Há uma breve animação de partida; voltar durante a animação ou usar uma bandeira não faz a loja reaparecer nessa tentativa. Ela permanece disponível até ser encontrada. Uma nova tentativa recria a loja e reinicia as coletas e o inventário daquela tentativa, preservando o saldo de cerejas.
 
-Peças duráveis, estoque não usado e a folha não consumida permanecem após respawn, nesta tentativa. O açaí gelado ativo termina em morte, respawn ou conclusão; seu tempo não corre nos menus. A mochila comporta até três açaís congelantes. A Folha Protetora não impede quedas no mar e é consumida antes do escudo de três golpes.
+Peças duráveis, estoque não usado e a folha não consumida permanecem após respawn, nesta tentativa. O açaí gelado ativo termina em morte, respawn ou conclusão; seu tempo não corre nos menus. A mochila comporta até três unidades por tipo de provisão: Açaí Congelante, Biscoito de Mel e Açaí de Viagem. A Folha Protetora não impede quedas no mar e é consumida antes do escudo de três golpes.
 
 A HUD mostra somente o **SALDO** disponível em ambas as fases, sem a quantidade máxima por fase. A carteira é compartilhada entre as ilhas e salva a cada coleta e compra em `user://save.cfg`; trocar de fase, reiniciar uma tentativa, voltar ao menu ou reabrir o jogo preserva o saldo. Coletar soma uma cereja; comprar desconta o preço uma única vez. A pontuação e os totais dos resultados continuam contando apenas as coletas daquela tentativa, sem somar o saldo trazido de outras fases. Os resultados e a Coleção também mostram o saldo guardado. Cair no mar remove açaí e escudo, preservando a carteira. A loja não cobra por vida cheia, escudo já equipado ou saldo insuficiente.
 
@@ -165,3 +165,91 @@ Os estados seguem o salvamento: Arara vira companheira após a floresta, a tarta
 Oliver fica centralizado na janela da caravana, com uma pequena margem acima das orelhas e o corpo escondido pelo balcão. Um recorte na abertura impede que qualquer parte do sprite passe sobre a madeira durante a piscada ou o movimento da caravana.
 
 O rosto do lobo usa um recorte proporcional dentro do vidro da cabine do caminhão. Sua máscara acompanha a mesma origem arredondada e o mesmo balanço da carroceria na cutscene. Os quadros do caminhão e as duas expressões de Oliver foram conferidos com renderizações com e sem os personagens: somente os pixels internos das janelas mudam. As animações da abertura, compras, música, saldo, Coleção e demais regras permanecem funcionando.
+
+
+## Fase 3 — Floresta Violeta (v25)
+
+Depois da praia, **Próxima ilha** leva à floresta mágica para resgatar **Remi, o esquilo**. Saves que já concluíram a praia passam a abrir esta fase pelo botão Continuar, mantendo saldo e recordes. A Coleção registra três ilhas e o resgate de Remi. O modo livre agora exige as três fases disponíveis.
+
+A fase tem 6.384 pixels de extensão, oito bandeiras, 73 cerejas, três segredos, cinco besouros, cinco mariposas e a Hiena. Chão, raízes, plantas e cogumelos usam os mesmos pontos de apoio. O fundo tem paralaxe, vaga-lumes e tons roxos; a abertura com Arara Minas ensina as mecânicas.
+
+- **Cogumelos vermelhos:** pule sobre o chapéu. O impulso alcança mais de 200 pixels de altura e independe de manter o botão de salto pressionado. Há três no percurso e dois na arena.
+- **Cipós vivos:** aperte **E** perto da ponta para agarrar. Use **A / D** ou as setas para ganhar balanço; **Espaço / W** ou **E** solta com impulso. O personagem conserva a velocidade tangencial. Um cipó também desloca seu ponto de apoio sozinho.
+- **Plantas luminosas:** tocá-las abre/fecha a planta e reposiciona suavemente o cipó correspondente. Voltar a tocar permite alternar novamente o caminho.
+- **Besouros de espinhos:** recebem golpes laterais e não devem ser pisados. Eles avisam antes de uma pequena investida.
+- **Mariposas:** avisam antes do rasante. Podem ser atacadas ou derrotadas ao cair sobre elas. Ambos os inimigos podem ser congelados pelo açaí.
+- **Hiena HaHa (Triple H):** devolva um barril com **J / X**; a chefe só fica tonta quando ele volta e a atinge. Durante o combo de socos ou sua breve recuperação, acerte por trás para abrir outra janela. Golpes frontais e ataques contra a guarda são bloqueados; errar um ataque não a deixa tonta. Enquanto vulnerável, use um novo golpe ou pule na cabeça. Desvie dos chutes, investidas, saltos e cristais. Na segunda metade, os arremessos incluem um barril e um cristal. A bandeira permite tentar novamente e limpa todos os projéteis.
+- **Resgate:** derrote a Hiena e quebre o cadeado com **J / X**. Remi sai da gaiola e conversa com Nico e Arara Minas; o resultado fica salvo antes da cena.
+
+A caravana de Oliver aparece antes do chefe e segue as regras de compras e partida já usadas na praia. **I** abre a mochila. Duas frutas de açaí e as provisões da loja ajudam no caminho. A trilha original da floresta continua nos diálogos, muda durante a luta e dá prioridade à música da loja/mochila quando abertas.
+
+**Arte:** imagens geradas com a ferramenta integrada de geração de imagens, em `world/Arte/Magic/`. Há spritesheets da Hiena (16 poses), dos besouros e mariposas (16 poses), dos cogumelos/plantas/árvores (12 células), de Remi (corpo e retratos, oito células), além do fundo. Recursos AtlasTexture alinham os pés sem redesenhar os PNGs e mantêm a transparência com o shader de recorte do jogo. Os prompts exatos acompanham as imagens nos arquivos `PROMPT-*.txt`; `atlas_metadata.json` registra os recortes. As duas músicas originais sintetizadas estão em `world/Audio/Magic/`.
+
+
+## Polimento da Floresta Violeta e ringue da Hiena (v26)
+
+As árvores, plantas, Arara e os besouros agora alinham a parte opaca dos sprites ao chão, considerando o preenchimento de cada quadro de animação. Há espaço livre em volta da Arara e do ringue. Os vaga-lumes usam duas poses de asas e cruzam a tela nos dois sentidos.
+
+Os cipós têm arte própria de tronco trançado, folhas, apoio e nó de mão em `world/Arte/Magic/V26/vine_atlas.png`. O balanço limita o ângulo a 0,92 rad e a velocidade angular a 2,25 rad/s. Ao saltar, o impulso vertical fica entre -270 e -160 px/s e o horizontal entre -420 e 420 px/s. A travessia inteira foi repetida com os limites novos. Cada cipó tem cinco cerejas no arco real do personagem; elas acompanham o apoio móvel e as plantas, sem alterar o saldo já coletado.
+
+A Hiena luta em um ringue com tablado, postes acolchoados e três cordas. Ela se aproxima para um combo de dois socos, dá chutes de maior alcance, arremessa barris e cristais e conserva a investida e o salto marcado. Cada golpe tem antecipação. Na versão atual, a abertura precisa ser conquistada: rebata um barril com J / X ou acerte por trás durante os socos. Cristais arremessados podem ser quebrados com J / X. O açaí mantém seus golpes congelantes contra os inimigos da floresta. A segunda metade inclui dois arremessos seguidos. Morrer ou vencer limpa os projéteis e reabre a passagem. Remi continua sendo libertado após quebrar o cadeado.
+
+Trilhas fornecidas pelo jogador, copiadas sem conversão:
+- Fase e diálogos: **Glimmergrove Pathways.wav**, em `world/Audio/Magic/glimmergrove_pathways.wav`.
+- Luta: **Wrestlecackle Beatdown.wav**, em `world/Audio/Magic/wrestlecackle_beatdown.wav`.
+- A caravana/mochila mantém a prioridade de **Pixels and Trinkets** e devolve a trilha correta ao fechar.
+
+Três novas imagens foram criadas com a ferramenta integrada de geração de imagens: atlas do cipó e vaga-lumes, atlas do ringue/objetos e 12 novas poses da Hiena (socos, chute, guarda e arremesso). Os PNGs originais permanecem intactos; recursos de recorte isolam os personagens e alinham os pés. Os prompts exatos e os metadados acompanham a arte em `world/Arte/Magic/V26/`.
+
+
+## Ajustes de cenário e contra-ataques (v27)
+
+As quatro árvores usam recortes completos da copa às raízes. Cristais e pequenos cogumelos têm recortes próprios, sem pedaços da linha vizinha do atlas alterando seu ponto de apoio. Os PNGs originais são preservados; `world/Arte/Magic/atlas_grounding_v27.json` documenta os recortes corrigidos.
+
+Hiena HaHa, apelidada Triple H, só fica tonta por um barril devolvido ou um golpe pelas costas durante seu combo de socos/curta recuperação. Não há mais atordoamento automático ao errar os outros golpes. Barris devolvidos deixam de ferir Nico e voltam até a chefe; cristais continuam quebráveis. Os dois cogumelos da arena ficam em suportes nas hastes laterais, alcançáveis com o salto comum. A derrota, mesmo em uma posição aérea, termina no chão do ringue.
+
+Remi tem um apoio independente no chão da cena, na mesma escala do resgate: acena, pisca e fala sem a oscilação vertical anterior. Seus recortes foram corrigidos e o ator é removido quando o diálogo termina. A música continua durante a conversa e o progresso é salvo antes dela.
+
+Validação: 49 verificações de combate, saltos reais até os trampolins, barril em movimento rebatido com o comando normal, resgate e música; 170 poses/lados/tamanhos renderizados com os pés no apoio; percurso completo dos quatro cipós e plataformas principais sem mortes. Saves de teste ficam isolados dos saves do jogador.
+
+
+## Novos produtos de Oliver Gancho (v29)
+
+| Item | Cerejas | Efeito |
+|---|---:|---|
+| Biscoito de Mel | 6 | Guarde e use na mochila para recuperar um coração. Não é gasto com vida cheia. |
+| Açaí de Viagem | 12 | Guarde e ative na mochila: os mesmos 12 segundos de proteção e ataque dobrado da fruta comum. |
+| Luvas Ágeis | 14 | Recarga dos ataques -15%; ocupam o slot das Garras Afiadas. |
+| Broche do Saltador | 12 | Impulso do salto comum +10%; ocupa o slot de Gelo Duradouro. Não altera canhões, cogumelos ou o impulso do cipó. |
+| Bandana do Marujo | 7 | Acessório vermelho para a cabeça; substitui o chapéu. |
+| Óculos de Aviador | 7 | Óculos com lentes âmbar; substituem os óculos escuros. |
+
+O catálogo passou de 11 para 17 itens, além dos três suprimentos de uso imediato. As provisões guardáveis têm limite de três unidades por tipo e não são equipadas automaticamente. Peças duráveis são equipadas na compra; trocar de peça no mesmo slot retira seu bônus anterior. A mochila tem uma aba Suprimentos e mostra os bônus de impulso e recarga. Os timers continuam pausados enquanto loja ou mochila estão abertas. Roupas, luvas e broche acompanham as mesmas âncoras de animação de Nico, incluindo os lados e as poses de salto, corrida e dano.
+
+Os seis ícones foram gerados com a ferramenta integrada de imagens. O PNG original, sem alterações, está em `world/Arte/Equipment/V29/shop_items_atlas.png`; o prompt exato está em `PROMPT-SHOP-ITEMS.txt` e os recortes estão em `atlas_metadata.json`. Recursos AtlasTexture e shader de recorte exibem os ícones na loja/mochila. Os novos acessórios no personagem são desenhados em pixels pelo código de equipamentos para preservar o tamanho e acompanhar cada pose.
+
+Validação: compras e débitos únicos, limites, uso pela mochila, bloqueio de cura desnecessária, pausa do açaí, substituição dos slots, recarga e salto reais, acessórios em dez combinações de pose/direção, interface dentro da tela e partida da caravana. A correção de estabilidade do açaí foi mantida e verificada na praia e na floresta com o renderizador Vulkan.
+
+
+## Revisão geral de fluidez e interface (v30)
+
+- **Ataque mais responsivo:** uma nova pressão de J/X nos últimos 120 ms da recarga é guardada e executada assim que Nico pode atacar. Segurar o botão não cria golpes automáticos. Dano, pausa, mochila, caravana e canhões cancelam comandos pendentes para evitar um ataque involuntário ao retornar.
+- **Um painel para o açaí:** fruta comum e Açaí Congelante compartilham um indicador com tempo restante, dano dobrado, duração do gelo e barras de duração. O painel mostra os dois efeitos juntos e se reposiciona abaixo das instruções durante os chefes. Os contadores continuam atualizando durante os voos dos canhões e param nos menus.
+- **Interação com a caravana:** o aviso E / Loja do Oliver usa coordenadas da tela, com tamanho fixo e limites que o mantêm abaixo da HUD e acima das instruções inferiores. A aproximação, compra e regra de partida permanecem funcionando.
+- **Pausa ao sair da janela:** mudar para outro aplicativo abre a pausa durante a jogabilidade. Ao voltar, use Continuar; o jogo não retoma sozinho. Aberturas, resultados, loja e diálogos já pausados não recebem uma segunda pausa.
+- **Tremor opcional:** Opções → Tremor da câmera permite desligar os deslocamentos dos impactos. A preferência é guardada no save sem alterar carteira ou fases concluídas; saves antigos usam o efeito habilitado como padrão.
+- **Inimigos consistentes:** besouros e mariposas preservam a direção anterior quando o deslocamento ou a posição relativa é zero. Uma derrota limpa movimento e gelo residual.
+- **Troca de sprites:** 59 quadros do atlas mágico têm pontos de apoio calculados previamente. O recurso nativo `ground_contacts_v30.tres` acompanha a exportação; o JSON vizinho documenta os dados. A primeira troca desses quadros não precisa ler novamente os pixels da imagem para encontrar os pés.
+
+Validação: 28 verificações novas de comandos, HUD, foco, opções, inimigos e recortes; 50 da loja/mochila; 48 de estabilidade do açaí; 49 do ringue, combate e resgate; 170 combinações de sprites renderizadas; percursos físicos completos da floresta inicial e da floresta mágica sem mortes. Os testes usam saves isolados e não alteram o progresso do jogador.
+
+
+## Cerejas persistentes no modo livre (v31)
+
+O jogo registra quais cerejas foram coletadas em cada ilha, incluindo as da campanha e as que acompanham os cipós. No modo livre, somente as ainda não coletadas aparecem; cada uma pode acrescentar uma única cereja à carteira. Reiniciar a fase, trocar de ilha, gastar na loja, voltar ao menu ou fechar o jogo não repõe essas coletas. A seleção de ilhas explica essa regra.
+
+Histórico e saldo são gravados juntos: uma falha de gravação não consome a cereja nem concede saldo parcial. As cerejas da floresta mágica têm identificadores estáveis mesmo quando o cipó se move. Os totais originais das fases e os recordes continuam preservados. A campanha mantém suas regras de coleta; Novo jogo apaga também o histórico ao reiniciar o progresso.
+
+Saves anteriores não registravam a posição de cada cereja. Por isso, as ilhas já concluídas nesses saves ficam sem cerejas no modo livre, preservando a carteira e os resultados existentes. O jogo não transforma essa migração em uma coleta perfeita.
+
+Validação: 238 verificações de identidade, saldo, persistência nas três fases, reinício real, migração e reversão após falha de gravação; nove verificações na janela Vulkan cobrindo menu, coleta por colisão, reinício e enquadramento. As 177 cerejas foram identificadas e não concedem crédito duplicado no modo livre. O percurso físico da primeira fase passou sem mortes. Todos os saves usados nos testes são isolados.

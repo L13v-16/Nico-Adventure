@@ -71,7 +71,10 @@ func _load_art() -> void:
 		_load_texture("Corporacao/truck_drive_%d" % i)
 
 func _load_texture(file: String) -> void:
-	var texture := load("res://world/Arte/" + file + ".png") as Texture2D
+	var path := "res://world/Arte/" + file + ".png"
+	if file == "Amigos/remi": path = "res://world/Arte/Magic/remi_idle.tres"
+	if file == "Amigos/remi_2": path = "res://world/Arte/Magic/remi_blink.tres"
+	var texture := load(path) as Texture2D
 	_textures[file] = texture
 	_bounds[file] = texture.get_image().get_used_rect()
 

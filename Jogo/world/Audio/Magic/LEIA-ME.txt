@@ -1,0 +1,3 @@
+Trilhas originais sintetizadas para a Floresta Violeta e a Hiena. Composição em lá menor, 96 e 138 BPM, 64 tempos, PCM mono 22050 Hz. O controlador mantém a trilha durante diálogos e restaura após mochila/caravana.
+
+V26: a fase agora utiliza Glimmergrove Pathways.wav e a luta utiliza Wrestlecackle Beatdown.wav, fornecidas pelo jogador e copiadas byte a byte dos arquivos em Downloads. As trilhas sintetizadas da v25 permanecem no projeto como fontes anteriores. O controlador mantém os laços, a música nos diálogos e a prioridade da caravana/mochila.

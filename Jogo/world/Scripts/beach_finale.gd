@@ -11,7 +11,7 @@ const SPEAKERS: Array[String] = ["Nico", "Tartaruga", "Arara Minas"]
 const LINES: Array[String] = [
 	"Você está livre! Conseguimos abrir a gaiola.",
 	"Obrigada por me libertarem de Urus, o Urubu! Vocês chegaram bem na hora!",
-	"Estamos juntos agora. Vamos buscar nossos outros amigos pelas ilhas!",
+	"Remi, nosso amigo esquilo, está na Floresta Violeta! Hiena HaHa vigia a clareira. Vamos resgatá-lo!",
 ]
 
 @export var auto_progress := true

@@ -375,3 +375,49 @@ Enquadramento nas janelas (v24)
 Oliver fica centralizado na janela da caravana, com uma pequena margem acima das orelhas e o corpo escondido pelo balcão. Um recorte na abertura impede que qualquer parte do sprite passe sobre a madeira durante a piscada ou o movimento da caravana.
 
 O rosto do lobo usa um recorte proporcional dentro do vidro da cabine do caminhão. Sua máscara acompanha a mesma origem arredondada e o mesmo balanço da carroceria na cutscene. Os quadros do caminhão e as duas expressões de Oliver foram conferidos com renderizações com e sem os personagens: somente os pixels internos das janelas mudam. As animações da abertura, compras, música, saldo, Coleção e demais regras permanecem funcionando.
+
+
+V25 — FLORESTA VIOLETA / RESGATE DE REMI
+A terceira fase começa em Próxima ilha depois da praia. Continuar também a encontra quando a fase 2 já está concluída. Remi agora é um esquilo, com corpo animado e retratos próprios.
+Vermelhos: pule sobre o chapéu do cogumelo para subir muito alto.
+Cipós: E agarra perto da ponta; A/D ou setas dão balanço; Espaço/W ou E solta com impulso. Toque nas plantas luminosas para deslocar alguns cipós. Outro se move sozinho.
+Hiena HaHa (Triple H): J/X rebate o barril; ela fica tonta quando o barril devolvido a acerta. Nos socos, ataque por trás durante o combo ou sua curta recuperação. Depois, ataque novamente ou pule na cabeça para causar dano. Os cogumelos ficam apoiados nos postes laterais. Após vencer, quebre o cadeado de Remi com J/X.
+Oito checkpoints, novos besouros e mariposas, três segredos, caravana de Oliver, açaí congelante, novas trilhas e Coleção com três ilhas. Modo livre exige as três fases disponíveis. Saldo e progresso anteriores são mantidos.
+Imagens: ferramenta integrada de geração de imagens; spritesheets, fundo, recursos de animação e prompts completos em world/Arte/Magic. Detalhes e controles no README.md.
+
+
+V26 — POLIMENTO, CIPÓS E RINGUE DA HIENA
+Pés e raízes alinhados ao chão; cenário limpo junto da Arara e dentro do ringue.
+Cipós com novos sprites e impulso menor. Cinco cerejas por cipó seguem o arco e o apoio móvel. E agarra, A/D ou setas dão balanço, Espaço/W ou E solta.
+Vaga-lumes animados cruzam a tela. A fase usa Glimmergrove Pathways e o chefe Wrestlecackle Beatdown, copiadas sem conversão.
+Hiena HaHa: combo de socos, chute, barris/cristais, investida e salto marcado. Conquiste a abertura rebatendo um barril ou acertando por trás dos socos. J/X rebate barris e quebra cristais no ar. O açaí congela os inimigos da floresta. Morrer limpa os projéteis e permite outra tentativa.
+Artes geradas pela ferramenta integrada, spritesheets e prompts exatos em world/Arte/Magic/V26. Saldo e progresso permanecem preservados.
+
+
+V27 — HIENA HaHa / TRIPLE H E APOIO NO CHÃO
+J/X rebate barris: quando acertam a chefe, deixam-na tonta. Durante o combo de socos e a curta recuperação, somente um golpe por trás abre essa chance. Depois de abrir a guarda, dê outro golpe ou pule na cabeça. Errar outros ataques não causa tontura automática.
+Trampolins nos suportes dos postes laterais do ringue. Copas completas, cristais/cogumelos sem recortes vizinhos, derrota da Hiena no tablado e Remi apoiado no chão ao acenar, piscar e conversar.
+
+
+V29 — SEIS NOVOS ITENS NA LOJA DE OLIVER GANCHO
+Biscoito de Mel (6): recupera um coração ao usar na mochila; não é gasto com vida cheia.
+Açaí de Viagem (12): guarde para ativar proteção e ataque dobrado por 12 segundos.
+Luvas Ágeis (14): recarga dos ataques -15%; substituem as garras.
+Broche do Saltador (12): impulso do salto comum +10%; substitui Gelo Duradouro.
+Bandana do Marujo (7) e Óculos de Aviador (7): novos acessórios visíveis no Nico.
+Suprimentos guardáveis têm limite de três unidades por tipo. I abre a mochila; a aba Suprimentos permite usar as provisões. Novos ícones e prompt em world/Arte/Equipment/V29.
+
+
+V30 — REVISÃO GERAL
+Ataques aceitam um novo comando nos últimos 120 ms da recarga, sem repetição automática. Abrir pausa, mochila ou caravana limpa esse comando.
+Açaí comum e congelante usam um único painel de duração e gelo. Durante chefes, o painel se posiciona abaixo das instruções; os tempos também atualizam no voo dos canhões.
+Aviso da loja com tamanho fixo na tela. Mudar de aplicativo pausa a jogabilidade; use Continuar ao voltar. Opções: Tremor da câmera pode ser desligado e a preferência fica salva.
+Direção dos inimigos corrigida quando Nico fica exatamente sobre eles; derrota limpa gelo residual. Pontos de apoio de 59 quadros mágicos são pré-calculados, preservando os pés alinhados.
+175 verificações de jogabilidade/interface e 170 casos visuais passaram. Percursos da floresta inicial e floresta mágica: zero mortes.
+
+
+V31 — CEREJAS NO MODO LIVRE
+Cerejas já coletadas não reaparecem no modo livre. O histórico inclui a campanha e as cerejas dos cipós; cada cereja restante concede saldo uma única vez nesse modo.
+Reiniciar, trocar de ilha, gastar na loja, voltar ao menu ou fechar o jogo não repõe as cerejas. Saldo e histórico são salvos juntos. Novo jogo reinicia também esse histórico.
+Em saves antigos, as ilhas já concluídas ficam sem cerejas no modo livre porque não havia registro individual das coletas. A carteira e os recordes existentes são preservados.
+238 verificações de coleta/persistência e nove verificações na janela do jogo passaram, cobrindo as 177 cerejas das três fases. Percurso físico da primeira fase sem mortes; saves de teste isolados.

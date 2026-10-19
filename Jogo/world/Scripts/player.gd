@@ -21,6 +21,7 @@ const ATTACK_ACTIVE_TIME = 0.22
 const ATTACK_DURATION = 0.30
 const ATTACK_COOLDOWN = 0.35
 const ATTACK_REACH = 52.0
+const ATTACK_BUFFER_TIME := 0.12
 ## Modificado temporariamente pelo açaí; o golpe normal continua valendo 1.
 var attack_damage: int = 1
 const HITSTUN_TIME = 0.18
@@ -60,6 +61,7 @@ var _facing: float = 1.0
 var _attack_facing: float = 1.0
 var _attack_elapsed: float = -1.0
 var _attack_cooldown: float = 0.0
+var _attack_buffer_timer := 0.0
 var _attack_hit_targets: Dictionary = {}
 var _attack_shape: RectangleShape2D = RectangleShape2D.new()
 var _attack_query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
@@ -81,6 +83,13 @@ var equipment: Node
 var _freeze_hud: CanvasLayer
 var _freeze_canvas: Control
 var _freeze_status: Label
+var _active_acai: Node
+const ACAI_ICON := preload("res://world/Arte/Beach/acai.png")
+var _vine: Node2D
+var _vine_cooldown := 0.0
+var _spring_lock := 0.0
+var _last_valid_position := Vector2.ZERO
+var _last_valid_camera_base := Vector2.ZERO
 
 @onready var anim: AnimatedSprite2D = $anim
 
@@ -92,6 +101,7 @@ func _ready() -> void:
 	add_child(equipment)
 	_make_freeze_hud()
 	respawn_position = global_position
+	_last_valid_position = global_position
 	# Keeps the feet attached while riding descending or horizontal platforms.
 	floor_snap_length = ground_snap
 	platform_on_leave = CharacterBody2D.PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY
@@ -113,19 +123,33 @@ func _ready() -> void:
 	health_changed.emit(health, MAX_HEALTH)
 
 
+func _process(_delta: float) -> void:
+	# Cannon flight temporarily owns movement, while powers keep counting down.
+	if not is_physics_processing():_update_freeze_hud()
+
+
 func _physics_process(delta: float) -> void:
 	if _finished:
 		return
+	_stabilize_motion()
+	if delta <= 0.0:
+		return
 	_tick_combat(delta)
+	_vine_cooldown = maxf(0.0, _vine_cooldown - delta)
+	_spring_lock = maxf(0.0, _spring_lock - delta)
 	if health <= 0:
 		_death_timer -= delta
 		velocity.y = minf(velocity.y + get_gravity().y * delta, MAX_FALL_SPEED)
 		velocity.x = move_toward(velocity.x, 0.0, FRICTION * delta * 0.4)
 		move_and_slide()
+		_stabilize_motion()
 		if _death_timer <= 0.0:
 			_register_death()
 		_update_combat_visuals()
 		_update_camera(delta)
+		return
+	if is_instance_valid(_vine):
+		_swing_on_vine(delta)
 		return
 
 	if is_on_floor():
@@ -142,7 +166,7 @@ func _physics_process(delta: float) -> void:
 
 	var jumped := false
 	if can_control and _jump_buffer_timer > 0.0 and _coyote_timer > 0.0:
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY * equipment.get_jump_multiplier()
 		_jump_buffer_timer = 0.0
 		_coyote_timer = 0.0
 		_squash = SQUASH_JUMP
@@ -150,7 +174,7 @@ func _physics_process(delta: float) -> void:
 		Sfx.jump()
 
 	# A short tap produces a short jump, including a buffered tap before landing.
-	if can_control and velocity.y < 0.0 and not jump_held and (_jump_was_held or jumped):
+	if can_control and _spring_lock <= 0.0 and velocity.y < 0.0 and not jump_held and (_jump_was_held or jumped):
 		velocity.y *= 0.5
 	_jump_was_held = jump_held
 
@@ -168,11 +192,13 @@ func _physics_process(delta: float) -> void:
 		if _attack_elapsed < 0.0 and direction != 0.0:
 			_facing = signf(direction)
 		if InputMap.has_action("attack") and Input.is_action_just_pressed("attack"):
-			if _attack_cooldown <= 0.0 and _attack_elapsed < 0.0:
-				_start_attack()
+			_attack_buffer_timer = ATTACK_BUFFER_TIME
+		if _attack_buffer_timer > 0 and _attack_cooldown <= 0.0 and _attack_elapsed < 0.0:
+			_start_attack()
 
 	var fall_speed: float = velocity.y
 	move_and_slide()
+	_stabilize_motion()
 	_apply_ground_feedback(fall_speed, delta)
 	if global_position.y > FALL_LIMIT:
 		_register_death()
@@ -212,11 +238,28 @@ func _add_shake(amount: float) -> void:
 	_shake = minf(_shake + amount, SHAKE_LIMIT)
 
 
-## Antecipação da câmera: olha um pouco na direção do movimento, acompanha
-## quedas longas e treme em impactos.
+## Uma posição inválida nunca deve alcançar a câmera nem apagar o cenário.
+## Recupera a última posição válida sem consumir vida ou alterar a carteira.
+func _stabilize_motion() -> void:
+	if global_position.is_finite():
+		_last_valid_position = global_position
+	else:
+		global_position = _last_valid_position
+		reset_physics_interpolation()
+	if not velocity.is_finite():
+		velocity = Vector2.ZERO
+	if _camera_base_offset.is_finite():
+		_last_valid_camera_base = _camera_base_offset
+	else:
+		_camera_base_offset = _last_valid_camera_base
+
+
+## Antecipação da câmera: olha na direção do movimento e acompanha impactos.
 func _update_camera(delta: float) -> void:
 	if _camera == null:
 		return
+	_stabilize_motion()
+	if not Save.is_camera_shake_enabled(): _shake = 0.0
 	_shake = move_toward(_shake, 0.0, delta * 26.0)
 	var target_look: float = _facing * 34.0
 	_camera_look = lerpf(_camera_look, target_look, 1.0 - exp(-4.0 * delta))
@@ -253,6 +296,8 @@ func _register_death() -> void:
 func respawn() -> void:
 	if _finished:
 		return
+	release_vine(false)
+	_spring_lock = 0.0
 	shop_shield_hits = 0
 	shop_shield_changed.emit(0)
 	Fx.burst(global_position + Vector2(0.0, -4.0), Color(0.72, 0.9, 1.0), 10, 120.0)
@@ -281,10 +326,11 @@ func respawn() -> void:
 	respawned.emit()
 
 
-func collect_item() -> bool:
+func collect_item(cherry_id: String = "", level_id: String = "") -> bool:
 	if _finished:
 		return false
-	if not Save.add_cherries(1):
+	var saved:bool=Save.add_cherries(1) if cherry_id.is_empty() or level_id.is_empty() else Save.collect_level_cherry(level_id,cherry_id)
+	if not saved:
 		return false
 	gems += 1
 	gem_collected.emit(gems)
@@ -324,6 +370,7 @@ func grant_shop_shield(hits: int = 3) -> bool:
 
 
 func finish_level() -> void:
+	release_vine(false)
 	_finished = true
 	equipment.clear_temporary()
 	shop_shield_hits = 0
@@ -404,6 +451,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 		queue_redraw()
 		return
 	health = maxi(health - amount, 0)
+	release_vine(false)
 	_invulnerability_timer = INVULNERABILITY_TIME
 	_hitstun_timer = HITSTUN_TIME
 	_jump_buffer_timer = 0.0
@@ -438,8 +486,9 @@ func is_attacking() -> bool:
 
 
 func _start_attack() -> void:
+	_attack_buffer_timer = 0.0
 	_attack_elapsed = 0.0
-	_attack_cooldown = ATTACK_COOLDOWN
+	_attack_cooldown = ATTACK_COOLDOWN * equipment.get_attack_cooldown_multiplier()
 	_attack_facing = _facing
 	_attack_hit_targets.clear()
 	Sfx.swing()
@@ -447,12 +496,14 @@ func _start_attack() -> void:
 
 func _cancel_attack() -> void:
 	_attack_elapsed = -1.0
+	_attack_buffer_timer = 0.0
 	_attack_hit_targets.clear()
 	queue_redraw()
 
 
 func _tick_combat(delta: float) -> void:
 	_update_freeze_hud()
+	_attack_buffer_timer = maxf(_attack_buffer_timer-delta,0)
 	_attack_cooldown = maxf(_attack_cooldown - delta, 0.0)
 	_hitstun_timer = maxf(_hitstun_timer - delta, 0.0)
 	_invulnerability_timer = maxf(_invulnerability_timer - delta, 0.0)
@@ -460,7 +511,10 @@ func _tick_combat(delta: float) -> void:
 	if _attack_elapsed >= 0.0:
 		_attack_elapsed += delta
 		if _attack_elapsed >= ATTACK_DURATION:
-			_cancel_attack()
+			# Keep a recent press across the end of the current swing.
+			_attack_elapsed = -1.0
+			_attack_hit_targets.clear()
+			queue_redraw()
 
 
 func _strike_enemies() -> void:
@@ -545,9 +599,82 @@ func get_equipment() -> Node:
 	return equipment
 
 
+func launch_from_spring(speed: float) -> void:
+	release_vine(false)
+	velocity.y = -absf(speed)
+	_spring_lock = 0.38
+	_coyote_timer = 0.0
+	_jump_buffer_timer = 0.0
+	_squash = SQUASH_JUMP
+	current_state = State.JUMP
+	play_state_animation()
+
+
+func can_grab_vine() -> bool:
+	return not is_dead() and _hitstun_timer <= 0 and _vine_cooldown <= 0 and not is_instance_valid(_vine)
+
+
+func grab_vine(vine: Node2D) -> bool:
+	if not can_grab_vine(): return false
+	_vine = vine
+	_vine_cooldown = 0.18
+	_cancel_attack()
+	_coyote_timer = 0.0
+	_jump_buffer_timer = 0.0
+	_jump_was_held = Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W)
+	return true
+
+
+func release_vine(jump_off: bool = true) -> void:
+	if not is_instance_valid(_vine):
+		_vine = null
+		return
+	velocity = _vine.release_velocity()
+	_vine.detach()
+	_vine = null
+	_vine_cooldown = 0.4
+	anim.rotation = 0.0
+	if jump_off:
+		var direction := Input.get_axis("ui_left", "ui_right") + float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A))
+		if absf(direction)>0: velocity.x = signf(direction)*maxf(absf(velocity.x),300.0)
+		velocity.x = clampf(velocity.x,-420.0,420.0)
+		velocity.y = clampf(velocity.y-65.0,-270.0,-160.0)
+		_spring_lock = 0.2
+		Sfx.jump()
+
+
+func _swing_on_vine(delta: float) -> void:
+	var direction := clampf(Input.get_axis("ui_left", "ui_right")+float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),-1,1)
+	var jump_held := Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W)
+	if (jump_held and not _jump_was_held) or (_vine_cooldown <= 0 and Input.is_action_just_pressed("interagir")):
+		_jump_was_held = jump_held
+		release_vine(true)
+		return
+	_jump_was_held = jump_held
+	_vine.swing(delta,direction)
+	_vine.queue_redraw()
+	var target: Vector2 = _vine.get_grip()+Vector2(0,12)
+	var contact := move_and_collide(target-global_position)
+	if contact != null:
+		release_vine(false)
+		return
+	velocity = _vine.release_velocity()
+	if absf(direction)>0: _facing = signf(direction)
+	anim.flip_h = _facing < 0
+	anim.play("jump")
+	_update_combat_visuals()
+	anim.rotation = -float(_vine.angle)*0.18
+	_update_camera(delta)
+
+
 ## Preserva os 20% das garras como fração, inclusive durante o açaí comum.
 func get_attack_damage() -> float:
 	return float(attack_damage) * equipment.get_damage_multiplier()
+
+
+func set_acai_power(power: Node) -> void:
+	_active_acai=power
+	_update_freeze_hud()
 
 
 func _make_freeze_hud() -> void:
@@ -556,34 +683,45 @@ func _make_freeze_hud() -> void:
 	_freeze_hud.layer = 24
 	add_child(_freeze_hud)
 	_freeze_canvas = Control.new()
-	_freeze_canvas.position = Vector2(12, 84)
-	_freeze_canvas.size = Vector2(188, 20)
+	_freeze_canvas.position = Vector2(12,58)
+	_freeze_canvas.size = Vector2(188,38)
 	_freeze_canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_freeze_canvas.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	_freeze_canvas.draw.connect(_draw_freeze_hud)
 	_freeze_hud.add_child(_freeze_canvas)
 	_freeze_status = Label.new()
-	_freeze_status.position = Vector2(5, 0)
-	_freeze_status.size = Vector2(178, 18)
-	_freeze_status.add_theme_font_size_override("font_size", 9)
-	_freeze_status.add_theme_color_override("font_color", Color("d9faff"))
-	_freeze_status.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_freeze_status.position = Vector2(28,2)
+	_freeze_status.size = Vector2(156,25)
+	_freeze_status.add_theme_font_size_override("font_size",9)
+	_freeze_status.add_theme_color_override("font_color",Color("d9faff"))
+	_freeze_status.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_freeze_canvas.add_child(_freeze_status)
 	_update_freeze_hud()
 
 
 func _update_freeze_hud() -> void:
-	if not is_instance_valid(_freeze_status) or not is_instance_valid(equipment):
-		return
-	var boost_left: float = equipment.get_frost_boost_left()
-	_freeze_canvas.visible = not _finished and (attack_damage > 1 or boost_left > 0.0)
-	var duration: int = int(equipment.get_freeze_duration())
-	if boost_left > 0.0:
-		_freeze_status.text = "AÇAÍ GELADO · %ds · GELO %ds" % [int(ceilf(boost_left)), duration]
-	else:
-		_freeze_status.text = "AÇAÍ · GOLPES COM GELO %ds" % duration
+	if not is_instance_valid(_freeze_status) or not is_instance_valid(equipment):return
+	var regular:float=_active_acai.get_time_left() if is_instance_valid(_active_acai) else 0.0
+	var boost:float=equipment.get_frost_boost_left()
+	_freeze_canvas.visible=not _finished and (regular>0 or boost>0)
+	var boss:=get_parent().get_node_or_null("Boss")
+	_freeze_canvas.position.y=90 if is_instance_valid(boss) and boss.get("active")==true else 58
+	var title:="AÇAÍ 2× · %ds"%int(ceilf(regular)) if regular>0 else "AÇAÍ GELADO · %ds"%int(ceilf(boost))
+	var detail:="Gelo %ds"%int(equipment.get_freeze_duration())
+	if regular>0 and boost>0:detail+=" · Gelado %ds"%int(ceilf(boost))
+	_freeze_status.text=title+"\n"+detail
 	_freeze_canvas.queue_redraw()
 
 
 func _draw_freeze_hud() -> void:
-	_freeze_canvas.draw_rect(Rect2(0, 0, 188, 20), Color(0.04, 0.12, 0.18, 0.89))
-	_freeze_canvas.draw_rect(Rect2(0, 0, 188, 20), Color(0.49, 0.75, 0.80, 0.8), false, 1.0)
+	_freeze_canvas.draw_rect(Rect2(0,0,188,38),Color("101f30"))
+	_freeze_canvas.draw_rect(Rect2(0,0,188,38),Color("648d9e"),false,1)
+	_freeze_canvas.draw_texture_rect(ACAI_ICON,Rect2(4,5,20,20),false)
+	var regular:float=_active_acai.get_time_left() if is_instance_valid(_active_acai) else 0.0
+	var boost:float=equipment.get_frost_boost_left()
+	var total:float=_active_acai.duration if regular>0 else 30.0
+	var left:float=regular if regular>0 else boost
+	_freeze_canvas.draw_rect(Rect2(28,29,152,3),Color("304457"))
+	_freeze_canvas.draw_rect(Rect2(28,29,152*clampf(left/maxf(total,0.1),0,1),3),Color("bd8fea") if regular>0 else Color("88dbed"))
+	if regular>0 and boost>0:
+		_freeze_canvas.draw_rect(Rect2(28,34,152*clampf(boost/30.0,0,1),1),Color("88dbed"))

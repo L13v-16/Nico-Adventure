@@ -6,6 +6,7 @@ const CollectionPanel := preload("res://world/Scripts/collection_panel.gd")
 
 const LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_SCENE := "res://world/beach_02.tscn"
+const MAGIC_SCENE := "res://world/magic_03.tscn"
 const LEVEL_ID := "fase_1"
 
 const LOGO_TEXTURE := preload("res://world/Arte/logo.png")
@@ -253,6 +254,9 @@ func _build_options(column: VBoxContainer) -> void:
 	column.add_child(UiStyle.check_row(
 		"Tela cheia", Save.is_fullscreen(), _on_fullscreen_toggled
 	))
+	column.add_child(UiStyle.check_row(
+		"Tremor da câmera", Save.is_camera_shake_enabled(), _on_camera_shake_toggled
+	))
 	_clear_button = UiStyle.button("Apagar progresso")
 	_clear_button.pressed.connect(_on_clear_pressed)
 	column.add_child(_clear_button)
@@ -273,6 +277,11 @@ func _preview_sfx(changed: bool) -> void:
 
 func _on_fullscreen_toggled(value: bool) -> void:
 	Save.set_fullscreen(value)
+	Sfx.select()
+
+
+func _on_camera_shake_toggled(value: bool) -> void:
+	Save.set_camera_shake_enabled(value)
 	Sfx.select()
 
 
@@ -315,9 +324,11 @@ func _open_free_mode(_unused = null) -> void:
 func _build_free_mode(column: VBoxContainer) -> void:
 	column.add_child(UiStyle.label("Revisite as ilhas e explore no seu ritmo.", 11, UiStyle.MUTED_COLOR))
 	column.add_child(UiStyle.label("Saldo de cerejas: %d" % Save.get_cherry_balance(), 11, UiStyle.GOLD_COLOR))
+	column.add_child(UiStyle.label("Cerejas já coletadas não reaparecem.",10,UiStyle.MUTED_COLOR))
 	var phases := [
 		{"n": 1, "name": "A Floresta", "scene": LEVEL_SCENE},
 		{"n": 2, "name": "Costa das Marés", "scene": BEACH_SCENE},
+		{"n": 3, "name": "Floresta Violeta", "scene": MAGIC_SCENE},
 	]
 	for phase: Dictionary in phases:
 		var text := "%d. %s" % [int(phase["n"]), String(phase["name"])]
@@ -353,13 +364,13 @@ func _play_resume() -> void:
 
 
 func _play_free_scene(scene: String) -> void:
-	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE]:
+	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE]:
 		return
-	_start_level(true, scene)
+	_start_level(true, scene, true)
 
 
-func _start_level(skip_intro: bool, scene: String = LEVEL_SCENE) -> void:
-	Save.request_play(skip_intro)
+func _start_level(skip_intro: bool, scene: String = LEVEL_SCENE, free_mode: bool = false) -> void:
+	Save.request_play(skip_intro,free_mode)
 	get_tree().paused = false
 	get_tree().change_scene_to_file(scene)
 

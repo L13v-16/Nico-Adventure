@@ -224,6 +224,14 @@ func _draw_front() -> void:
 			_draw_art_at(_front, "lasting_ice", pose["body"] + Vector2(3, -1), Vector2(-1, -2), Vector2(3, 5))
 		if _has("claws"):
 			_draw_art_at(_front, "claws", pose["hand_near"], Vector2(-2, -3), Vector2(8, 7), _hand_angle(pose))
+		if _has("swift_gloves"):
+			_draw_glove(pose["hand_far"])
+			_draw_glove(pose["hand_near"])
+		if _has("jump_brooch"):
+			_part_transform(_front, pose["body"] + Vector2(2,-2))
+			_front.draw_rect(Rect2(-1,-2,3,5),Color("352943"))
+			_front.draw_line(Vector2(-1,2),Vector2(2,-2),Color("edbc61"),1)
+			_front.draw_rect(Rect2(0,1,2,2),Color("55ded0"))
 	# Na morte, tronco e pés estão cortados pela própria textura de Nico.
 	# Chapéu e óculos continuam acompanhando a cabeça visível.
 	var head_angle := -0.22 if _anim.animation == &"hurt" else (0.24 if dying else 0.0)
@@ -231,7 +239,31 @@ func _draw_front() -> void:
 		_draw_art_at(_front, "straw_hat", pose["head"], Vector2(-10.5, -10.5), Vector2(21, 10), head_angle)
 	if _has("sunglasses"):
 		_draw_art_at(_front, "sunglasses", pose["eyes"], Vector2(-5.5, -2.5), Vector2(11, 5), head_angle)
+	if _has("sailor_bandana"):
+		_part_transform(_front,pose["head"],head_angle)
+		_front.draw_rect(Rect2(-6,-3,12,4),Color("342033"))
+		_front.draw_rect(Rect2(-5,-3,10,3),Color("d94448"))
+		_front.draw_rect(Rect2(-5,-2,9,1),Color("ffe4af"))
+		_front.draw_rect(Rect2(-8,-2,3,3),Color("a02b43"))
+		_front.draw_rect(Rect2(-9,1,2,4),Color("db4c4b"))
+		_front.draw_rect(Rect2(-7,2,2,4),Color("f3bf95"))
+	if _has("aviator_goggles"):
+		_part_transform(_front,pose["eyes"],head_angle)
+		_front.draw_rect(Rect2(-7,-1,13,2),Color("653b32"))
+		_front.draw_rect(Rect2(-6,-3,5,5),Color("2b2332"))
+		_front.draw_rect(Rect2(0,-3,5,5),Color("2b2332"))
+		_front.draw_rect(Rect2(-5,-2,3,3),Color("e9b24f"))
+		_front.draw_rect(Rect2(1,-2,3,3),Color("e9b24f"))
+		_front.draw_rect(Rect2(-4,-2,1,2),Color("fff0cc"))
+		_front.draw_rect(Rect2(2,-2,1,2),Color("fff0cc"))
 	_front.draw_set_transform_matrix(Transform2D.IDENTITY)
+
+
+func _draw_glove(hand:Vector2) -> void:
+	_part_transform(_front,hand)
+	_front.draw_rect(Rect2(-2,-3,5,5),Color("27223c"))
+	_front.draw_rect(Rect2(-1,-2,3,3),Color("774a9d"))
+	_front.draw_rect(Rect2(-1,0,3,1),Color("69d0c0"))
 
 
 func _draw_outfit(id: String, pose: Dictionary) -> void:

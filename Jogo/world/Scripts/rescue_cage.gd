@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 signal opened
+@export var guardian_name := "URUS"
 var health := 3.0
 var unlocked := false
 var _flash := 0.0
@@ -23,7 +24,7 @@ func take_damage(amount: float, _source: Vector2) -> void:
 		return
 	if not unlocked:
 		if _lock_notice <= 0.0:
-			Fx.popup(global_position + Vector2(0,-62), "DERROTE URUS", Color("ffd798"), 9)
+			Fx.popup(global_position + Vector2(0,-62), "DERROTE " + guardian_name, Color("ffd798"), 9)
 			_lock_notice = 1.6
 		return
 	health = maxf(health - amount, 0.0)

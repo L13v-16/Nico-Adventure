@@ -115,11 +115,14 @@ func _build_world() -> void:
 	merchant_material.shader = ACTOR_SHADER
 	_rat.material = merchant_material
 	_merchant_window.add_child(_rat)
-	_hint = UiStyle.shadowed_label("E: Loja de Oliver Gancho", 10, Color("fff0bd"))
-	_hint.position = Vector2(-80, -104)
-	_hint.size = Vector2(160, 16)
+	var hint_layer:=CanvasLayer.new()
+	hint_layer.layer=14
+	add_child(hint_layer)
+	_hint = UiStyle.shadowed_label("E · Loja do Oliver", 9, Color("fff0bd"))
+	_hint.size = Vector2(116,18)
+	_hint.add_theme_stylebox_override("normal",UiStyle.panel_style())
 	_hint.hide()
-	add_child(_hint)
+	hint_layer.add_child(_hint)
 
 
 func _process(delta: float) -> void:
@@ -159,6 +162,8 @@ func _process(delta: float) -> void:
 	# Uma piscada curta, com o sprite no tamanho nativo, sem tremor por escala.
 	_rat_region.region.position.x = 32.0 if fposmod(_time, 2.0) > 1.82 else 0.0
 	_hint.visible = _can_open()
+	var screen_at:Vector2=get_global_transform_with_canvas()*Vector2(0,-30)
+	_hint.position=Vector2(clampf(screen_at.x-58,12,512),clampf(screen_at.y-9,112,306))
 
 
 func _input(event: InputEvent) -> void:
@@ -203,6 +208,7 @@ func open() -> void:
 		return
 	_mark_met()
 	_is_open = true
+	_player.call("_cancel_attack")
 	_was_paused = get_tree().paused
 	_pause_menu = _level.get("pause_menu") as Node
 	if is_instance_valid(_pause_menu):
@@ -564,6 +570,7 @@ func _add_stock_row(category_id: String, item_id: String, item_name: String, des
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		if ResourceLoader.exists(icon_path):
 			icon.texture = load(icon_path) as Texture2D
+		if Catalog.ITEMS.has(item_id): icon.material = Catalog.icon_material(item_id)
 		row.add_child(icon)
 	var texts := VBoxContainer.new()
 	texts.add_theme_constant_override("separation", 1)
