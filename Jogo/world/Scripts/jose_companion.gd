@@ -73,11 +73,12 @@ func _physics_process(delta:float) -> void:
 			elif _timer<=0:state="recover";_timer=0.5;velocity.x=0
 	elif state=="recover":
 		velocity.x=0
+		if _timer<0.32:_sprite.play(&"recover")
 		if _timer<=0:state="idle"
 	else:
 		var dx:float=_player.position.x-position.x
 		velocity.x=signf(dx)*minf(absf(dx)*3,245) if absf(dx)>62 else 0
-		if velocity.x!=0:_sprite.flip_h=velocity.x<0
+		if absf(dx)>10:_sprite.flip_h=dx<0
 		_sprite.play((&"jump" if velocity.y<0 else &"fall") if not is_on_floor() else (&"walk" if absf(velocity.x)>5 else &"idle"))
 		if is_on_floor() and absf(dx)>90 and _player.position.y+11<position.y-24:velocity.y=-440
 		elif is_on_floor() and absf(dx)>75:

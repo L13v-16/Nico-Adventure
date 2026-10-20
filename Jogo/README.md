@@ -384,3 +384,14 @@ Na forja, quatro esferas embutidas no chão mostram vermelho → azul → vermel
 Na segunda etapa do Carcereiro, todo o chão da arena sobe. Há dois segundos de preparação e uma subida suave de 16 segundos, sem exigir saltos nem escalada. O AnimatableBody2D carrega Nico e José pela física; a lava permanece 70 pixels abaixo do piso, e os ataques de corrente têm aviso de 0,8 segundo e intervalo de 3,6 segundos. O piso continua no alto durante o restante da luta, incluindo a retomada após morrer. A câmera acompanha a nova velocidade. A última etapa dos canhões mantém seu funcionamento.
 
 Validação: transporte sem entrada de salto em três posições da arena, distância da lava e preservação dos corações, retomada superior, reprodução/encerramento do som, sprites e colisões da coluna/ponte/gêiser, renderização das laterais e quatro esferas, além da regressão completa com disparos reais, José, forja, chefe, canhões e fuga. Saves isolados em todos os testes.
+
+
+José no modelo dos sprites do Nico (v46)
+
+Sprites e retratos refeitos a partir dos PNGs originais de Nico, incluindo o personagem 33×32 e o retrato da HUD, ampliados com nearest-neighbor como referência. A versão final usa blocos de cor simples e construção compacta do rosto, conservando o bode de chifres curvos, barba e lenço laranja.
+
+Dezesseis quadros cobrem repouso/piscar, quatro passos, preparação, dois quadros de investida, impacto, recuperação, salto, queda, alegria, dano e fala. Os retratos têm quatro expressões. A escala em pé fica perto de 32 pixels; recortes e preenchimentos comuns preservam os pés entre animações. A recuperação da cabeçada é exibida no controlador, e José se vira para Nico quando ficam próximos.
+
+Os mesmos recursos atualizam o Submundo, os diálogos, a Coleção e as cutscenes de sequestro/apresentação/fuga. Arte final, prompts, referência e metadados em world/Arte/Underworld/V46/. Criados com imagegen integrado; os PNGs gerados foram preservados sem edição.
+
+Validação: comparação renderizada com os sprites originais de Nico, apoio de todos os quadros, diálogos e Coleção, oito momentos da fuga montada e regressão completa com cabeçadas reais, forja, batalha, canhões e conclusão. Todos os testes usam saves isolados.
