@@ -6,6 +6,7 @@ var state:="dormant"
 var _launched:=0.0
 var _sprite:Sprite2D
 const Art=preload("res://world/Scripts/underworld_art.gd")
+const LAVA=preload("res://world/Arte/Underworld/V35/lava.tres")
 func _ready() -> void:
 	add_to_group("lava_geysers")
 	cycle=phase
@@ -25,6 +26,8 @@ func _physics_process(delta:float) -> void:
 		if state=="warning":Sfx.alert()
 	_sprite.position.x=roundf(-24+sin(cycle*65)*1.5) if state=="warning" else (-24 if state=="erupting" else -26)
 	if state=="erupting":
+		_sprite.texture=LAVA.get_frame_texture(&"jet",int(cycle*9)%4)
+		_sprite.scale=Vector2(48,112)/_sprite.texture.get_size()
 		var player:=get_tree().get_first_node_in_group("player") as CharacterBody2D
 		if player!=null and not player.is_dead() and absf(player.position.x-position.x)<23 and player.position.y+11>position.y-107 and player.position.y<position.y+9:
 			if launch_geyser and _launched<=0:

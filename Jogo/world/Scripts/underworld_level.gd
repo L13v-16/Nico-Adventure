@@ -178,10 +178,8 @@ func _draw() -> void:
 	# Lava abaixo das ilhas: sua superfície permanece longe do chão seguro.
 	if not is_node_ready():return
 	for gap in [[904,1320],[2200,2540],[3180,3376],[3776,3904],[4944,5200],[5904,6144]]:
-		draw_rect(Rect2(gap[0],210,gap[1]-gap[0],260),Color("9b3834"))
-		draw_rect(Rect2(gap[0],210,gap[1]-gap[0],4),Color("f9ba68"))
-		for i in int((gap[1]-gap[0])/20):draw_rect(Rect2(gap[0]+i*20,218+fmod(_clock*16+i*7,24),12,2),Color("ee7950"))
-	draw_rect(Rect2(4067,98,66,4),Color("a2c6ba"))
+		preload("res://world/Scripts/underworld_lava.gd").draw_pool(self,Rect2(gap[0],210,gap[1]-gap[0],260),_clock)
+	draw_texture_rect(preload("res://world/Arte/Underworld/V35/forge_28.tres"),Rect2(4067,91,66,11),false)
 	if is_instance_valid(_selected_target) and _selected_target.can_jose_target():
 		var point:Vector2=_selected_target.jose_point()+Vector2(0,-73)
 		draw_arc(point,12,0,TAU,16,Color("ffe09b"),2)

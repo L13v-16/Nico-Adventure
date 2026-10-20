@@ -6,6 +6,16 @@ A primeira fase atravessa a vila, a floresta e a caverna até a casa na árvore.
 
 A chegada tem uma casa de madeira construída entre os galhos de uma árvore, com copa, tronco e raízes integrados à mesma arte. A varanda elevada e os apoios de madeira conectam o caminho à porta. A câmera abre suavemente ao se aproximar do final para mostrar a árvore inteira; o encontro com Arara Minas reutiliza a mesma casa. A imagem está em `world/Arte/Props/casa_arvore_v13.png`; os prompts exatos acompanham o PNG em `PROMPT-CASA-ARVORE-v13.txt` e `PROMPT-CASA-ARVORE-v13-revisao.txt`.
 
+## Portal, lava e forja — v35
+
+O portal da saída tem arte própria: arco de obsidiana, correntes e cadeado, quatro quadros trancados, quatro de abertura e oito de vórtice em repetição. Recolher a Chave das Profundezas inicia a quebra das correntes; o vórtice continua animado durante a conversa final. O templo da aquisição dos poderes mantém sua arte própria.
+
+A lava das travessias e da arena usa texturas animadas de superfície e correntes internas, bolhas e respingos. Os gêiseres têm quatro sprites de erupção. O desenho é limitado à área visível para evitar renderizar os reservatórios inteiros fora da câmera. As alturas de dano e os intervalos dos perigos permanecem os mesmos.
+
+A Forja Invertida ganhou uma máquina de pedra e bronze com bigorna invertida, câmaras de calor e frio e oito estados visuais. As válvulas são pedestais com sprites próprios: o próximo alvo fica aceso e identificado como FOGO ou GELO. O painel grande foi substituído por texto curto e quatro indicadores com as imagens das válvulas. A máquina muda conforme o padrão avança e fica animada quando funciona. Dutos, placa do bloco e respiradouros também usam partes do atlas; o vapor tem aviso, jato e dissipação.
+
+As três novas folhas originais e seus prompts finais estão em `world/Arte/Underworld/V35/`: `portal_sheet.png`, `lava_sheet.png`, `forge_sheet.png`, `PROMPT-portal.txt`, `PROMPT-lava.txt` e `PROMPT-forge.txt`. Criadas com a ferramenta integrada de geração de imagens, usando Nico e Oliver como referências visuais; PNGs preservados, recortes AtlasTexture, filtro nearest e alinhamento de base. O arquivo `atlas_metadata.json` registra dimensões e recortes. Validação: 65 verificações de mecânicas, 21 de animação/renderização (13 capturas nativas) e a travessia física de 34 etapas, com save isolado.
+
 ## Fase 4 — O Submundo (v34)
 
 A saída da floresta mágica leva ao Submundo. A corporação lança Nico de um canhão animado; ele encontra **José, o Bode** logo no começo, mas os dois ainda precisam escapar. O resgate de José é registrado separadamente da conclusão da fase. A aventura agora tem quatro fases; **Continuar** leva saves da terceira ilha ao Submundo, e o Modo livre desbloqueia ao concluir as quatro. O saldo e o histórico persistente de cerejas continuam compartilhados: as cerejas já recolhidas não reaparecem ao revisitar.

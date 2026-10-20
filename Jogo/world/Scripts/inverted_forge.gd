@@ -8,8 +8,12 @@ var power_ready:=false
 var gate:StaticBody2D
 var _label:Label
 var _flash:=0.0
+var _machine:AnimatedSprite2D
+var _runes:Array[AnimatedSprite2D]=[]
 func _ready() -> void:
-	add_child(Art.prop(10,Vector2(128,110),Vector2(-64,-108)))
+	_machine=Art.actor("V35/forge",112)
+	_machine.name="ForgeSprite"
+	add_child(_machine)
 	for element in ["fire","ice"]:
 		var socket:=StaticBody2D.new()
 		socket.name="HotValve" if element=="fire" else "ColdValve"
@@ -21,12 +25,20 @@ func _ready() -> void:
 		socket.forge=self
 		add_child(socket)
 	_label=Label.new()
-	_label.position=Vector2(-84,8)
-	_label.size=Vector2(168,20)
+	_label.position=Vector2(-68,8)
+	_label.size=Vector2(136,14)
 	_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_label.add_theme_font_size_override("font_size",8)
 	_label.add_theme_color_override("font_color",Color("ffe0a6"))
+	_label.add_theme_color_override("font_outline_color",Color("171321"))
+	_label.add_theme_constant_override("outline_size",2)
 	add_child(_label)
+	for i in 4:
+		var rune:=Art.actor("V35/valves",20)
+		rune.position+=Vector2(-26+i*18,40)
+		rune.play(&"fire_active" if PATTERN[i]=="fire" else &"ice_active")
+		add_child(rune)
+		_runes.append(rune)
 	_update()
 func activate(element:String) -> bool:
 	if complete:return false
@@ -49,16 +61,15 @@ func activate(element:String) -> bool:
 	_update()
 	return true
 func _update() -> void:
-	_label.text="FORJA INVERTIDA · "+("ABERTA" if complete else ("%d / 4"%progress if power_ready else "C: BLOCO"))
+	_label.text="FORJA · "+("PRONTA" if complete else ("%d / 4"%progress if power_ready else "C: EMPURRE O BLOCO"))
+	var pose:StringName=&"off" if not power_ready else &"ready"
+	if complete:pose=&"working"
+	elif progress>0:pose=[&"fire",&"ice",&"fire_strike"][progress-1]
+	_machine.play(pose)
+	for i in _runes.size():_runes[i].modulate=Color.WHITE if i<progress else Color(0.5,0.45,0.55,0.55)
 	queue_redraw()
 func _process(delta:float) -> void:
 	_flash=maxf(0,_flash-delta)
-	queue_redraw()
+	_machine.modulate=Color(1,0.65,0.55) if _flash>0 else Color.WHITE
 func _draw() -> void:
-	draw_rect(Rect2(-88,6,176,33),Color("1d1b28"))
-	draw_rect(Rect2(-88,6,176,33),Color("8b6b56"),false,1)
-	for i in 4:
-		var color:=Color("ff9a50") if PATTERN[i]=="fire" else Color("a7edff")
-		draw_rect(Rect2(-32+i*17,27,12,5),color if i<progress else Color("3a2c42"))
-		if not complete and i==progress:draw_rect(Rect2(-34+i*17,25,16,9),Color("fff3d4"),false,1)
-	if _flash>0:draw_rect(Rect2(-36,24,72,12),Color(1,0.3,0.15,_flash*0.4))
+	draw_texture_rect(preload("res://world/Arte/Underworld/V35/forge_pipe.tres"),Rect2(-103,-7,206,6),false)

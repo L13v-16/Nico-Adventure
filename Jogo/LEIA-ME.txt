@@ -1,3 +1,10 @@
+NOVIDADES v35 — PORTAL, LAVA E FORJA
+Portal próprio com correntes, cadeado, abertura animada e vórtice em oito quadros.
+Lava com texturas de correnteza, superfície animada, bolhas e gêiseres em sprites.
+Forja de pedra e bronze: oito estados, válvulas de fogo/gelo e vapor com sprites.
+A válvula do próximo elemento fica acesa. A sequência continua fogo/gelo/fogo/gelo.
+Artes originais e prompts em world/Arte/Underworld/V35/. Consulte README.md.
+
 NOVIDADES v34 — SUBMUNDO
 Fase 4 integrada após a floresta mágica. José agora é um bode, resgatado no início;
 acompanha Nico até a saída e usa cabeçadas em paredes, pilares e blocos.

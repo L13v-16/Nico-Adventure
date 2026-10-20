@@ -295,8 +295,4 @@ func _draw() -> void:
 		draw_line(at+Vector2(-22,-2),at+Vector2(22,-2),Color("ffd278"),2)
 	if active and phase>=2 and lava_y<155:
 		var start:=to_local(Vector2(6456,lava_y))
-		draw_rect(Rect2(start,Vector2(1008,480)),Color("a74032"))
-		draw_rect(Rect2(start,Vector2(1008,5)),Color("ffcf77"))
-		for i in 60:
-			var x:=i*17.0
-			draw_rect(Rect2(start+Vector2(x,8+fmod(_phase_time*24+i*7,40)),Vector2(9,2)),Color("ed7c41"))
+		preload("res://world/Scripts/underworld_lava.gd").draw_pool(self,Rect2(start,Vector2(1008,480)),_phase_time)

@@ -1,26 +1,30 @@
 extends Node2D
 var unlocked:=false
-var _clock:=0.0
+var _was_unlocked:=false
 var _arch:AnimatedSprite2D
+var _title:Label
 func _ready() -> void:
-	_arch=preload("res://world/Scripts/underworld_art.gd").actor("scenery",128)
+	_arch=preload("res://world/Scripts/underworld_art.gd").actor("V35/portal",128)
+	_arch.name="PortalSprite"
+	_arch.process_mode=Node.PROCESS_MODE_ALWAYS
 	add_child(_arch)
-	_arch.play(&"temple_dormant")
-	var title:=Label.new()
-	title.text="SAÍDA · CORPORAÇÃO"
-	title.position=Vector2(-66,-137)
-	title.size=Vector2(132,20)
-	title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size",8)
-	title.add_theme_color_override("font_color",Color("f6cb8b"))
-	add_child(title)
-func _process(delta:float) -> void:
-	_clock+=delta
-	_arch.play(&"temple_ready" if unlocked else &"temple_dormant")
-	queue_redraw()
-func _draw() -> void:
-	if unlocked:
-		draw_rect(Rect2(-22,-76,44,76),Color("594275"))
-		for i in 7:
-			var y:=fposmod(i*17-_clock*13,88)
-			draw_rect(Rect2(-17+i%3*12,-y-3,2,3),Color("f9c488"))
+	_arch.play(&"locked")
+	_arch.animation_finished.connect(func():
+		if _arch.animation==&"opening" and unlocked:_arch.play(&"open")
+	)
+	_title=Label.new()
+	_title.text="CHAVE DAS PROFUNDEZAS"
+	_title.position=Vector2(-78,-137)
+	_title.size=Vector2(156,20)
+	_title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	_title.add_theme_font_size_override("font_size",8)
+	_title.add_theme_color_override("font_color",Color("f6cb8b"))
+	_title.add_theme_color_override("font_shadow_color",Color("171321"))
+	_title.add_theme_constant_override("shadow_offset_y",1)
+	add_child(_title)
+func _process(_delta:float) -> void:
+	if unlocked!=_was_unlocked:
+		_was_unlocked=unlocked
+		_arch.play(&"opening" if unlocked else &"locked")
+		_title.text="SAÍDA · CORPORAÇÃO" if unlocked else "CHAVE DAS PROFUNDEZAS"
+		if unlocked:Sfx.checkpoint()
