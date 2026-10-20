@@ -6,6 +6,8 @@ var _sprite:Sprite2D
 func _ready() -> void:
 	add_to_group("underworld_projectiles")
 	_sprite=Art.prop(13,Vector2(29,10),Vector2(-14,-5))
+	_sprite.texture=preload("res://world/Arte/Underworld/V48/imp_11.tres")
+	_sprite.scale=Vector2(29,10)/_sprite.texture.get_size()
 	_sprite.flip_h=flight.x>0
 	add_child(_sprite)
 func _physics_process(delta:float) -> void:

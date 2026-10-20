@@ -23,6 +23,9 @@ func _ready() -> void:
 	health=2 if species=="skeleton" else 1
 	_sprite=Art.actor(species,46 if species=="skeleton" else 42)
 	add_child(_sprite)
+	if species=="imp":
+		_sprite.frame_changed.connect(_anchor_flight)
+		_sprite.animation_changed.connect(_anchor_flight)
 	var shape:=RectangleShape2D.new()
 	shape.size=Vector2(23,34) if species=="skeleton" else Vector2(26,22)
 	var collider:=CollisionShape2D.new()
@@ -31,6 +34,14 @@ func _ready() -> void:
 	add_child(collider)
 	_player=get_tree().get_first_node_in_group("player")
 	_sprite.play(&"walk" if species=="skeleton" else &"fly")
+	if species=="imp":_anchor_flight()
+func _anchor_flight() -> void:
+	if is_dead():return # A pose derrotada continua apoiada no chão ao cair.
+	var texture:Texture2D=_sprite.sprite_frames.get_frame_texture(_sprite.animation,_sprite.frame)
+	if texture!=null and texture.has_meta("hover_anchor"):
+		# Corpo e ponto de lançamento ficam estáveis enquanto as asas batem.
+		_sprite.position=Vector2(0,-11)-Vector2(texture.get_meta("hover_anchor"))*_sprite.scale
+		_sprite.set_meta("ground_art_offset",_sprite.position)
 func _physics_process(delta:float) -> void:
 	if is_dead():
 		if species=="imp":

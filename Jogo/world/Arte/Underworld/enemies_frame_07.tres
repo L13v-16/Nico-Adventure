@@ -1,7 +1,7 @@
 [gd_resource type="AtlasTexture" format=3]
-[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_sheet.png" id="1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton.png" id="1"]
 [resource]
 atlas = ExtResource("1")
-region = Rect2(969, 507, 255, 195)
-margin = Rect2(29.0, 118, 58, 118)
+region = Rect2(1070, 932, 314, 107)
 filter_clip = true
+margin = Rect2(3.5, 214, 7, 214)

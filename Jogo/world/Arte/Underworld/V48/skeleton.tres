@@ -1,0 +1,23 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_03.tres" id="f3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_04.tres" id="f4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_05.tres" id="f5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_06.tres" id="f6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_07.tres" id="f7"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_08.tres" id="f8"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_09.tres" id="f9"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_10.tres" id="f10"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/skeleton_11.tres" id="f11"]
+[resource]
+animations = [
+{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f1")}], "loop": true, "name": &"idle", "speed": 3.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f2")}, {"duration": 1.0, "texture": ExtResource("f3")}, {"duration": 1.0, "texture": ExtResource("f4")}, {"duration": 1.0, "texture": ExtResource("f5")}], "loop": true, "name": &"walk", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f6")}, {"duration": 1.0, "texture": ExtResource("f7")}], "loop": false, "name": &"warning", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f8")}, {"duration": 1.0, "texture": ExtResource("f9")}], "loop": false, "name": &"attack", "speed": 7.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f10")}], "loop": false, "name": &"hurt", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}], "loop": true, "name": &"frozen", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f11")}], "loop": false, "name": &"defeat", "speed": 4.0}
+]

@@ -1,7 +1,8 @@
 [gd_resource type="AtlasTexture" format=3]
-[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_sheet.png" id="1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/imp.png" id="1"]
 [resource]
 atlas = ExtResource("1")
-region = Rect2(365, 797, 227, 166)
-margin = Rect2(43.0, 147, 86, 147)
+region = Rect2(395, 123, 305, 228)
 filter_clip = true
+margin = Rect2(14.35357512953368, 44.776787564766835, 42, 119)
+metadata/hover_anchor = Vector2(188.2, 213.32999999999998)

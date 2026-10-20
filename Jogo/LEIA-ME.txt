@@ -1,3 +1,10 @@
+NOVIDADES v48 — INIMIGOS DO SUBMUNDO
+Esqueletos e diabinhos refeitos com base no rato e no caranguejo das fases 1 e 2.
+Novos passos, golpes, voo, arremesso, dano e derrota; tridente do mesmo atlas.
+Pés alinhados e corpo do diabinho estável durante o bater das asas.
+Vida, colisões, ataques e congelamento preservados.
+Artes e prompts completos em world/Arte/Underworld/V48/.
+
 NOVIDADES v47 — AMIGOS NA ESTÉTICA DE NICO E JOSÉ
 Novos sprites e retratos: Arara Minas, Tartaruga, Remi, Urso, Mico e Oliver.
 Oito poses e quatro expressões por personagem; contorno e pixels compactos.
