@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://prefabs/game_hud.tscn" id="hud"]
 [ext_resource type="Script" path="res://world/Scripts/underworld_backdrop.gd" id="sky"]
 [ext_resource type="Script" path="res://world/Scripts/underworld_music.gd" id="music"]
+[ext_resource type="Script" path="res://world/Scripts/underworld_smoke.gd" id="smoke"]
 
 [sub_resource type="RectangleShape2D" id="finish"]
 size = Vector2(110,90)
@@ -87,5 +88,8 @@ layer = -10
 script = ExtResource("sky")
 [node name="UnderworldMusic" type="Node" parent="."]
 script = ExtResource("music")
+
+[node name="Atmosphere" type="Node" parent="."]
+script = ExtResource("smoke")
 
 [editable path="Player"]

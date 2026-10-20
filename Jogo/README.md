@@ -331,3 +331,9 @@ As 13 árvores da Floresta Violeta entram de seis a oito pixels no solo, conform
 Validação: 99 verificações de contato das raízes, estabilidade da âncora, camada visual e apoio das 13 árvores; 24 combinações renderizadas de variação, tamanho e direção. Capturas da fase real foram feitas com Vulkan nos 13 locais. Colisões, plataformas, cerejas e posições dos personagens mantêm suas regras.
 
 **Ajuste v33:** o encaixe foi aprofundado para 16–19 pixels, conforme o tamanho de cada árvore, enterrando mais das raízes para reforçar a ligação visual com o chão. Novas capturas dos 13 locais foram feitas na janela Vulkan.
+
+## Atmosfera do Submundo (v41)
+
+Fumaça de cinzas em duas camadas, com deriva lenta e paralaxe: uma atrás do cenário e outra discreta nas bordas inferiores da tela. O efeito usa ruído contínuo em shader, com passos de dois pixels, e acompanha o enquadramento sem cobrir a HUD ou interceptar comandos. Pausa e retoma com a fase; existe apenas no Submundo.
+
+Validação: 15 verificações sem janela e 21 na janela Vulkan, incluindo textura contínua, camadas, pausa, retomada, renderização real e limpeza ao sair da fase. Entrada, forja e arena foram capturadas com saves isolados.

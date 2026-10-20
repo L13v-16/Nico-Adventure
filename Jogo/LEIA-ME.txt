@@ -488,3 +488,7 @@ As 13 árvores da floresta mágica agora entram no solo, com o terreno cobrindo 
 99 verificações passaram, incluindo 24 combinações de sprites renderizados. Os 13 locais também foram capturados na fase real com Vulkan.
 
 V33: árvores aprofundadas para 16–19 pixels dentro do chão. Novas capturas dos 13 locais na janela Vulkan.
+
+V41 — FUMAÇA NO SUBMUNDO
+Duas camadas de fumaça com movimento lento e paralaxe, em tons de cinza e roxo. A camada próxima se concentra nas bordas inferiores; HUD e diálogos ficam acima do efeito. A fumaça respeita a pausa e aparece apenas nesta fase.
+Verificado na entrada, na forja e na arena do Carcereiro, em janela Vulkan e sem janela. Saves de teste isolados.
