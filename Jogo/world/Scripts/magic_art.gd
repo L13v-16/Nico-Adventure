@@ -65,3 +65,13 @@ static func prop(animation: StringName, native_width: float) -> AnimatedSprite2D
 	sprite.play(animation)
 	reanchor(sprite)
 	return sprite
+
+## As raízes têm pontas em alturas diferentes. Enterrar a base permite que
+## o terreno à frente cubra as pontas e encoste também nas raízes mais altas.
+static func planted_tree(animation: StringName, native_width: float, surface: Vector2) -> AnimatedSprite2D:
+	var tree := prop(animation, native_width)
+	var root_depth := roundf(native_width * 0.04)
+	tree.position += surface + Vector2(0, root_depth)
+	tree.set_meta("ground_surface", surface)
+	tree.set_meta("root_depth", root_depth)
+	return tree

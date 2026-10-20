@@ -421,3 +421,8 @@ Cerejas já coletadas não reaparecem no modo livre. O histórico inclui a campa
 Reiniciar, trocar de ilha, gastar na loja, voltar ao menu ou fechar o jogo não repõe as cerejas. Saldo e histórico são salvos juntos. Novo jogo reinicia também esse histórico.
 Em saves antigos, as ilhas já concluídas ficam sem cerejas no modo livre porque não havia registro individual das coletas. A carteira e os recordes existentes são preservados.
 238 verificações de coleta/persistência e nove verificações na janela do jogo passaram, cobrindo as 177 cerejas das três fases. Percurso físico da primeira fase sem mortes; saves de teste isolados.
+
+
+V32 — RAÍZES DAS ÁRVORES
+As 13 árvores da floresta mágica agora entram no solo, com o terreno cobrindo as pontas das raízes. Árvores junto das bordas ficam dentro da ilha de apoio.
+99 verificações passaram, incluindo 24 combinações de sprites renderizados. Os 13 locais também foram capturados na fase real com Vulkan.

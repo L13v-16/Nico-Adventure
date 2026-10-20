@@ -30,8 +30,14 @@ static func build(level: Node2D) -> void:
 	level.add_child(scenery)
 	var trees:=[Vector2(50,100),Vector2(365,100),Vector2(960,-64),Vector2(1550,64),Vector2(1720,64),Vector2(2240,64),Vector2(3120,32),Vector2(3370,32),Vector2(3790,-112),Vector2(4620,64),Vector2(4960,64),Vector2(5990,64),Vector2(6190,64)]
 	for i in trees.size():
-		var tree:=Art.prop(StringName("tree%d"%(i%4)),160+(i%3)*16)
-		tree.position+=trees[i]
+		var tree_width:=160.0+(i%3)*16
+		var surface:Vector2=trees[i]
+		for island in GROUND:
+			if is_equal_approx(surface.y,island.y) and surface.x>=island.x and surface.x<=island.x+island.z:
+				surface.x=clampf(surface.x,island.x+tree_width*0.5+2,island.x+island.z-tree_width*0.5-2)
+				break
+		var tree:=Art.planted_tree(StringName("tree%d"%(i%4)),tree_width,surface)
+		tree.name="MagicTree%02d"%i
 		scenery.add_child(tree)
 	for info in GROUND:
 		for i in range(1,int(info.z/96)):
