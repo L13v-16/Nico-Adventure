@@ -18,10 +18,11 @@ static func build(level:Node2D) -> void:
 	cage.position+=Vector2(250,104)
 	cage.play(&"cage")
 	scenery.add_child(cage)
-	var temple:=Art.actor("scenery",210)
+	var temple:=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Arte/Underworld/V38/altar.tres"),184)
+	temple.material.set_shader_parameter("alpha_cutoff",0.94)
 	temple.name="Temple"
 	temple.position+=Vector2(3555,-36)
-	temple.play(&"temple_ready" if Save.has_story_flag("elemental_mastery") else &"temple_dormant")
+	temple.play(&"temple_dormant")
 	scenery.add_child(temple)
 	preload("res://world/Scripts/underworld_scenery.gd").build(scenery)
 	var jose:=preload("res://world/Scripts/jose_companion.gd").new()
@@ -59,10 +60,6 @@ static func build(level:Node2D) -> void:
 		enemy.position=point
 		enemy.patrol_width=66
 		level.add_child(enemy)
-	for point in [Vector2(602,100),Vector2(2615,36),Vector2(5250,100)]:
-		var fruit:=preload("res://world/Scripts/dragon_fruit.gd").new()
-		fruit.position=point
-		level.add_child(fruit)
 	for point in [Vector2(610,100),Vector2(1390,100),Vector2(2030,100),Vector2(2630,36),Vector2(3440,-40),Vector2(3940,100),Vector2(4850,100),Vector2(5240,100),Vector2(6200,100),Vector2(6385,100)]:
 		preload("res://world/Scripts/magic_layout.gd")._checkpoint(level.get_node("Checkpoints"),point)
 	var forge:=preload("res://world/Scripts/inverted_forge.gd").new()

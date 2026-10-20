@@ -8,13 +8,25 @@ var _destination:=Vector2.ZERO
 var _sprite:Sprite2D
 var _collider:CollisionShape2D
 var _prompt:Label
+var _break_clock:=-1.0
+var _rock_frames:Array[Texture2D]=[]
 const Art=preload("res://world/Scripts/underworld_art.gd")
 func _ready() -> void:
 	add_to_group("jose_targets")
 	collision_layer=1
 	collision_mask=0
-	var size:=Vector2(34,108) if kind=="wall" else (Vector2(27,126) if kind=="pillar" else Vector2(52,48))
-	_sprite=Art.prop(6 if kind=="wall" else (7 if kind=="pillar" else 5),size,Vector2(-size.x/2,-size.y))
+	var size:=Vector2(80,108) if kind=="wall" else (Vector2(27,126) if kind=="pillar" else Vector2(52,48))
+	if kind=="wall":
+		for i in 4:_rock_frames.append(load("res://world/Arte/Underworld/V38/rocks_%02d.tres"%i))
+		_sprite=Sprite2D.new()
+		_sprite.texture=_rock_frames[0]
+		_sprite.centered=false
+		_sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+		_sprite.material=preload("res://world/Scripts/magic_art.gd").material()
+		_sprite.material.set_shader_parameter("alpha_cutoff",0.94)
+		_sprite.scale=size/_sprite.texture.get_size()
+		_sprite.position=Vector2(-size.x/2,-size.y)
+	else:_sprite=Art.prop(7 if kind=="pillar" else 5,size,Vector2(-size.x/2,-size.y))
 	add_child(_sprite)
 	var shape:=RectangleShape2D.new()
 	shape.size=size
@@ -35,6 +47,7 @@ func _ready() -> void:
 	add_child(_prompt)
 func can_jose_target() -> bool:return not broken
 func jose_point() -> Vector2:return global_position
+func jose_hit_range() -> float:return _collider.shape.size.x*0.5+18
 func receive_jose_hit() -> bool:
 	if broken:return false
 	broken=true
@@ -53,9 +66,21 @@ func receive_jose_hit() -> bool:
 			bridge.depth=12
 			bridge.platform=true
 			get_parent().add_child(bridge)
-		_sprite.hide()
+		if kind=="wall":
+			_break_clock=0
+			_sprite.texture=_rock_frames[1]
+		else:_sprite.hide()
 	return true
 func _physics_process(delta:float) -> void:
+	if _break_clock>=0:
+		_break_clock+=delta
+		_sprite.texture=_rock_frames[2] if _break_clock<0.26 and _break_clock>=0.12 else (_rock_frames[3] if _break_clock>=0.26 else _rock_frames[1])
+		if _break_clock>=0.26:
+			# O entulho assenta numa faixa baixa; não parece outra barreira sólida.
+			var height:=roundf(lerpf(108,32,smoothstep(0.26,0.48,_break_clock)))
+			_sprite.scale.y=height/_sprite.texture.get_height()
+			_sprite.position.y=-height
+		if _break_clock>=0.48:_break_clock=-1
 	if pushing:
 		position=position.move_toward(_destination,85*delta)
 		if position.is_equal_approx(_destination):

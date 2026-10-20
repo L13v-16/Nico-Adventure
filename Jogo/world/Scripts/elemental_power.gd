@@ -29,7 +29,12 @@ func _ready() -> void:
 	_hud.add_child(_label)
 	_player.respawned.connect(func():temporary_fire=0;cooldown=0)
 	_update_hud()
-func has_mastery() -> bool:return Save.has_story_flag("elemental_mastery")
+func has_mastery() -> bool:
+	var level:=_player.get_parent()
+	# No Submundo, o altar precisa ser ativado nesta passagem. Um save de
+	# uma visita anterior não deve antecipar a aquisição mostrada na cena.
+	if level.has_method("has_elemental_mastery"):return level.has_elemental_mastery()
+	return Save.has_story_flag("elemental_mastery")
 func has_fire() -> bool:return has_mastery() or temporary_fire>0
 func grant_fruit(seconds:float=20.0) -> void:
 	temporary_fire=maxf(temporary_fire,seconds)
@@ -70,4 +75,4 @@ func _update_hud() -> void:
 	var boss:=_player.get_parent().get_node_or_null("Boss")
 	_label.position.y=102 if is_instance_valid(boss) and boss.get("active")==true else 91
 	var title:="FOGO" if selected=="fire" else "GELO"
-	_label.text=("K: "+title+"   Q: alternar\nPoderes do templo · sem consumir itens") if has_mastery() else "K: FOGO · %ds\nFruta-do-dragão"%int(ceilf(temporary_fire))
+	_label.text=("K: "+title+"   Q: alternar\nPoderes do altar · sem consumir itens") if has_mastery() else "K: FOGO · %ds\nFruta-do-dragão"%int(ceilf(temporary_fire))

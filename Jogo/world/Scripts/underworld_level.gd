@@ -8,7 +8,7 @@ var _temple_busy:=false
 var _clock:=0.0
 var _command_flash:=0.0
 func _ready() -> void:
-	temple_seen=Save.has_story_flag("elemental_mastery")
+	temple_seen=false
 	Layout.build(self)
 	$Forge.solved.connect(func():_show_notice("Forja funcionando! A passagem está aberta."))
 	$ForgeWeight.settled.connect(func():$Forge.power_ready=true;$Forge._update();_show_notice("Bloco no encaixe! Ative a forja com fogo e gelo."))
@@ -71,6 +71,7 @@ func _dialogue(mode:String,node_name:String) -> void:
 	dialogue.name=node_name
 	add_child(dialogue)
 	await dialogue.finished
+func has_elemental_mastery() -> bool:return temple_seen
 func _temple() -> void:
 	_temple_busy=true
 	intro_active=true
@@ -86,13 +87,13 @@ func _temple() -> void:
 	await _dialogue("temple","TempleLesson")
 	var saved:bool=Save.set_story_flag("elemental_mastery")
 	$Scenery/Temple.play(&"temple_ready")
-	temple_seen=saved
+	temple_seen=true
 	_temple_busy=false
 	intro_active=false
 	get_tree().paused=false
 	pause_menu.can_open=true
 	_timing=true
-	_show_notice("Poderes do templo! K: disparar · Q: alternar fogo/gelo" if saved else "Não foi possível guardar o poder. Aproxime-se do templo para tentar de novo.")
+	_show_notice("Poderes do altar! K: disparar · Q: alternar fogo/gelo" if saved else "Altar ativado nesta partida. Não foi possível salvar o aprendizado.")
 	camera.position_smoothing_enabled=true
 func _process(delta:float) -> void:
 	_clock+=delta
@@ -115,11 +116,11 @@ func _process(delta:float) -> void:
 	if player.position.y>210 and x<6450:player.take_damage(3,Vector2(x,240))
 	if not temple_seen and not _temple_busy and x>3460 and x<3750:_temple()
 	if Input.is_action_just_pressed("jose_command") and player.elements.can_control():_command_jose()
-	if x<900:hint.text="C: cabeçada de José nos pontos marcados  ·  K: fogo da fruta-do-dragão  ·  J / X: atacar"
+	if x<900:hint.text="Pedras rachadas: C chama José para quebrar  ·  J / X: atacar  ·  Encontre o altar para aprender fogo e gelo."
 	elif x<1450:hint.text="Rochas claras seguem você; roxas se afastam. Posicione a ponte e pule. Ao embarcar, elas param."
 	elif x<2200:hint.text="Observe as faíscas antes da erupção! A seta azul marca um gêiser que lança Nico para cima."
 	elif x<3376:hint.text="Use os gêiseres de impulso para alcançar as partes altas. C: José derruba pilares frágeis."
-	elif x<3904:hint.text="Templo dos Contrários: fogo e gelo sem frutas. K: disparar  ·  Q: alternar"
+	elif x<3904:hint.text="Altar dos Contrários: aprenda fogo e gelo sem frutas. K: disparar  ·  Q: alternar"
 	elif x<4944:hint.text="Forja: C empurra o bloco. Fogo na válvula laranja, gelo na azul; repita. Evite os jatos de vapor."
 	elif x<6144:hint.text="As rochas bloqueiam tridentes! C: derrube o pilar para criar uma ponte sobre a lava."
 	elif x<6450:hint.text="Oliver está por aqui. E: loja  ·  I: mochila  ·  Ative a bandeira antes de enfrentar o Carcereiro."

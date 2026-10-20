@@ -6,6 +6,12 @@ A primeira fase atravessa a vila, a floresta e a caverna até a casa na árvore.
 
 A chegada tem uma casa de madeira construída entre os galhos de uma árvore, com copa, tronco e raízes integrados à mesma arte. A varanda elevada e os apoios de madeira conectam o caminho à porta. A câmera abre suavemente ao se aproximar do final para mostrar a árvore inteira; o encontro com Arara Minas reutiliza a mesma casa. A imagem está em `world/Arte/Props/casa_arvore_v13.png`; os prompts exatos acompanham o PNG em `PROMPT-CASA-ARVORE-v13.txt` e `PROMPT-CASA-ARVORE-v13-revisao.txt`.
 
+## Pedras, altar e fruta-do-dragão — v38
+
+José quebra uma barricada de pedras com rachadura dourada, quatro estados de impacto/desmoronamento e entulho baixo apoiado no piso. Sua cabeçada considera a largura do alvo. O **Altar dos Contrários** tem pedestal próprio, runas e oito quadros de fogo/gelo. Nico entra no Submundo **sem disparos elementais**, inclusive com aprendizado de uma visita anterior salvo: aproximar-se do altar e concluir a cena libera K e Q para o restante daquela passagem, preservando os poderes após morrer. Voltar à fase começa novamente pelo altar; o registro de aprendizado continua no save e permanece disponível fora do Submundo.
+
+A **fruta-do-dragão foi movida para a Floresta Violeta**, em três pontos do percurso. Cada coleta permite fogo por 20 segundos, sem gelo nem domínio permanente. A Arara explica o efeito; o açaí continua na floresta. Não há fruta-do-dragão no Submundo. Atlas originais gerados com imagegen integrado, recortes e prompts em `world/Arte/Underworld/V38/`.
+
 ## Abertura aérea do Submundo — v37
 
 Nico caminha sobre as costas da Arara Minas enquanto ela voa entre nuvens. Uma bola de canhão com o crachá dourado da corporação atravessa o céu e o derruba. A câmera acompanha sua queda pelo poço até a aterrissagem no Submundo; só então entram o título da fase e o encontro com José. Roupas equipadas acompanham as animações do passageiro. ESC pula o voo ou a queda e mantém o mesmo ponto seguro de chegada, com música, HUD e controles restaurados. O antigo canhão e seu patamar na entrada foram retirados.
@@ -18,7 +24,7 @@ As plataformas e rochas gravitacionais têm um topo horizontal com a largura vis
 
 Foram corrigidos **55 recortes** dos atlas anteriores de José, criaturas, objetos, chefe e cutscenes: algumas regiões incluíam pedaços do quadro vizinho e exibiam botas ou linhas soltas acima dos sprites. Os PNGs originais não foram modificados; os recortes agora acompanham a silhueta completa do objeto e a ancoragem de base.
 
-Na transição para a etapa final do Carcereiro, José aparece apoiado na plataforma superior e pode dar a cabeçada sem precisar cair e se recuperar antes. Os operários sobreviventes recuam e entram brevemente na pose de dano, sem causar contato durante esse intervalo. **Segurar K** mantém os disparos no ritmo do tempo de recarga. Obstáculos de José mostram **C · JOSÉ**, e os gêiseres de impulso têm uma seta visível acima da erupção. O templo não repete sua aula quando o poder permanente já foi salvo.
+Na transição para a etapa final do Carcereiro, José aparece apoiado na plataforma superior e pode dar a cabeçada sem precisar cair e se recuperar antes. Os operários sobreviventes recuam e entram brevemente na pose de dano, sem causar contato durante esse intervalo. **Segurar K** mantém os disparos no ritmo do tempo de recarga. Obstáculos de José mostram **C · JOSÉ**, e os gêiseres de impulso têm uma seta visível acima da erupção. O altar ensina os poderes uma vez por passagem pelo Submundo.
 
 Artes e prompts finais em `world/Arte/Underworld/V36/`: `props.png`, `terrain.png`, `background.png`, `PROMPT-props.txt`, `PROMPT-terrain.txt`, `PROMPT-background.txt` e `atlas_metadata.json`. Três imagens geradas com a ferramenta integrada de imagens, usando os sprites existentes de Nico e Oliver como referências de estilo; os arquivos originais foram preservados. Os atlas registram as dimensões reais de cada folha.
 
@@ -40,10 +46,10 @@ A saída da floresta mágica leva ao voo com Arara Minas. Um tiro de canhão da 
 
 O percurso tem 54 cerejas com identificadores estáveis, três segredos, dez checkpoints, seis rochas gravitacionais, sete gêiseres, seis esqueletos operários, cinco diabinhos voadores e a caravana de Oliver antes da arena. As cerejas nas rochas acompanham seu movimento.
 
-- **Gêiseres:** observe o brilho da rachadura, as pedras tremendo e as faíscas antes da erupção. Os marcados em azul lançam Nico até as áreas altas. A fruta-do-dragão protege contra as erupções durante seu efeito.
+- **Gêiseres:** observe o brilho da rachadura, as pedras tremendo e as faíscas antes da erupção. Os marcados em azul lançam Nico até as áreas altas.
 - **Rochas gravitacionais:** algumas seguem Nico e outras se afastam; param quando ele embarca. Posicione uma ponte com elas. Sua colisão também bloqueia tridentes.
 - **José:** C chama a cabeçada no obstáculo próximo; o botão direito marca um alvo específico. Ele quebra paredes, derruba pilares que viram pontes e empurra o bloco da forja. Segue Nico, salta e se reúne a ele depois das travessias.
-- **Fogo e gelo:** a fruta-do-dragão concede fogo por 20 segundos. K dispara. No Templo dos Contrários, uma cutscene concede os dois elementos permanentemente; Q alterna fogo/gelo e K dispara, inclusive após morrer ou reabrir o jogo. O poder do açaí continua disponível nas outras fases.
+- **Fogo e gelo:** a fruta-do-dragão da floresta concede fogo por 20 segundos. No Submundo, o Altar dos Contrários libera os dois elementos sem frutas para o restante daquela passagem; Q alterna fogo/gelo e K dispara. Morrer mantém o aprendizado da passagem. Ao entrar novamente na fase, o altar precisa ser ativado outra vez. O poder do açaí continua disponível nas outras fases.
 - **Forja Invertida:** empurre o bloco pesado para alimentar a máquina; acerte a válvula laranja com fogo e a azul com gelo, repetindo fogo/gelo. Um elemento ou uma válvula errados reiniciam o padrão. Evite o vapor e aproveite as plataformas móveis.
 - **Correntes:** E segura; ↑/↓ sobe/desce; Espaço solta e salta. Use as duas correntes e os patamares durante a subida da lava.
 

@@ -26,7 +26,7 @@ const LINES={
 		["José","Rochas claras se aproximam; as roxas se afastam. Ajuste a ponte e use as pedras para se proteger dos tridentes. Vamos juntos!"],
 	],
 	"temple":[
-		["José","O Templo dos Contrários! Estas inscrições dizem que calor e frio abrem o caminho da Forja Invertida."],
+		["José","O Altar dos Contrários! Aproxime-se do pedestal. Ele ensina a lançar fogo e gelo sem precisar de frutas."],
 		["Nico","Agora consigo lançar fogo e gelo quando quiser! K dispara; Q alterna o elemento. Não preciso gastar frutas."],
 		["José","Na forja: fogo na válvula laranja, gelo na azul, fogo e gelo outra vez. Desvie do vapor e use as plataformas."],
 		["José","O Carcereiro guarda a chave. A corporação prendeu correntes no guardião. Talvez seja possível quebrar esse controle!"],
@@ -54,7 +54,7 @@ func _ready() -> void:
 	_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_canvas.draw.connect(_draw_overlay)
 	add_child(_canvas)
-	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"TEMPLO DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"DESCARTE DA CORPORAÇÃO"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
+	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"ALTAR DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"ATAQUE NO CÉU"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
 	if mode=="launch":
 		_lines=[]
 		_title.hide()

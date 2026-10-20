@@ -62,10 +62,10 @@ func _process(delta: float) -> void:
 	player.set("_camera_base_offset",offset.lerp(desired,1-exp(-delta*5)))
 	if x<550:hint.text="Remi está na clareira.  •  J / X: atacar  •  I: mochila  •  ESC: menu"
 	elif x<1080:hint.text="Cogumelo vermelho: caia sobre ele para subir muito alto. Direcione Nico no ar!"
-	elif x<1500:hint.text="Cipó: E para agarrar perto da ponta. A / D: balanço. Espaço / W: saltar e soltar."
+	elif x<1500:hint.text="E: agarrar o cipó  ·  Espaço: soltar  ·  Fruta-do-dragão: fogo temporário. Segure K para disparar!"
 	elif x<2200:hint.text="Toque na planta luminosa: ela aproxima o cipó. Espere a ponta e aperte E!"
 	elif x<3050:hint.text="Este cipó se move sozinho! Use o cogumelo e observe a aproximação antes de agarrar."
-	elif x<3700:hint.text="Besouro: evite os espinhos e ataque pela lateral. Açaí congela os inimigos!"
+	elif x<3700:hint.text="Fruta-do-dragão: K lança fogo por 20 s. Açaí congela. Evite os espinhos do besouro!"
 	elif x<4496:hint.text="Outra planta muda o cipó. Balance e solte no impulso para alcançar a próxima ilha."
 	elif x<5184:hint.text="Oliver chegou antes de nós! E: caravana  •  I: mochila  •  Ative a bandeira antes de Hiena HaHa."
 	elif not _boss_defeated:hint.text="Hiena HaHa: J / X rebate o barril. Nos socos, passe por cima e ataque por trás!"

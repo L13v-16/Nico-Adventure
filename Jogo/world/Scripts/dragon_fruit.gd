@@ -3,6 +3,7 @@ var collected:=false
 var _sprite:Sprite2D
 var _clock:=0.0
 func _ready() -> void:
+	add_to_group("dragon_fruits")
 	_sprite=preload("res://world/Scripts/underworld_art.gd").prop(14,Vector2(20,24),Vector2(-10,-24))
 	add_child(_sprite)
 func _physics_process(delta:float) -> void:

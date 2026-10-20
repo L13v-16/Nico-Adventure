@@ -1,0 +1,20 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_03.tres" id="f3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_04.tres" id="f4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_05.tres" id="f5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_06.tres" id="f6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V38/altar_07.tres" id="f7"]
+[resource]
+animations = [
+{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}], "loop": true, "name": &"temple_dormant", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f1")}], "loop": true, "name": &"temple_fire", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f2")}], "loop": true, "name": &"temple_ice", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f3")}], "loop": true, "name": &"temple_both", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f4")}, {"duration": 1.0, "texture": ExtResource("f5")}], "loop": true, "name": &"temple_opening", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f5")}], "loop": true, "name": &"temple_open", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f6")}], "loop": true, "name": &"temple_shine", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f3")}], "loop": true, "name": &"temple_ready", "speed": 5.0}
+]

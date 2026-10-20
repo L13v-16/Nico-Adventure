@@ -117,6 +117,11 @@ static func build(level: Node2D) -> void:
 		var acai:=preload("res://world/Scripts/acai_power.gd").new()
 		acai.position=point
 		level.add_child(acai)
+	# Ao alcance no piso, antes de inimigos e junto da bandeira pré-chefe.
+	for point in [Vector2(1440,64),Vector2(3090,32),Vector2(5070,64)]:
+		var fruit:=preload("res://world/Scripts/dragon_fruit.gd").new()
+		fruit.position=point
+		level.add_child(fruit)
 	var cage:=preload("res://world/Scripts/rescue_cage.gd").new()
 	cage.name="RescueCage"
 	cage.position=Vector2(6096,64)

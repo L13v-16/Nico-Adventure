@@ -62,7 +62,8 @@ func _physics_process(delta:float) -> void:
 		else:
 			velocity.x=_dash_side*480
 			_sprite.play(&"charge")
-			if absf(position.x-_target.jose_point().x)<48 and absf(position.y-_target.jose_point().y)<55:
+			var reach:float=_target.jose_hit_range() if _target.has_method("jose_hit_range") else 48.0
+			if absf(position.x-_target.jose_point().x)<reach and absf(position.y-_target.jose_point().y)<55:
 				var target:=_target
 				if target.receive_jose_hit():headbutt_landed.emit(target)
 				state="recover"

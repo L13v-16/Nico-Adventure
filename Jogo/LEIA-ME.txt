@@ -1,3 +1,11 @@
+NOVIDADES v38 — PEDRAS, ALTAR E FRUTA-DO-DRAGÃO
+Pedras rachadas próprias para José, animação de quebra e entulho baixo no chão.
+Altar com pedestal e sprites de fogo/gelo. Nico começa o Submundo sem poderes.
+O altar libera K e Q para esta passagem; morrer mantém a habilidade aprendida.
+Ao entrar de novo na fase, ative o altar outra vez, inclusive com save antigo.
+Fruta-do-dragão agora na floresta mágica: três coletas, fogo por 20 segundos.
+Artes e prompts finais em world/Arte/Underworld/V38/. Detalhes no README.md.
+
 NOVIDADES v37 — ATAQUE NO CÉU
 Nico caminha sobre Arara Minas durante o voo. Um tiro da empresa o derruba.
 A cena acompanha a queda e a aterrissagem antes do título e da conversa com José.
@@ -11,7 +19,7 @@ Rochas com topo plano alinhado à colisão. Corrigidos 55 recortes de sprites.
 José aparece no piso correto ao começar a etapa final da luta.
 Operários reagem aos golpes; segurar K mantém os disparos.
 Obstáculos mostram C · JOSÉ, e gêiseres de impulso têm seta acima da lava.
-O templo não repete a explicação quando a habilidade permanente já foi salva.
+O altar ensina os poderes uma vez por passagem pelo Submundo.
 Artes originais e prompts em world/Arte/Underworld/V36/. Detalhes no README.md.
 
 NOVIDADES v35 — PORTAL, LAVA E FORJA
@@ -25,7 +33,7 @@ NOVIDADES v34 — SUBMUNDO
 Fase 4 integrada após a floresta mágica. José agora é um bode, resgatado no início;
 acompanha Nico até a saída e usa cabeçadas em paredes, pilares e blocos.
 Gêiseres com aviso, rochas gravitacionais, operários esqueletos e diabinhos voadores.
-Fruta-do-dragão: fogo por 20 s. Templo: fogo e gelo permanentes (K dispara, Q alterna).
+Fruta-do-dragão na floresta: fogo por 20 s. Altar: K dispara, Q alterna fogo/gelo.
 Forja: bloco no encaixe + fogo/gelo/fogo/gelo nas válvulas da cor correspondente.
 C chama José; botão direito marca alvo. E segura correntes, setas sobem/descem,
 Espaço solta. Guardião em quatro etapas; use José no círculo dourado na etapa final.
