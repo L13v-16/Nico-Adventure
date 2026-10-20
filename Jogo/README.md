@@ -1,5 +1,9 @@
 # Nico's Adventure
 
+## Amigos na estética de Nico e José — v47
+
+Arara Minas, Tartaruga, Remi, Urso, Mico-leão-dourado e Oliver Gancho usam novos sprites e retratos na mesma estética compacta de pixel art do Nico original e do José aprovado. Cada personagem tem oito poses e quatro expressões de rosto. A Arara tem quatro quadros de voo com Nico apoiado nas costas; a Tartaruga tem quatro quadros de caminhada. A arte está integrada ao prólogo, às fases, aos resgates, à loja e à Coleção, com escala e pés ajustados. Nico e José mantêm os desenhos aprovados. PNGs originais gerados com imagegen integrado, prompts finais e metadados dos atlas em `world/Arte/Friends/V47/`.
+
 Abra `project.godot` no Godot 4.7.1 e pressione **F5**. O projeto abre no menu principal.
 
 A primeira fase atravessa a vila, a floresta e a caverna até a casa na árvore. Na varanda, Nico reencontra Arara Minas, que escapou da captura. Os dois combinam uma viagem entre ilhas para resgatar seus amigos e partem em voo. A primeira parada é Costa das Marés, para salvar a Tartaruga; ela aparece destacada como o próximo resgate no mapa. A cutscene termina na tela de resultados, com o botão **Próxima ilha** para seguir à praia.

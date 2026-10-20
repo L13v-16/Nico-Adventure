@@ -6,15 +6,16 @@ signal purchased(item_id: String, price: int)
 
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
 const CARAVAN := preload("res://world/Arte/Caravan/caravana_movel.png")
-const RAT := preload("res://world/Arte/Caravan/V23/oliver_idle_v23.png")
-const PORTRAIT := preload("res://world/Arte/Caravan/V23/oliver_portrait_v23.png")
+const RAT_BLINK := preload("res://world/Arte/Friends/V47/oliver_body_01.tres")
+const RAT := preload("res://world/Arte/Friends/V47/oliver_body_00.tres")
+const PORTRAIT := preload("res://world/Arte/Friends/V47/oliver_portrait_neutral.tres")
 const ACTOR_SHADER := preload("res://world/Scripts/characters_cutout.gdshader")
 const CHERRY := preload("res://Sunny-land-files/assets/Misc/Sunnyland items/cherry.png")
 const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const PRICES := {"heart": 4, "acai": 7, "shield": 10}
 const CATEGORIES := ["supplies", "equipment", "style"]
 const CATEGORY_LABELS := ["Suprimentos", "Equipamentos", "Estilo"]
-const COUNTER_ART_PATH := "res://world/Arte/Caravan/V23/oliver_counter_v23.png"
+const COUNTER_ART_PATH := "res://world/Arte/Friends/V47/oliver_body_06.tres"
 const SHOP_CREAM := Color("f5e7c9")
 const SHOP_MUTED := Color("c9bda1")
 const SHOP_GOLD := Color("ebc27a")
@@ -38,7 +39,6 @@ var _pause_menu: Node
 var _wagon: Sprite2D
 var _rat: Sprite2D
 var _merchant_window: Control
-var _rat_region: AtlasTexture
 var _hint: Label
 var _canvas: CanvasLayer
 var _screen: Control
@@ -102,15 +102,13 @@ func _build_world() -> void:
 	_merchant_window.clip_contents = true
 	_merchant_window.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_merchant_window)
-	_rat_region = AtlasTexture.new()
-	_rat_region.atlas = RAT
-	_rat_region.region = Rect2(0, 0, 32, 32)
 	_rat = Sprite2D.new()
 	_rat.name = "MerchantSprite"
-	_rat.texture = _rat_region
+	_rat.texture = RAT
+	_rat.scale=Vector2(24,36)/RAT.get_size()
 	_rat.centered = false
 	# A cabeça fica centralizada; o corpo termina atrás da madeira do balcão.
-	_rat.position = Vector2(8, -10)
+	_rat.position = Vector2(16, -10)
 	var merchant_material := ShaderMaterial.new()
 	merchant_material.shader = ACTOR_SHADER
 	_rat.material = merchant_material
@@ -160,7 +158,7 @@ func _process(delta: float) -> void:
 		position = _origin + travel_offset * sin(_time * travel_speed / span)
 	_wagon.frame = int(_time * 3.0) % 2 if span > 0.001 else 0
 	# Uma piscada curta, com o sprite no tamanho nativo, sem tremor por escala.
-	_rat_region.region.position.x = 32.0 if fposmod(_time, 2.0) > 1.82 else 0.0
+	_rat.texture = RAT_BLINK if fposmod(_time, 2.0) > 1.82 else RAT
 	_hint.visible = _can_open()
 	var screen_at:Vector2=get_global_transform_with_canvas()*Vector2(0,-30)
 	_hint.position=Vector2(clampf(screen_at.x-58,12,512),clampf(screen_at.y-9,112,306))

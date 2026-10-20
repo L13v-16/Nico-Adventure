@@ -10,6 +10,11 @@ func _ready() -> void:
 	$Boss.defeated.connect(_on_boss_defeated)
 	$Water.body_entered.connect(_on_water_entered)
 	$Player.shop_shield_changed.connect(_on_shop_shield_changed)
+	# As telas usam o mesmo atlas; aqui preservamos os tamanhos nativos da fase.
+	var arara:AnimatedSprite2D=$Scenery/AraraMinas
+	arara.scale=Vector2.ONE*48.0/arara.sprite_frames.get_frame_texture(&"idle",0).get_width()
+	var turtle:AnimatedSprite2D=$RescueCage/Turtle
+	turtle.scale=Vector2(64,48)/turtle.sprite_frames.get_frame_texture(&"idle",0).get_size()
 	super._ready()
 	_on_cherry_balance_changed(player.get_cherry_balance())
 

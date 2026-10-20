@@ -1,4 +1,5 @@
 extends Control
+const FriendArt = preload("res://world/Scripts/friend_art.gd")
 ## Encenação em coordenadas de tela: nenhum ator altera a física de Nico.
 const DURATION := 9.6
 const IMPACT := 3.25
@@ -32,7 +33,7 @@ func _ready() -> void:
 	bird.name = "AraraMinas"
 	bird.sprite_frames = preload("res://world/Arte/Amigos/arara_minas.tres")
 	bird.centered = false
-	bird.scale = Vector2.ONE * 2.25
+	bird.scale = Vector2.ONE * 144.0 / bird.sprite_frames.get_frame_texture(&"fly",0).get_width()
 	add_child(bird)
 	bird.play(&"fly")
 	rider = Node2D.new()
@@ -72,7 +73,8 @@ func update_scene(time: float) -> void:
 	var flight_at := Vector2(170+time*15,113+sin(time*3)*3)
 	if time < IMPACT:
 		bird.position = flight_at.round()
-		rider.position = (flight_at+Vector2(77+sin(time*2)*6,80)).round()
+		var flight_texture:Texture2D=bird.sprite_frames.get_frame_texture(bird.animation,bird.frame)
+		rider.position = (bird.position+FriendArt.ride_point(flight_texture,Vector2(144,144))).round()
 		impact_at = rider.position-Vector2(0,34)
 		ball_at = Vector2(735,64).lerp(impact_at,clampf((time-2.5)/(IMPACT-2.5),0,1)).round()
 	else:

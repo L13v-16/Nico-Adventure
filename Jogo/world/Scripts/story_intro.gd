@@ -1,4 +1,5 @@
 extends CanvasLayer
+const FriendArt = preload("res://world/Scripts/friend_art.gd")
 ## Sete planos animados; o relógio da narrativa continua com o mundo pausado.
 signal finished
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
@@ -76,9 +77,9 @@ func _load_texture(file: String) -> void:
 	if file == "Amigos/remi_2": path = "res://world/Arte/Magic/remi_blink.tres"
 	if file == "Amigos/jose": path = "res://world/Arte/Underworld/jose_idle.tres"
 	if file == "Amigos/jose_2": path = "res://world/Arte/Underworld/jose_blink.tres"
-	var texture := load(path) as Texture2D
+	var texture := FriendArt.texture(path)
 	_textures[file] = texture
-	_bounds[file] = texture.get_image().get_used_rect()
+	_bounds[file] = FriendArt.bounds(texture)
 
 func _canvas(canvas_name: String, callback: Callable) -> Control:
 	var canvas := Control.new()

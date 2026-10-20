@@ -1,4 +1,5 @@
 extends Control
+const FriendArt = preload("res://world/Scripts/friend_art.gd")
 ## Álbum de personagens e recordes. A consulta não altera o progresso salvo.
 signal back_requested
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
@@ -11,13 +12,13 @@ const MINT := Color("b9dea1")
 const GOLD := Color("e3bf76")
 const CHARACTERS := [
  {"id":"nico", "name":"Nico", "short":"Nico", "art":"Nico/idle_1", "bio":"Um guaxinim de lenço verde e mochila. Viaja entre as ilhas para reunir os amigos.", "where":"A jornada começa no Vale das Copas."},
- {"id":"arara", "name":"Arara Minas", "short":"Arara", "art":"Amigos/arara_idle_1", "bio":"Arara azul e amarela que escapou do sequestro. Guia Nico na viagem entre as ilhas.", "where":"Encontro: casa na árvore da floresta."},
- {"id":"turtle", "name":"Tartaruga", "short":"Tartaruga", "art":"Tartaruga/turtle_idle_1", "bio":"Uma companheira idosa, serena e de casco marcado por muitas travessias.", "where":"Resgate: Costa das Marés, após Urus."},
+ {"id":"arara", "name":"Arara Minas", "short":"Arara", "art":"Amigos/arara_idle_1", "portrait":"Friends/V47/arara_portrait_neutral.tres", "bio":"Arara azul e amarela que escapou do sequestro. Guia Nico na viagem entre as ilhas.", "where":"Encontro: casa na árvore da floresta."},
+ {"id":"turtle", "name":"Tartaruga", "short":"Tartaruga", "art":"Tartaruga/turtle_idle_1", "portrait":"Friends/V47/turtle_portrait_neutral.tres", "bio":"Uma companheira idosa, serena e de casco marcado por muitas travessias.", "where":"Resgate: Costa das Marés, após Urus."},
  {"id":"oliver", "name":"Oliver Gancho", "short":"Oliver", "art":"Caravan/V23/oliver_idle_1_v23", "portrait":"Caravan/V23/oliver_portrait_v23", "bio":"O rato de tapa-olho da caravana. Troca provisões, equipamentos e roupas por cerejas.", "where":"Encontro: caravana móvel da praia."},
  {"id":"remi", "name":"Remi", "short":"Remi", "art":"Magic/remi_idle.tres", "portrait":"Magic/remi_portrait.tres", "bio":"Um esquilo de cauda fofa, pelagem castanha e lenço azul. Conhece as árvores e os segredos das ilhas.", "where":"Resgate: Floresta Violeta, após Hiena HaHa (Triple H)."},
  {"id":"jose", "name":"José, o Bode", "short":"José", "art":"Underworld/jose_idle.tres", "portrait":"Underworld/jose_portrait_neutral.tres", "bio":"Um bode forte de chifres curvos e lenço laranja. Suas cabeçadas quebram paredes, derrubam pilares e empurram objetos pesados.", "where":"Resgate: início do Submundo. Depois, acompanha Nico até a saída."},
- {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Nico ainda procura a ilha onde ele está."},
- {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Também foi capturado pela corporação.", "where":"Nico ainda procura a ilha onde ele está."},
+ {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "portrait":"Friends/V47/urso_portrait_neutral.tres", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Nico ainda procura a ilha onde ele está."},
+ {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Também foi capturado pela corporação.", "where":"Nico ainda procura a ilha onde ele está."},
 ]
 var _cards:Array[Button]=[]
 var _tabs:Array[Button]=[]
@@ -50,7 +51,7 @@ static func _style(bg:Color,border:Color,width:int=1,padding:int=0) -> StyleBoxF
  return style
 
 func _texture(path:String) -> Texture2D:
- if not _textures.has(path):_textures[path]=load("res://world/Arte/"+path+("" if path.ends_with(".tres") else ".png"))
+ if not _textures.has(path):_textures[path]=FriendArt.texture("res://world/Arte/"+path+("" if path.ends_with(".tres") else ".png"))
  return _textures[path] as Texture2D
 
 func _art(path:String,minimum:Vector2) -> TextureRect:

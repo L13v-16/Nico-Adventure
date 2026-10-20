@@ -1,3 +1,10 @@
+NOVIDADES v47 — AMIGOS NA ESTÉTICA DE NICO E JOSÉ
+Novos sprites e retratos: Arara Minas, Tartaruga, Remi, Urso, Mico e Oliver.
+Oito poses e quatro expressões por personagem; contorno e pixels compactos.
+Aplicados às fases, ao prólogo, aos resgates, à loja e à Coleção.
+Voo da Arara com Nico apoiado nas costas e mercador enquadrado no balcão.
+Artes e prompts finais em world/Arte/Friends/V47/. Nico e José preservados.
+
 NOVIDADES v40 — NICO LEVITANDO NO ALTAR
 Nico flutua entre dois jatos de água e duas chamas, que se concentram nele.
 Os poderes da jogabilidade continuam fogo e gelo; água é o efeito da cutscene.

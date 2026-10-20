@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(33, 84, 278, 278)
+filter_clip = true
+margin = Rect2(17.5, 35, 35, 35)

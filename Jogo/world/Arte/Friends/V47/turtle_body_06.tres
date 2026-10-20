@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/turtle.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(744, 489, 328, 214)
+filter_clip = true
+margin = Rect2(59.5, 107.98880000000003, 119, 122)

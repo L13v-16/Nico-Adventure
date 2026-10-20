@@ -39,7 +39,7 @@ func _ready() -> void:
 	layer=80
 	_lines=RESCUE if rescue else ARRIVAL
 	Sfx.begin_dialogue_music(self)
-	_portraits={"Nico":preload("res://world/Arte/Nico/hud_1.png"),"Arara Minas":preload("res://world/Arte/Amigos/arara_idle_1.png"),"Remi":preload("res://world/Arte/Magic/remi_portrait.tres")}
+	_portraits={"Nico":preload("res://world/Arte/Nico/hud_1.png"),"Arara Minas":preload("res://world/Arte/Friends/V47/arara_portrait_neutral.tres"),"Remi":preload("res://world/Arte/Magic/remi_portrait.tres")}
 	var hud:=get_parent().get_node_or_null("HUD") as CanvasLayer
 	if hud!=null:
 		_old_hud_visible=hud.visible
@@ -94,6 +94,7 @@ func _build() -> void:
 		_actor=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Arte/Magic/remi.tres"),32)
 		_actor.material.set_shader_parameter("alpha_cutoff",0.94)
 		_actor_anchor.add_child(_actor)
+		_actor.flip_h=true # Nico aguarda à esquerda durante o resgate.
 		_actor.play(&"happy")
 		preload("res://world/Scripts/magic_art.gd").reanchor(_actor)
 
@@ -104,12 +105,7 @@ func _show_beat() -> void:
 	_line.text=String(_lines[beat_index][1])
 	_topic.text=String(_lines[beat_index][2])
 	var texture:Texture2D=_portraits[_speaker.text]
-	if _speaker.text=="Arara Minas":
-		var atlas:=AtlasTexture.new()
-		atlas.atlas=texture
-		atlas.region=Rect2(27,22,34,34)
-		_portrait.texture=atlas
-	else:_portrait.texture=texture
+	_portrait.texture=texture
 	_line.visible_characters=0
 
 func _process(delta: float) -> void:
@@ -123,6 +119,8 @@ func _process(delta: float) -> void:
 		_actor.play(&"talk" if _speaker.text=="Remi" and _line.visible_characters>=0 else (&"happy" if _clock<2.2 or beat_index==3 else &"idle"))
 	if _speaker.text=="Remi":
 		_portrait.texture=preload("res://world/Arte/Magic/remi_portrait_talk.tres") if int(_clock*7)%2==0 and _line.visible_characters>=0 else preload("res://world/Arte/Magic/remi_portrait.tres")
+	if _speaker.text=="Arara Minas":
+		_portrait.texture=preload("res://world/Arte/Friends/V47/arara_portrait_talk.tres") if int(_clock*7)%2==0 and _line.visible_characters>=0 else _portraits["Arara Minas"]
 	_canvas.queue_redraw()
 	if auto_progress and _elapsed>maxf(6.0,_line.text.length()/36.0+3.0):_advance()
 

@@ -34,7 +34,7 @@
 
 [ext_resource type="Script" path="res://world/Scripts/rescue_cage.gd" id="cage"]
 
-[ext_resource type="Texture2D" path="res://world/Arte/Tartaruga/turtle.png" id="turtle"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/turtle_body_00.tres" id="turtle"]
 
 [ext_resource type="Script" path="res://world/Scripts/acai_power.gd" id="acai"]
 

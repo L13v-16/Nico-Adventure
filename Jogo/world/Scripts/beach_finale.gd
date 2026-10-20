@@ -1,4 +1,5 @@
 extends CanvasLayer
+const FriendArt = preload("res://world/Scripts/friend_art.gd")
 ## O dono da fase controla a pausa e os resultados; a cena só emite finished.
 
 signal finished
@@ -29,6 +30,7 @@ var _speaker: Label
 var _line: Label
 var _nico_frames: Array[Texture2D] = []
 var _arara_frames: Array[Texture2D] = []
+var _arara_portraits: Array[Texture2D] = [preload("res://world/Arte/Friends/V47/arara_portrait_neutral.tres"),preload("res://world/Arte/Friends/V47/arara_portrait_talk.tres")]
 var _turtle: Texture2D
 var _turtle_frames: SpriteFrames
 var _turtle_portraits: Array[Texture2D] = []
@@ -51,18 +53,18 @@ func start() -> void:
 		_nico_frames.append(_texture("res://world/Arte/Nico/idle_%d.png" % frame))
 	for frame: int in range(1, 3):
 		_arara_frames.append(_texture("res://world/Arte/Amigos/arara_idle_%d.png" % frame))
-	_turtle = _texture("res://world/Arte/Tartaruga/turtle.png")
+	_turtle = _texture("res://world/Arte/Friends/V47/turtle_body_00.tres")
 	if ResourceLoader.exists("res://world/Arte/Tartaruga/turtle.tres"):
 		_turtle_frames = load("res://world/Arte/Tartaruga/turtle.tres") as SpriteFrames
-	_turtle_portraits.append(_texture("res://world/Arte/Tartaruga/portrait_idle.png"))
-	_turtle_portraits.append(_texture("res://world/Arte/Tartaruga/portrait_talk.png"))
+	_turtle_portraits.append(_texture("res://world/Arte/Friends/V47/turtle_portrait_neutral.tres"))
+	_turtle_portraits.append(_texture("res://world/Arte/Friends/V47/turtle_portrait_talk.tres"))
 	_nico_portrait = _texture("res://world/Arte/Nico/hud_1.png")
 	_build()
 	_show_beat(0)
 
 
 func _texture(path: String) -> Texture2D:
-	return load(path) as Texture2D if ResourceLoader.exists(path) else null
+	return FriendArt.texture(path) if ResourceLoader.exists(FriendArt.resolve(path)) else null
 
 
 func _build() -> void:
@@ -305,7 +307,7 @@ func _draw_portrait() -> void:
 	elif beat_index == 0:
 		texture = _nico_portrait
 	else:
-		texture = _arara_frames[int(_total_elapsed * 2.0) % _arara_frames.size()]
+		texture = _arara_portraits[int(_elapsed * 5.0) % 2]
 	if texture == null:
 		return
 	# Conserva a proporção nativa de cada retrato ou sprite reutilizado.

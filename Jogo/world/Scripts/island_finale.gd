@@ -1,4 +1,5 @@
 extends CanvasLayer
+const FriendArt = preload("res://world/Scripts/friend_art.gd")
 ## Encontro na casa da árvore e partida para o arquipélago.
 ## O dono da fase controla pausa, HUD e resultados; esta cena só emite finished.
 
@@ -79,8 +80,8 @@ func _load_art() -> void:
 	for frame: int in range(1, 3):
 		_arara_idle.append(_texture("res://world/Arte/Amigos/arara_idle_%d.png" % frame))
 	# A primeira parada usa a mesma tartaruga idosa que será resgatada na praia.
-	_friend_textures.append(_texture("res://world/Arte/Tartaruga/turtle_idle_1.png"))
-	_friend_second_textures.append(_texture("res://world/Arte/Tartaruga/turtle_idle_2.png"))
+	_friend_textures.append(_texture("res://world/Arte/Friends/V47/turtle_body_00.tres"))
+	_friend_second_textures.append(_texture("res://world/Arte/Friends/V47/turtle_body_01.tres"))
 	for file: String in FRIEND_FILES:
 		_friend_textures.append(_texture("res://world/Arte/Amigos/%s.png" % file))
 		_friend_second_textures.append(_texture("res://world/Arte/Amigos/%s_2.png" % file))
@@ -91,8 +92,8 @@ func _texture(path: String) -> Texture2D:
 	if path.ends_with("/Amigos/remi_2.png"): path = "res://world/Arte/Magic/remi_blink.tres"
 	if path.ends_with("/Amigos/jose.png"): path = "res://world/Arte/Underworld/jose_idle.tres"
 	if path.ends_with("/Amigos/jose_2.png"): path = "res://world/Arte/Underworld/jose_blink.tres"
-	if ResourceLoader.exists(path):
-		return load(path) as Texture2D
+	if ResourceLoader.exists(FriendArt.resolve(path)):
+		return FriendArt.texture(path)
 	return null
 
 
@@ -375,7 +376,8 @@ func _draw_actors() -> void:
 		# Os pés de Nico acompanham o dorso registrado nos quatro frames.
 		var wing_frame: int = int(_total_elapsed * 8.0) % _arara_fly.size()
 		_draw_actor_texture(_arara_fly[wing_frame], Rect2(at, Vector2(112, 112) * flight_scale))
-		_draw_nico(at + Vector2(40, 17) * flight_scale, 1.5 * flight_scale)
+		var seat:=FriendArt.ride_point(_arara_fly[wing_frame],Vector2(112,112)*flight_scale)
+		_draw_nico(at+seat-Vector2(16.5,30)*1.5*flight_scale,1.5*flight_scale)
 
 
 func _meeting_arrival() -> float:

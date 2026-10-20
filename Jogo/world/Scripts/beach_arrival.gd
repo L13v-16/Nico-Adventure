@@ -1,4 +1,5 @@
 extends CanvasLayer
+const FriendArt = preload("res://world/Scripts/friend_art.gd")
 ## Conversa de chegada sobre o cenário real. A fase controla pausa e cronômetro.
 signal finished
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
@@ -43,9 +44,9 @@ func _ready() -> void:
 	layer = 80
 	Sfx.begin_dialogue_music(self)
 	for key in ICON_PATHS:
-		_textures[key] = load("res://world/Arte/" + String(ICON_PATHS[key])) as Texture2D
+		_textures[key] = FriendArt.texture("res://world/Arte/" + String(ICON_PATHS[key]))
 	for i in range(1, 3):
-		_textures["arara%d" % i] = load("res://world/Arte/Amigos/arara_idle_%d.png" % i) as Texture2D
+		_textures["arara%d" % i] = FriendArt.texture("res://world/Arte/Friends/V47/arara_portrait_%s.tres" % ("neutral" if i == 1 else "talk"))
 	_textures["nico"] = load("res://world/Arte/Nico/hud_1.png") as Texture2D
 	_frame_characters()
 	_build()
@@ -204,11 +205,11 @@ func _draw_portrait() -> void:
 		_portrait.draw_texture_rect(_textures.nico, Rect2(0, 0, 68, 68), false)
 	else:
 		var frame := 1 + int(_clock * 4) % 2
-		_portrait.draw_texture_rect_region(_textures["arara%d" % frame], Rect2(0, 0, 68, 68), Rect2(27, 22, 34, 34))
+		_portrait.draw_texture_rect(_textures["arara%d" % frame], Rect2(0, 0, 68, 68), false)
 
 func _draw_icon() -> void:
 	var texture: Texture2D = _textures[String(LINES[beat_index].icon)]
-	var bounds := texture.get_image().get_used_rect()
+	var bounds := FriendArt.bounds(texture)
 	var ratio := minf(52.0 / bounds.size.x, 52.0 / bounds.size.y)
 	var size := Vector2(bounds.size) * ratio
 	_icon.draw_texture_rect_region(texture, Rect2((Vector2(52, 52) - size) * 0.5, size), bounds)
