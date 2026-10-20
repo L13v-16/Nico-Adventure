@@ -7,7 +7,6 @@ static func build(level:Node2D) -> void:
 	terrain.name="Level"
 	level.add_child(terrain)
 	for info in GROUND:_ground(terrain,Vector2(info.x,info.y),info.z,440,false)
-	_ground(terrain,Vector2(-80,-154),176,14,true)
 	_ground(terrain,Vector2(6590,28),110,14,true)
 	_ground(terrain,Vector2(6740,-62),110,14,true)
 	_ground(terrain,Vector2(6895,-160),500,18,true)
@@ -15,11 +14,6 @@ static func build(level:Node2D) -> void:
 	scenery.name="Scenery"
 	scenery.z_index=-1
 	level.add_child(scenery)
-	var cannon:=Art.actor("scenery",142)
-	cannon.name="CorporateCannon"
-	cannon.position+=Vector2(27,-152)
-	cannon.play(&"cannon_idle")
-	scenery.add_child(cannon)
 	var cage:=Art.actor("scenery",80)
 	cage.position+=Vector2(250,104)
 	cage.play(&"cage")

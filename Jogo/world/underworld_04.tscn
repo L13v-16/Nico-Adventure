@@ -21,7 +21,7 @@ intro_title = "O SUBMUNDO"
 intro_act = 4
 
 [node name="Player" parent="." instance=ExtResource("nico")]
-position = Vector2(60,-170)
+position = Vector2(190,89)
 coyote_time = 0.13
 jump_buffer_time = 0.16
 move_acceleration = 1800.0

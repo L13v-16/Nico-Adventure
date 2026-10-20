@@ -15,11 +15,12 @@ var _portrait:TextureRect
 var _title:Label
 var _portraits:Dictionary={}
 var _old_hud:=true
+var _sky:Control
 const Ui=preload("res://world/Scripts/ui_style.gd")
 const LINES={
 	"arrival":[
 		["José","Nico! A empresa me largou aqui, mas estas grades não seguraram minhas cabeçadas. Ainda precisamos encontrar a saída!"],
-		["Nico","José, meu amigo! Vou tirar nós dois daqui. Esse canhão da corporação vai ter volta!"],
+		["Nico","José! Um tiro da empresa me derrubou da Arara Minas. Precisamos sair daqui e avisar a turma!"],
 		["José","Marque os obstáculos e aperte C. Eu quebro paredes rachadas, derrubo pilares frágeis e empurro blocos pesados."],
 		["José","Observe as fendas: rachaduras brilham, pedras tremem e faíscas sobem antes da lava. As marcadas com uma seta azul servem de impulso!"],
 		["José","Rochas claras se aproximam; as roxas se afastam. Ajuste a ponte e use as pedras para se proteger dos tridentes. Vamos juntos!"],
@@ -56,6 +57,10 @@ func _ready() -> void:
 	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"TEMPLO DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"DESCARTE DA CORPORAÇÃO"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
 	if mode=="launch":
 		_lines=[]
+		_title.hide()
+		_sky=preload("res://world/Scripts/underworld_sky_attack.gd").new()
+		_sky.player=player
+		_canvas.add_child(_sky)
 		return
 	_lines=LINES[mode]
 	var panel:=Panel.new()
@@ -99,21 +104,8 @@ func _process(delta:float) -> void:
 	_elapsed+=delta
 	_canvas.queue_redraw()
 	if mode=="launch":
-		var level:=get_parent()
-		var player:CharacterBody2D=level.player
-		var t:=clampf((_clock-1.05)/1.6,0,1)
-		player.position=Vector2(68+122*t,lerpf(-185,89,t*t))
-		player.visible=not (_clock>0.5 and _clock<1.05)
-		player.get_node("anim").play("fall" if t>0 else "idle")
-		player.get_node("Camera2D").force_update_scroll()
-		var cannon:AnimatedSprite2D=level.get_node("Scenery/CorporateCannon")
-		var pose:StringName=&"cannon_load" if _clock<0.5 else (&"cannon_charge" if _clock<1.05 else (&"cannon_fire" if _clock<1.2 else (&"cannon_recoil" if _clock<1.45 else (&"cannon_smoke" if _clock<2.1 else &"cannon_idle"))))
-		cannon.play(pose)
-		if _clock>1.05 and not level.get_meta("cannon_fired",false):
-			level.set_meta("cannon_fired",true)
-			Sfx.hit()
-			Fx.burst(Vector2(60,-174),Color("ffc570"),24,200)
-		if _clock>=3.1:_finish()
+		_sky.update_scene(_clock)
+		if _clock>=_sky.DURATION:_finish()
 		return
 	if mode=="temple":
 		var temple:AnimatedSprite2D=get_parent().get_node("Scenery/Temple")
@@ -140,7 +132,6 @@ func _finish() -> void:
 	has_finished=true
 	if mode=="launch":
 		get_parent().player.show()
-		get_parent().get_node("Scenery/CorporateCannon").play(&"cannon_idle")
 	var hud:=get_parent().get_node_or_null("HUD") as CanvasLayer
 	if hud!=null: hud.visible=_old_hud
 	Sfx.end_dialogue_music(self)
@@ -148,7 +139,3 @@ func _finish() -> void:
 	queue_free()
 func _draw_overlay() -> void:
 	_canvas.draw_rect(Rect2(0,0,640,7),Color("191522"))
-	if mode=="launch":
-		_canvas.draw_rect(Rect2(0,310,640,50),Color("191522"))
-		var w:=clampf((_clock-0.1)/0.4,0,1)
-		_canvas.draw_rect(Rect2(0,0,640,360),Color(1,0.7,0.35,maxf(0,0.4-absf(_clock-1.05))*w))

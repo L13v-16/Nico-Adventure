@@ -33,7 +33,7 @@ func _spawn_fragments() -> void:
 		add_child(fragment)
 func _start_sequence() -> void:
 	Save.consume_skip_intro()
-	await _begin_intro()
+	Sfx.begin_dialogue_music(self)
 	intro_active=true
 	_timing=false
 	pause_menu.can_open=false
@@ -44,10 +44,17 @@ func _start_sequence() -> void:
 	await _dialogue("launch","CorporateCannon")
 	player.position=Vector2(190,89)
 	player.velocity=Vector2.ZERO
+	player.get_node("anim").play(&"idle")
 	player.respawn_position=player.position
 	camera.offset=Vector2(55,-9)
 	camera.force_update_scroll()
+	await _begin_intro()
+	intro_active=true
+	_timing=false
+	pause_menu.can_open=false
+	get_tree().paused=true
 	await _dialogue("arrival","JoseRescue")
+	Sfx.end_dialogue_music(self)
 	Save.set_story_flag("jose_rescued")
 	$Jose.rescued=true
 	intro_active=false
