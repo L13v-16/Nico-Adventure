@@ -1,0 +1,13 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/sanctuary_texture.tres" id="1"]
+[resource]
+animations = [
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_dormant", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_fire", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_ice", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_both", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_opening", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_open", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_shine", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("1")}], "loop": true, "name": &"temple_ready", "speed": 1.0}
+]

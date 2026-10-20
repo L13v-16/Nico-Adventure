@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/guardian_actions.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(331, 641, 280, 299)
+margin = Rect2(18, 14, 34, 15)
+filter_clip = true

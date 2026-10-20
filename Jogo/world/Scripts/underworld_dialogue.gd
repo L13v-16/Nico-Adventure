@@ -27,14 +27,14 @@ const LINES={
 	"arrival":[
 		["José","Nico! A empresa me largou aqui, mas estas grades não seguraram minhas cabeçadas. Ainda precisamos encontrar a saída!"],
 		["Nico","José! Um tiro da empresa me derrubou da Arara Minas. Precisamos sair daqui e avisar a turma!"],
-		["José","Marque os obstáculos e aperte C. Eu quebro paredes rachadas, derrubo pilares frágeis e empurro blocos pesados."],
+		["José","Marque os obstáculos e aperte C. Eu quebro paredes rachadas e derrubo pilares frágeis para abrir o caminho."],
 		["José","Observe as fendas: rachaduras brilham, pedras tremem e faíscas sobem antes da lava. As marcadas com uma seta azul servem de impulso!"],
 		["José","Rochas claras se aproximam; as roxas se afastam. Ajuste a ponte e use as pedras para se proteger dos tridentes. Vamos juntos!"],
 	],
 	"temple":[
 		["José","As chamas e as águas do altar despertaram seu domínio dos contrários! Agora você pode usar fogo e gelo sem frutas."],
 		["Nico","Agora consigo lançar fogo e gelo quando quiser! K dispara; Q alterna o elemento. Não preciso gastar frutas."],
-		["José","Na forja: fogo na válvula laranja, gelo na azul, fogo e gelo outra vez. Desvie do vapor e use as plataformas."],
+		["José","O santuário despertou seu poder! Na forja: fogo na válvula laranja, gelo na azul, fogo e gelo outra vez. Desvie dos jatos de vapor."],
 		["José","O Carcereiro guarda a chave. A corporação prendeu correntes no guardião. Talvez seja possível quebrar esse controle!"],
 	],
 }
@@ -54,7 +54,7 @@ func _ready() -> void:
 	_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_canvas.draw.connect(_draw_overlay)
 	add_child(_canvas)
-	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"ALTAR DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"ATAQUE NO CÉU"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
+	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"SANTUÁRIO DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"ATAQUE NO CÉU"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
 	if mode=="launch":
 		_lines=[]
 		_title.hide()

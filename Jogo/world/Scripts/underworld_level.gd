@@ -11,7 +11,6 @@ func _ready() -> void:
 	temple_seen=false
 	Layout.build(self)
 	$Forge.solved.connect(func():_show_notice("Forja funcionando! A passagem está aberta."))
-	$ForgeWeight.settled.connect(func():$Forge.power_ready=true;$Forge._update();_show_notice("Bloco no encaixe! Ative a forja com fogo e gelo."))
 	$Boss.defeated.connect(_on_boss_defeated)
 	$Boss.encounter_started.connect(func():_show_notice(""))
 	$DepthKey.collected.connect(func():key_collected=true;$ExitPortal.unlocked=true;_show_notice("Chave das Profundezas! Siga para a saída à direita."))
@@ -82,14 +81,16 @@ func _temple() -> void:
 	player.anim.play(&"idle")
 	var camera:=player.get_node("Camera2D") as Camera2D
 	camera.position_smoothing_enabled=false
-	camera.zoom=Vector2.ONE*1.35
-	camera.offset=Vector2(3555-player.position.x,-20)
+	camera.zoom=Vector2.ONE*1.15
+	camera.offset=Vector2(3555-player.position.x,-64)
 	camera.force_update_scroll()
 	get_tree().paused=true
 	await _dialogue("temple","TempleLesson")
 	var saved:bool=Save.set_story_flag("elemental_mastery")
 	$Scenery/Temple.play(&"temple_ready")
 	temple_seen=true
+	$Forge.power_ready=true
+	$Forge._update()
 	_temple_busy=false
 	intro_active=false
 	get_tree().paused=false
@@ -108,14 +109,15 @@ func _process(delta:float) -> void:
 	var boss:Node2D=$Boss
 	var arena:bool=boss.active
 	var camera:=player.get_node("Camera2D") as Camera2D
-	camera.zoom=camera.zoom.lerp(Vector2.ONE*(0.90 if arena else 1.5),1-exp(-delta*4))
+	var arena_zoom:float=0.9 if boss.phase==5 else clampf(640.0 / (absf(x-boss.position.x)+180.0),0.74,0.9)
+	camera.zoom=camera.zoom.lerp(Vector2.ONE*(arena_zoom if arena else 1.5),1-exp(-delta*4))
 	# A câmera acompanha a subida da luta para manter a cabeça do guardião
 	# abaixo da HUD, sem perder o patamar seguro que Nico precisa alcançar.
 	var arena_y:float=-65
 	if arena and boss.phase==2:arena_y=lerpf(-65,-220,clampf((boss._phase_time-2)/9,0,1))
 	elif arena and boss.phase>=3:arena_y=-220
 	if arena and boss.phase==5:arena_y=-312
-	var arena_x:float=7145 if arena and boss.phase==5 else 6950
+	var arena_x:float=7145 if arena and boss.phase==5 else clampf((x + boss.position.x) * 0.5 + signf(boss.position.x-x)*25, 6740, 7180)
 	var desired:=Vector2(arena_x-x-float(player._camera_look),arena_y-player.position.y) if arena else Vector2(55,-38)
 	player._camera_base_offset=player._camera_base_offset.lerp(desired,1-exp(-delta*5))
 	camera.limit_top=-750 if arena and boss.phase==5 else -550
@@ -126,8 +128,8 @@ func _process(delta:float) -> void:
 	elif x<1450:hint.text="Rochas claras seguem você; roxas se afastam. Posicione a ponte e pule. Ao embarcar, elas param."
 	elif x<2200:hint.text="Observe as faíscas antes da erupção! A seta azul marca um gêiser que lança Nico para cima."
 	elif x<3376:hint.text="Use os gêiseres de impulso para alcançar as partes altas. C: José derruba pilares frágeis."
-	elif x<3904:hint.text="Altar dos Contrários: aprenda fogo e gelo sem frutas. K: disparar  ·  Q: alternar"
-	elif x<4944:hint.text="Forja: C empurra o bloco. Fogo na válvula laranja, gelo na azul; repita. Evite os jatos de vapor."
+	elif x<3904:hint.text="Santuário dos Contrários: receba fogo e gelo. K: disparar  ·  Q: alternar"
+	elif x<4944:hint.text="Forja: fogo na válvula laranja, gelo na azul; repita. K: disparar · Q: alternar. Evite o vapor."
 	elif x<6144:hint.text="As rochas bloqueiam tridentes! C: derrube o pilar para criar uma ponte sobre a lava."
 	elif x<6450:hint.text="Oliver está por aqui. E: loja  ·  I: mochila  ·  Ative a bandeira antes de enfrentar o Carcereiro."
 	elif arena:hint.text=boss._advice()+"  ·  K: disparo  ·  Q: elemento  ·  C: José"
@@ -188,7 +190,6 @@ func _draw() -> void:
 	if not is_node_ready():return
 	for gap in [[904,1320],[2200,2540],[3180,3376],[3776,3904],[4944,5200],[5904,6144]]:
 		preload("res://world/Scripts/underworld_lava.gd").draw_pool(self,Rect2(gap[0],210,gap[1]-gap[0],260),_clock)
-	draw_texture_rect(preload("res://world/Arte/Underworld/V35/forge_28.tres"),Rect2(4067,91,66,11),false)
 	if is_instance_valid(_selected_target) and _selected_target.can_jose_target():
 		var point:Vector2=_selected_target.jose_point()+Vector2(0,-73)
 		draw_arc(point,12,0,TAU,16,Color("ffe09b"),2)

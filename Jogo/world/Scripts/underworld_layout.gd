@@ -18,12 +18,16 @@ static func build(level:Node2D) -> void:
 	cage.position+=Vector2(250,104)
 	cage.play(&"cage")
 	scenery.add_child(cage)
-	var temple:=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Arte/Underworld/V38/altar.tres"),184)
+	var temple:=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Arte/Underworld/V44/sanctuary.tres"),300)
 	temple.material.set_shader_parameter("alpha_cutoff",0.94)
 	temple.name="Temple"
 	temple.position+=Vector2(3555,-36)
 	temple.play(&"temple_dormant")
 	scenery.add_child(temple)
+	var radiance:=preload("res://world/Scripts/sanctuary_radiance.gd").new()
+	radiance.position=Vector2(3555,-38)
+	radiance.z_index=-1
+	scenery.add_child(radiance)
 	preload("res://world/Scripts/underworld_scenery.gd").build(scenery)
 	var jose:=preload("res://world/Scripts/jose_companion.gd").new()
 	jose.name="Jose"
@@ -41,13 +45,10 @@ static func build(level:Node2D) -> void:
 		geyser.launch_geyser=info[1]
 		geyser.phase=info[2]
 		level.add_child(geyser)
-	for info in [[Vector2(530,100),"wall"],[Vector2(1810,100),"pillar"],[Vector2(3970,100),"block"],[Vector2(5840,100),"pillar"]]:
+	for info in [[Vector2(530,100),"wall"],[Vector2(1810,100),"pillar"],[Vector2(5840,100),"pillar"]]:
 		var obstacle:=preload("res://world/Scripts/underworld_obstacle.gd").new()
 		obstacle.position=info[0]
 		obstacle.kind=info[1]
-		if obstacle.kind=="block":
-			obstacle.name="ForgeWeight"
-			obstacle.push_offset=Vector2(130,0)
 		level.add_child(obstacle)
 	for point in [Vector2(760,100),Vector2(1670,100),Vector2(2750,36),Vector2(4610,100),Vector2(5680,100),Vector2(6320,100)]:
 		var enemy:=preload("res://world/Scripts/underworld_enemy.gd").new()
@@ -84,22 +85,6 @@ static func build(level:Node2D) -> void:
 		steam.position=info[0]
 		steam.phase=info[1]
 		level.add_child(steam)
-	for info in [[Vector2(4060,12),Vector2(160,-28)],[Vector2(4540,0),Vector2(190,-24)]]:
-		var moving:=preload("res://world/Scripts/underworld_platform.gd").new()
-		moving.position=info[0]
-		moving.travel_offset=info[1]
-		moving.travel_time=2.5
-		moving.endpoint_pause=0.35
-		moving.collision_layer=1
-		moving.collision_mask=0
-		var collision:=CollisionShape2D.new()
-		var rect:=RectangleShape2D.new()
-		rect.size=Vector2(86,12)
-		collision.shape=rect
-		collision.position.y=6
-		collision.one_way_collision=true
-		moving.add_child(collision)
-		level.add_child(moving)
 	for info in [[Vector2(6555,-235),260.0],[Vector2(6870,-325),270.0]]:
 		var chain:=preload("res://world/Scripts/underworld_chain.gd").new()
 		chain.position=info[0]

@@ -357,3 +357,17 @@ Enter/E/Espaço ou clique avançam para a próxima ação; Esc pula para os resu
 O atlas `world/Arte/Underworld/V43/chains.png` contém oito sprites: trecho horizontal, vertical, laço frontal/traseiro, gancho, fecho, trecho curvo e corrente enrolada. Criados com imagegen integrado; PNG original preservado, recortes nativos, prompt e origem documentados na mesma pasta. As novas correntes aparecem na cena, na escalada e no golpe preso do chefe.
 
 Validação: sequência natural completa, oito momentos renderizados, roupas equipadas, apoio dos passageiros, enquadramento do salto, avanço/pulo, música, restauração dos atores e resultados. Regressão do Submundo inclui forja, José, correntes de escalada, combate, canhões, chave e conclusão; saves isolados.
+
+## Carcereiro: animações e ritmo de combate (v44)
+
+Dezesseis novos quadros em `world/Arte/Underworld/V44/` ampliam preparação da corrente, pancada, corrente presa, recuperação, dano e rugido. A arte mantém a identidade e a paleta do guardião, usa recortes nativos com preenchimento fixo e apoia cada quadro no chão. PNG original preservado, origem e prompt incluídos; geração pelo imagegen integrado.
+
+O fecho dourado da corrente presa virou um alvo real: J/X e os poderes podem atingir a corrente junto de Nico, sem precisar atravessar a arena para alcançar o corpo do chefe. Corpo e fecho compartilham a mesma proteção contra acertos duplicados. O golpe tem 2,6 segundos de abertura e uma recuperação visível de 0,65 segundo, com tempo para recuar; a troca de estado funciona também quando a taxa de quadros cai.
+
+Na subida da lava, o Carcereiro mira por 0,4 segundo antes de lançar uma corrente em direção fixa. Rochas e chão bloqueiam esse projétil. Atingir o patamar superior cria uma retomada da luta na armadura: morrer dali em diante dispensa repetir a subida. Fogo seguido de gelo abre uma janela de três segundos para o contra-ataque.
+
+A última etapa preserva os canhões e a escalada. Uma ativação bem-sucedida limpa o aviso de ataque e dá um segundo de proteção; eventos repetidos de um mesmo canhão não contam novamente. O último disparo encerra o combate sem correntes causando dano durante a vitória. A HUD separa etapa e instrução, e a câmera ajusta centro e aproximação à distância entre Nico e o guardião.
+
+Validação: animações e apoio dos quadros renderizados; J real contra a corrente distante; primeira etapa vencida com saltos e ataques sem perder vida; mira fixa, bloqueio e dano dos projéteis; retomada superior; canhões, último disparo, chave e saída. Regressão completa do Submundo, sempre com saves isolados.
+
+Santuário e forja (v44): o centro da fase agora abriga um santuário divino de mármore claro e ouro, arco solar, braseiros dos dois elementos, raios suaves e partículas. A câmera mostra a estrutura inteira durante a levitação com água e chamas. O poder continua sendo adquirido somente ali. A caixa de contrapeso e as duas plataformas suspensas sem apoio foram retiradas do corredor da forja; o santuário libera o mecanismo. Fogo → gelo → fogo → gelo e os jatos de vapor continuam como desafio, com instruções e runas acima do chão. Sprite e prompt em world/Arte/Underworld/V44/sanctuary*.

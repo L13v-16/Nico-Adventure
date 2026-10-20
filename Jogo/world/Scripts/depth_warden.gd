@@ -31,6 +31,12 @@ var _entrance: CanvasLayer
 var cylinder: Node2D
 var _normal_scale := Vector2.ONE
 var _entrance_seen := false
+var _upper_unlocked := false
+var _cast_warn := false
+var _cast_target := Vector2.ZERO
+var _cast_anim := 0.0
+var _phase_caption: Label
+var _anchor: StaticBody2D
 func _ready() -> void:
 	add_to_group("enemies")
 	add_to_group("bosses")
@@ -44,6 +50,7 @@ func _ready() -> void:
 	collider.position.y=-52
 	add_child(collider)
 	_sprite=Art.actor("boss",162)
+	_sprite.sprite_frames = preload("res://world/Arte/Underworld/V44/guardian.tres")
 	_normal_scale = _sprite.scale
 	add_child(_sprite)
 	_sprite.play(&"idle")
@@ -61,25 +68,42 @@ func _ready() -> void:
 	_pedestal.hide()
 	_player=get_tree().get_first_node_in_group("player")
 	_player.respawned.connect(reset_encounter)
+	_anchor = preload("res://world/Scripts/warden_chain_anchor.gd").new()
+	_anchor.name = "PinnedChain"
+	_anchor.boss = self
+	add_child(_anchor)
 	_build_bar()
 func _build_bar() -> void:
 	_bar=CanvasLayer.new()
 	_bar.layer=16
 	add_child(_bar)
-	var panel:=ColorRect.new()
+	var panel:=Panel.new()
 	panel.position=Vector2(66,58)
 	panel.size=Vector2(508,32)
-	panel.color=Color("1a1824")
+	var style := preload("res://world/Scripts/ui_style.gd").panel_style()
+	style.bg_color = Color("1a1824")
+	style.border_color = Color("a88468")
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(3)
+	style.shadow_size = 2
+	panel.add_theme_stylebox_override("panel", style)
 	panel.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_bar.add_child(panel)
+	_phase_caption = Label.new()
+	_phase_caption.position = Vector2(74, 59)
+	_phase_caption.size = Vector2(492, 11)
+	_phase_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_phase_caption.add_theme_font_size_override("font_size", 9)
+	_phase_caption.add_theme_color_override("font_color", Color("ffd298"))
+	_bar.add_child(_phase_caption)
 	_caption=Label.new()
-	_caption.position=Vector2(70,59)
-	_caption.size=Vector2(500,22)
+	_caption.position=Vector2(74,71)
+	_caption.size=Vector2(492,11)
 	_caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	_caption.add_theme_font_size_override("font_size",9)
+	_caption.add_theme_font_size_override("font_size",8)
 	_bar.add_child(_caption)
 	_fill=ColorRect.new()
-	_fill.position=Vector2(74,84)
+	_fill.position=Vector2(74,85)
 	_fill.size=Vector2(492,3)
 	_fill.color=Color("f4a96b")
 	_fill.mouse_filter=Control.MOUSE_FILTER_IGNORE
@@ -124,6 +148,30 @@ func reset_encounter() -> void:
 		_clear_projectiles()
 		cylinder._recover()
 		return
+	if _upper_unlocked:
+		_clear_projectiles()
+		active = true
+		health = 9
+		phase = 3
+		state = "idle"
+		position = Vector2(7100, UPPER_FLOOR)
+		lava_y = -109
+		velocity = Vector2.ZERO
+		_timer = 1.6
+		_phase_time = 0
+		_vulnerable = 0
+		_invulnerable = 0
+		heated = false
+		brittle = false
+		armor_broken = false
+		_cast_warn = false
+		_sprite.modulate = Color.WHITE
+		_sprite.play(&"guard")
+		_player.position = Vector2(6950, UPPER_FLOOR - 11)
+		_player.respawn_position = _player.position
+		_player.velocity = Vector2.ZERO
+		_player._invulnerability_timer = 1.5
+		return
 	_clear_gates()
 	_clear_projectiles()
 	active=false
@@ -140,6 +188,8 @@ func reset_encounter() -> void:
 	heated=false
 	brittle=false
 	armor_broken=false
+	_cast_warn = false
+	_cast_anim = 0
 	_sprite.play(&"idle")
 	_sprite.scale = _normal_scale
 	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
@@ -156,16 +206,27 @@ func _physics_process(delta:float) -> void:
 	if phase == 5:
 		_phase_time += delta
 		_vulnerable = maxf(0, _vulnerable - delta)
-		_sprite.play(&"hurt" if _vulnerable > 0 else &"exposed")
+		_sprite.play(&"hurt" if _vulnerable > 0 else (&"roar" if cylinder._warning > 0 else &"exposed"))
+		_sprite.modulate = Color.WHITE
 		_sprite.flip_h = false
 		_fill.size.x = 492 * maxf(0, 3 - cylinder.hits) / 3.0
-		_caption.text = "ÚLTIMA CORRENTE  ·  CANHÕES %d / 3  ·  " % cylinder.hits + _advice()
+		_phase_caption.text = "5 / 5 · ÚLTIMA CORRENTE · CANHÕES %d / 3" % cylinder.hits
+		_caption.text = _advice()
+		_fill.color = Color("a2d9ee") if cylinder.hits == 1 else Color("f4ac71")
 		queue_redraw()
 		return
 	_timer-=delta
 	_phase_time+=delta
+	var was_vulnerable := _vulnerable > 0
 	_vulnerable=maxf(0,_vulnerable-delta)
+	if was_vulnerable and _vulnerable <= 0:
+		heated = false
+		brittle = false
+		armor_broken = false
+		state = "recover"
+		_timer = 0.65
 	_invulnerable=maxf(0,_invulnerable-delta)
+	_cast_anim = maxf(0, _cast_anim - delta)
 	_sprite.modulate=Color("ffdfb3") if _invulnerable>0 else Color.WHITE
 	_side=-1 if _player.position.x<position.x else 1
 	_sprite.flip_h=_side>0
@@ -174,10 +235,14 @@ func _physics_process(delta:float) -> void:
 	if phase==2:
 		lava_y=lerpf(153, -109,clampf(_phase_time/13,0,1))
 		position.y=lerpf(100,UPPER_FLOOR,clampf((_phase_time-2)/9,0,1))
-		_sprite.play(&"lava")
+		_sprite.play(&"chain_cast" if _cast_anim > 0 or _cast_warn else &"lava")
+		if _timer <= 0.4 and not _cast_warn:
+			_cast_warn = true
+			_cast_target = _player.position
 		if _timer<=0:
 			_cast_chain()
-			_timer=2.1
+			_timer=2.3
+			_cast_warn = false
 		if _phase_time>=11 and _player.position.y+11<=UPPER_FLOOR+15:
 			phase=3
 			position.y=UPPER_FLOOR
@@ -185,16 +250,19 @@ func _physics_process(delta:float) -> void:
 			state="idle"
 			_timer=1.4
 			health=9
+			_upper_unlocked = true
+			_cast_warn = false
+			_player.respawn_position = Vector2(6950, UPPER_FLOOR - 11)
+			Fx.popup(Vector2(6990, UPPER_FLOOR - 110), "PATAMAR SEGURO · RETOMADA ATIVADA", Color("bce6d6"), 9)
 	elif _vulnerable>0:
 		_sprite.play(&"stuck" if phase==1 else &"exposed")
-		if _vulnerable<=delta:
-			heated=false
-			brittle=false
-			armor_broken=false
-			state="idle"
-			_timer=1.0
 	else:
 		match state:
+			"recover":
+				_sprite.play(&"recover")
+				if _timer <= 0:
+					state = "idle"
+					_timer = 1.05
 			"idle":
 				_sprite.play(&"heated" if heated else (&"frozen" if brittle else &"guard"))
 				if phase==4:
@@ -216,17 +284,21 @@ func _physics_process(delta:float) -> void:
 				if _timer<=0:
 					state="idle"
 					_timer=1.5
-					if phase==1:_vulnerable=2.2
+					if phase==1:
+						_vulnerable=2.6
+						Fx.popup(Vector2(_target_x, 52), "CORRENTE PRESA!", Color("ffe2a2"), 9)
 	if phase>=2 and _player.position.y+11>lava_y and _phase_time>0.5:_player.take_damage(1,Vector2(_player.position.x,lava_y+20))
-	if _vulnerable<=0 and _player.position.distance_to(position+Vector2(0,-22))<48:_player.take_damage(1,position)
+	if _vulnerable<=0 and state != "recover" and _player.position.distance_to(position+Vector2(0,-22))<48:_player.take_damage(1,position)
 	if _invulnerable > 0.43 and phase != 2: _sprite.play(&"hurt")
 	_fill.size.x=492*health/MAX_HEALTH
-	_caption.text="CARCEREIRO DAS PROFUNDEZAS  ·  "+_advice()
+	_phase_caption.text="%d / 5 · CARCEREIRO · " % phase + ["", "CORRENTES", "LAVA ASCENDENTE", "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
+	_caption.text=_advice()
+	_fill.color = Color("a7e5f4") if brittle else (Color("ffba75") if heated else Color("e4bb8d"))
 	queue_redraw()
 func _advice() -> String:
-	if _vulnerable>0:return "ATAQUE O PONTO FRACO!"
+	if _vulnerable>0 and phase < 5:return "J / X NA CORRENTE PRESA!" if phase == 1 else "ATAQUE O PONTO FRACO!"
 	match phase:
-		1:return "Pule a onda; ataque a corrente presa"
+		1:return "Pule a onda; J / X no fecho dourado da corrente presa"
 		2:return "LAVA SUBINDO! E: corrente · ↑: subir · Espaço: soltar"
 		3:return "GELO nas correntes!" if heated else "FOGO na armadura!"
 		4:return "Atraia para o círculo dourado e use C: JOSÉ"
@@ -245,9 +317,10 @@ func _slam() -> void:
 		get_parent().add_child(wave)
 func _cast_chain() -> void:
 	Sfx.play("warden_chain", -8)
-	var shot:=preload("res://world/Scripts/underworld_trident.gd").new()
-	shot.position=position+Vector2(-45,-75)
-	shot.flight=(_player.position-shot.position).normalized()*180
+	_cast_anim = 0.45
+	var shot:=preload("res://world/Scripts/warden_chain_bolt.gd").new()
+	shot.position=position+Vector2(_side * 45,-75)
+	shot.flight=((_cast_target if _cast_warn else _player.position)-shot.position).normalized()*175
 	get_parent().add_child(shot)
 func take_element(element:String,source:Vector2) -> void:
 	if not active or is_dead() or phase==2 or phase==5:return
@@ -259,8 +332,8 @@ func take_element(element:String,source:Vector2) -> void:
 		Fx.popup(position+Vector2(0,-140),"ARMADURA AQUECIDA · GELO!",Color("ffc788"),9)
 	elif element=="ice" and heated:
 		brittle=true
-		_vulnerable=2.6
-		_timer=3.0
+		_vulnerable=3.0
+		_timer=3.4
 		state="idle"
 		Fx.burst(position+Vector2(0,-60),Color("b6f1ff"),20,150)
 		Sfx.play("warden_break", -5)
@@ -347,12 +420,16 @@ func _defeat() -> void:
 	queue_redraw()
 func is_dead() -> bool:return health<=0
 func _draw() -> void:
+	if active and phase == 2 and _cast_warn:
+		var from := Vector2(_side * 45, -75)
+		var target := to_local(_cast_target)
+		for i in range(1, 12):
+			var at := from.lerp(target, i / 12.0).round()
+			draw_rect(Rect2(at, Vector2(2, 2)), Color(1, 0.75, 0.4, 0.6))
 	if active and phase != 2 and phase < 5 and (state == "slam" or _vulnerable > 0):
-		var hand := Vector2(-45, -75)
+		var hand := Vector2(_side * 50, -22)
 		var pinned := to_local(Vector2(_target_x, 100 if phase == 1 else UPPER_FLOOR))
 		preload("res://world/Scripts/underworld_chain_art.gd").strand(self, hand, pinned, 6)
-		if _vulnerable > 0:
-			draw_arc(pinned + Vector2(0, -5), 14 + sin(_phase_time * 8) * 2, 0, TAU, 16, Color("ffe4ad"), 2)
 	if active and state=="warning":
 		var at:=to_local(Vector2(_target_x,100 if phase==1 else UPPER_FLOOR))
 		draw_rect(Rect2(at-Vector2(22,3),Vector2(44,3)),Color("ffbd79"))

@@ -7,8 +7,6 @@ var _impact := false
 var _canvas: Control
 var _level: Node2D
 var _hud_visible := true
-var _old_offset := Vector2.ZERO
-var _old_zoom := Vector2.ONE
 var _old_smoothing := true
 var _old_timing := true
 var _old_pause := false
@@ -25,8 +23,6 @@ func _ready() -> void:
 	_level._timing = false
 	_level.pause_menu.can_open = false
 	var camera: Camera2D = boss._player.get_node("Camera2D")
-	_old_offset = camera.offset
-	_old_zoom = camera.zoom
 	_old_smoothing = camera.position_smoothing_enabled
 	camera.position_smoothing_enabled = false
 	get_tree().paused = true
@@ -83,9 +79,14 @@ func _restore() -> void:
 		boss._timer = 1.4
 		boss._bar.show()
 		var camera: Camera2D = boss._player.get_node("Camera2D")
-		camera.offset = _old_offset
-		camera.zoom = _old_zoom
+		# Return to a view containing both actors, including the arena entrance.
+		var gap: float = boss.position.x-boss._player.position.x
+		var focus_x := clampf((boss._player.position.x + boss.position.x) * 0.5 + signf(gap)*25, 6740, 7180)
+		boss._player._camera_base_offset = Vector2(focus_x, -65) - boss._player.position - Vector2(boss._player._camera_look, 0)
+		camera.offset = boss._player._camera_base_offset + Vector2(boss._player._camera_look, 0)
+		camera.zoom = Vector2.ONE * clampf(640.0/(absf(gap)+180.0),0.74,0.9)
 		camera.position_smoothing_enabled = _old_smoothing
+		camera.force_update_scroll()
 	Sfx.end_dialogue_music(self)
 
 func _exit_tree() -> void:

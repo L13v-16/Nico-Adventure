@@ -25,8 +25,8 @@ func _ready() -> void:
 		socket.forge=self
 		add_child(socket)
 	_label=Label.new()
-	_label.position=Vector2(-68,8)
-	_label.size=Vector2(136,14)
+	_label.position=Vector2(-88,-135)
+	_label.size=Vector2(176,14)
 	_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_label.add_theme_font_size_override("font_size",8)
 	_label.add_theme_color_override("font_color",Color("ffe0a6"))
@@ -35,7 +35,7 @@ func _ready() -> void:
 	add_child(_label)
 	for i in 4:
 		var rune:=Art.actor("V35/valves",20)
-		rune.position+=Vector2(-26+i*18,40)
+		rune.position+=Vector2(-27+i*18,-8)
 		rune.play(&"fire_active" if PATTERN[i]=="fire" else &"ice_active")
 		add_child(rune)
 		_runes.append(rune)
@@ -61,7 +61,7 @@ func activate(element:String) -> bool:
 	_update()
 	return true
 func _update() -> void:
-	_label.text="FORJA · "+("PRONTA" if complete else ("%d / 4"%progress if power_ready else "C: EMPURRE O BLOCO"))
+	_label.text="FORJA · "+("PRONTA" if complete else ("FOGO / GELO · %d / 4"%progress if power_ready else "DESPERTE NO SANTUÁRIO"))
 	var pose:StringName=&"off" if not power_ready else &"ready"
 	if complete:pose=&"working"
 	elif progress>0:pose=[&"fire",&"ice",&"fire_strike"][progress-1]

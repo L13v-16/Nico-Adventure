@@ -64,9 +64,11 @@ func _physics_process(delta: float) -> void:
 	if not boss.active or boss.phase != 5: return
 	if _finish_left >= 0:
 		_finish_left -= delta
+		for beam in _beams: beam.time += delta
+		queue_redraw()
 		if _finish_left <= 0:
 			boss._defeat()
-			return
+		return
 	_clock += delta
 	for ledge in _orbits:
 		var tier: int = ledge.get_meta("tier")
@@ -113,8 +115,13 @@ func _recover() -> void:
 
 func _on_cannon(cannon: StaticBody2D) -> void:
 	if not boss.active or boss.phase != 5 or hits >= 3: return
+	if cannon != cannons[hits] or not cannon.spent: return
 	cannon.set_meta("fired_at", cannon._clock)
 	hits += 1
+	# A successful activation earns a short breathing space for the next jump.
+	_warning = 0
+	_attack = 2.8
+	boss._player._invulnerability_timer = maxf(boss._player._invulnerability_timer, 1.0)
 	_beams.append({"from": cannon.position + Vector2(0, -28), "to": Vector2(0, -118), "time": 0.0, "ice": cannon.element == "ice"})
 	Sfx.play("warden_cannon", -3)
 	Sfx.play("warden_break", -7)

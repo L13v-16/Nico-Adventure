@@ -503,3 +503,11 @@ V43 — RÉDEAS DO SUBMUNDO
 José lança correntes para tentar domar o Carcereiro. Nico e José sobem nele e partem em direção à próxima ilha. Cena animada com retratos, sons, roupas de Nico e salto entre as margens.
 E/Enter/Espaço ou clique: próxima ação. Esc: pular para resultados. Música e progresso da fase são preservados.
 Oito novos sprites de correntes em world/Arte/Underworld/V43/, também aplicados à escalada e ao golpe preso do guardião. PNG, recortes e prompt incluídos.
+
+V44 — CARCEREIRO MAIS ANIMADO
+16 novos quadros de preparação, pancada, recuperação, dano e rugido. Sprites e prompt: world/Arte/Underworld/V44/.
+Depois de pular a onda, acerte o FECHO DOURADO da corrente presa com J/X; não é preciso correr até o corpo do chefe. A recuperação dá tempo para recuar.
+As correntes lançadas mostram a mira antes do disparo e podem ser bloqueadas por pedras. Alcançar o patamar superior ativa uma retomada da luta na armadura.
+Canhões dão um breve intervalo seguro após cada acerto. HUD indica a etapa e a instrução em linhas separadas; a câmera acompanha os dois combatentes. A fuga montada com José continua sendo a cena final.
+
+Santuário e forja (v44): o centro da fase agora abriga um santuário divino de mármore claro e ouro, arco solar, braseiros dos dois elementos, raios suaves e partículas. A câmera mostra a estrutura inteira durante a levitação com água e chamas. O poder continua sendo adquirido somente ali. A caixa de contrapeso e as duas plataformas suspensas sem apoio foram retiradas do corredor da forja; o santuário libera o mecanismo. Fogo → gelo → fogo → gelo e os jatos de vapor continuam como desafio, com instruções e runas acima do chão. Sprite e prompt em world/Arte/Underworld/V44/sanctuary*.
