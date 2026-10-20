@@ -492,3 +492,9 @@ V33: árvores aprofundadas para 16–19 pixels dentro do chão. Novas capturas d
 V41 — FUMAÇA NO SUBMUNDO
 Duas camadas de fumaça com movimento lento e paralaxe, em tons de cinza e roxo. A camada próxima se concentra nas bordas inferiores; HUD e diálogos ficam acima do efeito. A fumaça respeita a pausa e aparece apenas nesta fase.
 Verificado na entrada, na forja e na arena do Carcereiro, em janela Vulkan e sem janela. Saves de teste isolados.
+
+V42 — CARCEREIRO E ÚLTIMA CORRENTE
+Entrada animada e pulável, sons próprios de combate e correntes visíveis. A entrada não se repete nas novas tentativas.
+Depois da ajuda de José, suba a estrutura cilíndrica em torno do chefe. Ative os canhões em ordem: FOGO, GELO, FOGO. K dispara, Q alterna. Observe a marca da corrente e saia dela antes do impacto.
+Apoios laterais servem de descanso. Quedas causam dano e devolvem Nico ao apoio; uma morte na última etapa mantém os canhões já ativados. O terceiro disparo liberta o Carcereiro e revela a Chave das Profundezas.
+Sprites e prompt: world/Arte/Underworld/V42/. Tiros muito próximos também atingem a runa do canhão.

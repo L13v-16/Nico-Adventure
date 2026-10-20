@@ -12,6 +12,8 @@ func _physics_process(delta:float) -> void:
 	if life<=0:queue_free();return
 	var next:=global_position+flight*delta
 	var query:=PhysicsRayQueryParameters2D.create(global_position,next,1|4|16)
+	# A close-range shot can start inside a cannon's rune (or an enemy).
+	query.hit_from_inside = true
 	if is_instance_valid(source) and source is CollisionObject2D:query.exclude=[source.get_rid()]
 	var hit:=get_world_2d().direct_space_state.intersect_ray(query)
 	if not hit.is_empty():

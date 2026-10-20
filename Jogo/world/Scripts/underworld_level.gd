@@ -114,8 +114,11 @@ func _process(delta:float) -> void:
 	var arena_y:float=-65
 	if arena and boss.phase==2:arena_y=lerpf(-65,-220,clampf((boss._phase_time-2)/9,0,1))
 	elif arena and boss.phase>=3:arena_y=-220
-	var desired:=Vector2(6950-x-float(player._camera_look),arena_y-player.position.y) if arena else Vector2(55,-38)
+	if arena and boss.phase==5:arena_y=-312
+	var arena_x:float=7145 if arena and boss.phase==5 else 6950
+	var desired:=Vector2(arena_x-x-float(player._camera_look),arena_y-player.position.y) if arena else Vector2(55,-38)
 	player._camera_base_offset=player._camera_base_offset.lerp(desired,1-exp(-delta*5))
+	camera.limit_top=-750 if arena and boss.phase==5 else -550
 	if player.position.y>210 and x<6450:player.take_damage(3,Vector2(x,240))
 	if not temple_seen and not _temple_busy and player.is_on_floor() and not player.is_dead() and x>3460 and x<3750:_temple()
 	if Input.is_action_just_pressed("jose_command") and player.elements.can_control():_command_jose()
@@ -130,6 +133,7 @@ func _process(delta:float) -> void:
 	elif arena:hint.text=boss._advice()+"  ·  K: disparo  ·  Q: elemento  ·  C: José"
 	elif not key_collected:hint.text="Recolha a Chave das Profundezas no alto da arena para abrir a saída."
 	else:hint.text="Chave das Profundezas obtida! Siga para a passagem da corporação à direita."
+	if arena and boss.phase==5:hint.text="Salte pelas plataformas de pedra  ·  Canhões: FOGO → GELO → FOGO  ·  K: disparar  ·  Q: alternar"
 	if x>7730:_on_finish_entered(player)
 	queue_redraw()
 func _unhandled_input(event:InputEvent) -> void:

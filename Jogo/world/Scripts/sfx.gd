@@ -210,6 +210,19 @@ func _build_streams() -> void:
 	_streams["menu"] = _synth(0.07, 660.0, 660.0, Wave.TRIANGLE, 0.32, 0.003, 0.05)
 	_streams["select"] = _synth(0.09, 880.0, 1180.0, Wave.SQUARE, 0.32, 0.003, 0.06)
 	_streams["secret"] = _sequence([[783.99, 0.07], [987.77, 0.07], [1174.66, 0.18]], Wave.TRIANGLE, 0.34, 0.004, 0.08)
+	# The guardian has a heavier palette than ordinary enemies. Every cue is
+	# event-driven (never restarted every frame), through the normal SFX bus.
+	_streams["warden_roar"] = _synth(1.15, 105, 43, Wave.SAW, 0.42, 0.14, 0.65, 0.12, 0.35)
+	_streams["warden_chain"] = _sequence([[740, 0.07], [185, 0.08], [990, 0.06], [247, 0.13]], Wave.SQUARE, 0.27, 0.001, 0.05)
+	_streams["warden_slam"] = _synth(0.48, 135, 27, Wave.TRIANGLE, 0.63, 0.001, 0.4, 0, 0.55)
+	_streams["warden_rise"] = _synth(0.85, 58, 165, Wave.SAW, 0.32, 0.16, 0.4, 0.06, 0.4)
+	_streams["warden_break"] = _synth(0.42, 610, 115, Wave.SQUARE, 0.38, 0.001, 0.37, 0, 0.7)
+	_streams["warden_hurt"] = _synth(0.27, 125, 55, Wave.SAW, 0.36, 0.006, 0.23, 0.09, 0.3)
+	_streams["warden_fire_charge"] = _synth(0.75, 105, 510, Wave.SAW, 0.28, 0.16, 0.2, 0.025, 0.28)
+	_streams["warden_ice_charge"] = _sequence([[523, 0.15], [784, 0.15], [1046, 0.18], [1568, 0.25]], Wave.TRIANGLE, 0.34, 0.015, 0.1)
+	_streams["warden_cannon"] = _synth(0.58, 230, 32, Wave.TRIANGLE, 0.63, 0.001, 0.48, 0, 0.65)
+	_streams["warden_fizzle"] = _synth(0.19, 480, 90, Wave.NOISE, 0.22, 0.002, 0.16)
+	_streams["warden_freed"] = _sequence([[196, 0.15], [294, 0.15], [392, 0.17], [587, 0.45]], Wave.TRIANGLE, 0.4, 0.02, 0.15)
 
 
 ## Trilha calma em laço: baixo, acorde sustentado e arpejo sobre I-V-vi-IV.

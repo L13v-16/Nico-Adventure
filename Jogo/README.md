@@ -337,3 +337,13 @@ Validação: 99 verificações de contato das raízes, estabilidade da âncora, 
 Fumaça de cinzas em duas camadas, com deriva lenta e paralaxe: uma atrás do cenário e outra discreta nas bordas inferiores da tela. O efeito usa ruído contínuo em shader, com passos de dois pixels, e acompanha o enquadramento sem cobrir a HUD ou interceptar comandos. Pausa e retoma com a fase; existe apenas no Submundo.
 
 Validação: 15 verificações sem janela e 21 na janela Vulkan, incluindo textura contínua, camadas, pausa, retomada, renderização real e limpeza ao sair da fase. Entrada, forja e arena foram capturadas com saves isolados.
+
+## Carcereiro: entrada e última corrente (v42)
+
+A luta do Submundo tem uma entrada animada de cinco segundos, com aproximação do guardião, pose de ataque, impacto, nome e fala. Enter, E ou Esc pulam a cena; novas tentativas dispensam sua repetição. A música continua durante a entrada. Correntes presas ficam visíveis e o chefe reage aos golpes. Onze efeitos sintetizados próprios distinguem rugido, correntes, pancadas, lava, armadura, fogo, gelo, disparo e libertação; usam o volume SFX das opções.
+
+Após a cabeçada de José e os últimos golpes, surge a etapa **Última Corrente**: uma estrutura cilíndrica com quatro alturas, 16 plataformas em órbita e apoios laterais. Os canhões de obsidiana são ativados na sequência **fogo → gelo → fogo**, usando K e Q. O elemento errado não dispara e um canhão só concede um acerto. Correntes marcam a posição antes do golpe; mover-se evita o impacto. Os apoios separam a subida em trechos; quedas recuperam Nico com dano, mortes mantêm os canhões já usados nesta tentativa. A transição recupera a vida. O último disparo liberta o guardião, revela a chave e restaura o caminho de saída.
+
+Sprites novos dos canhões e seus oito estados em `world/Arte/Underworld/V42/`; imagem gerada pelo imagegen integrado, preservada sem alteração, com recortes nativos e prompt documentados. O guardião reutiliza a arte já existente. Disparos elementais passam a detectar alvos quando nascem dentro de uma colisão, corrigindo tiros muito próximos dos canhões.
+
+Validação: combate completo por comandos e projéteis reais; percurso físico da estrutura com corrida e saltos comuns; pausa, retomada, quedas, dicas de ataque, morte, cenas descartadas durante entrada/disparo, chave e encerramento. Saves isolados.
