@@ -1,0 +1,8 @@
+Use case: stylized-concept. Asset type: 2x2 atlas of FOUR seamless SQUARE 16-bit pixel-art terrain tiles for the reference side-scroller's dark underworld.
+Match reference grey-purple basalt blocks, black crevices, restrained light grey highlights, chunky pixel clusters. The old side texture has a projecting cap on every row: eliminate this.
+Exact 2x2 layout, equal square cells, clear transparent gutters between FOUR FULLY RECTANGULAR filled tiles.
+TOP LEFT: top-left outer ground corner, thin flat light stone walking ledge across TOP only, straight solid vertical left boundary with a subtly lighter rim.
+TOP RIGHT: mirrored top-right outer ground corner, thin ledge along TOP only, straight solid vertical right boundary.
+BOTTOM LEFT: repeating LEFT VERTICAL CLIFF WALL tile, SOLID FILLED rectangle all the way to left boundary, subtle vertical lighter rim along left only; no horizontal ledge, no grass, no protruding ledge, NO rounded outside silhouette. Rocks meet upper and lower square boundaries so repeated tiles form one continuous cliff.
+BOTTOM RIGHT: repeating RIGHT VERTICAL CLIFF WALL tile matching left, same solid square rectangle with rim on right only. No top cap or bottom lip on either lower-row tile.
+All four squares use the same light direction and rock scale. Orthographic side view, no perspective. No floating stones, no foliage, no labels, no symbols. Transparent background only OUTSIDE the four rectangular tile cells. Deliberate clean pixel art, not photorealism.

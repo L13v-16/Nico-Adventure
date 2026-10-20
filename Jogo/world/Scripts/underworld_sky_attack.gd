@@ -18,6 +18,8 @@ var _caption: Label
 var _hit := false
 var _landed := false
 var _warned := false
+var _fall_sound:=false
+var _fall_player:AudioStreamPlayer
 var _shade: Control
 var player: CharacterBody2D
 
@@ -77,6 +79,14 @@ func update_scene(time: float) -> void:
 		if not _hit:
 			_hit = true
 			Sfx.hit()
+		if time>=IMPACT+0.2 and time<LANDING and not _fall_sound:
+			_fall_sound=true
+			_fall_player=AudioStreamPlayer.new()
+			_fall_player.stream=Sfx._streams["sky_fall"]
+			_fall_player.bus="SFX"
+			_fall_player.volume_db=-6
+			add_child(_fall_player)
+			_fall_player.play()
 		var fall := time-IMPACT
 		bird.position = (Vector2(219,113)+Vector2(fall*90,-fall*95)).round()
 		bird.rotation = -minf(fall,0.3)
@@ -91,6 +101,7 @@ func update_scene(time: float) -> void:
 			rider.position = Vector2(302,lerpf(204,280,pow(clampf((time-7.7)/0.8,0,1),2)))
 		if time >= LANDING and not _landed:
 			_landed = true
+			if is_instance_valid(_fall_player):_fall_player.stop()
 			Sfx.land(1.0)
 	_caption.text = "ARARA MINAS  ·  Próxima parada: a ilha dos nossos amigos!" if time < 2.5 else ("NICO  ·  Minas, cuidado! Um tiro da empresa!" if time < IMPACT else ("ARARA MINAS  ·  Nico!" if time < 4.8 else ("" if time < LANDING else "NICO  ·  Onde eu vim parar...?")))
 	queue_redraw()

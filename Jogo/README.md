@@ -371,3 +371,16 @@ A última etapa preserva os canhões e a escalada. Uma ativação bem-sucedida l
 Validação: animações e apoio dos quadros renderizados; J real contra a corrente distante; primeira etapa vencida com saltos e ataques sem perder vida; mira fixa, bloqueio e dano dos projéteis; retomada superior; canhões, último disparo, chave e saída. Regressão completa do Submundo, sempre com saves isolados.
 
 Santuário e forja (v44): o centro da fase agora abriga um santuário divino de mármore claro e ouro, arco solar, braseiros dos dois elementos, raios suaves e partículas. A câmera mostra a estrutura inteira durante a levitação com água e chamas. O poder continua sendo adquirido somente ali. A caixa de contrapeso e as duas plataformas suspensas sem apoio foram retiradas do corredor da forja; o santuário libera o mecanismo. Fogo → gelo → fogo → gelo e os jatos de vapor continuam como desafio, com instruções e runas acima do chão. Sprite e prompt em world/Arte/Underworld/V44/sanctuary*.
+
+
+Submundo: cenário, som e subida acessível (v45)
+
+O voo de abertura ganhou um som descendente de queda, ligado ao volume de efeitos, disparado uma única vez depois do impacto e interrompido ao aterrissar ou sair da cena. A música continua.
+
+Sprites próprios substituem a pilastra esticada: coluna de basalto com proporções naturais, rachadura, queda e ponte de pedra formada pela cabeçada de José. As laterais dos abismos usam paredes verticais contínuas, com a borda superior somente na primeira fileira. Os gêiseres de impulso têm uma plataforma sólida com setas turquesa e quatro estados visuais; continuam lançando Nico para cima. Originais, prompts e recortes em world/Arte/Underworld/V45/.
+
+Na forja, quatro esferas embutidas no chão mostram vermelho → azul → vermelho → azul. Os indicadores se acendem conforme os disparos corretos; válvulas, sequência e jatos de vapor continuam funcionando.
+
+Na segunda etapa do Carcereiro, todo o chão da arena sobe. Há dois segundos de preparação e uma subida suave de 16 segundos, sem exigir saltos nem escalada. O AnimatableBody2D carrega Nico e José pela física; a lava permanece 70 pixels abaixo do piso, e os ataques de corrente têm aviso de 0,8 segundo e intervalo de 3,6 segundos. O piso continua no alto durante o restante da luta, incluindo a retomada após morrer. A câmera acompanha a nova velocidade. A última etapa dos canhões mantém seu funcionamento.
+
+Validação: transporte sem entrada de salto em três posições da arena, distância da lava e preservação dos corações, retomada superior, reprodução/encerramento do som, sprites e colisões da coluna/ponte/gêiser, renderização das laterais e quatro esferas, além da regressão completa com disparos reais, José, forja, chefe, canhões e fuga. Saves isolados em todos os testes.

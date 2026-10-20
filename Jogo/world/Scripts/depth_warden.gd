@@ -37,7 +37,9 @@ var _cast_target := Vector2.ZERO
 var _cast_anim := 0.0
 var _phase_caption: Label
 var _anchor: StaticBody2D
+var _rising_floor:AnimatableBody2D
 func _ready() -> void:
+	process_physics_priority=-30
 	add_to_group("enemies")
 	add_to_group("bosses")
 	add_to_group("jose_targets")
@@ -149,6 +151,7 @@ func reset_encounter() -> void:
 		cylinder._recover()
 		return
 	if _upper_unlocked:
+		_ensure_rising_floor()
 		_clear_projectiles()
 		active = true
 		health = 9
@@ -173,6 +176,8 @@ func reset_encounter() -> void:
 		_player._invulnerability_timer = 1.5
 		return
 	_clear_gates()
+	if is_instance_valid(_rising_floor):_rising_floor.queue_free()
+	_rising_floor=null
 	_clear_projectiles()
 	active=false
 	health=MAX_HEALTH
@@ -230,20 +235,21 @@ func _physics_process(delta:float) -> void:
 	_sprite.modulate=Color("ffdfb3") if _invulnerable>0 else Color.WHITE
 	_side=-1 if _player.position.x<position.x else 1
 	_sprite.flip_h=_side>0
-	_pedestal.visible=phase==2
-	_pedestal.collision_layer=1 if phase==2 else 0
+	_pedestal.hide()
+	_pedestal.collision_layer=0
 	if phase==2:
-		lava_y=lerpf(153, -109,clampf(_phase_time/13,0,1))
-		position.y=lerpf(100,UPPER_FLOOR,clampf((_phase_time-2)/9,0,1))
+		_ensure_rising_floor()
+		position.y=_rising_floor.floor_height()
+		lava_y=position.y+70
 		_sprite.play(&"chain_cast" if _cast_anim > 0 or _cast_warn else &"lava")
-		if _timer <= 0.4 and not _cast_warn:
+		if _timer <= 0.8 and not _cast_warn:
 			_cast_warn = true
 			_cast_target = _player.position
 		if _timer<=0:
 			_cast_chain()
-			_timer=2.3
+			_timer=3.6
 			_cast_warn = false
-		if _phase_time>=11 and _player.position.y+11<=UPPER_FLOOR+15:
+		if _phase_time>=18:
 			phase=3
 			position.y=UPPER_FLOOR
 			_phase_time=0
@@ -299,7 +305,7 @@ func _advice() -> String:
 	if _vulnerable>0 and phase < 5:return "J / X NA CORRENTE PRESA!" if phase == 1 else "ATAQUE O PONTO FRACO!"
 	match phase:
 		1:return "Pule a onda; J / X no fecho dourado da corrente presa"
-		2:return "LAVA SUBINDO! E: corrente · ↑: subir · Espaço: soltar"
+		2:return "O CHÃO ESTÁ SUBINDO! Desvie das correntes; não é preciso escalar"
 		3:return "GELO nas correntes!" if heated else "FOGO na armadura!"
 		4:return "Atraia para o círculo dourado e use C: JOSÉ"
 		5:return "Suba pelas plataformas; K no canhão de " + ("GELO" if cylinder.hits == 1 else "FOGO") + " · Q: alternar"
@@ -348,8 +354,11 @@ func take_damage(amount:float,_source:Vector2) -> void:
 		phase=2
 		_phase_time=0
 		_vulnerable=0
-		_timer=1.8
+		_timer=4.0
 		_clear_projectiles()
+		_ensure_rising_floor()
+		Sfx.play("warden_rise",-7)
+		Fx.popup(_player.position+Vector2(0,-50),"FIQUE NO PISO · A ARENA VAI SUBIR",Color("ffe2aa"),9)
 	elif phase==3 and health<=3:
 		health=3
 		phase=4
@@ -381,6 +390,13 @@ func _begin_cylinder() -> void:
 	cylinder.name = "WardenCylinder"
 	cylinder.boss = self
 	get_parent().add_child(cylinder)
+func _ensure_rising_floor() -> void:
+	if is_instance_valid(_rising_floor):return
+	_rising_floor=preload("res://world/Scripts/warden_rising_floor.gd").new()
+	_rising_floor.boss=self
+	_rising_floor.sync_to_physics=false
+	_rising_floor.position=Vector2(6456,_rising_floor.floor_height())
+	get_parent().add_child(_rising_floor)
 func can_jose_target() -> bool:
 	return active and phase==4 and not is_dead() and not armor_broken and absf(position.x-MARKER_X)<70
 func jose_point() -> Vector2:return Vector2(position.x,UPPER_FLOOR)

@@ -8,6 +8,7 @@ var _jet:Sprite2D
 var _terrain:Node2D
 var _ground_frame:=0
 var _jet_height:=0.0
+var _launch_pad:AnimatedSprite2D
 const GROUND_FRAMES: Array[Texture2D]=[
 	preload("res://world/Arte/Underworld/V39/terrain_16.tres"),
 	preload("res://world/Arte/Underworld/V39/terrain_17.tres"),
@@ -26,6 +27,29 @@ func _ready() -> void:
 	_jet=_make_sprite()
 	_jet.name="LavaJet"
 	_jet.hide()
+	if launch_geyser:
+		var support:=StaticBody2D.new()
+		support.collision_layer=1
+		support.collision_mask=0
+		var shape:=RectangleShape2D.new()
+		shape.size=Vector2(44,6)
+		var collider:=CollisionShape2D.new()
+		collider.shape=shape
+		collider.position=Vector2(0,-3)
+		collider.one_way_collision=true
+		support.add_child(collider)
+		add_child(support)
+		_launch_pad=AnimatedSprite2D.new()
+		_launch_pad.sprite_frames=preload("res://world/Arte/Underworld/V45/launch_pad.tres")
+		_launch_pad.centered=false
+		_launch_pad.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+		_launch_pad.material=preload("res://world/Scripts/magic_art.gd").material()
+		_launch_pad.material.set_shader_parameter("alpha_cutoff",0.94)
+		var texture:Texture2D=_launch_pad.sprite_frames.get_frame_texture(&"dormant",0)
+		var ratio:float=50.0/float(texture.get_meta("core_width"))
+		_launch_pad.scale=Vector2.ONE*ratio
+		_launch_pad.position=Vector2(-texture.get_width()*0.5*ratio,12-500*ratio)
+		add_child(_launch_pad)
 	_update_art()
 
 func _make_sprite(parent:Node=null) -> Sprite2D:
@@ -70,6 +94,7 @@ func _physics_process(delta:float) -> void:
 	queue_redraw()
 
 func _update_art() -> void:
+	if is_instance_valid(_launch_pad):_launch_pad.play(StringName(state))
 	# A fenda nunca troca de tamanho nem abandona o piso; o jato é outra peça.
 	var base_index:=0
 	if state=="warning":base_index=1 if cycle<2.95 else 2
@@ -90,14 +115,6 @@ func _update_art() -> void:
 		_jet.scale=Vector2(48,maxf(_jet_height,0.01))/_jet.texture.get_size()
 
 func _draw() -> void:
-	if launch_geyser:
-		# Marca gravada na face do próprio tile, sem placa flutuante.
-		draw_rect(Rect2(-1,15,2,7),Color("80b7c3"))
-		draw_rect(Rect2(-5,17,2,2),Color("80b7c3"))
-		draw_rect(Rect2(3,17,2,2),Color("80b7c3"))
-		draw_rect(Rect2(-3,15,2,2),Color("80b7c3"))
-		draw_rect(Rect2(1,15,2,2),Color("80b7c3"))
-		draw_rect(Rect2(-1,13,2,2),Color("a8d0d5"))
 	if state=="warning":
 		var heat:=clampf((cycle-2.2)/1.25,0,1)
 		for i in 6:

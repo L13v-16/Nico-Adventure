@@ -1,0 +1,172 @@
+{
+  "pillar": {
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-68db8d63-9734-4f12-bfe8-aa2bf7e795ed.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "frames": [
+      {
+        "region": [
+          253,
+          36,
+          234,
+          468
+        ],
+        "margin": [
+          253,
+          32,
+          534,
+          44
+        ]
+      },
+      {
+        "region": [
+          989,
+          38,
+          331,
+          466
+        ],
+        "margin": [
+          221,
+          34,
+          437,
+          46
+        ]
+      },
+      {
+        "region": [
+          143,
+          573,
+          527,
+          404
+        ],
+        "margin": [
+          143,
+          96,
+          241,
+          108
+        ]
+      },
+      {
+        "region": [
+          746,
+          813,
+          752,
+          155
+        ],
+        "margin": null
+      }
+    ]
+  },
+  "launch_pad": {
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-e932861a-f201-4879-b9d1-f4e553d3d42c.png",
+    "size": [
+      1536,
+      1024
+    ],
+    "frames": [
+      {
+        "region": [
+          145,
+          301,
+          478,
+          179
+        ],
+        "margin": [
+          145,
+          324,
+          290,
+          381
+        ]
+      },
+      {
+        "region": [
+          913,
+          141,
+          478,
+          339
+        ],
+        "margin": [
+          145,
+          164,
+          290,
+          221
+        ]
+      },
+      {
+        "region": [
+          129,
+          780,
+          521,
+          203
+        ],
+        "margin": [
+          129,
+          324,
+          247,
+          357
+        ]
+      },
+      {
+        "region": [
+          913,
+          661,
+          478,
+          299
+        ],
+        "margin": [
+          145,
+          206,
+          290,
+          261
+        ]
+      }
+    ]
+  },
+  "cliff": {
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-5506aecc-c27a-4776-bcec-fcdb2eec8035.png",
+    "size": [
+      1278,
+      1230
+    ],
+    "frames": [
+      {
+        "region": [
+          93,
+          87,
+          533,
+          501
+        ],
+        "margin": null
+      },
+      {
+        "region": [
+          652,
+          87,
+          533,
+          501
+        ],
+        "margin": null
+      },
+      {
+        "region": [
+          98,
+          617,
+          528,
+          524
+        ],
+        "margin": null
+      },
+      {
+        "region": [
+          652,
+          617,
+          529,
+          524
+        ],
+        "margin": null
+      }
+    ]
+  }
+}

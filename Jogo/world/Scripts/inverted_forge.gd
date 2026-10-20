@@ -9,7 +9,6 @@ var gate:StaticBody2D
 var _label:Label
 var _flash:=0.0
 var _machine:AnimatedSprite2D
-var _runes:Array[AnimatedSprite2D]=[]
 func _ready() -> void:
 	_machine=Art.actor("V35/forge",112)
 	_machine.name="ForgeSprite"
@@ -33,12 +32,6 @@ func _ready() -> void:
 	_label.add_theme_color_override("font_outline_color",Color("171321"))
 	_label.add_theme_constant_override("outline_size",2)
 	add_child(_label)
-	for i in 4:
-		var rune:=Art.actor("V35/valves",20)
-		rune.position+=Vector2(-27+i*18,-8)
-		rune.play(&"fire_active" if PATTERN[i]=="fire" else &"ice_active")
-		add_child(rune)
-		_runes.append(rune)
 	_update()
 func activate(element:String) -> bool:
 	if complete:return false
@@ -66,10 +59,23 @@ func _update() -> void:
 	if complete:pose=&"working"
 	elif progress>0:pose=[&"fire",&"ice",&"fire_strike"][progress-1]
 	_machine.play(pose)
-	for i in _runes.size():_runes[i].modulate=Color.WHITE if i<progress else Color(0.5,0.45,0.55,0.55)
 	queue_redraw()
 func _process(delta:float) -> void:
 	_flash=maxf(0,_flash-delta)
 	_machine.modulate=Color(1,0.65,0.55) if _flash>0 else Color.WHITE
+	queue_redraw()
 func _draw() -> void:
 	draw_texture_rect(preload("res://world/Arte/Underworld/V35/forge_pipe.tres"),Rect2(-103,-7,206,6),false)
+	# Quatro cavidades no chão mostram a sequência mesmo antes da ativação.
+	for i in 4:
+		var at:=Vector2(-54+i*36,12)
+		var fire:bool=PATTERN[i]=="fire"
+		var base:=Color("ae494b") if fire else Color("386baf")
+		var light:=Color("ff9b83") if fire else Color("8bd9ff")
+		if i<progress:base=base.lightened(0.3)
+		draw_circle(at,9,Color("151320"))
+		draw_circle(at+Vector2(0,1),7,Color("4e3f52"))
+		draw_circle(at,6,base)
+		draw_rect(Rect2(at+Vector2(-3,-3),Vector2(4,2)),light)
+		draw_rect(Rect2(at+Vector2(-3,3),Vector2(7,2)),base.darkened(0.35))
+		if i<progress:draw_arc(at,8,0,TAU,24,light,1)

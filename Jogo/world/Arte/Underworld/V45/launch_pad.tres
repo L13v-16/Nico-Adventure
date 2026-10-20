@@ -1,0 +1,12 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V45/launch_pad_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V45/launch_pad_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V45/launch_pad_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V45/launch_pad_03.tres" id="f3"]
+[resource]
+animations = [
+{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}], "loop": true, "name": &"dormant", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f1")}], "loop": true, "name": &"warning", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f2")}], "loop": true, "name": &"erupting", "speed": 1.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f3")}], "loop": true, "name": &"cooling", "speed": 1.0}
+]

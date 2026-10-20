@@ -210,6 +210,7 @@ func _build_streams() -> void:
 	_streams["menu"] = _synth(0.07, 660.0, 660.0, Wave.TRIANGLE, 0.32, 0.003, 0.05)
 	_streams["select"] = _synth(0.09, 880.0, 1180.0, Wave.SQUARE, 0.32, 0.003, 0.06)
 	_streams["secret"] = _sequence([[783.99, 0.07], [987.77, 0.07], [1174.66, 0.18]], Wave.TRIANGLE, 0.34, 0.004, 0.08)
+	_streams["sky_fall"] = _synth(2.9,760,55,Wave.TRIANGLE,0.38,0.06,0.7,0.04,0.3)
 	# The guardian has a heavier palette than ordinary enemies. Every cue is
 	# event-driven (never restarted every frame), through the normal SFX bus.
 	_streams["warden_roar"] = _synth(1.15, 105, 43, Wave.SAW, 0.42, 0.14, 0.65, 0.12, 0.35)

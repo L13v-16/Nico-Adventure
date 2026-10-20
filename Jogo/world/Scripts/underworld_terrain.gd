@@ -37,4 +37,5 @@ func _draw() -> void:
 			if reference!=null and reference.get_ref()!=null:
 				draw_texture_rect(reference.get_ref().ground_texture(),cell,false)
 				continue
-			Tiles.tile(self,cell,index)
+			if left or right:Tiles.cliff(self,cell,left,y==0)
+			else:Tiles.tile(self,cell,index)
