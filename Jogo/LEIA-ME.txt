@@ -1,3 +1,11 @@
+NOVIDADES v40 — NICO LEVITANDO NO ALTAR
+Nico flutua entre dois jatos de água e duas chamas, que se concentram nele.
+Os poderes da jogabilidade continuam fogo e gelo; água é o efeito da cutscene.
+Animação de cerca de oito segundos, seguida das instruções do altar.
+Roupas equipadas, música, aterrissagem e controles preservados.
+Enter/E/Espaço avança a animação; ESC pula a cena e libera os poderes.
+Sprites originais e prompt final em world/Arte/Underworld/V40/.
+
 NOVIDADES v39 — CHÃO E GÊISERES
 20 tiles novos e integrados: chão, paredes, plataformas, bordas e fendas.
 O gêiser é um tile do próprio chão, com quatro estados de calor.

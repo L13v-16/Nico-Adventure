@@ -16,6 +16,11 @@ var _title:Label
 var _portraits:Dictionary={}
 var _old_hud:=true
 var _sky:Control
+var _ritual:Node2D
+var _panel:Panel
+var _ritual_caption:Label
+var _continue_hint:Label
+var _temple_talk_started:=false
 const Ui=preload("res://world/Scripts/ui_style.gd")
 const LINES={
 	"arrival":[
@@ -26,7 +31,7 @@ const LINES={
 		["José","Rochas claras se aproximam; as roxas se afastam. Ajuste a ponte e use as pedras para se proteger dos tridentes. Vamos juntos!"],
 	],
 	"temple":[
-		["José","O Altar dos Contrários! Aproxime-se do pedestal. Ele ensina a lançar fogo e gelo sem precisar de frutas."],
+		["José","As chamas e as águas do altar despertaram seu domínio dos contrários! Agora você pode usar fogo e gelo sem frutas."],
 		["Nico","Agora consigo lançar fogo e gelo quando quiser! K dispara; Q alterna o elemento. Não preciso gastar frutas."],
 		["José","Na forja: fogo na válvula laranja, gelo na azul, fogo e gelo outra vez. Desvie do vapor e use as plataformas."],
 		["José","O Carcereiro guarda a chave. A corporação prendeu correntes no guardião. Talvez seja possível quebrar esse controle!"],
@@ -64,6 +69,7 @@ func _ready() -> void:
 		return
 	_lines=LINES[mode]
 	var panel:=Panel.new()
+	_panel=panel
 	panel.position=Vector2(18,224)
 	panel.size=Vector2(604,112)
 	var style:=Ui.panel_style()
@@ -83,8 +89,18 @@ func _ready() -> void:
 	_speaker=_label("",13,Rect2(115,235,480,22),Color("f7bd83"))
 	_line=_label("",13,Rect2(115,262,477,66),Color("f7eee2"))
 	_line.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	_label("E / Enter / Espaço: continuar   ·   ESC: pular",10,Rect2(24,341,590,17),Color("c5acb6"))
+	_continue_hint=_label("E / Enter / Espaço: continuar   ·   ESC: pular",10,Rect2(24,341,590,17),Color("c5acb6"))
 	_show_beat()
+	if mode=="temple":
+		_ritual=preload("res://world/Scripts/altar_awakening.gd").new()
+		_ritual.name="AltarAwakening"
+		_ritual.player=player
+		_ritual.altar=get_parent().get_node("Scenery/Temple")
+		get_parent().add_child(_ritual)
+		_ritual_caption=_label("O ALTAR RESPONDE",13,Rect2(35,297,570,28),Color("fff0c9"))
+		_ritual_caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		_set_temple_panel(false)
+		_continue_hint.text="E / Enter / Espaço: avançar animação   ·   ESC: pular"
 func _label(text:String,size:int,rect:Rect2,color:Color) -> Label:
 	var label:=Ui.label(text,size,color,HORIZONTAL_ALIGNMENT_LEFT)
 	label.position=rect.position
@@ -108,9 +124,11 @@ func _process(delta:float) -> void:
 		if _clock>=_sky.DURATION:_finish()
 		return
 	if mode=="temple":
-		var temple:AnimatedSprite2D=get_parent().get_node("Scenery/Temple")
-		var pose:StringName=&"temple_fire" if _clock<1.2 else (&"temple_ice" if _clock<2.4 else (&"temple_both" if _clock<3.6 else (&"temple_opening" if _clock<5 else &"temple_shine")))
-		temple.play(pose)
+		if not _temple_talk_started:
+			_ritual.update_scene(_clock)
+			_ritual_caption.text="O ALTAR RESPONDE" if _clock<1.1 else ("NICO É ERGUIDO PELA ENERGIA" if _clock<2.4 else ("ÁGUA E CHAMAS GIRAM AO SEU REDOR" if _clock<5.9 else ("O PODER DOS CONTRÁRIOS" if _clock<6.9 else "FOGO E GELO DESPERTARAM")))
+			if not _ritual.done:return
+			_start_temple_talk()
 	_line.visible_characters=-1 if _revealed else int(_elapsed*43)
 	if _speaker.text=="José":
 		_portrait.texture=load("res://world/Arte/Underworld/jose_portrait_talk.tres") if int(_clock*6)%2==0 and _line.visible_characters>=0 else _portraits["José"]
@@ -122,6 +140,11 @@ func _input(event:InputEvent) -> void:
 		_finish()
 	elif mode!="launch" and (event.is_action_pressed("ui_accept") or event.is_action_pressed("interagir") or (event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT)):
 		get_viewport().set_input_as_handled()
+		if mode=="temple" and not _temple_talk_started:
+			_clock=_ritual.DURATION
+			_ritual.update_scene(_clock)
+			_start_temple_talk()
+			return
 		if _line.visible_characters>=0 and _line.visible_characters<_line.text.length():_revealed=true
 		else:_advance()
 func _advance() -> void:
@@ -132,6 +155,7 @@ func _finish() -> void:
 	has_finished=true
 	if mode=="launch":
 		get_parent().player.show()
+	_cleanup_ritual()
 	var hud:=get_parent().get_node_or_null("HUD") as CanvasLayer
 	if hud!=null: hud.visible=_old_hud
 	Sfx.end_dialogue_music(self)
@@ -139,3 +163,27 @@ func _finish() -> void:
 	queue_free()
 func _draw_overlay() -> void:
 	_canvas.draw_rect(Rect2(0,0,640,7),Color("191522"))
+	if mode=="temple" and not _temple_talk_started:
+		_canvas.draw_rect(Rect2(0,0,640,360),Color(0.04,0.03,0.08,0.14))
+		_canvas.draw_rect(Rect2(0,330,640,30),Color("191522"))
+		var flash:=maxf(0,1-absf(_clock-6.45)/0.16)*0.2
+		if flash>0:_canvas.draw_rect(Rect2(0,0,640,330),Color(1,0.95,0.8,flash))
+
+func _set_temple_panel(shown:bool) -> void:
+	for node in [_panel,_portrait,_speaker,_line]:node.visible=shown
+
+func _start_temple_talk() -> void:
+	if _temple_talk_started:return
+	_temple_talk_started=true
+	_set_temple_panel(true)
+	_ritual_caption.hide()
+	_continue_hint.text="E / Enter / Espaço: continuar   ·   ESC: pular"
+	_show_beat()
+
+func _cleanup_ritual() -> void:
+	if is_instance_valid(_ritual):
+		_ritual.restore()
+		_ritual.queue_free()
+		_ritual=null
+
+func _exit_tree() -> void:_cleanup_ritual()

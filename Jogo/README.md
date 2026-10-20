@@ -6,6 +6,12 @@ A primeira fase atravessa a vila, a floresta e a caverna até a casa na árvore.
 
 A chegada tem uma casa de madeira construída entre os galhos de uma árvore, com copa, tronco e raízes integrados à mesma arte. A varanda elevada e os apoios de madeira conectam o caminho à porta. A câmera abre suavemente ao se aproximar do final para mostrar a árvore inteira; o encontro com Arara Minas reutiliza a mesma casa. A imagem está em `world/Arte/Props/casa_arvore_v13.png`; os prompts exatos acompanham o PNG em `PROMPT-CASA-ARVORE-v13.txt` e `PROMPT-CASA-ARVORE-v13-revisao.txt`.
 
+## Despertar dos poderes no altar — v40
+
+Nico levita diante do altar enquanto **dois jatos de água e duas chamas** giram em sentidos opostos, com faixas passando pela frente e por trás do corpo. A água é um efeito visual: as habilidades continuam sendo **fogo e gelo**. Os elementos se concentram em Nico num clarão, ele retorna ao chão e a conversa explica K, Q e o padrão da forja. A animação dura cerca de oito segundos, preserva as roupas equipadas, a música e a posição física do jogador. Enter/E/Espaço avança para as instruções; ESC pula toda a cena com restauração de Nico, HUD e controles. O aprendizado só é liberado ao concluir ou pular a cena.
+
+O encontro espera Nico aterrissar perto do altar. Os novos efeitos usam oito quadros originais de pixel art em `world/Arte/Underworld/V40/streams.png`, gerados com imagegen integrado. O PNG foi preservado sem alterações; prompt e recortes acompanham o arquivo.
+
 ## Tiles de chão e gêiseres — v39
 
 O Submundo usa um conjunto novo de **20 tiles**: superfícies de basalto, preenchimentos, bordas, plataformas, minerais e quatro estados de chão com fenda. Cada gêiser substitui uma célula de piso real; sua abertura fica no centro dessa célula, sem monte de pedras ou objeto flutuando acima. O jato é um sprite separado, com quatro quadros, crescimento e recuo durante a erupção. O dano acompanha sua altura visível. Os gêiseres de impulso mantêm a força de lançamento e têm uma pequena seta azul gravada na face da pedra.

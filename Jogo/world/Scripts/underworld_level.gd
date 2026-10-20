@@ -78,10 +78,12 @@ func _temple() -> void:
 	_timing=false
 	pause_menu.can_open=false
 	player._cancel_attack()
+	player.velocity=Vector2.ZERO
+	player.anim.play(&"idle")
 	var camera:=player.get_node("Camera2D") as Camera2D
 	camera.position_smoothing_enabled=false
-	camera.zoom=Vector2.ONE*1.15
-	camera.offset=Vector2(55,-9)
+	camera.zoom=Vector2.ONE*1.35
+	camera.offset=Vector2(3555-player.position.x,-20)
 	camera.force_update_scroll()
 	get_tree().paused=true
 	await _dialogue("temple","TempleLesson")
@@ -94,6 +96,7 @@ func _temple() -> void:
 	pause_menu.can_open=true
 	_timing=true
 	_show_notice("Poderes do altar! K: disparar · Q: alternar fogo/gelo" if saved else "Altar ativado nesta partida. Não foi possível salvar o aprendizado.")
+	player._camera_base_offset=camera.offset
 	camera.position_smoothing_enabled=true
 func _process(delta:float) -> void:
 	_clock+=delta
@@ -114,7 +117,7 @@ func _process(delta:float) -> void:
 	var desired:=Vector2(6950-x-float(player._camera_look),arena_y-player.position.y) if arena else Vector2(55,-38)
 	player._camera_base_offset=player._camera_base_offset.lerp(desired,1-exp(-delta*5))
 	if player.position.y>210 and x<6450:player.take_damage(3,Vector2(x,240))
-	if not temple_seen and not _temple_busy and x>3460 and x<3750:_temple()
+	if not temple_seen and not _temple_busy and player.is_on_floor() and not player.is_dead() and x>3460 and x<3750:_temple()
 	if Input.is_action_just_pressed("jose_command") and player.elements.can_control():_command_jose()
 	if x<900:hint.text="Pedras rachadas: C chama José para quebrar  ·  J / X: atacar  ·  Encontre o altar para aprender fogo e gelo."
 	elif x<1450:hint.text="Rochas claras seguem você; roxas se afastam. Posicione a ponte e pule. Ao embarcar, elas param."
