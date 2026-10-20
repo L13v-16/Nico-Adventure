@@ -2,6 +2,6 @@
 [ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_sheet.png" id="1"]
 [resource]
 atlas = ExtResource("1")
-region = Rect2(677, 112, 189, 199)
-margin = Rect2(62.0, 114, 124, 114)
+region = Rect2(677, 112, 207, 249)
+margin = Rect2(53.0, 64, 106, 64)
 filter_clip = true

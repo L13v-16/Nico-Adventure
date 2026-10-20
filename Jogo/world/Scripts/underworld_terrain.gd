@@ -20,12 +20,12 @@ func _draw() -> void:
 	if platform:
 		Tiles.platform(self,Rect2(0,0,width,depth))
 		return
-	for x in range(0,int(width),16):
-		for y in range(0,int(depth),16):
-			var cell:=Rect2(x,y,minf(16,width-x),minf(16,depth-y))
+	for x in range(0,int(width),32):
+		for y in range(0,int(depth),32):
+			var cell:=Rect2(x,y,minf(32,width-x),minf(32,depth-y))
 			var left:=x==0
-			var right:=x+16>=width
-			var index:=4 if left else (7 if right else 5+(int(x/16)+int(y/16))%2)
-			if y==0:index=0 if left else (3 if right else 1+int(x/16)%2)
+			var right:=x+32>=width
+			var index:=12 if left else (13 if right else 4+(int(x/32)+int(y/32))%4)
+			if y==0:index=int(x/32)%4
 			Tiles.tile(self,cell,index)
-	draw_rect(Rect2(0,0,width,1),Color("9a7d92"))
+	draw_rect(Rect2(0,0,width,1),Color("7b7189"))

@@ -6,6 +6,20 @@ A primeira fase atravessa a vila, a floresta e a caverna até a casa na árvore.
 
 A chegada tem uma casa de madeira construída entre os galhos de uma árvore, com copa, tronco e raízes integrados à mesma arte. A varanda elevada e os apoios de madeira conectam o caminho à porta. A câmera abre suavemente ao se aproximar do final para mostrar a árvore inteira; o encontro com Arara Minas reutiliza a mesma casa. A imagem está em `world/Arte/Props/casa_arvore_v13.png`; os prompts exatos acompanham o PNG em `PROMPT-CASA-ARVORE-v13.txt` e `PROMPT-CASA-ARVORE-v13-revisao.txt`.
 
+## Cenário e jogabilidade do Submundo — v36
+
+O Submundo recebeu um novo fundo de caverna em tons mais contidos, um tileset de basalto com blocos maiores e **16 tipos de props**: pedras, entulho, cristais baixos, fungos, estalagmites, estalactites, arcos, colunas em ruínas, correntes quebradas, equipamento de mineiro, carrinhos, trilhos, suportes de madeira, lanternas, estelas e muretas. São 56 peças colocadas em grupos por trecho, substituindo os pilares decorativos repetidos. A decoração fica atrás da área jogável; suas bases entram três pixels no piso. Estalactites e correntes curtas se prendem a arcos e suportes. As correntes longas da arena continuam interativas.
+
+As plataformas e rochas gravitacionais têm um topo horizontal com a largura visível correspondente à colisão. Os cristais ciano e roxo identificam os comportamentos de aproximação e afastamento. O cenário natural fica mais escuro que Nico e que os objetos interativos. A textura interna da lava foi suavizada para reduzir o ruído.
+
+Foram corrigidos **55 recortes** dos atlas anteriores de José, criaturas, objetos, chefe e cutscenes: algumas regiões incluíam pedaços do quadro vizinho e exibiam botas ou linhas soltas acima dos sprites. Os PNGs originais não foram modificados; os recortes agora acompanham a silhueta completa do objeto e a ancoragem de base.
+
+Na transição para a etapa final do Carcereiro, José aparece apoiado na plataforma superior e pode dar a cabeçada sem precisar cair e se recuperar antes. Os operários sobreviventes recuam e entram brevemente na pose de dano, sem causar contato durante esse intervalo. **Segurar K** mantém os disparos no ritmo do tempo de recarga. Obstáculos de José mostram **C · JOSÉ**, e os gêiseres de impulso têm uma seta visível acima da erupção. O templo não repete sua aula quando o poder permanente já foi salvo.
+
+Artes e prompts finais em `world/Arte/Underworld/V36/`: `props.png`, `terrain.png`, `background.png`, `PROMPT-props.txt`, `PROMPT-terrain.txt`, `PROMPT-background.txt` e `atlas_metadata.json`. Três imagens geradas com a ferramenta integrada de imagens, usando os sprites existentes de Nico e Oliver como referências de estilo; os arquivos originais foram preservados. Os atlas registram as dimensões reais de cada folha.
+
+Validação: 65 verificações das mecânicas da fase e 20 de cenário/correções, com dez capturas nativas. Uma travessia de 34 etapas com inimigos e dano ativos chegou à entrada da arena usando controles normais, ataques e poderes. A travessia das duas correntes foi conferida separadamente para geometria; os testes usam saves isolados. A verificação da cabeçada final parte da transição real da etapa três para a quatro, sem reposicionar José manualmente.
+
 ## Portal, lava e forja — v35
 
 O portal da saída tem arte própria: arco de obsidiana, correntes e cadeado, quatro quadros trancados, quatro de abertura e oito de vórtice em repetição. Recolher a Chave das Profundezas inicia a quebra das correntes; o vórtice continua animado durante a conversa final. O templo da aquisição dos poderes mantém sua arte própria.

@@ -17,7 +17,7 @@ static func draw_pool(canvas:CanvasItem,rect:Rect2,clock:float) -> void:
 		for y in range(first_y,last_y):
 			var at:=rect.position+Vector2(x*64,y*64)
 			var size:=Vector2(minf(64,rect.end.x-at.x),minf(64,rect.end.y-at.y))
-			canvas.draw_texture_rect(texture(&"body",body_tick+x+y*2),Rect2(at,size),false,Color("dec9bd"))
+			canvas.draw_texture_rect(texture(&"body",body_tick+x+y*2),Rect2(at,size),false,Color("bfa79d"))
 		canvas.draw_texture_rect(texture(&"surface",tick),Rect2(rect.position+Vector2(x*64,0),Vector2(minf(64,rect.size.x-x*64),22)),false)
 	for i in range(maxi(0,int((visible.position.x-rect.position.x)/96)),int(ceilf((visible.end.x-rect.position.x)/96))):
 		var t:=fposmod(clock*0.55+i*0.37,1)

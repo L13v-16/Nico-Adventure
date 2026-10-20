@@ -1,3 +1,13 @@
+NOVIDADES v36 — CENÁRIO E JOGABILIDADE DO SUBMUNDO
+16 novos tipos de cenário, 56 peças distribuídas pela mina e pelas ruínas.
+Novo fundo de caverna e chão de basalto com menos ruído visual.
+Rochas com topo plano alinhado à colisão. Corrigidos 55 recortes de sprites.
+José aparece no piso correto ao começar a etapa final da luta.
+Operários reagem aos golpes; segurar K mantém os disparos.
+Obstáculos mostram C · JOSÉ, e gêiseres de impulso têm seta acima da lava.
+O templo não repete a explicação quando a habilidade permanente já foi salva.
+Artes originais e prompts em world/Arte/Underworld/V36/. Detalhes no README.md.
+
 NOVIDADES v35 — PORTAL, LAVA E FORJA
 Portal próprio com correntes, cadeado, abertura animada e vórtice em oito quadros.
 Lava com texturas de correnteza, superfície animada, bolhas e gêiseres em sprites.

@@ -10,6 +10,7 @@ var _clock:=0.0
 var _side:=-1.0
 var _home:=Vector2.ZERO
 var _invulnerable:=0.0
+var _stagger:=0.0
 var _sprite:AnimatedSprite2D
 var _player:CharacterBody2D
 const Art=preload("res://world/Scripts/underworld_art.gd")
@@ -41,6 +42,15 @@ func _physics_process(delta:float) -> void:
 		frozen_left=maxf(0,frozen_left-delta)
 		_sprite.pause()
 		_sprite.modulate=Color("a2eaff")
+		return
+	_stagger=maxf(0,_stagger-delta)
+	if _stagger>0:
+		_sprite.play(&"hurt")
+		_sprite.modulate=Color("ffbf9d")
+		if species=="skeleton":
+			velocity.y=minf(velocity.y+980*delta,600)
+			velocity.x=move_toward(velocity.x,0,250*delta)
+			move_and_slide()
 		return
 	_clock+=delta
 	_timer-=delta
@@ -84,10 +94,14 @@ func _throw() -> void:
 func take_element(element:String,source:Vector2) -> void:
 	take_damage(1,source)
 	if element=="ice":freeze_for(3)
-func take_damage(amount:float,_source:Vector2) -> void:
+func take_damage(amount:float,source:Vector2) -> void:
 	if is_dead() or _invulnerable>0 or amount<=0:return
 	health=maxf(0,health-amount)
 	_invulnerable=0.3
+	_stagger=0.28
+	state="patrol"
+	_timer=1.1
+	velocity.x=(1 if position.x>=source.x else -1)*110
 	Fx.burst(position+Vector2(0,-18),Color("f6b17a"),7,90)
 	Sfx.hit()
 	if is_dead():

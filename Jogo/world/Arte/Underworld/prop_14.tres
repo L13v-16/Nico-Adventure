@@ -2,5 +2,5 @@
 [ext_resource type="Texture2D" path="res://world/Arte/Underworld/props_sheet.png" id="1"]
 [resource]
 atlas = ExtResource("1")
-region = Rect2(628, 998, 276, 211)
+region = Rect2(719, 998, 185, 211)
 filter_clip = true

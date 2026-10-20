@@ -5,6 +5,7 @@ var cycle:=0.0
 var state:="dormant"
 var _launched:=0.0
 var _sprite:Sprite2D
+var _marker:Label
 const Art=preload("res://world/Scripts/underworld_art.gd")
 const LAVA=preload("res://world/Arte/Underworld/V35/lava.tres")
 func _ready() -> void:
@@ -12,6 +13,18 @@ func _ready() -> void:
 	cycle=phase
 	_sprite=Art.prop(0,Vector2(52,15),Vector2(-26,-9))
 	add_child(_sprite)
+	if launch_geyser:
+		_marker=Label.new()
+		_marker.text="↑"
+		_marker.position=Vector2(-9,-30)
+		_marker.size=Vector2(18,22)
+		_marker.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		_marker.add_theme_font_size_override("font_size",18)
+		_marker.add_theme_color_override("font_color",Color("9ceaff"))
+		_marker.add_theme_color_override("font_outline_color",Color("171726"))
+		_marker.add_theme_constant_override("outline_size",2)
+		_marker.z_index=8
+		add_child(_marker)
 func _physics_process(delta:float) -> void:
 	cycle=fposmod(cycle+delta,4.8)
 	_launched=maxf(0,_launched-delta)
@@ -25,6 +38,7 @@ func _physics_process(delta:float) -> void:
 		_sprite.position=Vector2(-size.x/2,-size.y+6)
 		if state=="warning":Sfx.alert()
 	_sprite.position.x=roundf(-24+sin(cycle*65)*1.5) if state=="warning" else (-24 if state=="erupting" else -26)
+	if _marker!=null:_marker.position.y=-132 if state=="erupting" else -30
 	if state=="erupting":
 		_sprite.texture=LAVA.get_frame_texture(&"jet",int(cycle*9)%4)
 		_sprite.scale=Vector2(48,112)/_sprite.texture.get_size()

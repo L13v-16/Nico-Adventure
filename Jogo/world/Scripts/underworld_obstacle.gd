@@ -7,6 +7,7 @@ var pushing:=false
 var _destination:=Vector2.ZERO
 var _sprite:Sprite2D
 var _collider:CollisionShape2D
+var _prompt:Label
 const Art=preload("res://world/Scripts/underworld_art.gd")
 func _ready() -> void:
 	add_to_group("jose_targets")
@@ -21,6 +22,17 @@ func _ready() -> void:
 	_collider.shape=shape
 	_collider.position=Vector2(0,-size.y/2)
 	add_child(_collider)
+	_prompt=Label.new()
+	_prompt.text="C · JOSÉ"
+	_prompt.position=Vector2(-27,-size.y-20)
+	_prompt.size=Vector2(54,16)
+	_prompt.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	_prompt.add_theme_font_size_override("font_size",8)
+	_prompt.add_theme_color_override("font_color",Color("ffe1a0"))
+	_prompt.add_theme_color_override("font_outline_color",Color("181522"))
+	_prompt.add_theme_constant_override("outline_size",2)
+	_prompt.z_index=8
+	add_child(_prompt)
 func can_jose_target() -> bool:return not broken
 func jose_point() -> Vector2:return global_position
 func receive_jose_hit() -> bool:
@@ -49,10 +61,7 @@ func _physics_process(delta:float) -> void:
 		if position.is_equal_approx(_destination):
 			pushing=false
 			settled.emit()
-	queue_redraw()
-func _draw() -> void:
-	if broken:return
+	_update_prompt()
+func _update_prompt() -> void:
 	var player:=get_tree().get_first_node_in_group("player") as Node2D
-	if player!=null and absf(player.position.x-position.x)<205:
-		draw_circle(Vector2(0,-65),10,Color("ddaa65"),false,2)
-		draw_line(Vector2(-5,-65),Vector2(5,-65),Color("fff0c4"),2)
+	_prompt.visible=not broken and player!=null and player.position.distance_to(position)<240

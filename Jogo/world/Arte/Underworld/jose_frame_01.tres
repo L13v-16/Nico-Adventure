@@ -2,6 +2,6 @@
 [ext_resource type="Texture2D" path="res://world/Arte/Underworld/jose_sheet.png" id="1"]
 [resource]
 atlas = ExtResource("1")
-region = Rect2(387, 81, 165, 230)
-margin = Rect2(74.0, 83, 148, 83)
+region = Rect2(387, 81, 165, 232)
+margin = Rect2(74.0, 81, 148, 81)
 filter_clip = true

@@ -18,7 +18,13 @@ func _ready() -> void:
 	collider.shape=shape
 	collider.position=Vector2(0,22)
 	add_child(collider)
-	_sprite=Art.prop(4,Vector2(width,44),Vector2(-width/2,0))
+	_sprite=Sprite2D.new()
+	_sprite.centered=false
+	_sprite.texture=load("res://world/Arte/Underworld/V36/terrain_%02d.tres"%(15 if behavior=="repel" else 14))
+	_sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	_sprite.scale=Vector2(width,44)/_sprite.texture.get_size()
+	_sprite.position=Vector2(-width/2,0)
+	if behavior=="shuttle":_sprite.modulate=Color("ffe0a8")
 	add_child(_sprite)
 func _physics_process(delta:float) -> void:
 	_clock+=delta

@@ -29,11 +29,7 @@ static func build(level:Node2D) -> void:
 	temple.position+=Vector2(3555,-36)
 	temple.play(&"temple_ready" if Save.has_story_flag("elemental_mastery") else &"temple_dormant")
 	scenery.add_child(temple)
-	for info in GROUND:
-		for x in range(int(info.x+70),int(info.x+info.z-40),180):
-			if x<350 or x>6370 or (x>3360 and x<3800) or (x>3900 and x<4944):continue
-			var size:=Vector2(18,42+(x%3)*12)
-			scenery.add_child(Art.prop(7,size,Vector2(x,info.y-size.y+6)))
+	preload("res://world/Scripts/underworld_scenery.gd").build(scenery)
 	var jose:=preload("res://world/Scripts/jose_companion.gd").new()
 	jose.name="Jose"
 	jose.position=Vector2(275,100)

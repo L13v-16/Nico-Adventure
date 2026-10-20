@@ -252,7 +252,10 @@ func take_damage(amount:float,_source:Vector2) -> void:
 		heated=false
 		brittle=false
 		_timer=1.5
-		get_parent().get_node("Jose").position=Vector2(6850,UPPER_FLOOR)
+		var jose:CharacterBody2D=get_parent().get_node("Jose")
+		jose.position=Vector2(6950,UPPER_FLOOR-1)
+		jose.velocity=Vector2.ZERO
+		jose.state="idle"
 	elif health<=0:_defeat()
 func can_jose_target() -> bool:
 	return active and phase==4 and not is_dead() and not armor_broken and absf(position.x-MARKER_X)<70

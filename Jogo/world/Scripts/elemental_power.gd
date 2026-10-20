@@ -42,7 +42,7 @@ func _process(delta:float) -> void:
 func _physics_process(_delta:float) -> void:
 	if not can_control():return
 	if Input.is_action_just_pressed("element_swap") and has_mastery():swap()
-	if Input.is_action_just_pressed("element_cast"):cast()
+	if Input.is_action_pressed("element_cast"):cast()
 func can_control() -> bool:
 	var level:=_player.get_parent()
 	return not get_tree().paused and _player.is_physics_processing() and not _player.is_dead() and not _player._finished and level.get("intro_active")!=true and level.get("completed")!=true

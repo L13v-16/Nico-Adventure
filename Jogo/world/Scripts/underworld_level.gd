@@ -8,6 +8,7 @@ var _temple_busy:=false
 var _clock:=0.0
 var _command_flash:=0.0
 func _ready() -> void:
+	temple_seen=Save.has_story_flag("elemental_mastery")
 	Layout.build(self)
 	$Forge.solved.connect(func():_show_notice("Forja funcionando! A passagem está aberta."))
 	$ForgeWeight.settled.connect(func():$Forge.power_ready=true;$Forge._update();_show_notice("Bloco no encaixe! Ative a forja com fogo e gelo."))
