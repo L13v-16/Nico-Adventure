@@ -5,8 +5,8 @@ const IMPACT := 3.25
 const LANDING := 8.5
 const Ui = preload("res://world/Scripts/ui_style.gd")
 const BACKDROP = preload("res://world/Arte/Underworld/V36/background.png")
-const WALL = preload("res://world/Arte/Underworld/V36/terrain_04.tres")
-const FLOOR = preload("res://world/Arte/Underworld/V36/terrain_00.tres")
+const WALL = preload("res://world/Arte/Underworld/V39/terrain_04.tres")
+const FLOOR = preload("res://world/Arte/Underworld/V39/terrain_00.tres")
 var clock := 0.0
 var stage := "flight"
 var bird: AnimatedSprite2D

@@ -1,3 +1,10 @@
+NOVIDADES v39 — CHÃO E GÊISERES
+20 tiles novos e integrados: chão, paredes, plataformas, bordas e fendas.
+O gêiser é um tile do próprio chão, com quatro estados de calor.
+Jato de lava separado, com crescimento e recuo; o dano acompanha sua altura.
+Pequena seta azul gravada na pedra indica os gêiseres de impulso.
+Artes originais e prompts em world/Arte/Underworld/V39/.
+
 NOVIDADES v38 — PEDRAS, ALTAR E FRUTA-DO-DRAGÃO
 Pedras rachadas próprias para José, animação de quebra e entulho baixo no chão.
 Altar com pedestal e sprites de fogo/gelo. Nico começa o Submundo sem poderes.
@@ -18,7 +25,7 @@ Novo fundo de caverna e chão de basalto com menos ruído visual.
 Rochas com topo plano alinhado à colisão. Corrigidos 55 recortes de sprites.
 José aparece no piso correto ao começar a etapa final da luta.
 Operários reagem aos golpes; segurar K mantém os disparos.
-Obstáculos mostram C · JOSÉ, e gêiseres de impulso têm seta acima da lava.
+Obstáculos mostram C · JOSÉ, e gêiseres de impulso têm uma marca azul no chão.
 O altar ensina os poderes uma vez por passagem pelo Submundo.
 Artes originais e prompts em world/Arte/Underworld/V36/. Detalhes no README.md.
 
