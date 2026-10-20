@@ -16,7 +16,7 @@ level_id = "fase_3"
 level_name = "Fase 3 — Floresta Violeta"
 par_time = 240.0
 finish_floor_y = 64.0
-next_level_scene = ""
+next_level_scene = "res://world/underworld_04.tscn"
 intro_title = "FLORESTA VIOLETA"
 intro_act = 3
 

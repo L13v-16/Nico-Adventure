@@ -1,3 +1,17 @@
+NOVIDADES v34 — SUBMUNDO
+Fase 4 integrada após a floresta mágica. José agora é um bode, resgatado no início;
+acompanha Nico até a saída e usa cabeçadas em paredes, pilares e blocos.
+Gêiseres com aviso, rochas gravitacionais, operários esqueletos e diabinhos voadores.
+Fruta-do-dragão: fogo por 20 s. Templo: fogo e gelo permanentes (K dispara, Q alterna).
+Forja: bloco no encaixe + fogo/gelo/fogo/gelo nas válvulas da cor correspondente.
+C chama José; botão direito marca alvo. E segura correntes, setas sobem/descem,
+Espaço solta. Guardião em quatro etapas; use José no círculo dourado na etapa final.
+Novo tileset de basalto e plataformas, oito estados do templo, canhão animado,
+sprites de José, inimigos e chefe no estilo do jogo. Cutscenes e retratos integrados.
+54 cerejas, dez checkpoints, três segredos. Coletas persistem também no Modo livre.
+Hollow Chain Murmurs na fase e Obsidian Chainbreaker no chefe, WAVs integrais.
+Consulte README.md para mecânicas, arte, prompts e validação desta versão.
+
 NICO ADVENTURE — FASE REMONTADA COM CAVERNA, CONVERSAS COM ESCOLHAS, MENU E PROGRESSO
 
 Abra project.godot no Godot 4.7 e pressione F5 para jogar o projeto (abre no menu principal).
@@ -7,7 +21,7 @@ Polimento desta versão
 - Golpes com faíscas, tremor de câmera e uma breve pausa no impacto (hit-stop) para dar peso ao combate.
 - Câmera com antecipação na direção do movimento e leve acompanhamento da queda.
 - Efeitos de coleta de cereja, de dano, de cura e de retorno ao ponto de bandeira.
-- Contador de cerejas dividido em quantidade coletada e total ("12 / 44"); fica dourado ao completar.
+- HUD de cerejas mostra apenas o saldo disponível; o total da fase aparece nos resultados.
 - O último coração pulsa quando resta apenas um ponto de vida.
 - Menu de pausa com ESC: continuar, reiniciar a fase ou sair do jogo, mostrando o progresso atual.
 - Ajuste de volume de efeitos e de música no menu de pausa (a preferência fica guardada).
@@ -22,7 +36,7 @@ Novidades
 - O retrato do HUD também é o rosto do Nico, agora com quatro expressões: ele comemora as cerejas, se espanta com o dano e fecha os olhos quando cai.
 - Na conversa, a lista de perguntas passa a mostrar o rosto e o nome do Nico, e a tela de resultados mostra a cara dele conforme a nota.
 - A Vera, a raposa, e o Espeto, o porco-espinho, ganharam quatro expressões cada: eles sorriem, se espantam com as notícias ruins e dão uma piscada ou fecham os olhos na despedida.
-- Menu principal com Jogar, Continuar, Modo livre, Coleção, Opções, Créditos e Sair. Modo livre fica bloqueado até concluir as duas fases. O fundo limpo e Nico animado seguem o acabamento descrito nas versões recentes abaixo.
+- Menu principal com Jogar, Continuar, Modo livre, Coleção, Opções, Créditos e Sair. Modo livre fica bloqueado até concluir as quatro fases. O fundo limpo e Nico animado seguem o acabamento descrito nas versões recentes abaixo.
 - Abertura da história em sete telas, mostrada na primeira partida e pulável com ESC.
 - Tela de resultados ao concluir a fase, com tempo, inimigos, cerejas, segredos, mortes e nota de S a D.
 - Progresso e preferências guardados entre partidas, em user://save.cfg.

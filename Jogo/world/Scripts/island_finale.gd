@@ -89,6 +89,8 @@ func _load_art() -> void:
 func _texture(path: String) -> Texture2D:
 	if path.ends_with("/Amigos/remi.png"): path = "res://world/Arte/Magic/remi_idle.tres"
 	if path.ends_with("/Amigos/remi_2.png"): path = "res://world/Arte/Magic/remi_blink.tres"
+	if path.ends_with("/Amigos/jose.png"): path = "res://world/Arte/Underworld/jose_idle.tres"
+	if path.ends_with("/Amigos/jose_2.png"): path = "res://world/Arte/Underworld/jose_blink.tres"
 	if ResourceLoader.exists(path):
 		return load(path) as Texture2D
 	return null

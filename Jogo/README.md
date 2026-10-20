@@ -6,6 +6,29 @@ A primeira fase atravessa a vila, a floresta e a caverna até a casa na árvore.
 
 A chegada tem uma casa de madeira construída entre os galhos de uma árvore, com copa, tronco e raízes integrados à mesma arte. A varanda elevada e os apoios de madeira conectam o caminho à porta. A câmera abre suavemente ao se aproximar do final para mostrar a árvore inteira; o encontro com Arara Minas reutiliza a mesma casa. A imagem está em `world/Arte/Props/casa_arvore_v13.png`; os prompts exatos acompanham o PNG em `PROMPT-CASA-ARVORE-v13.txt` e `PROMPT-CASA-ARVORE-v13-revisao.txt`.
 
+## Fase 4 — O Submundo (v34)
+
+A saída da floresta mágica leva ao Submundo. A corporação lança Nico de um canhão animado; ele encontra **José, o Bode** logo no começo, mas os dois ainda precisam escapar. O resgate de José é registrado separadamente da conclusão da fase. A aventura agora tem quatro fases; **Continuar** leva saves da terceira ilha ao Submundo, e o Modo livre desbloqueia ao concluir as quatro. O saldo e o histórico persistente de cerejas continuam compartilhados: as cerejas já recolhidas não reaparecem ao revisitar.
+
+O percurso tem 54 cerejas com identificadores estáveis, três segredos, dez checkpoints, seis rochas gravitacionais, sete gêiseres, seis esqueletos operários, cinco diabinhos voadores e a caravana de Oliver antes da arena. As cerejas nas rochas acompanham seu movimento.
+
+- **Gêiseres:** observe o brilho da rachadura, as pedras tremendo e as faíscas antes da erupção. Os marcados em azul lançam Nico até as áreas altas. A fruta-do-dragão protege contra as erupções durante seu efeito.
+- **Rochas gravitacionais:** algumas seguem Nico e outras se afastam; param quando ele embarca. Posicione uma ponte com elas. Sua colisão também bloqueia tridentes.
+- **José:** C chama a cabeçada no obstáculo próximo; o botão direito marca um alvo específico. Ele quebra paredes, derruba pilares que viram pontes e empurra o bloco da forja. Segue Nico, salta e se reúne a ele depois das travessias.
+- **Fogo e gelo:** a fruta-do-dragão concede fogo por 20 segundos. K dispara. No Templo dos Contrários, uma cutscene concede os dois elementos permanentemente; Q alterna fogo/gelo e K dispara, inclusive após morrer ou reabrir o jogo. O poder do açaí continua disponível nas outras fases.
+- **Forja Invertida:** empurre o bloco pesado para alimentar a máquina; acerte a válvula laranja com fogo e a azul com gelo, repetindo fogo/gelo. Um elemento ou uma válvula errados reiniciam o padrão. Evite o vapor e aproveite as plataformas móveis.
+- **Correntes:** E segura; ↑/↓ sobe/desce; Espaço solta e salta. Use as duas correntes e os patamares durante a subida da lava.
+
+**O Carcereiro das Profundezas** tem quatro etapas: saltar ondas de corrente e atacar quando ela prende; escalar a arena com a lava subindo; aquecer a armadura com fogo e tornar as correntes quebradiças com gelo para expor o núcleo; atrair o guardião ao círculo dourado e chamar a cabeçada de José para quebrar a proteção final. Morrer reinicia a luta, mantendo os poderes aprendidos. Após a vitória, o guardião permanece apoiado na plataforma e liberta a **Chave das Profundezas**; recolha-a e siga para a saída da corporação. A conversa final preserva a música e leva aos resultados.
+
+Arte de produção em **`world/Arte/Underworld/`**: José com caminhada, salto, cabeçada, dano e retratos falantes; esqueletos e diabinhos animados; 16 poses do Carcereiro; gêiseres, pilares, blocos, chave, frutas e tridentes. O tileset próprio de basalto cobre chão, paredes, bordas, plataformas da forja e da arena, incluindo o suporte do guardião. As regiões do atlas removem a folga superior para alinhar a superfície visível à colisão. O templo tem oito estados, do altar apagado à abertura elemental; o canhão tem carregamento, carga, disparo, recuo, fumaça e retorno. A jaula aberta e a saída reutilizam as artes da mesma coleção. As cutscenes enquadram o canhão, o encontro com José, a aquisição dos poderes e a fuga.
+
+As sete imagens originais foram criadas com a **ferramenta integrada de geração de imagens**, usando os sprites existentes de Nico e Oliver como referência de estilo. Os PNGs originais foram preservados; os recortes são recursos AtlasTexture do Godot, com filtro nearest e ancoragem pelos pés. Os prompts finais acompanham os arquivos: `PROMPT-jose.txt`, `PROMPT-enemies.txt`, `PROMPT-props.txt`, `PROMPT-boss.txt`, `PROMPT-background.txt`, `PROMPT-terrain.txt` e `PROMPT-scenes.txt`. `atlas_metadata.json` registra os recortes e estados.
+
+**Música:** `world/Audio/Underworld/hollow_chain_murmurs.wav` toca na exploração e nos diálogos; `obsidian_chainbreaker.wav` assume na luta. São cópias integrais dos dois WAVs fornecidos, com repetição e volume de música. Loja e mochila mantêm sua própria faixa.
+
+Validação no Godot 4.7.1: 65 verificações de mecânicas/combate/progressão da fase, 68 de menu/persistência/Coleção e 48 de regressão do açaí. Travessias físicas do percurso e das duas correntes usam comandos normais, com combate desativado ou invulnerabilidade apenas nos cenários de teste de geometria. As capturas nativas conferem o chão, as plataformas, as cenas, a forja e a arena; esses testes não alteram o save do jogador.
+
 ## Personagens
 
 | Personagem | Descrição | Arte |
@@ -13,7 +36,7 @@ A chegada tem uma casa de madeira construída entre os galhos de uma árvore, co
 | Nico | Guaxinim com lenço verde e mochila | `world/Arte/Nico/` |
 | Arara Minas | Arara azul e amarela, bico forte, companheira de viagem | `world/Arte/Amigos/arara_minas.tres` |
 | Remi | Esquilo castanho, cauda fofa e lenço azul | `world/Arte/Magic/remi.tres` |
-| José | Tatu-bola com casco segmentado e orelhas pequenas | `world/Arte/Amigos/jose.tres` |
+| José, o Bode | Bode forte, chifres curvos, barba grisalha e lenço laranja; acompanha Nico com suas cabeçadas | `world/Arte/Underworld/jose.tres` |
 | Urso | Urso-pardo grande, gentil e de olhar cansado | `world/Arte/Amigos/urso.tres` |
 | Tartaruga | Companheira idosa, de olhar sereno e casco marcado pelas travessias | `world/Arte/Tartaruga/turtle.tres` |
 | Urus, o Urubu | Executivo de terno que mantém a tartaruga presa no cais | `world/Arte/Beach/urus.tres` |
@@ -30,7 +53,7 @@ Na praia, Nico e Arara Minas encontram a tartaruga presa por **Urus, o Urubu**. 
 - **Urus:** escolha entre os dois canhões e salte dentro da boca. As miras têm alcances fixos; observe o voo do chefe e a indicação verde **PULE AGORA**. O lançamento pode errar. Três impactos derrotam Urus.
 - **Resgate:** depois da luta, quebre o cadeado com J/X para libertar a tartaruga. A cena de conversa usa os sprites da tartaruga idosa e seu retrato falante.
 
-Para chegar à praia, conclua a floresta e escolha **Próxima ilha** nos resultados. **Continuar** também leva à praia após concluir a primeira fase. Cada fase guarda seu próprio resultado. Depois de concluir as duas fases, **Modo livre** permite revisitar as duas ilhas; essa opção fica bloqueada até terminar a aventura.
+Para chegar à praia, conclua a floresta e escolha **Próxima ilha** nos resultados. **Continuar** também leva à praia após concluir a primeira fase. Cada fase guarda seu próprio resultado. Depois de concluir as quatro fases, **Modo livre** permite revisitar as quatro ilhas; essa opção fica bloqueada até terminar a aventura.
 
 ## Caravana, trilha da praia e encontro
 

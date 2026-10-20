@@ -7,6 +7,7 @@ const CollectionPanel := preload("res://world/Scripts/collection_panel.gd")
 const LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_SCENE := "res://world/beach_02.tscn"
 const MAGIC_SCENE := "res://world/magic_03.tscn"
+const UNDERWORLD_SCENE := "res://world/underworld_04.tscn"
 const LEVEL_ID := "fase_1"
 
 const LOGO_TEXTURE := preload("res://world/Arte/logo.png")
@@ -329,6 +330,7 @@ func _build_free_mode(column: VBoxContainer) -> void:
 		{"n": 1, "name": "A Floresta", "scene": LEVEL_SCENE},
 		{"n": 2, "name": "Costa das Marés", "scene": BEACH_SCENE},
 		{"n": 3, "name": "Floresta Violeta", "scene": MAGIC_SCENE},
+		{"n": 4, "name": "O Submundo", "scene": UNDERWORLD_SCENE},
 	]
 	for phase: Dictionary in phases:
 		var text := "%d. %s" % [int(phase["n"]), String(phase["name"])]
@@ -364,7 +366,7 @@ func _play_resume() -> void:
 
 
 func _play_free_scene(scene: String) -> void:
-	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE]:
+	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE, UNDERWORLD_SCENE]:
 		return
 	_start_level(true, scene, true)
 

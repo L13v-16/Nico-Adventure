@@ -1,0 +1,34 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_03.tres" id="f3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_04.tres" id="f4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_05.tres" id="f5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_06.tres" id="f6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_07.tres" id="f7"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_08.tres" id="f8"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_09.tres" id="f9"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_10.tres" id="f10"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_11.tres" id="f11"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_12.tres" id="f12"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_13.tres" id="f13"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_14.tres" id="f14"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_frame_15.tres" id="f15"]
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}], "loop": true, "name": &"temple_dormant", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f1")}], "loop": true, "name": &"temple_fire", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f2")}], "loop": true, "name": &"temple_ice", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f3")}], "loop": true, "name": &"temple_both", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f4")}], "loop": true, "name": &"temple_opening", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f5")}], "loop": true, "name": &"temple_open", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f6")}], "loop": true, "name": &"temple_shine", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f7")}], "loop": true, "name": &"temple_ready", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f8")}], "loop": true, "name": &"cannon_idle", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f9")}], "loop": true, "name": &"cannon_load", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f10")}], "loop": true, "name": &"cannon_charge", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f11")}], "loop": true, "name": &"cannon_fire", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f12")}], "loop": true, "name": &"cannon_recoil", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f13")}], "loop": true, "name": &"cannon_smoke", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f14")}], "loop": true, "name": &"cannon_reset", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f15")}], "loop": true, "name": &"cage", "speed": 4.0}]

@@ -9,12 +9,13 @@ extends Node
 
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
-const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3"]
+const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4"]
 const MAX_CHERRY_BALANCE := 9223372036854775807
 const RANK_ORDER := ["D", "C", "B", "A", "S"]
 const FIRST_LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_LEVEL_SCENE := "res://world/beach_02.tscn"
 const MAGIC_LEVEL_SCENE := "res://world/magic_03.tscn"
+const UNDERWORLD_LEVEL_SCENE := "res://world/underworld_04.tscn"
 
 ## Guardado no arquivo: id da fase -> dicionário de resultados.
 var _levels: Dictionary = {}
@@ -28,6 +29,7 @@ var _pending_skip_intro := false
 var _free_mode := false
 var _collected_cherries: Dictionary = {}
 var _legacy_cherry_locks: Dictionary = {}
+var _story_flags: Dictionary = {}
 
 
 func _ready() -> void:
@@ -76,6 +78,18 @@ func add_cherries(amount: int) -> bool:
 
 func is_free_mode() -> bool:
 	return _free_mode
+
+func has_story_flag(flag: String) -> bool:
+	return _story_flags.has(flag)
+
+func set_story_flag(flag: String) -> bool:
+	if flag not in ["jose_rescued", "elemental_mastery", "depth_key"]:return false
+	if _story_flags.has(flag):return true
+	_story_flags[flag]=true
+	if not _save():
+		_story_flags.erase(flag)
+		return false
+	return true
 
 
 func has_collected_cherry(level_id: String, cherry_id: String) -> bool:
@@ -131,7 +145,9 @@ func completed_count() -> int:
 
 ## Retoma o resgate seguinte sem apagar as ilhas nem a carteira existentes.
 func get_continue_scene() -> String:
-	if is_level_completed("fase_2") or is_level_completed("fase_3"):
+	if is_level_completed("fase_3") or is_level_completed("fase_4"):
+		return UNDERWORLD_LEVEL_SCENE
+	if is_level_completed("fase_2"):
 		return MAGIC_LEVEL_SCENE
 	if is_level_completed("fase_1"):
 		return BEACH_LEVEL_SCENE
@@ -160,6 +176,7 @@ func mark_level_complete(level_id: String, stats: Dictionary) -> Dictionary:
 
 func reset_progress() -> void:
 	_levels.clear()
+	_story_flags.clear()
 	_collected_cherries.clear()
 	_legacy_cherry_locks.clear()
 	_free_mode=false
@@ -261,6 +278,7 @@ func compute_rank(collect_ratio: float, time: float, par_time: float, deaths: in
 func _load() -> void:
 	# Recarregar também é seguro após apagar/trocar o arquivo de save.
 	_levels.clear()
+	_story_flags.clear()
 	_seen_intro = false
 	_fullscreen = false
 	_camera_shake = true
@@ -276,6 +294,10 @@ func _load() -> void:
 	_seen_intro = bool(config.get_value("progress", "seen_intro", false))
 	_fullscreen = bool(config.get_value("video", "fullscreen", false))
 	_camera_shake = bool(config.get_value("video", "camera_shake", true))
+	var saved_flags:Variant=config.get_value("progress","story_flags",[])
+	if saved_flags is Array or saved_flags is PackedStringArray:
+		for flag in saved_flags:
+			if flag in ["jose_rescued", "elemental_mastery", "depth_key"]:_story_flags[flag]=true
 	var saved_balance: Variant = config.get_value("wallet", "cherries", 0)
 	if saved_balance is int:
 		_cherry_balance = maxi(saved_balance, 0)
@@ -326,6 +348,7 @@ func _save() -> bool:
 			config.erase_section(section)
 	config.set_value("progress", "seen_intro", _seen_intro)
 	config.set_value("progress", "started", _campaign_started)
+	config.set_value("progress", "story_flags", _story_flags.keys())
 	config.set_value("wallet", "cherries", _cherry_balance)
 	config.set_value("progress", "levels", _levels.keys())
 	config.set_value("video", "fullscreen", _fullscreen)

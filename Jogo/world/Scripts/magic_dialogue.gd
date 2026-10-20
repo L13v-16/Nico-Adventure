@@ -15,7 +15,7 @@ const RESCUE := [
 	["Nico","Remi! Hiena HaHa não vai mais prender ninguém aqui. Você está livre!","REMI RESGATADO"],
 	["Remi","Eu sabia que vocês viriam! O lobo do crachá dourado quer dominar todas as ilhas. Ele levou José, Urso e o mico para longe daqui.","O RASTRO DA CORPORAÇÃO"],
 	["Arara Minas","Então seguimos juntos. Cada amigo de volta deixa nossa turma mais forte!","UMA NOVA COMPANHIA NA VIAGEM"],
-	["Remi","Contem comigo! Conheço cada árvore destas ilhas. Vamos encontrar nossos amigos e parar esse lobo!","PRÓXIMA JORNADA: REUNIR A TURMA"],
+	["Remi","José, nosso amigo bode, foi levado ao Submundo. Cuidado com os canhões da corporação! Vamos encontrar nossos amigos e parar esse lobo!","PRÓXIMA JORNADA: O SUBMUNDO"],
 ]
 var beat_index := 0
 var has_finished := false

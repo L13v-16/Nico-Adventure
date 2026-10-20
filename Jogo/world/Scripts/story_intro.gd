@@ -74,6 +74,8 @@ func _load_texture(file: String) -> void:
 	var path := "res://world/Arte/" + file + ".png"
 	if file == "Amigos/remi": path = "res://world/Arte/Magic/remi_idle.tres"
 	if file == "Amigos/remi_2": path = "res://world/Arte/Magic/remi_blink.tres"
+	if file == "Amigos/jose": path = "res://world/Arte/Underworld/jose_idle.tres"
+	if file == "Amigos/jose_2": path = "res://world/Arte/Underworld/jose_blink.tres"
 	var texture := load(path) as Texture2D
 	_textures[file] = texture
 	_bounds[file] = texture.get_image().get_used_rect()

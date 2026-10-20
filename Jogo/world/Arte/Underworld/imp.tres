@@ -1,0 +1,16 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_08.tres" id="f8"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_09.tres" id="f9"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_10.tres" id="f10"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_11.tres" id="f11"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_12.tres" id="f12"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_13.tres" id="f13"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_14.tres" id="f14"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_frame_15.tres" id="f15"]
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("f8")}, {"duration": 1.0, "texture": ExtResource("f9")}, {"duration": 1.0, "texture": ExtResource("f10")}], "loop": true, "name": &"fly", "speed": 9.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f11")}], "loop": true, "name": &"warning", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f12")}], "loop": false, "name": &"attack", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f13")}], "loop": false, "name": &"hurt", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f14")}], "loop": true, "name": &"frozen", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f15")}], "loop": false, "name": &"defeat", "speed": 4.0}]

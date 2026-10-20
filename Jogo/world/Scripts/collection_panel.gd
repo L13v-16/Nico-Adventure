@@ -15,7 +15,7 @@ const CHARACTERS := [
  {"id":"turtle", "name":"Tartaruga", "short":"Tartaruga", "art":"Tartaruga/turtle_idle_1", "bio":"Uma companheira idosa, serena e de casco marcado por muitas travessias.", "where":"Resgate: Costa das Marés, após Urus."},
  {"id":"oliver", "name":"Oliver Gancho", "short":"Oliver", "art":"Caravan/V23/oliver_idle_1_v23", "portrait":"Caravan/V23/oliver_portrait_v23", "bio":"O rato de tapa-olho da caravana. Troca provisões, equipamentos e roupas por cerejas.", "where":"Encontro: caravana móvel da praia."},
  {"id":"remi", "name":"Remi", "short":"Remi", "art":"Magic/remi_idle.tres", "portrait":"Magic/remi_portrait.tres", "bio":"Um esquilo de cauda fofa, pelagem castanha e lenço azul. Conhece as árvores e os segredos das ilhas.", "where":"Resgate: Floresta Violeta, após Hiena HaHa (Triple H)."},
- {"id":"jose", "name":"José", "short":"José", "art":"Amigos/jose", "bio":"Tatu-bola de casco segmentado. Foi levado pelo lobo da corporação com os outros amigos.", "where":"Nico ainda procura a ilha onde ele está."},
+ {"id":"jose", "name":"José, o Bode", "short":"José", "art":"Underworld/jose_idle.tres", "portrait":"Underworld/jose_portrait_neutral.tres", "bio":"Um bode forte de chifres curvos e lenço laranja. Suas cabeçadas quebram paredes, derrubam pilares e empurram objetos pesados.", "where":"Resgate: início do Submundo. Depois, acompanha Nico até a saída."},
  {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Nico ainda procura a ilha onde ele está."},
  {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Também foi capturado pela corporação.", "where":"Nico ainda procura a ilha onde ele está."},
 ]
@@ -101,8 +101,8 @@ func _build() -> void:
  var title:=UiStyle.label("COLEÇÃO",20,CREAM,HORIZONTAL_ALIGNMENT_LEFT)
  title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  header.add_child(title)
- var completed_islands:=int(Save.is_level_completed("fase_1"))+int(Save.is_level_completed("fase_2"))+int(Save.is_level_completed("fase_3"))
- var summary:=UiStyle.label("%d / 3 ILHAS" % completed_islands,10,MINT)
+ var completed_islands:=int(Save.is_level_completed("fase_1"))+int(Save.is_level_completed("fase_2"))+int(Save.is_level_completed("fase_3"))+int(Save.is_level_completed("fase_4"))
+ var summary:=UiStyle.label("%d / 4 ILHAS" % completed_islands,10,MINT)
  summary.name="CollectionIslandCount"
  summary.custom_minimum_size.x=82
  header.add_child(summary)
@@ -233,7 +233,7 @@ func _build_islands() -> Control:
  var content:=HBoxContainer.new()
  content.custom_minimum_size.y=202
  content.add_theme_constant_override("separation",10)
- for phase in [{"id":"fase_1","name":"Vale das Copas","art":"fundo_meio"},{"id":"fase_2","name":"Costa das Marés","art":"Beach/beach_background"},{"id":"fase_3","name":"Floresta Violeta","art":"Magic/magic_background"}]:
+ for phase in [{"id":"fase_1","name":"Vale das Copas","art":"fundo_meio"},{"id":"fase_2","name":"Costa das Marés","art":"Beach/beach_background"},{"id":"fase_3","name":"Floresta Violeta","art":"Magic/magic_background"},{"id":"fase_4","name":"O Submundo","art":"Underworld/underworld_background"}]:
   var panel:=PanelContainer.new()
   panel.name="Island_"+phase.id
   panel.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -242,11 +242,11 @@ func _build_islands() -> Control:
   var column:=VBoxContainer.new()
   column.add_theme_constant_override("separation",4)
   panel.add_child(column)
-  var banner:=_art(phase.art,Vector2(144,36))
+  var banner:=_art(phase.art,Vector2(116,32))
   banner.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED
   banner.clip_contents=true
   column.add_child(banner)
-  column.add_child(UiStyle.label(phase.name,12,CREAM,HORIZONTAL_ALIGNMENT_LEFT))
+  column.add_child(UiStyle.label(phase.name,11,CREAM,HORIZONTAL_ALIGNMENT_LEFT))
   var complete:bool=Save.is_level_completed(phase.id)
   column.add_child(UiStyle.label("CONCLUÍDA" if complete else "A EXPLORAR",9,MINT if complete else GOLD,HORIZONTAL_ALIGNMENT_LEFT))
   var stats:Dictionary=Save.get_level_stats(phase.id)
@@ -282,6 +282,9 @@ func character_state(id:String) -> Dictionary:
   "remi":
    if Save.is_level_completed("fase_3"):return {"text":"Resgatado na Floresta Violeta", "short":"RESGATADO", "color":MINT}
    return {"text":"Próximo resgate" if Save.is_level_completed("fase_2") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
+  "jose":
+   if Save.has_story_flag("jose_rescued") or Save.is_level_completed("fase_4"):return {"text":"Resgatado no Submundo · companheiro", "short":"RESGATADO", "color":MINT}
+   return {"text":"Próximo resgate" if Save.is_level_completed("fase_3") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
  return {"text":"Ainda desaparecido", "short":"A SALVAR", "color":GOLD}
 
 func _select_character(index:int,play_sound:bool=true) -> void:

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/scenery_sheet.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(341, 1005, 282, 171)
+margin = Rect2(15.5, 142, 31, 142)
+filter_clip = true

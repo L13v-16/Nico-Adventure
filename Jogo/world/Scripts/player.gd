@@ -88,6 +88,7 @@ const ACAI_ICON := preload("res://world/Arte/Beach/acai.png")
 var _vine: Node2D
 var _vine_cooldown := 0.0
 var _spring_lock := 0.0
+var elements:Node
 var _last_valid_position := Vector2.ZERO
 var _last_valid_camera_base := Vector2.ZERO
 
@@ -100,6 +101,9 @@ func _ready() -> void:
 	equipment.name = "Equipment"
 	add_child(equipment)
 	_make_freeze_hud()
+	elements=preload("res://world/Scripts/elemental_power.gd").new()
+	elements.name="Elements"
+	add_child(elements)
 	respawn_position = global_position
 	_last_valid_position = global_position
 	# Keeps the feet attached while riding descending or horizontal platforms.
@@ -382,6 +386,7 @@ func finish_level() -> void:
 	_hit_flash_timer = 0.0
 	if is_instance_valid(_freeze_hud):
 		_freeze_hud.hide()
+	if is_instance_valid(elements):elements._hud.hide()
 	velocity = Vector2.ZERO
 	current_state = State.IDLE
 	play_state_animation()

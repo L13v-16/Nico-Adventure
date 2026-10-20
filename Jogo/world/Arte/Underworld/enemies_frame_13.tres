@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/enemies_sheet.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(315, 941, 294, 254)
+margin = Rect2(9.5, 59, 19, 59)
+filter_clip = true
