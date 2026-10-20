@@ -168,16 +168,9 @@ func _on_finish_entered(body:Node2D) -> void:
 func _start_finale(stats:Dictionary,new_record:bool) -> void:
 	_show_notice("")
 	$HUD.hide()
-	# A conversa começa com os dois já reunidos no piso da saída.
-	$Jose.position=Vector2(player.position.x-58,100)
+	# The finale stages its own actors, including Nico's current equipment.
+	player.velocity=Vector2.ZERO
 	$Jose.velocity=Vector2.ZERO
-	$Jose._sprite.flip_h=false
-	$Jose._sprite.play(&"happy")
-	var camera:=player.get_node("Camera2D") as Camera2D
-	camera.position_smoothing_enabled=false
-	camera.zoom=Vector2.ONE*1.35
-	camera.offset=Vector2(15,-9)
-	camera.force_update_scroll()
 	get_tree().paused=true
 	_finale=Dialogue.new()
 	_finale.mode="ending"

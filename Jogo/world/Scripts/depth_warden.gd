@@ -350,11 +350,7 @@ func _draw() -> void:
 	if active and phase != 2 and phase < 5 and (state == "slam" or _vulnerable > 0):
 		var hand := Vector2(-45, -75)
 		var pinned := to_local(Vector2(_target_x, 100 if phase == 1 else UPPER_FLOOR))
-		var count := maxi(1, int(hand.distance_to(pinned) / 7))
-		for i in count + 1:
-			var at := hand.lerp(pinned, float(i) / count).round()
-			draw_rect(Rect2(at - Vector2(3, 3), Vector2(6, 7)), Color("1a1827"))
-			draw_rect(Rect2(at - Vector2(2, 2), Vector2(4, 5)), Color("d9b181") if _vulnerable > 0 else Color("918393"), false, 1)
+		preload("res://world/Scripts/underworld_chain_art.gd").strand(self, hand, pinned, 6)
 		if _vulnerable > 0:
 			draw_arc(pinned + Vector2(0, -5), 14 + sin(_phase_time * 8) * 2, 0, TAU, 16, Color("ffe4ad"), 2)
 	if active and state=="warning":

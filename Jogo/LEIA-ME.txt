@@ -498,3 +498,8 @@ Entrada animada e pulável, sons próprios de combate e correntes visíveis. A e
 Depois da ajuda de José, suba a estrutura cilíndrica em torno do chefe. Ative os canhões em ordem: FOGO, GELO, FOGO. K dispara, Q alterna. Observe a marca da corrente e saia dela antes do impacto.
 Apoios laterais servem de descanso. Quedas causam dano e devolvem Nico ao apoio; uma morte na última etapa mantém os canhões já ativados. O terceiro disparo liberta o Carcereiro e revela a Chave das Profundezas.
 Sprites e prompt: world/Arte/Underworld/V42/. Tiros muito próximos também atingem a runa do canhão.
+
+V43 — RÉDEAS DO SUBMUNDO
+José lança correntes para tentar domar o Carcereiro. Nico e José sobem nele e partem em direção à próxima ilha. Cena animada com retratos, sons, roupas de Nico e salto entre as margens.
+E/Enter/Espaço ou clique: próxima ação. Esc: pular para resultados. Música e progresso da fase são preservados.
+Oito novos sprites de correntes em world/Arte/Underworld/V43/, também aplicados à escalada e ao golpe preso do guardião. PNG, recortes e prompt incluídos.

@@ -347,3 +347,13 @@ Após a cabeçada de José e os últimos golpes, surge a etapa **Última Corrent
 Sprites novos dos canhões e seus oito estados em `world/Arte/Underworld/V42/`; imagem gerada pelo imagegen integrado, preservada sem alteração, com recortes nativos e prompt documentados. O guardião reutiliza a arte já existente. Disparos elementais passam a detectar alvos quando nascem dentro de uma colisão, corrigindo tiros muito próximos dos canhões.
 
 Validação: combate completo por comandos e projéteis reais; percurso físico da estrutura com corrida e saltos comuns; pausa, retomada, quedas, dicas de ataque, morte, cenas descartadas durante entrada/disparo, chave e encerramento. Saves isolados.
+
+## Rédeas do Submundo (v43)
+
+A cena final agora mostra José tentando domar o Carcereiro com suas correntes. Ele lança o gancho, prende o guardião e segura as rédeas enquanto Nico e José sobem. Os dois partem montados nele; a câmera abre para o litoral e acompanha o salto em direção à próxima ilha. Falas novas, retratos, resistência do monstro, sons de elos e montagem fazem parte da sequência de aproximadamente 19 segundos.
+
+Enter/E/Espaço ou clique avançam para a próxima ação; Esc pula para os resultados. Música, conclusão, chave e progresso mantêm o fluxo da fase. A encenação usa cópias dos atores e conserva as roupas articuladas de Nico. Pontos de apoio são calculados sobre o quadro atual do guardião para acompanhar a inclinação das costas.
+
+O atlas `world/Arte/Underworld/V43/chains.png` contém oito sprites: trecho horizontal, vertical, laço frontal/traseiro, gancho, fecho, trecho curvo e corrente enrolada. Criados com imagegen integrado; PNG original preservado, recortes nativos, prompt e origem documentados na mesma pasta. As novas correntes aparecem na cena, na escalada e no golpe preso do chefe.
+
+Validação: sequência natural completa, oito momentos renderizados, roupas equipadas, apoio dos passageiros, enquadramento do salto, avanço/pulo, música, restauração dos atores e resultados. Regressão do Submundo inclui forja, José, correntes de escalada, combate, canhões, chave e conclusão; saves isolados.

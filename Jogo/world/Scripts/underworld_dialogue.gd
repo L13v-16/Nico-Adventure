@@ -21,6 +21,7 @@ var _panel:Panel
 var _ritual_caption:Label
 var _continue_hint:Label
 var _temple_talk_started:=false
+var _escape:Control
 const Ui=preload("res://world/Scripts/ui_style.gd")
 const LINES={
 	"arrival":[
@@ -36,12 +37,6 @@ const LINES={
 		["José","Na forja: fogo na válvula laranja, gelo na azul, fogo e gelo outra vez. Desvie do vapor e use as plataformas."],
 		["José","O Carcereiro guarda a chave. A corporação prendeu correntes no guardião. Talvez seja possível quebrar esse controle!"],
 	],
-	"ending":[
-		["Carcereiro","As correntes... enfim se partiram. Os executivos me enganaram para guardar seus prisioneiros."],
-		["José","Nossas cabeçadas e os poderes de Nico acabaram com isso. Agora ninguém fica preso aqui!"],
-		["Carcereiro","A Chave das Profundezas é de vocês. A passagem leva às instalações da corporação. Sigam o símbolo do crachá dourado."],
-		["Nico","José está de volta! Vamos reunir a turma, encontrar o Urso e o mico e enfrentar o lobo!"],
-	]
 }
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
@@ -66,6 +61,14 @@ func _ready() -> void:
 		_sky=preload("res://world/Scripts/underworld_sky_attack.gd").new()
 		_sky.player=player
 		_canvas.add_child(_sky)
+		return
+	if mode=="ending":
+		_lines=[]
+		_title.hide()
+		_escape=preload("res://world/Scripts/underworld_escape.gd").new()
+		_escape.name="MountedEscape"
+		_escape.player=player
+		_canvas.add_child(_escape)
 		return
 	_lines=LINES[mode]
 	var panel:=Panel.new()
@@ -123,6 +126,10 @@ func _process(delta:float) -> void:
 		_sky.update_scene(_clock)
 		if _clock>=_sky.DURATION:_finish()
 		return
+	if mode=="ending":
+		_escape.update_scene(_clock)
+		if _clock>=_escape.DURATION:_finish()
+		return
 	if mode=="temple":
 		if not _temple_talk_started:
 			_ritual.update_scene(_clock)
@@ -140,6 +147,12 @@ func _input(event:InputEvent) -> void:
 		_finish()
 	elif mode!="launch" and (event.is_action_pressed("ui_accept") or event.is_action_pressed("interagir") or (event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT)):
 		get_viewport().set_input_as_handled()
+		if mode=="ending":
+			_clock=_escape.next_beat(_clock)
+			_elapsed=0
+			_escape.update_scene(_clock)
+			if _clock>=_escape.DURATION:_finish()
+			return
 		if mode=="temple" and not _temple_talk_started:
 			_clock=_ritual.DURATION
 			_ritual.update_scene(_clock)
@@ -156,6 +169,7 @@ func _finish() -> void:
 	if mode=="launch":
 		get_parent().player.show()
 	_cleanup_ritual()
+	_cleanup_escape()
 	var hud:=get_parent().get_node_or_null("HUD") as CanvasLayer
 	if hud!=null: hud.visible=_old_hud
 	Sfx.end_dialogue_music(self)
@@ -186,4 +200,12 @@ func _cleanup_ritual() -> void:
 		_ritual.queue_free()
 		_ritual=null
 
-func _exit_tree() -> void:_cleanup_ritual()
+func _cleanup_escape() -> void:
+	if is_instance_valid(_escape):
+		_escape.restore()
+		_escape.queue_free()
+		_escape=null
+
+func _exit_tree() -> void:
+	_cleanup_ritual()
+	_cleanup_escape()
