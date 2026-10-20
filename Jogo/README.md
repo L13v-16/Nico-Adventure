@@ -260,3 +260,5 @@ Validação: 238 verificações de identidade, saldo, persistência nas três fa
 As 13 árvores da Floresta Violeta entram de seis a oito pixels no solo, conforme seu tamanho. O terreno desenhado à frente cobre as pontas mais baixas e encontra as raízes mais altas, eliminando o vão que continuava visível quando apenas a ponta inferior era alinhada. Árvores próximas das bordas ficam inteiramente dentro da ilha de apoio. O encaixe é preservado ao recalcular a âncora do sprite.
 
 Validação: 99 verificações de contato das raízes, estabilidade da âncora, camada visual e apoio das 13 árvores; 24 combinações renderizadas de variação, tamanho e direção. Capturas da fase real foram feitas com Vulkan nos 13 locais. Colisões, plataformas, cerejas e posições dos personagens mantêm suas regras.
+
+**Ajuste v33:** o encaixe foi aprofundado para 16–19 pixels, conforme o tamanho de cada árvore, enterrando mais das raízes para reforçar a ligação visual com o chão. Novas capturas dos 13 locais foram feitas na janela Vulkan.

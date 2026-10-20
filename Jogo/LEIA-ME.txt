@@ -426,3 +426,5 @@ Em saves antigos, as ilhas já concluídas ficam sem cerejas no modo livre porqu
 V32 — RAÍZES DAS ÁRVORES
 As 13 árvores da floresta mágica agora entram no solo, com o terreno cobrindo as pontas das raízes. Árvores junto das bordas ficam dentro da ilha de apoio.
 99 verificações passaram, incluindo 24 combinações de sprites renderizados. Os 13 locais também foram capturados na fase real com Vulkan.
+
+V33: árvores aprofundadas para 16–19 pixels dentro do chão. Novas capturas dos 13 locais na janela Vulkan.
