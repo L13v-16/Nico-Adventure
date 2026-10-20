@@ -14,10 +14,9 @@ static func build(level:Node2D) -> void:
 	scenery.name="Scenery"
 	scenery.z_index=-1
 	level.add_child(scenery)
-	var cage:=Art.actor("scenery",80)
-	cage.position+=Vector2(250,104)
-	cage.play(&"cage")
-	scenery.add_child(cage)
+	var cage:=preload("res://world/Scripts/jose_rescue_cage.gd").new()
+	cage.name="JoseCage";cage.position=Vector2(275,100)
+	level.add_child(cage)
 	var temple:=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Arte/Underworld/V44/sanctuary.tres"),300)
 	temple.material.set_shader_parameter("alpha_cutoff",0.94)
 	temple.name="Temple"
@@ -33,6 +32,7 @@ static func build(level:Node2D) -> void:
 	jose.name="Jose"
 	jose.position=Vector2(275,100)
 	level.add_child(jose)
+	jose.hide() # Aparece primeiro dentro da jaula suspensa.
 	for info in [[Vector2(1000,84),"follow",50.0],[Vector2(1190,84),"repel",45.0],[Vector2(2320,40),"shuttle",45.0],[Vector2(2465,36),"follow",30.0],[Vector2(5070,82),"follow",38.0],[Vector2(5530,42),"repel",50.0]]:
 		var rock:=preload("res://world/Scripts/gravity_rock.gd").new()
 		rock.position=info[0]

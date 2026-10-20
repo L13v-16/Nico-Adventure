@@ -1,3 +1,10 @@
+NOVIDADES v49 — RESGATE DE JOSÉ NA JAULA SUSPENSA
+Após cair no Submundo, Nico encontra José preso numa jaula pendurada.
+Nico salta e golpeia a fechadura; a jaula desce e abre no chão.
+José caminha para fora e só então começa a conversa de resgate.
+E/Enter/Espaço avança a cena; ESC pula com o resgate concluído.
+Sprites e prompt final em world/Arte/Underworld/V49/.
+
 NOVIDADES v48 — INIMIGOS DO SUBMUNDO
 Esqueletos e diabinhos refeitos com base no rato e no caranguejo das fases 1 e 2.
 Novos passos, golpes, voo, arremesso, dano e derrota; tridente do mesmo atlas.

@@ -1,5 +1,9 @@
 # Nico's Adventure
 
+## Resgate na jaula suspensa — v49
+
+Na abertura do Submundo, depois da queda, Nico encontra José numa jaula pendurada. Ele salta e golpeia a fechadura duas vezes; a jaula desce pela corrente e abre no chão. José caminha para fora antes de agradecer a Nico e explicar como encontrar a saída. A cena mantém roupas e música, permite avançar com E/Enter/Espaço e pular com ESC, restaurando câmera e controles. A jaula permanece aberta na fase. Sprites originais, prompt final e metadados em `world/Arte/Underworld/V49/`.
+
 ## Inimigos do Submundo — v48
 
 Esqueletos operários e diabinhos receberam sprites na estética dos inimigos das duas primeiras fases, usando rato e caranguejo como referências diretas. Novos passos, preparação e golpes de picareta, quatro quadros de voo, arremesso de tridente, dano e derrota. O corpo do diabinho se mantém estável durante o bater das asas, e o projétil combina com a arma que ele carrega. Vida, ataques, colisões e congelamento foram preservados. PNGs originais gerados com imagegen integrado, prompts e metadados em `world/Arte/Underworld/V48/`.

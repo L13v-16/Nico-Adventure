@@ -22,10 +22,13 @@ var _ritual_caption:Label
 var _continue_hint:Label
 var _temple_talk_started:=false
 var _escape:Control
+var _rescue:Node2D
+var _rescue_caption:Label
+var _arrival_talk_started:=false
 const Ui=preload("res://world/Scripts/ui_style.gd")
 const LINES={
 	"arrival":[
-		["José","Nico! A empresa me largou aqui, mas estas grades não seguraram minhas cabeçadas. Ainda precisamos encontrar a saída!"],
+		["José","Nico! Você quebrou a fechadura! Eu estava preso nessa jaula suspensa. Obrigado por me libertar! Ainda precisamos encontrar a saída."],
 		["Nico","José! Um tiro da empresa me derrubou da Arara Minas. Precisamos sair daqui e avisar a turma!"],
 		["José","Marque os obstáculos e aperte C. Eu quebro paredes rachadas e derrubo pilares frágeis para abrir o caminho."],
 		["José","Observe as fendas: rachaduras brilham, pedras tremem e faíscas sobem antes da lava. As marcadas com uma seta azul servem de impulso!"],
@@ -94,6 +97,15 @@ func _ready() -> void:
 	_line.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	_continue_hint=_label("E / Enter / Espaço: continuar   ·   ESC: pular",10,Rect2(24,341,590,17),Color("c5acb6"))
 	_show_beat()
+	if mode=="arrival":
+		_rescue=preload("res://world/Scripts/jose_cage_rescue.gd").new()
+		_rescue.name="CageRescue";_rescue.player=player;_rescue.jose=get_parent().get_node("Jose");_rescue.cage=get_parent().get_node("JoseCage")
+		get_parent().add_child(_rescue)
+		_rescue_caption=_label("José está preso lá em cima!",13,Rect2(35,307,570,25),Color("fff0c9"))
+		_rescue_caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		_set_temple_panel(false)
+		_title.text="SUBMUNDO  /  A JAULA SUSPENSA"
+		_continue_hint.text="E / Enter / Espaço: avançar animação   ·   ESC: pular"
 	if mode=="temple":
 		_ritual=preload("res://world/Scripts/altar_awakening.gd").new()
 		_ritual.name="AltarAwakening"
@@ -130,6 +142,11 @@ func _process(delta:float) -> void:
 		_escape.update_scene(_clock)
 		if _clock>=_escape.DURATION:_finish()
 		return
+	if mode=="arrival" and not _arrival_talk_started:
+		_rescue.update_scene(_clock)
+		_rescue_caption.text="José está preso lá em cima!" if _clock<1.05 else ("Nico: aguenta firme, José!" if _clock<3.65 else ("A jaula está descendo..." if _clock<5.65 else "José está livre!"))
+		if _rescue.done:_start_arrival_talk()
+		return
 	if mode=="temple":
 		if not _temple_talk_started:
 			_ritual.update_scene(_clock)
@@ -153,6 +170,11 @@ func _input(event:InputEvent) -> void:
 			_escape.update_scene(_clock)
 			if _clock>=_escape.DURATION:_finish()
 			return
+		if mode=="arrival" and not _arrival_talk_started:
+			_clock=_rescue.next_beat(_clock);_elapsed=0
+			_rescue.update_scene(_clock)
+			if _rescue.done:_start_arrival_talk()
+			return
 		if mode=="temple" and not _temple_talk_started:
 			_clock=_ritual.DURATION
 			_ritual.update_scene(_clock)
@@ -168,6 +190,8 @@ func _finish() -> void:
 	has_finished=true
 	if mode=="launch":
 		get_parent().player.show()
+	if mode=="arrival" and is_instance_valid(_rescue):_rescue.complete()
+	_cleanup_rescue()
 	_cleanup_ritual()
 	_cleanup_escape()
 	var hud:=get_parent().get_node_or_null("HUD") as CanvasLayer
@@ -194,6 +218,18 @@ func _start_temple_talk() -> void:
 	_continue_hint.text="E / Enter / Espaço: continuar   ·   ESC: pular"
 	_show_beat()
 
+func _start_arrival_talk() -> void:
+	if _arrival_talk_started:return
+	_arrival_talk_started=true
+	_rescue_caption.hide();_set_temple_panel(true)
+	_title.text="SUBMUNDO  /  UM AMIGO, UMA SAÍDA"
+	_continue_hint.text="E / Enter / Espaço: continuar   ·   ESC: pular"
+	_show_beat()
+
+func _cleanup_rescue() -> void:
+	if is_instance_valid(_rescue):
+		_rescue.restore();_rescue.queue_free();_rescue=null
+
 func _cleanup_ritual() -> void:
 	if is_instance_valid(_ritual):
 		_ritual.restore()
@@ -207,5 +243,6 @@ func _cleanup_escape() -> void:
 		_escape=null
 
 func _exit_tree() -> void:
+	_cleanup_rescue()
 	_cleanup_ritual()
 	_cleanup_escape()
