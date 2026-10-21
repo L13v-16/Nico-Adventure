@@ -47,7 +47,7 @@ static func build(level:Node2D) -> void:
 		obstacle.position=info[0]
 		obstacle.kind=info[1]
 		level.add_child(obstacle)
-	for point in [Vector2(760,100),Vector2(1670,100),Vector2(2750,36),Vector2(4610,100),Vector2(5680,100),Vector2(6320,100)]:
+	for point in [Vector2(760,100),Vector2(1670,100),Vector2(2750,36),Vector2(4900,100),Vector2(5680,100),Vector2(6320,100)]:
 		var enemy:=preload("res://world/Scripts/underworld_enemy.gd").new()
 		enemy.position=point
 		enemy.patrol_width=104
@@ -76,11 +76,6 @@ static func build(level:Node2D) -> void:
 	gate.add_child(collider)
 	level.add_child(gate)
 	forge.gate=gate
-	for info in [[Vector2(4150,100),0.0],[Vector2(4670,100),1.8]]:
-		var steam:=preload("res://world/Scripts/underworld_steam.gd").new()
-		steam.position=info[0]
-		steam.phase=info[1]
-		level.add_child(steam)
 	# A arena usa somente o piso inteiro; a torre final monta sua própria rota.
 	var boss:=preload("res://world/Scripts/depth_warden.gd").new()
 	boss.name="Boss"

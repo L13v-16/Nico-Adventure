@@ -1,0 +1,103 @@
+{
+  "mode": "built-in imagegen",
+  "source_sha256": {
+    "forge_room.png": "a77cd34670c0286b6ab7149df96cd6fa10e692c95184af807cdc2f67df1b4301",
+    "forge_tiles.png": "7bfb78ca7b4e2c63262ec7cc1b380dde80927bb9bb08e94aa7ee7d6a3afb892d"
+  },
+  "sources": {
+    "forge_room.png": "exec-e42924f5-6526-47aa-b240-4b9caa53a8bd.png",
+    "forge_tiles.png": "exec-ce21cf90-37f0-441b-9c24-70c0063dee4f.png"
+  },
+  "frames": [
+    {
+      "name": "floor_00",
+      "region": [
+        28,
+        158,
+        353,
+        217
+      ],
+      "ground_foot": 214,
+      "walk_top": 3
+    },
+    {
+      "name": "floor_01",
+      "region": [
+        402,
+        158,
+        356,
+        216
+      ],
+      "ground_foot": 213,
+      "walk_top": 3
+    },
+    {
+      "name": "floor_02",
+      "region": [
+        779,
+        158,
+        357,
+        216
+      ],
+      "ground_foot": 213,
+      "walk_top": 3
+    },
+    {
+      "name": "floor_03",
+      "region": [
+        1155,
+        158,
+        356,
+        216
+      ],
+      "ground_foot": 213,
+      "walk_top": 3
+    },
+    {
+      "name": "anvil",
+      "region": [
+        46,
+        670,
+        299,
+        258
+      ],
+      "ground_foot": 255,
+      "walk_top": 3
+    },
+    {
+      "name": "tools",
+      "region": [
+        399,
+        608,
+        389,
+        320
+      ],
+      "ground_foot": 317,
+      "walk_top": 3
+    },
+    {
+      "name": "ingots",
+      "region": [
+        795,
+        654,
+        402,
+        274
+      ],
+      "ground_foot": 271,
+      "walk_top": 3
+    },
+    {
+      "name": "column",
+      "region": [
+        1256,
+        498,
+        215,
+        430
+      ],
+      "ground_foot": 427,
+      "walk_top": 3
+    }
+  ],
+  "wall_floor_baseline": 676,
+  "native_pngs_preserved": true
+}
