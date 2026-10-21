@@ -547,3 +547,15 @@ Ao vencer a etapa da cabeçada de José, uma cena de oito segundos apresenta a p
 Após os últimos selos, a fuga ganhou 6,4 segundos de derrota antes da aproximação de José. O monstro cambaleia com o último golpe, cai numa pose apoiada no chão e se acalma enquanto os elos da corporação caem. Nico e José falam antes de José se aproximar e lançar suas próprias correntes como rédeas. A montagem e a viagem para a próxima ilha continuam na sequência, agora com 25,6 segundos no total. Avançar percorre os momentos da derrota antes da doma; pular preserva a vitória, a Chave das Profundezas e os resultados.
 
 As cenas reutilizam as spritesheets do jogo, incluindo os recortes corrigidos e os apoios dos pés do Carcereiro. Não há novos PNGs ou alterações nas imagens existentes. Validação adicional: 36 verificações de pausa, música, enquadramento, ordem dos eventos, checkpoint, física real após a queda, salto das cenas, reinício, remoção, doma, montagem e recompensa. Na janela Vulkan foram 44 verificações, incluindo oito capturas das duas cenas. A regressão completa do Submundo mantém suas 64 verificações. Saves reais permanecem intocados; cada execução usa APPDATA próprio.
+
+## Triple H: mais oportunidades de contra-ataque (v61)
+
+Nico agora pode causar dano direto durante a recuperação do chute (1,7 s), da corrida (1,8 s), do arremesso (1,8 s) e do salto do primeiro round (2 s). Uma marca dourada e o aviso ATAQUE indicam as brechas. Nessas aberturas, encostar no corpo do chefe não retira vida; golpes comuns e quedas na cabeça podem aproveitar a oportunidade.
+
+No segundo round, os primeiros 1,8 segundos da preparação do barril depois da aterrissagem também permitem contra-atacar. O intervalo total de 3,2 segundos até começar o arremesso foi preservado, assim como as ondas do impacto. Depois de lançar o barril, Triple H oferece outra abertura de recuperação. O barril pode ser rebatido normalmente.
+
+A recuperação dos socos passou de 0,85 s para 1,5 s. A frente continua protegida, mas acertar por trás agora atordoa e causa dano no mesmo golpe, sem exigir uma segunda tentativa. O atordoamento pelas costas dura 3,2 s; o barril devolvido permite 3,5 s. Continua valendo o teto de um ponto de dano por abertura/atordoamento, mesmo com bônus ou golpes fracionados. Devolver um barril durante uma abertura já aproveitada não restaura esse limite. A próxima recuperação abre um novo orçamento de dano.
+
+O terceiro round continua exigindo os três mergulhos com os trampolins alternados. As novas brechas não permitem pular essa mecânica nem libertar Remi antes da vitória. Foram reutilizados os sprites e as animações do jogo.
+
+Validação: 46 verificações das novas recuperações, ataques J reais pelos dois lados, ausência de dano de contato durante a brecha, socos, tempo do barril, limite por abertura, transições e reinício. Execução Vulkan com quatro capturas (50 verificações). As 51 verificações anteriores da luta também passaram, incluindo os três acertos com física e controles reais nos trampolins, derrota e liberação de Remi. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.

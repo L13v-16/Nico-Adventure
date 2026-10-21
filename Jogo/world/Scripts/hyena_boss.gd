@@ -9,6 +9,7 @@ const FLOOR := 64.0
 const MAX_HEALTH := 8.0
 const MAX_DAMAGE_PER_STUN := 1.0
 const ROUND_TWO_BARREL_DELAY := 3.2
+const LANDING_OPENING := 1.8
 const SPRING_ROUND_HEALTH := 3.0
 const SPRING_FLIGHT_LIMIT := 2.2
 var _stun_damage := 0.0
@@ -226,13 +227,13 @@ func _physics_process(delta: float) -> void:
 			if _state_elapsed>=0.12+_melee_hits*0.22 and _melee_hits<2:
 				_melee_hits+=1
 				_hurt_front(100)
-			if _timer<=0:_set_state("punch_recovery",0.85)
+			if _timer<=0:_set_state("punch_recovery",1.5)
 		"kick":
 			_play(&"kick")
 			if _state_elapsed>=0.13 and _melee_hits==0:
 				_melee_hits=1
 				_hurt_front(125)
-			if _timer<=0:_set_state("recovery",0.7)
+			if _timer<=0:_set_state("opening",1.7)
 		"throw":
 			_play(&"throw")
 			if _state_elapsed>=0.18 and _throws==0:
@@ -241,7 +242,10 @@ func _physics_process(delta: float) -> void:
 			if phase==1 and health<=4 and _state_elapsed>=0.55 and _throws==1:
 				_throw_object("rock",clampf(_player.position.x,LEFT+25,RIGHT-25))
 				_throws=2
-			if _timer<=0:_set_state("recovery",0.65)
+			if _timer<=0:_set_state("opening",1.8)
+		"opening":
+			_play(&"hurt" if _invulnerability>0.64 else &"stunned")
+			if _timer<=0:_set_state("idle",0.65)
 		"punch_recovery", "recovery":
 			_play(&"guard")
 			if _timer<=0:_set_state("idle",0.65)
@@ -249,7 +253,7 @@ func _physics_process(delta: float) -> void:
 			_play(&"run")
 			if _timer<=0 or position.x<=LEFT+16 or position.x>=RIGHT-16:
 				velocity=Vector2.ZERO
-				_set_state("recovery",0.8)
+				_set_state("opening",1.8)
 		"leap":
 			_play(&"leap")
 			velocity.y+=1000*delta
@@ -273,15 +277,15 @@ func _physics_process(delta: float) -> void:
 				else:
 					_direction=signf(_player.position.x-position.x);_target_x=clampf(_player.position.x,LEFT+25,RIGHT-25)
 					_set_state("throw_warning",ROUND_TWO_BARREL_DELAY)
-			else:_set_state("recovery",0.8)
+			else:_set_state("opening",2.0)
 	if phase==3:
 		_tick_spring_launch(delta)
 		if _try_spring_stomp(delta) and is_dead():return
 	_sync_facing()
 	_fill.size.x=428*health/(3.0 if phase>=2 else MAX_HEALTH)
 	var advice:="Rebata o barril ou ataque por trás dos socos"
-	if state=="stunned":advice="VULNERÁVEL! J / X ou pule na cabeça"
-	if state=="stunned" and _stun_hit:advice="LIMITE DO ATORDOAMENTO! Afaste-se e conquiste outra abertura"
+	if _has_attack_opening():advice="ABERTURA! J / X ou pule na cabeça"
+	if _has_attack_opening() and _stun_hit:advice="ACERTOU! Prepare a próxima abertura"
 	elif state.begins_with("throw"):advice="J / X: REBATA O BARRIL!"
 	elif state.begins_with("punch"):advice="SOCOS! Passe por cima e ataque por trás"
 	elif state.begins_with("kick"):advice="CHUTE! Pule ou recue"
@@ -290,7 +294,9 @@ func _physics_process(delta: float) -> void:
 		if state.begins_with("rope"):advice="CORRIDA NAS CORDAS · PULE!"
 		elif state=="leap_warning":advice="SALTO NO CENTRO · AFASTE-SE!"
 		elif state=="leap":advice="PULE A ONDA · DEPOIS REBATA O BARRIL"
-		elif state=="throw_warning":advice="BARRIL EM %.1f s · PREPARE J / X"%maxf(0,_timer)
+		elif state=="throw_warning":
+			advice="BARRIL EM %.1f s · PREPARE J / X"%maxf(0,_timer)
+			if _has_attack_opening():advice=("ACERTOU! " if _stun_hit else "ABERTURA! ATAQUE AGORA · ")+"BARRIL EM %.1f s"%maxf(0,_timer)
 	if phase==3:
 		var side_name:="ESQUERDO" if _spring_side<0 else "DIREITO"
 		advice="TRAMPOLIM %s → CAIA NA CABEÇA!"%side_name
@@ -299,10 +305,10 @@ func _physics_process(delta: float) -> void:
 	_caption.text="TRIPLE H · %d / 3 · "%phase+advice
 	if not _player.is_dead() and absf(_player.global_position.x-position.x)<36:
 		var feet:float=_player.global_position.y+11
-		if phase<3 and state=="stunned" and _player.velocity.y>50 and feet>position.y-88 and feet<position.y-44:
+		if _has_attack_opening() and not _stun_hit and _player.velocity.y>50 and feet>position.y-88 and feet<position.y-44:
 			take_damage(_player.get_attack_damage(),_player.global_position)
 			_player.launch_from_spring(390)
-		elif _invulnerability<=0 and _player.global_position.y>position.y-60 and _player.global_position.y<position.y+15:
+		elif not _has_attack_opening() and _invulnerability<=0 and _player.global_position.y>position.y-60 and _player.global_position.y<position.y+15:
 			_player.take_damage(1,global_position)
 	queue_redraw()
 
@@ -312,6 +318,12 @@ func _set_state(value:String,duration:float) -> void:
 	_state_elapsed=0
 	_melee_hits=0
 	_throws=0
+	if phase<3 and (value=="opening" or (phase==2 and value=="throw_warning")):
+		_stun_damage=0;_stun_hit=false
+
+func _has_attack_opening() -> bool:
+	if phase>=3:return false
+	return state in ["stunned","opening"] or (phase==2 and state=="throw_warning" and _state_elapsed<LANDING_OPENING)
 
 func _prepare_attack() -> void:
 	if phase==3:
@@ -366,8 +378,10 @@ func _play(animation:StringName) -> void:
 func _stun(duration:float=2.5) -> void:
 	if phase==3:return
 	if state=="stunned":return
-	_stun_hit=false
-	_stun_damage=0
+	# A returned barrel can extend an existing opening, but cannot refill its damage.
+	if not _has_attack_opening():
+		_stun_hit=false
+		_stun_damage=0
 	_set_state("stunned",duration)
 	velocity=Vector2.ZERO
 	Sfx.hit()
@@ -384,7 +398,7 @@ func receive_reflected_barrel() -> void:
 	if state=="stunned":return
 	# A grounded stagger is earned by reflecting an actual thrown barrel.
 	position.y=FLOOR
-	_stun(2.8)
+	_stun(3.5)
 	Fx.popup(position+Vector2(0,-92),"BARRIL DEVOLVIDO!",Color("c6ffe5"),11)
 
 func take_damage(amount: float, source: Vector2) -> void:
@@ -392,13 +406,13 @@ func take_damage(amount: float, source: Vector2) -> void:
 	if phase==3:
 		Fx.popup(global_position+Vector2(0,-100),"USE O TRAMPOLIM!",Color("f7ccaa"),9)
 		return
-	if state!="stunned":
+	if not _has_attack_opening():
 		if state in ["punch","punch_recovery"] and (source.x-position.x)*_direction < -8 and absf(source.y-position.y)<95:
-			_stun(2.5)
+			_stun(3.2)
 			Fx.popup(position+Vector2(0,-92),"POR TRÁS!",Color("c6ffe5"),11)
+		else:
+			Fx.popup(global_position+Vector2(0,-88),"ESPERE A ABERTURA",Color("f7ccaa"),9)
 			return
-		Fx.popup(global_position+Vector2(0,-88),"ESPERE A ABERTURA",Color("f7ccaa"),9)
-		return
 	var allowed:=MAX_DAMAGE_PER_STUN-_stun_damage
 	if allowed<=0:return
 	var applied:=minf(amount,allowed)
@@ -489,6 +503,9 @@ func is_dead() -> bool:
 	return health<=0
 
 func _draw() -> void:
+	if active and _has_attack_opening() and not _stun_hit:
+		draw_arc(Vector2(0,-35),53,PI,TAU,20,Color("ffe2a0"),2)
+		draw_string(ThemeDB.fallback_font,Vector2(-48,-97),"ATAQUE!",HORIZONTAL_ALIGNMENT_CENTER,96,10,Color("ffe2a0"))
 	if phase==3 and active and state=="spring_guard":
 		var color:=Color("ffe2ac") if _spring_armed else Color("c4a3ec")
 		draw_line(Vector2(-8,-101),Vector2(0,-93),color,3)
