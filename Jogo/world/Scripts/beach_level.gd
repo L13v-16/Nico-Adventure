@@ -16,27 +16,20 @@ func _ready() -> void:
 	var turtle:AnimatedSprite2D=$RescueCage/Turtle
 	turtle.scale=Vector2(64,48)/turtle.sprite_frames.get_frame_texture(&"idle",0).get_size()
 	super._ready()
+	var advice:=preload("res://world/Scripts/optional_friend_advice.gd").new()
+	advice.name="AraraGuide";advice.kind="beach";advice.friend=arara;advice.anchor=Vector2(104,64)
+	add_child(advice)
 	_on_cherry_balance_changed(player.get_cherry_balance())
 
 func _start_sequence() -> void:
 	Save.consume_skip_intro()
 	await _begin_intro()
-	# O pedido de pular o prólogo também é usado por Próxima ilha: a chegada
-	# deve aparecer ao seguir da floresta para a praia.
-	intro_active = true
-	_timing = false
-	pause_menu.can_open = false
-	get_tree().paused = true
-	var arrival := ARRIVAL_SCRIPT.new()
-	arrival.name = "BeachArrival"
-	add_child(arrival)
-	await arrival.finished
 	intro_active = false
 	get_tree().paused = false
 	pause_menu.can_open = true
 	_timing = true
 	_elapsed = 0.0
-	_show_notice("Resgate a Tartaruga! Caranguejos: pule sobre o casco.")
+	_show_notice("Resgate a Tartaruga!")
 
 func _polish_terrain() -> void:
 	pass

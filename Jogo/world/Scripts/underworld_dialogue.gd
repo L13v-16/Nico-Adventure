@@ -1,6 +1,6 @@
 extends CanvasLayer
 signal finished
-@export_enum("arrival","temple","ending","launch") var mode:="arrival"
+@export_enum("arrival","temple","ending","launch","advice") var mode:="arrival"
 @export var auto_progress:=true
 var has_finished:=false
 var beat_index:=0
@@ -30,6 +30,8 @@ const LINES={
 	"arrival":[
 		["José","Nico! Você quebrou a fechadura! Eu estava preso nessa jaula suspensa. Obrigado por me libertar! Ainda precisamos encontrar a saída."],
 		["Nico","José! Um tiro da empresa me derrubou da Arara Minas. Precisamos sair daqui e avisar a turma!"],
+	],
+	"advice":[
 		["José","Marque os obstáculos e aperte C. Eu quebro paredes rachadas e derrubo pilares frágeis para abrir o caminho."],
 		["José","Observe as fendas: rachaduras brilham, pedras tremem e faíscas sobem antes da lava. As marcadas com uma seta azul servem de impulso!"],
 		["José","Rochas claras se aproximam; as roxas se afastam. Ajuste a ponte e use as pedras para se proteger dos tridentes. Vamos juntos!"],
@@ -57,7 +59,7 @@ func _ready() -> void:
 	_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_canvas.draw.connect(_draw_overlay)
 	add_child(_canvas)
-	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"SANTUÁRIO DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"ATAQUE NO CÉU"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
+	_title=_label("SUBMUNDO  /  "+{"arrival":"UM AMIGO, UMA SAÍDA","temple":"SANTUÁRIO DOS CONTRÁRIOS","ending":"CORRENTES PARTIDAS","launch":"ATAQUE NO CÉU","advice":"CONVERSANDO COM JOSÉ"}[mode],12,Rect2(24,22,600,23),Color("f7bb79"))
 	if mode=="launch":
 		_lines=[]
 		_title.hide()

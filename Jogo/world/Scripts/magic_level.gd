@@ -11,6 +11,9 @@ func _ready() -> void:
 	$RescueCage.opened.connect(_on_cage_opened)
 	player.shop_shield_changed.connect(func(hits:int):game_hud.set_shop_shield(hits))
 	super._ready()
+	var advice:=preload("res://world/Scripts/optional_friend_advice.gd").new()
+	advice.name="AraraGuide";advice.kind="magic";advice.friend=$Scenery/AraraMinas;advice.anchor=Vector2(160,100)
+	add_child(advice)
 
 func _polish_terrain() -> void:
 	pass
@@ -18,14 +21,6 @@ func _polish_terrain() -> void:
 func _start_sequence() -> void:
 	Save.consume_skip_intro()
 	await _begin_intro()
-	intro_active=true
-	_timing=false
-	pause_menu.can_open=false
-	get_tree().paused=true
-	var arrival:=DIALOGUE.new()
-	arrival.name="MagicArrival"
-	add_child(arrival)
-	await arrival.finished
 	intro_active=false
 	get_tree().paused=false
 	pause_menu.can_open=true

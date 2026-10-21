@@ -15,6 +15,9 @@ func _ready() -> void:
 	$Boss.encounter_started.connect(func():_show_notice(""))
 	player.shop_shield_changed.connect(func(hits:int):game_hud.set_shop_shield(hits))
 	super._ready()
+	var advice:=preload("res://world/Scripts/optional_friend_advice.gd").new()
+	advice.name="JoseGuide";advice.kind="jose";advice.friend=$Jose
+	add_child(advice)
 func _polish_terrain() -> void:pass
 func _setup_enemies() -> void:
 	total_enemies=0

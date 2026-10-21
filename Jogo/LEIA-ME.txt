@@ -692,3 +692,13 @@ A recuperação dos socos passou de 0,85 s para 1,5 s. A frente continua protegi
 O terceiro round continua exigindo os três mergulhos com os trampolins alternados. As novas brechas não permitem pular essa mecânica nem libertar Remi antes da vitória. Foram reutilizados os sprites e as animações do jogo.
 
 Validação: 46 verificações das novas recuperações, ataques J reais pelos dois lados, ausência de dano de contato durante a brecha, socos, tempo do barril, limite por abertura, transições e reinício. Execução Vulkan com quatro capturas (50 verificações). As 51 verificações anteriores da luta também passaram, incluindo os três acertos com física e controles reais nos trampolins, derrota e liberação de Remi. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+## Dicas dos amigos apenas por interação (v62)
+
+A chegada à praia e à Floresta Violeta agora termina na abertura com o nome da fase e libera o controle. A Arara Minas permanece no começo de cada uma, com um pequeno aviso de E quando Nico se aproxima. As explicações sobre caranguejos, açaí, canhões, cogumelos, cipós e fogo continuam disponíveis ao conversar com ela; não abrem sozinhas.
+
+No Submundo, a queda e a libertação da jaula de José foram preservadas. O diálogo automático depois do resgate tem apenas as duas falas de história. As três explicações iniciais sobre cabeçadas, gêiseres e rochas passaram para uma conversa opcional: aproxime-se de José, com os dois no chão, e aperte E. José continua seguindo Nico e recebendo comandos com C.
+
+As conversas podem ser revisitadas, começam na primeira fala e aguardam o jogador para avançar. E/Enter avança, Esc fecha. Apenas se aproximar, permanecer perto ou afastar-se não inicia nenhuma dica. O controle, o cronômetro, a câmera, a música e a HUD são restaurados ao fechar. Loja e portas da forja têm prioridade no E; a conversa fica indisponível durante a introdução, comando de cabeçada, combate com chefe ou conclusão da fase. Não há alteração de saldo ou ganho antecipado dos poderes do altar.
+
+Validação: 68 verificações de chegada sem diálogo, proximidade, E real, repetição, leitura, pausa, câmera, música, HUD, loja, forja, comando de José, resgate e limpeza. Execução Vulkan com seis capturas (74 verificações). As 64 verificações da fase completa do Submundo também passaram, incluindo a forja, etapas do Carcereiro e fuga. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados. Arte existente reutilizada.
