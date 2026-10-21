@@ -57,7 +57,7 @@ func _ready() -> void:
 	_scenery=Node2D.new()
 	_scenery.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;_scenery.draw.connect(_draw_stage);_stage.add_child(_scenery)
 	_actor_rig=Node2D.new();_actor_rig.z_index=2;_stage.add_child(_actor_rig)
-	_actor=Art.actor(preload("res://world/Arte/Beach/urus.tres") if kind=="urus" else HYENA,154 if kind=="urus" else 128)
+	_actor=Art.actor(preload("res://world/Arte/Beach/urus.tres") if kind=="urus" else HYENA,140 if kind=="urus" else 128)
 	_actor.material.set_shader_parameter("alpha_cutoff",.94)
 	_base_scale=_actor.scale;_actor_rig.add_child(_actor)
 	_actor.frame_changed.connect(_sync_actor);_actor.animation_changed.connect(_sync_actor)
@@ -67,7 +67,7 @@ func _ready() -> void:
 	if kind=="urus":
 		_cannon=Art.actor(preload("res://world/Arte/Beach/cannon.tres"),74)
 		_cannon.position+=Vector2(88,GROUND);_cannon.z_index=1;_stage.add_child(_cannon);_cannon.play(&"idle")
-	_canvas=Control.new();_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	_canvas=Control.new();_canvas.z_index=10;_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_canvas.draw.connect(_draw_overlay);add_child(_canvas)
 	_update_scene()
 func _process(delta:float) -> void:
