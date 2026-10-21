@@ -2,7 +2,9 @@ extends Node2D
 ## Peças articuladas sobre os 33 × 32 pixels de cada quadro de Nico.
 ## Filho do AnimatedSprite2D: squash, golpes e dano são herdados uma só vez.
 
-const IDS: Array[String] = ["claws", "sneakers", "leaf", "frozen_acai", "lasting_ice", "straw_hat", "sunglasses", "cape", "pajamas", "winter", "rainbow_tail"]
+const IDS: Array[String] = ["claws", "sneakers", "leaf", "lasting_ice", "straw_hat", "sunglasses", "cape", "pajamas", "winter", "rainbow_tail", "swift_gloves", "jump_brooch", "sailor_bandana", "aviator_goggles"]
+const PARTS := ["sneakers_far", "sneakers_near", "claws_far", "claws_near", "swift_gloves_far", "swift_gloves_near", "pajamas_torso", "pajamas_sleeve_far", "pajamas_sleeve_near", "pajamas_leg_far", "pajamas_leg_near", "winter_torso", "winter_sleeve_far", "winter_sleeve_near", "winter_leg_far", "winter_leg_near"]
+const ART_PATH := "res://world/Arte/Equipment/V56/"
 const RAINBOW: Array[Color] = [Color("ff5867"), Color("ffb44b"), Color("f7e86a"), Color("6bd98b"), Color("62c9ef"), Color("bb8aee")]
 # Coordenadas nas texturas originais, antes de centered, offset e flip.
 # cabeça, olhos, peito, mão próxima/distante, pé próximo/distante, raiz/ponta da cauda.
@@ -30,10 +32,6 @@ const FRAME_POINTS := {
 		[Vector2(21,27), Vector2(23,29), Vector2(15,29), Vector2(18,30), Vector2(13,29), Vector2(16,34), Vector2(11,33), Vector2(10,28), Vector2(4,25)],
 	],
 }
-const OUTFIT_REGIONS := {
-	"pajamas": {"torso": Rect2(3,0,5,8), "sleeve_far": Rect2(0,1,3,6), "sleeve_near": Rect2(8,1,3,6), "leg_far": Rect2(1,9,4,3), "leg_near": Rect2(6,9,4,3)},
-	"winter": {"torso": Rect2(3,0,6,10), "sleeve_far": Rect2(0,3,3,6), "sleeve_near": Rect2(9,3,3,6), "leg_far": Rect2(2,12,4,2), "leg_near": Rect2(7,12,4,2)},
-}
 
 var model: Node
 var _player: Node2D
@@ -60,18 +58,21 @@ func _ready() -> void:
 		visible = false
 		set_process(false)
 		return
-	for id: String in IDS:
-		var path := "res://world/Arte/Equipment/%s_worn.png" % id
-		if ResourceLoader.exists(path):
-			_art[id] = load(path) as Texture2D
+	for id in IDS + PARTS:
+		_art[id] = load(ART_PATH + id + ".tres") as Texture2D
+	var ink := ShaderMaterial.new()
+	ink.shader = preload("res://world/Scripts/characters_cutout.gdshader")
+	ink.set_shader_parameter("alpha_cutoff", 0.94)
 	_back = Node2D.new()
 	_back.name = "CapeAndAura"
 	_back.z_index = -1
+	_back.material = ink
 	_back.draw.connect(_draw_back)
 	add_child(_back)
 	_front = Node2D.new()
 	_front.name = "WornAccessories"
 	_front.z_index = 1
+	_front.material = ink
 	_front.draw.connect(_draw_front)
 	add_child(_front)
 	_trail = Node2D.new()
@@ -149,6 +150,10 @@ func _pose() -> Dictionary:
 	pose["shoulder_near"] = chest + Vector2(2, -2)
 	pose["knee_far"] = (pose["hip_far"] as Vector2).lerp(pose["foot_far"], 0.5)
 	pose["knee_near"] = (pose["hip_near"] as Vector2).lerp(pose["foot_near"], 0.5)
+	# Hands move only within their cuffs during the real attack pulse.
+	if "_attack_elapsed" in _player and float(_player.get("_attack_elapsed")) >= 0.0:
+		var pulse := sin(clampf(float(_player.get("_attack_elapsed")) / 0.32, 0, 1) * PI)
+		pose["hand_near"] += Vector2(roundf(pulse * 2), 0)
 	return pose
 
 
@@ -165,7 +170,7 @@ func _sprite_basis() -> Transform2D:
 
 
 func _part_transform(surface: Node2D, at: Vector2 = Vector2.ZERO, angle: float = 0.0, part_scale: Vector2 = Vector2.ONE) -> void:
-	surface.draw_set_transform_matrix(_sprite_basis() * Transform2D(angle, part_scale, 0.0, at))
+	surface.draw_set_transform_matrix(_sprite_basis() * Transform2D(angle, part_scale, 0.0, at.round()))
 
 
 func _draw_back() -> void:
@@ -188,133 +193,90 @@ func _draw_back() -> void:
 
 func _draw_cape(pose: Dictionary) -> void:
 	var running := _anim.animation == &"run"
-	var angle := 0.48 if running else 0.14
-	if _anim.animation == &"jump":
-		angle = 0.32
-	elif _anim.animation == &"fall":
-		angle = 0.62
-	elif _anim.animation == &"hurt":
-		angle = -0.1
-	_part_transform(_back, pose["neck"], angle, Vector2(0.8, 0.8))
-	# Três faixas do mesmo bitmap: a ponta varia com a passada, sem relógio próprio.
-	for strip: int in 3:
-		var x := strip * 4
-		var width := 5 if strip == 2 else 4
+	var anchor: Vector2 = pose["neck"] + Vector2(-3, -1)
+	var texture: Texture2D = _art["cape"]
+	var source_size := texture.get_size()
+	for strip in 4:
+		var x := strip * 3
+		var width := 2 if strip == 3 else 3
 		var flutter := float((_anim.frame + strip) % 3 - 1) if running and strip < 2 else 0.0
-		_draw_region(_back, "cape", Rect2(x, 0, width, 17), Rect2(x - 11, -1 + flutter, width, 17))
+		_part_transform(_back, anchor)
+		_back.draw_texture_rect_region(texture, Rect2(x-10, flutter, width, 14), Rect2(source_size.x*x/11, 0, source_size.x*width/11, source_size.y))
 
 
 func _draw_front() -> void:
-	if not is_instance_valid(_anim):
-		return
+	if not is_instance_valid(_anim):return
 	var pose := _pose()
 	var dying := _anim.animation == &"die"
 	if not dying:
-		if _has("rainbow_tail"):
-			_draw_tail(pose)
+		if _has("rainbow_tail"):_draw_tail(pose)
+		if _has("claws"):_draw_claw(pose["hand_far"], true)
+		if _has("swift_gloves"):_draw_glove(pose["hand_far"], true)
 		var outfit := "pajamas" if _has("pajamas") else ("winter" if _has("winter") else "")
-		if not outfit.is_empty():
-			_draw_outfit(outfit, pose)
+		if not outfit.is_empty():_draw_outfit(outfit, pose)
 		if _has("sneakers"):
 			_draw_shoe(pose["foot_far"], true)
 			_draw_shoe(pose["foot_near"], false)
-		if _has("leaf"):
-			_draw_art_at(_front, "leaf", pose["body"] + Vector2(-1, -1), Vector2(-2, -2), Vector2(4, 5))
-		if _has("lasting_ice"):
-			_draw_art_at(_front, "lasting_ice", pose["body"] + Vector2(3, -1), Vector2(-1, -2), Vector2(3, 5))
-		if _has("claws"):
-			_draw_art_at(_front, "claws", pose["hand_near"], Vector2(-2, -3), Vector2(8, 7), _hand_angle(pose))
-		if _has("swift_gloves"):
-			_draw_glove(pose["hand_far"])
-			_draw_glove(pose["hand_near"])
-		if _has("jump_brooch"):
-			_part_transform(_front, pose["body"] + Vector2(2,-2))
-			_front.draw_rect(Rect2(-1,-2,3,5),Color("352943"))
-			_front.draw_line(Vector2(-1,2),Vector2(2,-2),Color("edbc61"),1)
-			_front.draw_rect(Rect2(0,1,2,2),Color("55ded0"))
-	# Na morte, tronco e pés estão cortados pela própria textura de Nico.
-	# Chapéu e óculos continuam acompanhando a cabeça visível.
-	var head_angle := -0.22 if _anim.animation == &"hurt" else (0.24 if dying else 0.0)
-	if _has("straw_hat"):
-		_draw_art_at(_front, "straw_hat", pose["head"], Vector2(-10.5, -10.5), Vector2(21, 10), head_angle)
-	if _has("sunglasses"):
-		_draw_art_at(_front, "sunglasses", pose["eyes"], Vector2(-5.5, -2.5), Vector2(11, 5), head_angle)
-	if _has("sailor_bandana"):
-		_part_transform(_front,pose["head"],head_angle)
-		_front.draw_rect(Rect2(-6,-3,12,4),Color("342033"))
-		_front.draw_rect(Rect2(-5,-3,10,3),Color("d94448"))
-		_front.draw_rect(Rect2(-5,-2,9,1),Color("ffe4af"))
-		_front.draw_rect(Rect2(-8,-2,3,3),Color("a02b43"))
-		_front.draw_rect(Rect2(-9,1,2,4),Color("db4c4b"))
-		_front.draw_rect(Rect2(-7,2,2,4),Color("f3bf95"))
-	if _has("aviator_goggles"):
-		_part_transform(_front,pose["eyes"],head_angle)
-		_front.draw_rect(Rect2(-7,-1,13,2),Color("653b32"))
-		_front.draw_rect(Rect2(-6,-3,5,5),Color("2b2332"))
-		_front.draw_rect(Rect2(0,-3,5,5),Color("2b2332"))
-		_front.draw_rect(Rect2(-5,-2,3,3),Color("e9b24f"))
-		_front.draw_rect(Rect2(1,-2,3,3),Color("e9b24f"))
-		_front.draw_rect(Rect2(-4,-2,1,2),Color("fff0cc"))
-		_front.draw_rect(Rect2(2,-2,1,2),Color("fff0cc"))
+		if _has("leaf"):_draw_art_at(_front, "leaf", pose["body"]+Vector2(-1,0), Vector2(-2,-2), Vector2(4,4))
+		if _has("lasting_ice"):_draw_art_at(_front, "lasting_ice", pose["body"]+Vector2(2,-2), Vector2(-1,-2), Vector2(3,5))
+		if _has("jump_brooch"):_draw_art_at(_front, "jump_brooch", pose["body"]+Vector2(2,-1), Vector2(-2,-2), Vector2(4,4))
+		if _has("claws"):_draw_claw(pose["hand_near"], false)
+		if _has("swift_gloves"):_draw_glove(pose["hand_near"], false)
+	# Head pieces retain exact native pixel alignment, including hurt/death poses.
+	if _has("straw_hat"):_draw_art_at(_front, "straw_hat", pose["head"], Vector2(-10,-8), Vector2(20,10))
+	if _has("sailor_bandana"):_draw_art_at(_front, "sailor_bandana", pose["head"], Vector2(-10,-4), Vector2(17,11))
+	if _has("sunglasses"):_draw_art_at(_front, "sunglasses", pose["eyes"], Vector2(-5,-2), Vector2(9,4))
+	if _has("aviator_goggles"):_draw_art_at(_front, "aviator_goggles", pose["eyes"], Vector2(-6,-2), Vector2(10,4))
 	_front.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
-func _draw_glove(hand:Vector2) -> void:
-	_part_transform(_front,hand)
-	_front.draw_rect(Rect2(-2,-3,5,5),Color("27223c"))
-	_front.draw_rect(Rect2(-1,-2,3,3),Color("774a9d"))
-	_front.draw_rect(Rect2(-1,0,3,1),Color("69d0c0"))
+func _draw_glove(hand: Vector2, far_hand: bool) -> void:
+	_draw_art_at(_front, "swift_gloves_far" if far_hand else "swift_gloves_near", hand, Vector2(-2,-2), Vector2(3,3) if far_hand else Vector2(4,4))
+
+
+func _draw_claw(hand: Vector2, far_hand: bool) -> void:
+	# The atlas fingers point down; an exact quarter turn points them forward.
+	_draw_art_at(_front, "claws_far" if far_hand else "claws_near", hand, Vector2(-2,-2), Vector2(3,5) if far_hand else Vector2(4,6), -PI/2)
 
 
 func _draw_outfit(id: String, pose: Dictionary) -> void:
-	var regions: Dictionary = OUTFIT_REGIONS[id]
-	_draw_limb(id, regions["leg_far"], pose["hip_far"], pose["foot_far"] - Vector2(0, 1), 4.0)
-	_draw_limb(id, regions["leg_near"], pose["hip_near"], pose["foot_near"] - Vector2(0, 1), 4.0)
-	_draw_limb(id, regions["sleeve_far"], pose["shoulder_far"], pose["hand_far"] - Vector2(0, 1), 3.0)
-	var torso: Rect2 = regions["torso"]
-	_part_transform(_front, pose["body"], -0.18 if _anim.animation == &"hurt" else 0.0)
-	_draw_region(_front, id, torso, Rect2(Vector2(-torso.size.x * 0.5, -4), Vector2(torso.size.x, 8)))
-	_draw_limb(id, regions["sleeve_near"], pose["shoulder_near"], pose["hand_near"] - Vector2(0, 1), 3.0)
+	_draw_limb(id+"_leg_far", pose["hip_far"], pose["foot_far"]-Vector2(0,1), 3)
+	_draw_limb(id+"_leg_near", pose["hip_near"], pose["foot_near"]-Vector2(0,1), 3)
+	_draw_limb(id+"_sleeve_far", pose["shoulder_far"], pose["hand_far"]-Vector2(0,1), 2)
+	_draw_art_at(_front, id+"_torso", pose["body"], Vector2(-3,-4), Vector2(6,8))
+	_draw_limb(id+"_sleeve_near", pose["shoulder_near"], pose["hand_near"]-Vector2(0,1), 3)
 
 
-func _draw_limb(id: String, source: Rect2, start: Vector2, end: Vector2, width: float) -> void:
-	var segment := end - start
-	var length := maxf(segment.length(), 2.0)
-	_part_transform(_front, start, segment.angle() - PI * 0.5)
-	_draw_region(_front, id, source, Rect2(-width * 0.5, -0.5, width, length + 1))
+func _draw_limb(id: String, start: Vector2, end: Vector2, width: int) -> void:
+	# One-pixel rows articulate the source sleeve/trouser without subpixel rotation.
+	var texture: Texture2D = _art[id]
+	var size := texture.get_size()
+	var segment := end-start
+	var horizontal := absf(segment.x)>absf(segment.y)
+	var rows := maxi(2, roundi(maxf(absf(segment.x),absf(segment.y)))+1)
+	for row in rows:
+		var t := float(row)/maxi(1,rows-1)
+		var at := start.lerp(end,t).round()
+		_part_transform(_front, at, -PI/2 if horizontal and segment.x>0 else (PI/2 if horizontal else 0.0))
+		_front.draw_texture_rect_region(texture, Rect2(-floorf(width*.5),0,width,1), Rect2(0,size.y*float(row)/rows,size.x,size.y/rows))
 
 
 func _draw_shoe(foot: Vector2, far_foot: bool) -> void:
-	var source := Rect2(0, 0, 5, 6) if far_foot else Rect2(5, 0, 6, 6)
-	_part_transform(_front, foot)
-	_draw_region(_front, "sneakers", source, Rect2(Vector2(-3, -5), source.size))
+	_draw_art_at(_front, "sneakers_far" if far_foot else "sneakers_near", foot, Vector2(-2,-2), Vector2(4,3) if far_foot else Vector2(5,3))
 
 
 func _draw_tail(pose: Dictionary) -> void:
 	var tip: Vector2 = pose["tail_tip"]
-	var root: Vector2 = pose["tail_base"]
-	var segment := root - tip
-	_part_transform(_front, tip, segment.angle())
-	_draw_region(_front, "rainbow_tail", Rect2(0, 0, 15, 9), Rect2(-2, -3.5, maxf(segment.length() + 3, 7), 7))
-
-
-func _hand_angle(pose: Dictionary) -> float:
-	var segment: Vector2 = pose["hand_near"] - pose["shoulder_near"]
-	return clampf(segment.angle() - PI * 0.5, -0.5, 0.5)
+	var base: Vector2 = pose["tail_base"]
+	var width := clampf(absf(base.x-tip.x)+4,9,12)
+	_draw_art_at(_front, "rainbow_tail", tip, Vector2(-2,-3), Vector2(width,7))
 
 
 func _draw_art_at(surface: Node2D, id: String, at: Vector2, offset: Vector2, size: Vector2, angle: float = 0.0) -> void:
 	var texture: Texture2D = _art.get(id) as Texture2D
-	if texture == null:
-		return
+	if texture == null:return
 	_part_transform(surface, at, angle)
 	surface.draw_texture_rect_region(texture, Rect2(offset, size), Rect2(Vector2.ZERO, texture.get_size()))
-
-
-func _draw_region(surface: Node2D, id: String, source: Rect2, rect: Rect2) -> void:
-	var texture: Texture2D = _art.get(id) as Texture2D
-	if texture != null:
-		surface.draw_texture_rect_region(texture, rect, source)
 
 
 func _update_tail(delta: float) -> void:
@@ -327,6 +289,10 @@ func _update_tail(delta: float) -> void:
 	var running := _anim.animation in [&"run", &"jump", &"fall"]
 	var pose := _pose()
 	var at := _anim.to_global(_sprite_basis() * (pose["tail_tip"] as Vector2))
+	if _last_tail_at != Vector2.INF and _last_tail_at.distance_to(at)>96:
+		_tail_points.clear()
+		_last_tail_at=Vector2.INF
+		_trail_timer=0
 	if _has("rainbow_tail") and running and _anim.is_playing() and _trail_timer <= 0.0:
 		if _last_tail_at == Vector2.INF or _last_tail_at.distance_squared_to(at) >= 1.0:
 			_tail_points.append(Vector3(at.x, at.y, _clock))

@@ -1,0 +1,27 @@
+Built-in imagegen; style references: Nico animation grid and old equipment bitmap grid.
+Original PNG preserved unchanged. AtlasTexture crops and native Godot drawing only.
+Source: C:/Users/LEO/.codex/generated_images/01a1457e-c2c0-7f93-8f79-efdc74c5248d/exec-d4c59f44-17c6-4951-b6fd-cee61fb33839.png
+
+Create ONE production transparent pixel-art equipment sprite atlas for the EXISTING small 33x32 hero Nico Adventure. Reference 1 is the actual hero animation/contact-sheet: STYLE/SCALE reference only, do not draw Nico, grids, labels, digits or annotations. Reference 2 is the old wearable equipment atlas enlarged: item-identity reference only; improve readable contours and coherent dark navy outlines. This is game equipment for a tiny animal platformer hero, not realistic objects.
+Output a square 4-column x 4-row atlas of equal square cells. Exactly FOURTEEN isolated items in strict reading order; final TWO cells empty. Each item centered in its own cell with at least 15% completely transparent padding. No shadows, no background, no glow, no borders, no text. Strict nearest-neighbor 16-bit pixel art: simple large square pixel clusters, 5-8 colors per object, dark navy single logical pixel silhouette, warm cream highlights; no tiny realistic texture, gradients, blur, antialiasing. Aim at a 32x32 logical cell shown enlarged, designed to survive at 6-22 screen pixels. Side profile, hero faces RIGHT.
+ROW 1:
+1 golden straw hat, LOW short crown, dark brown band, wide nearly horizontal elliptical brim seen from SIDE; warm yellow/brown 4-tone clusters, no tall cone.
+2 black square sunglasses side profile with two readable blue-black lenses and tiny pale blue reflections; narrow bridge and short left temple.
+3 TWO separate red-and-cream explorer sneakers pointing RIGHT, side by side, with clear transparent gap; small heel, white sole, red upper, dark navy outline. Both shoes same side profile, no legs.
+4 TWO separate short steel claw gloves pointing RIGHT, side by side with clear transparent gap; dark fingerless cuff plus three compact silver claw tips, not huge blades. No hands or arms.
+ROW 2:
+5 red superhero cape, SIDE profile, narrow gold attachment at upper RIGHT, cloth flows down-left, broad red triangular fold with two stepped folds and clear dark outline, no logo.
+6 violet pajama outfit ONLY: front/slight right side flat shirt and trousers, small pale-yellow moon/star marks, arms hanging apart, TWO distinct sleeves, leg gap, tiny cream cuffs; no head/body/hands/feet inside. Low-detail blocky clear cutout silhouette so torso and each sleeve/leg can be articulated separately.
+7 teal winter coat plus dark blue trousers ONLY, flat front/slight right side, short cream fleece collar, two distinct down-hanging sleeves with cream cuffs, single warm cream fastening, two separated short legs, no person/head/hands/boots inside. Readable broad panels, not intricate fabric.
+8 rainbow raccoon-tail cover, SIDE view: ONE short fluffy curved tail to LEFT with broad diagonal bands red orange yellow green cyan violet, simple dark outline and no dangling ribbons.
+ROW 3:
+9 protective green LEAF brooch, one leaf with pale central vein, tiny gold pin, compact, no floating magic.
+10 cyan ICE amulet, one thick pale-blue crystal in dark navy/silver mount, short small cord, solid compact silhouette.
+11 TWO purple fingerless agility gloves side by side, separate gap, turquoise cuff stripe, side profile, no fingers/arms inside; same practical scale as claw cuffs.
+12 golden jumping brooch with turquoise simple wing/arrow motif, compact and outlined; no text.
+ROW 4:
+13 red sailor bandana, wide low head scarf with cream thin stripe, knot and TWO short ties extending LEFT, top curve fits an animal forehead; no head.
+14 brown aviator goggles, two compact amber square lenses joined by bridge, dark leather band extending LEFT, tiny pale lens glint; narrow side profile, not a full head mask.
+15 EMPTY transparent.
+16 EMPTY transparent.
+Keep the identity and palette of the reference equipment, with cleaner readable shapes matching Nico's crisp adventure pixel art. Every object fully inside its cell, no overlap. Transparent alpha is required.
