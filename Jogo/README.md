@@ -569,3 +569,12 @@ No Submundo, a queda e a libertação da jaula de José foram preservadas. O di�
 As conversas podem ser revisitadas, começam na primeira fala e aguardam o jogador para avançar. E/Enter avança, Esc fecha. Apenas se aproximar, permanecer perto ou afastar-se não inicia nenhuma dica. O controle, o cronômetro, a câmera, a música e a HUD são restaurados ao fechar. Loja e portas da forja têm prioridade no E; a conversa fica indisponível durante a introdução, comando de cabeçada, combate com chefe ou conclusão da fase. Não há alteração de saldo ou ganho antecipado dos poderes do altar.
 
 Validação: 68 verificações de chegada sem diálogo, proximidade, E real, repetição, leitura, pausa, câmera, música, HUD, loja, forja, comando de José, resgate e limpeza. Execução Vulkan com seis capturas (74 verificações). As 64 verificações da fase completa do Submundo também passaram, incluindo a forja, etapas do Carcereiro e fuga. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados. Arte existente reutilizada.
+
+
+## Gêiser com laje de pedra embutida (v64)
+
+Os dois gêiseres de subida agora possuem uma fenda integrada à parede do terreno e uma laje natural de basalto no nível do piso. Nico pode caminhar sobre ela sem degrau ou bloqueio. Durante a erupção, a laje sobe 72 pixels com colisão móvel, carrega Nico e concede o impulso no topo, voltando suavemente ao chão ao terminar. O jato fica sob a pedra. Foram removidos o pedestal e as setas azuis antigos; os quatro gêiseres perigosos mantêm seu comportamento.
+
+A nova spritesheet possui quatro estados da fenda e quatro da pedra (repouso, aviso, erupção e resfriamento), na paleta do Submundo. PNG gerado pelo imagegen integrado e preservado integralmente, com transparência. PROMPT.txt e regions.json acompanham a arte em world/Arte/Underworld/V64. Os quatro quadros de lava existentes foram recortados novamente com margem para preservar topo e base; as 402 imagens anteriores não foram alteradas.
+
+Validação: 40 verificações de lógica e física, 46 na janela Vulkan com seis capturas, e as 64 verificações da regressão completa do Submundo. Auditoria dos 511 AtlasTexture: nenhum recorte fora da imagem de origem. Os 12 quadros do gêiser têm pelo menos três pixels de margem ao redor dos pixels opacos. Testes usam APPDATA isolado; saves reais não foram lidos ou alterados.

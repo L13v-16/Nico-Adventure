@@ -34,8 +34,12 @@ func _draw() -> void:
 			var index:=12 if left else (13 if right else 4+(int(x/32)+int(y/32))%4)
 			if y==0:index=int(x/32)%4
 			var reference:WeakRef=_geysers.get(int(x/32)) if y==0 else null
-			if reference!=null and reference.get_ref()!=null:
+			if reference!=null and reference.get_ref()!=null and not reference.get_ref().launch_geyser:
 				draw_texture_rect(reference.get_ref().ground_texture(),cell,false)
 				continue
 			if left or right:Tiles.cliff(self,cell,left,y==0)
 			else:Tiles.tile(self,cell,index)
+	# The natural shaft replaces the wall face below the floor, never above it.
+	for reference:WeakRef in _geysers.values():
+		var geyser:Node2D=reference.get_ref()
+		if is_instance_valid(geyser) and geyser.launch_geyser:geyser.draw_buried(self,to_local(geyser.global_position))
