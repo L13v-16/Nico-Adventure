@@ -69,7 +69,7 @@ func open() -> void:
 	get_tree().paused = true
 	Sfx.begin_inventory_music(self)
 	_screen.show()
-	_feedback.text = "Escolha um item para equipar, retirar ou usar. As roupas aparecem no Nico."
+	_feedback.text = "Escolha um item para equipar, retirar ou usar. Nico mantém seu visual original."
 	_refresh()
 	_focus_first()
 	Sfx.menu()
@@ -131,11 +131,12 @@ func _refresh() -> void:
 		row.add_child(text)
 		var title: String = str(item["name"]) + (" ×%d" % model.get_quantity(id) if Catalog.is_consumable(id) else "")
 		text.add_child(Ui.label(title, 12, Ui.TITLE_COLOR if model.is_equipped(id) else Ui.TEXT_COLOR, HORIZONTAL_ALIGNMENT_LEFT))
-		var description := Ui.label(str(item["description"]), 9, Ui.MUTED_COLOR, HORIZONTAL_ALIGNMENT_LEFT)
+		var description := Ui.label(Catalog.description(id), 9, Ui.MUTED_COLOR, HORIZONTAL_ALIGNMENT_LEFT)
 		description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		description.custom_minimum_size.x = 300
 		text.add_child(description)
 		var button := Ui.button("Usar" if Catalog.is_consumable(id) else ("Retirar" if model.is_equipped(id) else "Equipar"), 11)
+		if Catalog.category(id)=="style":button.text="Coleção";button.disabled=true
 		button.custom_minimum_size = Vector2(66, 29)
 		button.pressed.connect(_toggle.bind(id))
 		row.add_child(button)
@@ -146,6 +147,8 @@ func _refresh() -> void:
 		_rows.add_child(empty)
 	_summary.text = "Ataque +%d%%  ·  Corrida +%d%%  ·  Gelo %.0f s%s" % [roundi((model.get_damage_multiplier() - 1.0) * 100.0), roundi((model.get_speed_multiplier() - 1.0) * 100.0), model.get_freeze_duration(), "  ·  Açaí gelado %.0f s" % ceilf(model.get_frost_boost_left()) if model.get_frost_boost_left() > 0.0 else ""]
 	_summary.text += "\nImpulso +%d%%  ·  Recarga -%d%%" % [roundi((model.get_jump_multiplier()-1.0)*100), roundi((1.0-model.get_attack_cooldown_multiplier())*100)]
+	if model.get_haste_left()>0:_summary.text += "  ·  Chá %.0f s"%ceilf(model.get_haste_left())
+	if model.get_magnet_radius()>0:_summary.text += "  ·  Ímã ativo"
 	if _buttons.has(focused):
 		(_buttons[focused] as Button).grab_focus()
 
@@ -207,7 +210,7 @@ func _build() -> void:
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation", 5)
 	column.add_child(tabs)
-	for entry in [["Tudo", "all"], ["Suprimentos", "supplies"], ["Equipamentos", "equipment"], ["Estilo", "style"]]:
+	for entry in [["Tudo", "all"], ["Suprimentos", "supplies"], ["Equipamentos", "equipment"], ["Coleção", "style"]]:
 		var button := Ui.button(str(entry[0]), 11)
 		button.pressed.connect(_set_category.bind(str(entry[1])))
 		tabs.add_child(button)

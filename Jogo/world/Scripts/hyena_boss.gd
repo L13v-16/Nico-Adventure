@@ -7,6 +7,8 @@ const LEFT := 5220.0
 const RIGHT := 5800.0
 const FLOOR := 64.0
 const MAX_HEALTH := 8.0
+const MAX_DAMAGE_PER_STUN := 1.0
+var _stun_damage := 0.0
 var phase := 1
 var _entrance_seen := false
 var _entrance: CanvasLayer
@@ -109,7 +111,7 @@ func start_encounter() -> void:
 func reset_encounter() -> void:
 	if is_dead():return
 	if is_instance_valid(_entrance):_entrance.finish()
-	phase=1;_rope_bounces=0;_stun_hit=false
+	phase=1;_rope_bounces=0;_stun_hit=false;_stun_damage=0
 	_clear_gates()
 	active=false
 	health=MAX_HEALTH
@@ -236,7 +238,7 @@ func _physics_process(delta: float) -> void:
 	_fill.size.x=428*health/(3.0 if phase==2 else MAX_HEALTH)
 	var advice:="Rebata o barril ou ataque por trás dos socos"
 	if state=="stunned":advice="VULNERÁVEL! J / X ou pule na cabeça"
-	if phase==2 and state=="stunned" and _stun_hit:advice="ACERTOU! Afaste-se e espere o próximo barril"
+	if state=="stunned" and _stun_hit:advice="LIMITE DO ATORDOAMENTO! Afaste-se e conquiste outra abertura"
 	elif state.begins_with("throw"):advice="J / X: REBATA O BARRIL!"
 	elif state.begins_with("punch"):advice="SOCOS! Passe por cima e ataque por trás"
 	elif state.begins_with("kick"):advice="CHUTE! Pule ou recue"
@@ -311,7 +313,9 @@ func _play(animation:StringName) -> void:
 	Art.reanchor(_sprite)
 
 func _stun(duration:float=2.5) -> void:
+	if state=="stunned":return
 	_stun_hit=false
+	_stun_damage=0
 	_set_state("stunned",duration)
 	velocity=Vector2.ZERO
 	Sfx.hit()
@@ -324,7 +328,7 @@ func _sync_facing() -> void:
 
 func receive_reflected_barrel() -> void:
 	if not active or is_dead():return
-	if phase==2 and state=="stunned":return
+	if state=="stunned":return
 	# A grounded stagger is earned by reflecting an actual thrown barrel.
 	position.y=FLOOR
 	_stun(2.8)
@@ -339,9 +343,12 @@ func take_damage(amount: float, source: Vector2) -> void:
 			return
 		Fx.popup(global_position+Vector2(0,-88),"ESPERE A ABERTURA",Color("f7ccaa"),9)
 		return
-	if phase==2 and _stun_hit:return
-	_stun_hit=true
-	health=maxf(0,health-(minf(amount,1.0) if phase==2 else amount))
+	var allowed:=MAX_DAMAGE_PER_STUN-_stun_damage
+	if allowed<=0:return
+	var applied:=minf(amount,allowed)
+	_stun_damage+=applied
+	_stun_hit=_stun_damage>=MAX_DAMAGE_PER_STUN
+	health=maxf(0,health-applied)
 	_invulnerability=0.8
 	_timer=maxf(_timer,1.0)
 	_play(&"hurt")
@@ -349,7 +356,7 @@ func take_damage(amount: float, source: Vector2) -> void:
 	Sfx.hit()
 	if health<=0 and phase==1:
 		phase=2;health=3;_clear_projectiles();velocity=Vector2.ZERO;position.y=FLOOR
-		_set_state("idle",2.0);_stun_hit=false
+		_set_state("idle",2.0);_stun_hit=false;_stun_damage=0
 		_player.heal_one();Sfx.alert()
 		Fx.popup(position+Vector2(0,-110),"ÚLTIMO ROUND!",Color("ffe2ac"),10)
 	elif is_dead():

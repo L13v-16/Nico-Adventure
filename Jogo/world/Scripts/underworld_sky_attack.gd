@@ -46,9 +46,6 @@ func _ready() -> void:
 	anim.position = Vector2(-16.5,-30)
 	rider.add_child(anim)
 	add_child(rider)
-	var clothing := preload("res://world/Scripts/equipment_visual.gd").new()
-	clothing.model = player.equipment
-	rider.add_child(clothing)
 	anim.play(&"run")
 	_shade = Control.new()
 	_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE

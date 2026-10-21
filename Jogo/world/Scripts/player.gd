@@ -457,7 +457,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 		return
 	health = maxi(health - amount, 0)
 	release_vine(false)
-	_invulnerability_timer = INVULNERABILITY_TIME
+	_invulnerability_timer = INVULNERABILITY_TIME + equipment.get_invulnerability_bonus()
 	_hitstun_timer = HITSTUN_TIME
 	_jump_buffer_timer = 0.0
 	_coyote_timer = 0.0

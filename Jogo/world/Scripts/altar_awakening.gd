@@ -47,9 +47,6 @@ func _ready() -> void:
 	anim.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	actor.add_child(anim)
 	add_child(actor)
-	var clothing:=preload("res://world/Scripts/equipment_visual.gd").new()
-	clothing.model=player.equipment
-	actor.add_child(clothing)
 	_front=Node2D.new()
 	_front.z_index=2
 	_front.draw.connect(_draw_streams.bind(_front,true))

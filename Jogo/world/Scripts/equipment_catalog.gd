@@ -2,8 +2,15 @@ extends RefCounted
 ## Dados compartilhados pela mochila, pelo modelo de equipamentos e pela loja.
 ## Ícones são opcionais até a arte terminar de importar.
 
-const ORDER := ["claws", "sneakers", "leaf", "frozen_acai", "lasting_ice", "swift_gloves", "jump_brooch", "honey_biscuit", "travel_acai", "straw_hat", "sunglasses", "cape", "pajamas", "winter", "rainbow_tail", "sailor_bandana", "aviator_goggles"]
+const NEW_ITEMS := ["pitaya_juice", "first_aid_kit", "bark_shield", "mint_tea", "cherry_magnet", "courage_medallion"]
+const ORDER := ["pitaya_juice", "first_aid_kit", "bark_shield", "mint_tea", "cherry_magnet", "courage_medallion", "claws", "sneakers", "leaf", "frozen_acai", "lasting_ice", "swift_gloves", "jump_brooch", "honey_biscuit", "travel_acai", "straw_hat", "sunglasses", "cape", "pajamas", "winter", "rainbow_tail", "sailor_bandana", "aviator_goggles"]
 const ITEMS := {
+	"pitaya_juice": {"name":"Suco de Pitaya", "price":12, "slot":"use", "description":"K dispara fogo por 20 s. Guarde na mochila para usar quando precisar.", "icon":"res://world/Arte/Equipment/V57/pitaya_juice.tres"},
+	"first_aid_kit": {"name":"Kit de Socorro", "price":12, "slot":"use", "description":"Recupera todos os corações. Use pela mochila quando estiver ferido.", "icon":"res://world/Arte/Equipment/V57/first_aid_kit.tres"},
+	"bark_shield": {"name":"Escudo de Casca", "price":9, "slot":"use", "description":"Guarde na mochila: absorve 2 golpes. Use quando estiver sem escudo.", "icon":"res://world/Arte/Equipment/V57/bark_shield.tres"},
+	"mint_tea": {"name":"Chá de Hortelã", "price":9, "slot":"use", "description":"Recarga dos golpes e disparos -25% por 20 s. Respeita a espera mínima dos chefes.", "icon":"res://world/Arte/Equipment/V57/mint_tea.tres"},
+	"cherry_magnet": {"name":"Ímã de Cerejas", "price":16, "slot":"relic", "description":"Atrai cerejas próximas sem atravessar paredes. Ocupa o lugar da relíquia.", "icon":"res://world/Arte/Equipment/V57/cherry_magnet.tres"},
+	"courage_medallion": {"name":"Medalhão da Coragem", "price":18, "slot":"charm", "description":"Proteção após receber dano dura mais 0,35 s. Substitui a Folha Protetora.", "icon":"res://world/Arte/Equipment/V57/courage_medallion.tres"},
 	"claws": {"name": "Garras Afiadas", "price": 12, "slot": "hands", "description": "Ataque básico +20%.", "icon": "res://world/Arte/Equipment/V56/claws.tres"},
 	"sneakers": {"name": "Tênis de Explorador", "price": 10, "slot": "feet", "description": "Velocidade de movimento +10%.", "icon": "res://world/Arte/Equipment/V56/sneakers.tres"},
 	"leaf": {"name": "Folha Protetora", "price": 5, "slot": "charm", "description": "Anula 1 golpe e desaparece após o uso.", "icon": "res://world/Arte/Equipment/V56/leaf.tres"},
@@ -30,12 +37,20 @@ static func category(item_id: String) -> String:
 	return "style" if slot in ["head", "face", "back", "outfit", "tail"] else "equipment"
 
 
+static func is_for_sale(item_id: String) -> bool:
+	return ITEMS.has(item_id) and category(item_id) != "style"
+
+
+static func description(item_id: String) -> String:
+	return "Recordação da coleção. O visual original de Nico é mantido." if category(item_id)=="style" else String(ITEMS[item_id]["description"])
+
+
 static func is_consumable(item_id: String) -> bool:
 	return ITEMS.has(item_id) and ITEMS[item_id]["slot"] == "use"
 
 
 static func icon_material(item_id: String) -> Material:
-	if not String(ITEMS[item_id]["icon"]).contains("/V29/") and not String(ITEMS[item_id]["icon"]).contains("/V56/"): return null
+	if not String(ITEMS[item_id]["icon"]).contains("/V29/") and not String(ITEMS[item_id]["icon"]).contains("/V56/") and not String(ITEMS[item_id]["icon"]).contains("/V57/"): return null
 	var ink := ShaderMaterial.new()
 	ink.shader = preload("res://world/Scripts/characters_cutout.gdshader")
 	ink.set_shader_parameter("alpha_cutoff", 0.94)

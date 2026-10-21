@@ -72,7 +72,7 @@ func cast() -> bool:
 	if not can_control() or cooldown>0 or not can_use(selected):return false
 	var minimum:float=_player.get_attack_cooldown_floor()
 	if minimum>0 and _player._attack_cooldown>0:return false
-	cooldown=maxf(.42,minimum)
+	cooldown=maxf(.42*_player.equipment.get_element_cooldown_multiplier(),minimum)
 	if minimum>0:_player._attack_cooldown=maxf(_player._attack_cooldown,minimum)
 	var shot:=preload("res://world/Scripts/elemental_projectile.gd").new()
 	shot.element=selected

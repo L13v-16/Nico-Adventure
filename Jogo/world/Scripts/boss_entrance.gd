@@ -34,7 +34,6 @@ func _ready() -> void:
 	_nico=Node2D.new();_nico.position=Vector2(130,247);_canvas.add_child(_nico)
 	var anim:=AnimatedSprite2D.new();anim.name="anim";anim.sprite_frames=_level.player.anim.sprite_frames
 	anim.centered=false;anim.position=Vector2(-33,-60);anim.scale=Vector2.ONE*2;anim.play(&"idle");_nico.add_child(anim)
-	var clothes:=preload("res://world/Scripts/equipment_visual.gd").new();clothes.model=_level.player.equipment;_nico.add_child(clothes)
 func _process(delta: float) -> void:
 	if _done:return
 	clock+=delta

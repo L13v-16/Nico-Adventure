@@ -90,9 +90,6 @@ func _ready() -> void:
 	anim.position = Vector2(-16.5, -30)
 	rider.add_child(anim)
 	add_child(rider)
-	var clothes := preload("res://world/Scripts/equipment_visual.gd").new()
-	clothes.model = player.equipment
-	rider.add_child(clothes)
 	_front = Control.new()
 	_front.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_front.draw.connect(_draw_front)

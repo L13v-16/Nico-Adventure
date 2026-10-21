@@ -115,18 +115,14 @@ func _build() -> void:
 
 
 func _make_equipped_nico() -> void:
-	# O ator conserva as roupas da tentativa e anima mesmo com a fase pausada.
+	# Nico mantém seu sprite original e anima mesmo com a fase pausada.
 	var player: Node = get_tree().get_first_node_in_group("player")
 	if player == null or not player.has_method("get_equipment"):
-		return
-	var equipment: Node = player.call("get_equipment") as Node
-	var path := "res://world/Scripts/equipment_visual.gd"
-	if not is_instance_valid(equipment) or not ResourceLoader.exists(path):
 		return
 	if _nico_frames.is_empty() or _nico_frames.has(null):
 		return
 	var actor := Node2D.new()
-	actor.name = "EquippedNico"
+	actor.name = "OriginalNico"
 	actor.position = Vector2(212, 210)
 	actor.scale = Vector2(2, 2)
 	actor.z_index = 2
@@ -144,9 +140,6 @@ func _make_equipped_nico() -> void:
 	animation.sprite_frames = frames
 	animation.animation = &"idle"
 	actor.add_child(animation)
-	var visual: Node2D = load(path).new()
-	visual.set("model", equipment)
-	actor.add_child(visual)
 	_equipped_nico = actor
 	_actors.add_child(actor)
 	animation.play(&"idle")

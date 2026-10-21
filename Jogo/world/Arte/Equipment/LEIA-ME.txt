@@ -11,3 +11,5 @@ Fonte, prompt exato e exportação: outputs/Equipment-v8/equipment-source.png, P
 Prévia e validação: outputs/Equipment-v8/equipment-idle.png e equipment-run-left.png; fixture Godot isolada com12combinações e4animações, sem erros.
 
 Revisão v56: as 14 peças vestíveis e os ícones ativos agora usam V56/equipment_atlas.png e recortes .tres. O PNG gerado foi preservado byte a byte; PROMPT.txt e regions.json registram origem, hash e recortes. Os arquivos anteriores continuam preservados. Encaixes de cabeça, mãos e pés são menores; mangas e calças usam linhas de pixels inteiros, e garras/luvas/calçados têm recortes separados. Equipamentos seguem o mesmo rig no jogo e nas cutscenes.
+
+V57: seis ícones de suprimentos/equipamentos em shop_items.png, com PROMPT.txt e regions.json (origem, SHA-256 e recortes AtlasTexture). PNG original e alpha preservados. Nico voltou a usar o visual original em todas as cenas; equipment_visual.gd e as artes antigas ficam preservados sem instanciação. Ícones dos equipamentos funcionais continuam ativos; cosméticos antigos permanecem como coleção salva, fora da loja.

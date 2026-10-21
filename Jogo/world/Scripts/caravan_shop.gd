@@ -13,8 +13,8 @@ const ACTOR_SHADER := preload("res://world/Scripts/characters_cutout.gdshader")
 const CHERRY := preload("res://Sunny-land-files/assets/Misc/Sunnyland items/cherry.png")
 const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const PRICES := {"heart": 4, "acai": 7, "shield": 10}
-const CATEGORIES := ["supplies", "equipment", "style"]
-const CATEGORY_LABELS := ["Suprimentos", "Equipamentos", "Estilo"]
+const CATEGORIES := ["supplies", "equipment"]
+const CATEGORY_LABELS := ["Suprimentos", "Equipamentos"]
 const COUNTER_ART_PATH := "res://world/Arte/Friends/V47/oliver_body_06.tres"
 const SHOP_CREAM := Color("f5e7c9")
 const SHOP_MUTED := Color("c9bda1")
@@ -333,6 +333,7 @@ func _refresh_stock() -> void:
 	(_buttons["heart"] as Button).text = "Coração  ·  4 cerejas" + ("  —  vida cheia" if int(_player.get("health")) >= 3 else "")
 	(_buttons["shield"] as Button).text = "Escudo  ·  10 cerejas" + ("  —  equipado" if int(_player.get("shop_shield_hits")) > 0 else "")
 	for item_id: String in Catalog.ORDER:
+		if not Catalog.is_for_sale(item_id):continue
 		var item: Dictionary = Catalog.ITEMS[item_id]
 		var state := ""
 		if is_instance_valid(_model):
@@ -533,6 +534,7 @@ func _build_menu() -> void:
 		}[item_id]
 		_add_stock_row("supplies", item_id, name_and_description[0], name_and_description[1], "")
 	for item_id: String in Catalog.ORDER:
+		if not Catalog.is_for_sale(item_id):continue
 		var item: Dictionary = Catalog.ITEMS[item_id]
 		_add_stock_row(Catalog.category(item_id), item_id, item["name"], item["description"], item["icon"])
 	(_buttons["acai"] as Button).text = "Açaí  ·  7 cerejas"

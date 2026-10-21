@@ -18,6 +18,18 @@ func _ready() -> void:
 		set_deferred("monitoring",false)
 		queue_free()
 
+func _physics_process(delta:float) -> void:
+	if collected or not monitoring:return
+	var player:=get_tree().get_first_node_in_group("player") as CharacterBody2D
+	if player==null or player.is_dead() or player._finished:return
+	var radius:float=player.equipment.get_magnet_radius()
+	if radius<=0 or global_position.distance_to(player.global_position)>radius:return
+	var ray:=PhysicsRayQueryParameters2D.create(global_position,player.global_position,1)
+	if not get_world_2d().direct_space_state.intersect_ray(ray).is_empty():return
+	global_position=global_position.move_toward(player.global_position+Vector2(0,-3),180*delta)
+	if global_position.distance_to(player.global_position)<13:_on_body_entered(player)
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if collected or not body.is_in_group("player"):
 		return

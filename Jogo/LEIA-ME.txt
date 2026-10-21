@@ -615,3 +615,23 @@ Os calçados agora ocupam somente os pés; as duas garras/luvas têm recortes pr
 Arte criada com imagegen integrado em world/Arte/Equipment/V56/equipment_atlas.png. O PNG e seu alpha foram copiados sem alterações; recortes são AtlasTexture nativos. Fonte, hash SHA-256, regiões, recortes das peças e prompt exato estão em regions.json e PROMPT.txt na mesma pasta. As imagens anteriores foram preservadas. Preços, efeitos, inventário salvo e colisões de Nico permanecem iguais.
 
 Validação: 16 folhas revisadas com 26 poses cada (13 quadros, duas direções), totalizando 416 renderizações; 22 verificações de encaixe/espelhamento/transparência/pausa na janela Vulkan; quatro verificações dos quadros de morte; sete de rastro e ocultação; 44 verificações e quatro capturas de compras reais, troca pela mochila, ataque, troca de fase e roupas na cutscene de Triple H. Mais 79 verificações de persistência da mochila, caravana e encerramento. Todos os testes usam APPDATA isolado, sem ler ou modificar os saves do jogador.
+
+## Loja ampliada e Nico original (v57)
+
+Esta revisão substitui a apresentação dos acessórios da v56: Nico mantém os sprites originais no jogo e nas cutscenes. Os bônus dos equipamentos funcionais continuam ativos. As roupas e peças puramente visuais já compradas permanecem salvas como coleção, sem venda ou alteração dos saves existentes.
+
+Seis itens novos na caravana de Oliver Gancho, com ícones próprios de pixel art:
+- Suco de Pitaya (12 cerejas): fogo no K por 20 s, guardado na mochila; não antecipa o poder permanente do altar.
+- Kit de Socorro (12): recupera todos os corações; vida cheia impede desperdício.
+- Escudo de Casca (9): bloqueia dois golpes; pode ser guardado e só é usado quando Nico está sem escudo.
+- Chá de Hortelã (9): recargas dos golpes e disparos 25% menores por 20 s; renova a duração sem acumular e respeita o mínimo de um segundo do Carcereiro.
+- Ímã de Cerejas (16): atrai cerejas a até 72 pixels, sem atravessar paredes. Ocupa o espaço de relíquia.
+- Medalhão da Coragem (18): adiciona 0,35 s à proteção depois de perder vida. Ocupa o espaço da Folha Protetora.
+
+Suprimentos permitem até três unidades de cada; consumidos, estoque, equipamentos e cerejas usam a mesma gravação atômica. As compras acompanham Nico entre fases e partidas. Efeitos temporários expiram e são encerrados ao morrer ou trocar de fase. As cerejas atraídas seguem o histórico original: o modo livre não recria cerejas já coletadas nem credita o saldo novamente.
+
+Triple H agora perde no máximo um ponto de vida por atordoamento em ambas as etapas. Bônus de ataque não pulam esse limite; múltiplos golpes somam no máximo um. Outro barril durante o mesmo atordoamento não restaura o limite. É preciso conquistar outra abertura com um barril rebatido ou um ataque pelas costas durante o soco.
+
+Arte em world/Arte/Equipment/V57/shop_items.png; prompt exato e procedência em PROMPT.txt e regions.json. O PNG gerado foi preservado byte a byte; seis recortes AtlasTexture nativos integram os ícones à loja e à mochila. Os sprites originais do protagonista permanecem intactos.
+
+Validação: 76 verificações de loja, efeitos, mochila, recarga, persistência, rollback e limite por atordoamento; repetidas na janela Vulkan com três capturas (79 verificações). Outras 51 verificações dos três chefes, 64 de mecânicas do Submundo, sete do chá junto à recarga do Carcereiro e duas capturas adicionais da loja. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
