@@ -125,7 +125,7 @@ static func build(level: Node2D) -> void:
 	var cage:=preload("res://world/Scripts/rescue_cage.gd").new()
 	cage.name="RescueCage"
 	cage.position=Vector2(6096,64)
-	cage.guardian_name="HIENA HaHa"
+	cage.guardian_name="Triple H"
 	cage.collision_layer=5
 	cage.collision_mask=0
 	var collider:=CollisionShape2D.new()

@@ -41,7 +41,7 @@ func _ready() -> void:
 		cannons.append(cannon)
 	_recover()
 	Sfx.play("warden_rise", -5)
-	Fx.popup(position + Vector2(-120, -260), "ÚLTIMA CORRENTE · SUBA E ATIVE OS CANHÕES", Color("ffe0aa"), 10)
+	Fx.popup(position + Vector2(-120, -260), "TORRE DO GUARDIÃO · SUBA E ATIVE OS CANHÕES", Color("ffe0aa"), 10)
 
 func _landing(at: Vector2, width: float, orbit := false) -> AnimatableBody2D:
 	var body := AnimatableBody2D.new()
@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 		for beam in _beams: beam.time += delta
 		queue_redraw()
 		if _finish_left <= 0:
-			boss._defeat()
+			boss._begin_final_seals()
 		return
 	_clock += delta
 	for ledge in _orbits:

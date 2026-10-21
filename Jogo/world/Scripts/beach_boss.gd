@@ -12,6 +12,12 @@ signal defeated
 @export var arena_max_x := 5056.0
 @export var arena_floor_y := 64.0
 
+var phase := 1
+var _entrance_seen := false
+var _entrance: CanvasLayer
+var _last_cannon_x := -INF
+var _gust := false
+var _gust_side := 1.0
 var health := 3
 var active := false
 var _dead := false
@@ -115,11 +121,17 @@ func _physics_process(delta: float) -> void:
 		_attack_clock = 2.6
 		_hud_layer.show()
 		_show_message("Urus muda de lado! Mira verde: pule no canhão.", 5.0)
+		if not _entrance_seen:
+			_entrance_seen=true
+			_entrance=preload("res://world/Scripts/boss_entrance.gd").new()
+			_entrance.boss=self;_entrance.kind="urus";_entrance.name="UrusEntrance"
+			get_parent().add_child(_entrance)
+			return
 	if not active:
 		return
 	_arena_time += delta
 	global_position = get_predicted_position(0.0)
-	_instruction.text = _message if _message_left > 0.0 else "Mira verde: pule  ·  Dourada: espere ou troque"
+	_instruction.text = _message if _message_left > 0.0 else ("2 / 2 · RAJADA FINAL · Alterne canhões e pule penas baixas" if phase==2 else "1 / 2 · Mira verde: pule  ·  Dourada: espere ou troque")
 	if _player.get_meta("cannon_flight", false):
 		_clear_attacks()
 		_attack_clock = 2.6
@@ -140,17 +152,25 @@ func _physics_process(delta: float) -> void:
 
 
 func _begin_warning() -> void:
-	_warning_left = 0.9
+	_gust = phase==2 and not _gust
+	_warning_left = 1.2 if _gust else 0.9
 	_attack_clock = 3.0
 	var target_x := clampf(_player.global_position.x, arena_min_x + 24.0, arena_max_x - 24.0)
 	_warning_positions.clear()
 	for offset in [-56.0, 0.0, 56.0]:
 		_warning_positions.append(clampf(target_x + offset, arena_min_x + 20.0, arena_max_x - 20.0))
 	_show_message("Atenção às marcas na areia!", 1.3)
+	if _gust:_show_message("RAJADA BAIXA! Pule as penas; depois escolha o outro canhão.",1.8)
 	Sfx.alert()
 
 
 func _release_feathers() -> void:
+	if _gust:
+		_gust_side=-_gust_side
+		for i in 2:
+			_feathers.append({"position":Vector2(arena_min_x-20-i*32 if _gust_side>0 else arena_max_x+20+i*32,arena_floor_y-6),"velocity":Vector2(_gust_side*170,0),"age":0.0})
+		_warning_positions.clear()
+		return
 	for target_x in _warning_positions:
 		var origin := get_hit_position() + Vector2(0, 16)
 		var target := Vector2(target_x, arena_floor_y - 7.0)
@@ -190,10 +210,11 @@ func get_predicted_position(seconds: float) -> Vector2:
 	if _dead:
 		return global_position
 	var future := _arena_time + maxf(seconds, 0.0)
-	return _home_position + Vector2(sin(future * 0.45) * 152.0, sin(future * 0.9) * 6.0)
+	return _home_position + Vector2(sin(future * (0.52 if phase==2 else 0.45)) * (174.0 if phase==2 else 152.0), sin(future * 0.9) * 6.0)
 
 
 func predicts_hit(point: Vector2, seconds: float) -> bool:
+	if phase==2 and absf(point.x-_last_cannon_x)<8:return false
 	var predicted := get_predicted_position(seconds)
 	return absf(predicted.x - point.x) <= 44.0 and absf(predicted.y - point.y) <= 40.0
 
@@ -215,6 +236,10 @@ func receive_cannon_hit(cannon: Node, shot_id: int) -> bool:
 		_show_message("Passou longe! Espere a mira verde ou troque de canhão.", 2.6)
 		Fx.popup(impact + Vector2(0, -18), "ERROU!", Color(1.0, 0.81, 0.43), 10)
 		return false
+	if phase==2 and absf(impact.x-_last_cannon_x)<8:
+		_show_message("Ele protegeu esse lado! Use o outro canhão.",2.5)
+		return false
+	_last_cannon_x=impact.x
 	health = maxi(health - 1, 0)
 	_meter.health = health
 	_meter.queue_redraw()
@@ -222,7 +247,12 @@ func receive_cannon_hit(cannon: Node, shot_id: int) -> bool:
 	notify_launch()
 	Fx.burst(get_hit_position(), Color(1.0, 0.81, 0.38), 15, 160.0)
 	Sfx.hit()
-	if health == 0:
+	if health==0 and phase==1:
+		phase=2;health=2;_last_cannon_x=-INF
+		_meter.maximum=2;_meter.health=2;_meter.queue_redraw()
+		_show_message("RAJADA FINAL! Dois impactos, alternando os canhões. Pule as penas baixas!",5.5)
+		Sfx.alert()
+	elif health == 0:
 		_dead = true
 		_defeat_time = 0.0
 		_show_message("Urus, o Urubu caiu! Abra a jaula!", 1.8)
@@ -273,6 +303,10 @@ func _draw() -> void:
 		draw_texture_rect(frame, Rect2(Vector2(-36, -48) + bob, Vector2(72, 96)), false, tint)
 	else:
 		_draw_fallback(bob, tint)
+	if _gust and _warning_left>0:
+		for x in [arena_min_x+30,arena_max_x-30]:
+			var at:=to_local(Vector2(x,arena_floor_y-15))
+			draw_string(ThemeDB.fallback_font,at-Vector2(22,0),"PULE",HORIZONTAL_ALIGNMENT_CENTER,44,10,Color("ffe5a8"))
 	for target_x in _warning_positions:
 		var point := to_local(Vector2(target_x, arena_floor_y - 2.0))
 		var pulse := 0.55 + 0.45 * sin(_time * 18.0)

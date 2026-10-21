@@ -4,16 +4,16 @@ signal finished
 @export var auto_progress := true
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
 const ARRIVAL := [
-	["Arara Minas","Esta é a Floresta Violeta! Remi, nosso amigo esquilo, está preso na clareira da Hiena HaHa, a Triple H.","REMI PRECISA DE NÓS"],
+	["Arara Minas","Esta é a Floresta Violeta! Remi, nosso amigo esquilo, está preso na clareira de Triple H.","REMI PRECISA DE NÓS"],
 	["Arara Minas","Os cogumelos vermelhos são elásticos. Caia sobre o chapéu e eles vão lançar você muito mais alto que um salto comum!","VERMELHO: IMPULSO ALTO"],
 	["Arara Minas","Aproxime-se da ponta de um cipó e aperte E para agarrar. Use A / D ou as setas para ganhar balanço. Espaço / W solta com um salto!","E: AGARRAR  ·  DIREÇÃO: BALANÇAR"],
 	["Arara Minas","Alguns cipós passeiam sozinhos. Toque nas plantas luminosas para mudar a posição de outros. Observe antes de saltar!","PLANTAS VIVAS MUDAM O CAMINHO"],
 	["Arara Minas","A fruta-do-dragão cresce nesta floresta! Ela permite lançar fogo por 20 segundos. Recolha uma e segure K para disparar. O açaí libera gelo: se os dois estiverem ativos, Q troca o elemento. As frutas são temporárias.","FRUTA-DO-DRAGÃO  ·  K: FOGO POR 20 SEGUNDOS"],
-	["Arara Minas","Hiena HaHa, a Triple H, montou um ringue! J / X rebate o barril e a deixa tonta. Nos socos, pule sobre ela e acerte por trás! Os cogumelos dos postes ajudam a passar por cima.","REBATA O BARRIL  ·  SOCOS: ACERTE POR TRÁS"],
-	["Nico","Vou ter cuidado com os besouros espinhosos e as mariposas. Hiena HaHa, já estou chegando!","J / X: ATACAR  ·  BANDEIRAS: RETORNO"],
+	["Arara Minas","Triple H montou um ringue! J / X rebate o barril e o deixa tonto. Nos socos, pule por cima e acerte por trás! No último round, salte a corrida nas cordas e espere o barril.","REBATA O BARRIL  ·  SOCOS: ACERTE POR TRÁS"],
+	["Nico","Vou ter cuidado com os besouros espinhosos e as mariposas. Triple H, já estou chegando!","J / X: ATACAR  ·  BANDEIRAS: RETORNO"],
 ]
 const RESCUE := [
-	["Nico","Remi! Hiena HaHa não vai mais prender ninguém aqui. Você está livre!","REMI RESGATADO"],
+	["Nico","Remi! Triple H não vai mais prender ninguém aqui. Você está livre!","REMI RESGATADO"],
 	["Remi","Eu sabia que vocês viriam! O lobo do crachá dourado quer dominar todas as ilhas. Ele levou José, Urso e o mico para longe daqui.","O RASTRO DA CORPORAÇÃO"],
 	["Arara Minas","Então seguimos juntos. Cada amigo de volta deixa nossa turma mais forte!","UMA NOVA COMPANHIA NA VIAGEM"],
 	["Remi","José, nosso amigo bode, foi levado ao Submundo. Cuidado com os canhões da corporação! Vamos encontrar nossos amigos e parar esse lobo!","PRÓXIMA JORNADA: O SUBMUNDO"],

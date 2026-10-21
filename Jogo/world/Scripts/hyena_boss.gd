@@ -7,6 +7,11 @@ const LEFT := 5220.0
 const RIGHT := 5800.0
 const FLOOR := 64.0
 const MAX_HEALTH := 8.0
+var phase := 1
+var _entrance_seen := false
+var _entrance: CanvasLayer
+var _rope_bounces := 0
+var _stun_hit := false
 var health := MAX_HEALTH
 var active := false
 var state := "idle"
@@ -95,9 +100,16 @@ func start_encounter() -> void:
 	_bar.show()
 	encounter_started.emit()
 	Sfx.alert()
+	if not _entrance_seen:
+		_entrance_seen=true
+		_entrance=preload("res://world/Scripts/boss_entrance.gd").new()
+		_entrance.boss=self;_entrance.kind="triple";_entrance.name="TripleHEntrance"
+		get_parent().add_child(_entrance)
 
 func reset_encounter() -> void:
 	if is_dead():return
+	if is_instance_valid(_entrance):_entrance.finish()
+	phase=1;_rope_bounces=0;_stun_hit=false
 	_clear_gates()
 	active=false
 	health=MAX_HEALTH
@@ -133,6 +145,19 @@ func _physics_process(delta: float) -> void:
 	_shock=maxf(0,_shock-delta)
 	_sprite.modulate=Color("ffc4eb") if _invulnerability>0 else Color.WHITE
 	match state:
+		"rope_warning":
+			_play(&"kick_windup")
+			if _timer<=0:_set_state("rope_run",4.0);velocity=Vector2(_direction*290,0)
+		"rope_run":
+			_play(&"run")
+			if position.x<=LEFT+22 or position.x>=RIGHT-22 or _timer<=0:
+				_rope_bounces+=1;_direction=-_direction
+				position.x=clampf(position.x,LEFT+28,RIGHT-28)
+				Sfx.swing();Fx.burst(position+Vector2(0,-25),Color("e0b0f4"),8,100)
+				if _rope_bounces>=2:
+					_target_x=(LEFT+RIGHT)*.5
+					_set_state("leap_warning",1.0);velocity=Vector2.ZERO
+				else:velocity.x=_direction*290;_timer=4.0
 		"idle":
 			_play(&"guard")
 			if _timer<=0:_prepare_attack()
@@ -174,7 +199,7 @@ func _physics_process(delta: float) -> void:
 			if _state_elapsed>=0.18 and _throws==0:
 				_throw_object("barrel",_target_x)
 				_throws=1
-			if health<=4 and _state_elapsed>=0.55 and _throws==1:
+			if phase==1 and health<=4 and _state_elapsed>=0.55 and _throws==1:
 				_throw_object("rock",clampf(_player.position.x,LEFT+25,RIGHT-25))
 				_throws=2
 			if _timer<=0:_set_state("recovery",0.65)
@@ -192,7 +217,7 @@ func _physics_process(delta: float) -> void:
 		"stunned":
 			_play(&"hurt" if _invulnerability>0.64 else &"stunned")
 			if _timer<=0:_set_state("idle",0.8)
-	if state in ["charge","leap","approach"]:
+	if state in ["charge","leap","approach","rope_run"]:
 		move_and_slide()
 		position.x=clampf(position.x,LEFT+12,RIGHT-12)
 		if state=="leap" and is_on_floor():
@@ -200,16 +225,27 @@ func _physics_process(delta: float) -> void:
 			Fx.burst(global_position,Color("d7b1fa"),20,180)
 			if _player.is_on_floor() and absf(_player.global_position.x-position.x)<105:_player.take_damage(1,global_position)
 			velocity=Vector2.ZERO
-			_set_state("recovery",0.8)
+			if phase==2:
+				for direction in [-1.0,1.0]:
+					var wave:=preload("res://world/Scripts/ring_shockwave.gd").new()
+					wave.owner_boss=self;wave.position=position;wave.speed=direction*170;get_parent().add_child(wave)
+				_direction=signf(_player.position.x-position.x);_target_x=clampf(_player.position.x,LEFT+25,RIGHT-25)
+				_set_state("throw_warning",1.1)
+			else:_set_state("recovery",0.8)
 	_sync_facing()
-	_fill.size.x=428*health/MAX_HEALTH
+	_fill.size.x=428*health/(3.0 if phase==2 else MAX_HEALTH)
 	var advice:="Rebata o barril ou ataque por trás dos socos"
 	if state=="stunned":advice="VULNERÁVEL! J / X ou pule na cabeça"
+	if phase==2 and state=="stunned" and _stun_hit:advice="ACERTOU! Afaste-se e espere o próximo barril"
 	elif state.begins_with("throw"):advice="J / X: REBATA O BARRIL!"
 	elif state.begins_with("punch"):advice="SOCOS! Passe por cima e ataque por trás"
 	elif state.begins_with("kick"):advice="CHUTE! Pule ou recue"
 	elif state=="leap_warning":advice="SAIA DA MARCA E PULE!"
-	_caption.text="HIENA HaHa  ·  "+advice
+	if phase==2:
+		if state.begins_with("rope"):advice="CORRIDA NAS CORDAS · PULE!"
+		elif state=="leap_warning":advice="SALTO NO CENTRO · AFASTE-SE!"
+		elif state=="leap":advice="PULE A ONDA · DEPOIS REBATA O BARRIL"
+	_caption.text="TRIPLE H · %d / 2 · "%phase+advice
 	if not _player.is_dead() and absf(_player.global_position.x-position.x)<36:
 		var feet:float=_player.global_position.y+11
 		if state=="stunned" and _player.velocity.y>50 and feet>position.y-88 and feet<position.y-44:
@@ -227,6 +263,9 @@ func _set_state(value:String,duration:float) -> void:
 	_throws=0
 
 func _prepare_attack() -> void:
+	if phase==2:
+		_rope_bounces=0;_direction=1 if position.x<(LEFT+RIGHT)*.5 else -1
+		_set_state("rope_warning",1.1);Sfx.alert();return
 	var pattern:=["punch","throw","charge","kick","throw","leap"]
 	_planned=pattern[_attack_number%pattern.size()]
 	_attack_number+=1
@@ -272,6 +311,7 @@ func _play(animation:StringName) -> void:
 	Art.reanchor(_sprite)
 
 func _stun(duration:float=2.5) -> void:
+	_stun_hit=false
 	_set_state("stunned",duration)
 	velocity=Vector2.ZERO
 	Sfx.hit()
@@ -284,6 +324,7 @@ func _sync_facing() -> void:
 
 func receive_reflected_barrel() -> void:
 	if not active or is_dead():return
+	if phase==2 and state=="stunned":return
 	# A grounded stagger is earned by reflecting an actual thrown barrel.
 	position.y=FLOOR
 	_stun(2.8)
@@ -298,13 +339,20 @@ func take_damage(amount: float, source: Vector2) -> void:
 			return
 		Fx.popup(global_position+Vector2(0,-88),"ESPERE A ABERTURA",Color("f7ccaa"),9)
 		return
-	health=maxf(0,health-amount)
+	if phase==2 and _stun_hit:return
+	_stun_hit=true
+	health=maxf(0,health-(minf(amount,1.0) if phase==2 else amount))
 	_invulnerability=0.8
 	_timer=maxf(_timer,1.0)
 	_play(&"hurt")
 	Fx.burst(global_position+Vector2(0,-38),Color("ffdeb0"),16,170)
 	Sfx.hit()
-	if is_dead():
+	if health<=0 and phase==1:
+		phase=2;health=3;_clear_projectiles();velocity=Vector2.ZERO;position.y=FLOOR
+		_set_state("idle",2.0);_stun_hit=false
+		_player.heal_one();Sfx.alert()
+		Fx.popup(position+Vector2(0,-110),"ÚLTIMO ROUND!",Color("ffe2ac"),10)
+	elif is_dead():
 		active=false
 		velocity=Vector2.ZERO
 		position.y=FLOOR

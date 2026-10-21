@@ -462,7 +462,7 @@ V25 — FLORESTA VIOLETA / RESGATE DE REMI
 A terceira fase começa em Próxima ilha depois da praia. Continuar também a encontra quando a fase 2 já está concluída. Remi agora é um esquilo, com corpo animado e retratos próprios.
 Vermelhos: pule sobre o chapéu do cogumelo para subir muito alto.
 Cipós: E agarra perto da ponta; A/D ou setas dão balanço; Espaço/W ou E solta com impulso. Toque nas plantas luminosas para deslocar alguns cipós. Outro se move sozinho.
-Hiena HaHa (Triple H): J/X rebate o barril; ela fica tonta quando o barril devolvido a acerta. Nos socos, ataque por trás durante o combo ou sua curta recuperação. Depois, ataque novamente ou pule na cabeça para causar dano. Os cogumelos ficam apoiados nos postes laterais. Após vencer, quebre o cadeado de Remi com J/X.
+Triple H: J/X rebate o barril; ela fica tonta quando o barril devolvido a acerta. Nos socos, ataque por trás durante o combo ou sua curta recuperação. Depois, ataque novamente ou pule na cabeça para causar dano. Os cogumelos ficam apoiados nos postes laterais. Após vencer, quebre o cadeado de Remi com J/X.
 Oito checkpoints, novos besouros e mariposas, três segredos, caravana de Oliver, açaí congelante, novas trilhas e Coleção com três ilhas. Modo livre exige as três fases disponíveis. Saldo e progresso anteriores são mantidos.
 Imagens: ferramenta integrada de geração de imagens; spritesheets, fundo, recursos de animação e prompts completos em world/Arte/Magic. Detalhes e controles no README.md.
 
@@ -471,7 +471,7 @@ V26 — POLIMENTO, CIPÓS E RINGUE DA HIENA
 Pés e raízes alinhados ao chão; cenário limpo junto da Arara e dentro do ringue.
 Cipós com novos sprites e impulso menor. Cinco cerejas por cipó seguem o arco e o apoio móvel. E agarra, A/D ou setas dão balanço, Espaço/W ou E solta.
 Vaga-lumes animados cruzam a tela. A fase usa Glimmergrove Pathways e o chefe Wrestlecackle Beatdown, copiadas sem conversão.
-Hiena HaHa: combo de socos, chute, barris/cristais, investida e salto marcado. Conquiste a abertura rebatendo um barril ou acertando por trás dos socos. J/X rebate barris e quebra cristais no ar. O açaí congela os inimigos da floresta. Morrer limpa os projéteis e permite outra tentativa.
+Triple H: combo de socos, chute, barris/cristais, investida e salto marcado. Conquiste a abertura rebatendo um barril ou acertando por trás dos socos. J/X rebate barris e quebra cristais no ar. O açaí congela os inimigos da floresta. Morrer limpa os projéteis e permite outra tentativa.
 Artes geradas pela ferramenta integrada, spritesheets e prompts exatos em world/Arte/Magic/V26. Saldo e progresso permanecem preservados.
 
 
@@ -594,3 +594,15 @@ Equipamentos, roupas, peças equipadas e quantidades de suprimentos acompanham N
 Compras gravam saldo e inventário na mesma transação. Uma falha de gravação preserva cerejas e itens. Saves anteriores continuam compatíveis e o histórico de cerejas do modo livre permanece preservado.
 
 Validação: 86 verificações na janela Vulkan, sete capturas, trocas reais de mapa, compras, equipamentos, consumo, respawn, recarga do save, limites de estoque, saves antigos/inválidos, nova campanha, duas falhas de gravação simuladas, partida da caravana e encerramento automático. Mais 63 verificações da fase completa do Submundo, incluindo altar, forja, José, combate e canhões. Todos os testes usam APPDATA isolado, sem ler nem alterar saves reais.
+
+## Triple H, apresentações e novas etapas dos chefes (v55)
+
+O nome usado nas barras, diálogos, jaula, Coleção e referências à floresta agora é apenas Triple H.
+
+Urus e Triple H ganharam apresentações animadas de 6,2 segundos com cenário próprio, nome, falas de desafio, resposta de Nico e instrução de combate. Os atores usam os mesmos sprites do jogo, incluindo as roupas equipadas de Nico. Enter, E ou Esc pulam a apresentação; a música continua e controles, pausa e cronômetro voltam ao estado anterior. A entrada do Carcereiro mantém a chegada, o golpe de corrente e a câmera dramática, agora com novas falas do guardião e de Nico. Novas tentativas dispensam a repetição das entradas.
+
+- Urus: depois dos três impactos originais, começa a Rajada Final. São necessários mais dois impactos, alternando os canhões. Urus protege o lado já atingido, e a mira desse canhão deixa de ficar verde. O voo muda de ritmo e ganha uma rajada rasteira de penas que Nico pode saltar, intercalada com os ataques marcados na areia.
+- Triple H: depois do combate original, começa o Último Round com três acertos. Ele usa as cordas para atravessar o ringue e rebater duas vezes, anuncia um salto ao centro, solta ondas baixas ao aterrissar e arremessa um barril. Rebatê-lo conquista um atordoamento que aceita um único ponto de dano, inclusive com bônus de equipamentos ou açaí. Os avisos distinguem corrida, salto, ondas e barril. A derrota continua apoiada no tablado e só então libera Remi.
+- Carcereiro: os três canhões da torre conduzem à sexta etapa, Os Últimos Selos. A torre desaparece e Nico retorna ao piso largo, com a vida recuperada e um ponto de retorno próprio. K com fogo pelo lado esquerdo abre o selo laranja; gelo pelo lado direito abre o azul. Os dois abertos liberam 4,5 segundos para um acerto de J/X. Três ciclos rompem as últimas correntes. Golpes fortes ou repetidos não pulam ciclos. Ondas têm alvo e aviso de 1,1 segundo. Depois da vitória, a fuga com José começa diretamente, sem portal.
+
+Validação: 58 verificações na janela Vulkan e sete capturas revisadas; 64 verificações da fase completa do Submundo; 13 verificações adicionais com saltos reais nos dois canhões usando a previsão da mira, retorno de controle, barril rebatido com J, acerto de J e bloqueio de dano repetido. As 79 verificações de mochila, caravana, saves e encerramento anteriores continuam passando. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.

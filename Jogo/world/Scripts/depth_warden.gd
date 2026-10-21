@@ -48,6 +48,7 @@ var _landing_grace:=0.0
 var _arena_cycle:=0
 var _phase2_parries:=0
 var _parry_stun:=0.0
+var final_seals:Node2D
 var _ring_pattern:Node2D
 func _ready() -> void:
 	process_physics_priority=-30
@@ -156,6 +157,8 @@ func _clear_gates() -> void:
 	_gates.clear()
 func reset_encounter() -> void:
 	if is_dead():return
+	if phase==6:
+		_begin_final_seals();return
 	if phase!=5:_end_ring_pattern()
 	_center_clock=-1;_center_cooldown=0;_landing_grace=0;_parry_stun=0
 	_arena_cycle=0;_phase2_parries=0;collision_layer=4
@@ -223,6 +226,8 @@ func _physics_process(delta:float) -> void:
 	if not active:
 		if _player.position.x>6510 and _player.position.x<7430 and not _player.is_dead():start_encounter()
 		return
+	if phase==6:
+		_phase_time+=delta;queue_redraw();return
 	if phase == 5:
 		_phase_time += delta
 		_vulnerable = maxf(0, _vulnerable - delta)
@@ -230,7 +235,7 @@ func _physics_process(delta:float) -> void:
 		_sprite.modulate = Color.WHITE
 		_sprite.flip_h = false
 		_fill.size.x = 492 * maxf(0, 3 - cylinder.hits) / 3.0
-		_phase_caption.text = "5 / 5 · ÚLTIMA CORRENTE · CANHÕES %d / 3" % cylinder.hits
+		_phase_caption.text = "5 / 6 · CANHÕES DA TORRE · CANHÕES %d / 3" % cylinder.hits
 		_caption.text = _advice()
 		_fill.color = Color("a2d9ee") if cylinder.hits == 1 else Color("f4ac71")
 		queue_redraw()
@@ -301,8 +306,9 @@ func _physics_process(delta:float) -> void:
 	_update_bar()
 	queue_redraw()
 func _update_bar() -> void:
+	if phase==6:return
 	_fill.size.x=492*health/MAX_HEALTH
-	_phase_caption.text="%d / 5 · CARCEREIRO · " % phase + ["", "CORRENTES", "ANEL DE CORRENTES · %d / 7" % _phase2_parries, "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
+	_phase_caption.text="%d / 6 · CARCEREIRO · " % phase + ["", "CORRENTES", "ANEL DE CORRENTES · %d / 7" % _phase2_parries, "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
 	_caption.text=_advice()
 	_fill.color = Color("a7e5f4") if brittle else (Color("ffba75") if heated else Color("e4bb8d"))
 	if phase==2:
@@ -390,6 +396,7 @@ func receive_returned_chain() -> bool:
 func _advice() -> String:
 	if _center_clock>=0:return "ELE VAI SALTAR AO CENTRO · Afaste-se do círculo"
 	if _vulnerable>0 and phase < 5:return "J / X NA CORRENTE PRESA!" if phase == 1 else "ATAQUE O PONTO FRACO!"
+	if phase==6:return final_seals.advice() if is_instance_valid(final_seals) else "OS ÚLTIMOS SELOS"
 	match phase:
 		1:return "Pule a onda; J / X no fecho dourado da corrente presa"
 		2:
@@ -420,6 +427,9 @@ func _cast_chain() -> void:
 	shot.flight=Vector2(_side*190,0)
 	get_parent().add_child(shot)
 func take_element(element:String,source:Vector2) -> void:
+	if phase==6:
+		if active and is_instance_valid(final_seals):final_seals.element(element,source)
+		return
 	if not active or is_dead() or phase==2 or phase==5:return
 	if _vulnerable>0:take_damage(1,source);return
 	if phase!=3:return
@@ -435,6 +445,9 @@ func take_element(element:String,source:Vector2) -> void:
 		Fx.burst(position+Vector2(0,-60),Color("b6f1ff"),20,150)
 		Sfx.play("warden_break", -5)
 func take_damage(amount:float,_source:Vector2) -> void:
+	if phase==6:
+		if active and is_instance_valid(final_seals):final_seals.strike(amount)
+		return
 	if not active or is_dead() or phase in [2,5] or amount<=0 or _invulnerable>0 or _vulnerable<=0:return
 	_invulnerable=0.65
 	health=maxf(0,health-amount)
@@ -484,6 +497,22 @@ func _begin_cylinder() -> void:
 	cylinder.name = "WardenCylinder"
 	cylinder.boss = self
 	get_parent().add_child(cylinder)
+func _begin_final_seals() -> void:
+	if is_instance_valid(cylinder):cylinder.set_physics_process(false);cylinder.queue_free()
+	if is_instance_valid(final_seals):final_seals.set_physics_process(false);final_seals.queue_free()
+	_clear_projectiles();_end_ring_pattern()
+	phase=6;health=3;active=true;state="final_seals";_phase_time=0;_center_clock=-1
+	_vulnerable=0;_invulnerable=0;collision_layer=4;lava_y=165
+	position=Vector2(7100,UPPER_FLOOR);velocity=Vector2.ZERO
+	_sprite.scale=_normal_scale;_sprite.play(&"guard");preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_ensure_rising_floor()
+	_player.position=Vector2(6960,UPPER_FLOOR-11);_player.respawn_position=_player.position
+	_player.velocity=Vector2.ZERO;_player.heal_full();_player._invulnerability_timer=1.5
+	final_seals=preload("res://world/Scripts/warden_final_seals.gd").new()
+	final_seals.name="FinalSeals";final_seals.boss=self;add_child(final_seals)
+	_bar.show();Sfx.play("warden_roar",-6)
+	Fx.popup(_player.position+Vector2(0,-50),"OS ÚLTIMOS SELOS!",Color("ffe5b9"),10)
+
 func _ensure_rising_floor() -> void:
 	if is_instance_valid(_rising_floor):return
 	_rising_floor=preload("res://world/Scripts/warden_rising_floor.gd").new()
@@ -503,6 +532,7 @@ func receive_jose_hit() -> bool:
 	Sfx.play("warden_break", -4)
 	return true
 func _defeat() -> void:
+	if is_instance_valid(final_seals):final_seals.queue_free()
 	health=0
 	active=false
 	state="defeated"

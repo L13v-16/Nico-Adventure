@@ -97,7 +97,7 @@ func _draw_scene() -> void:
 	_canvas.draw_rect(Rect2(0, 278, 640, 82), Color("100e19"))
 	if _clock >= 1.8:
 		_canvas.draw_string(ThemeDB.fallback_font, Vector2(32, 306), "O CARCEREIRO DAS PROFUNDEZAS", HORIZONTAL_ALIGNMENT_CENTER, 576, 19, Color("ffd398"))
-		_canvas.draw_string(ThemeDB.fallback_font, Vector2(28, 329), "\"A chave pertence a quem quebrar minhas correntes.\"", HORIZONTAL_ALIGNMENT_CENTER, 584, 12, Color("e5d4d1"))
+		_canvas.draw_string(ThemeDB.fallback_font, Vector2(28, 329), ("\"A corporação me acorrentou. Vocês não passarão!\"" if _clock<3.5 else "Nico: Vamos quebrar essas correntes e sair juntos!"), HORIZONTAL_ALIGNMENT_CENTER, 584, 12, Color("e5d4d1"))
 	_canvas.draw_string(ThemeDB.fallback_font, Vector2(30, 20), "GUARDIÃO DA CHAVE", HORIZONTAL_ALIGNMENT_LEFT, 400, 10, Color("bba8ba"))
 	_canvas.draw_string(ThemeDB.fallback_font, Vector2(420, 350), "Enter / E / Esc: pular", HORIZONTAL_ALIGNMENT_RIGHT, 190, 9, Color("bba8ba"))
 	if _clock > 2.3 and _clock < 2.55:

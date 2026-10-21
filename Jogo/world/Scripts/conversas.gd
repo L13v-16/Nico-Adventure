@@ -20,7 +20,7 @@ const CONVERSAS := {
 		},
 		{
 			"texto": "Quem manda nessa Corporação?",
-			"resposta": "Três figurões: o Lobo, a Hiena e o Urubu. Cada um armou um escritório no meio do caminho.",
+			"resposta": "Três figurões: o Lobo, Triple H e o Urubu. Cada um armou um escritório no meio do caminho.",
 			"cara": 4,
 		},
 		{

@@ -31,7 +31,7 @@ func _start_sequence() -> void:
 	pause_menu.can_open=true
 	_timing=true
 	_elapsed=0
-	_show_notice("Encontre Remi no ringue da Hiena HaHa!")
+	_show_notice("Encontre Remi no ringue de Triple H!")
 
 func _setup_enemies() -> void:
 	total_enemies=0
@@ -67,9 +67,9 @@ func _process(delta: float) -> void:
 	elif x<3050:hint.text="Este cipó se move sozinho! Use o cogumelo e observe a aproximação antes de agarrar."
 	elif x<3700:hint.text="Fruta-do-dragão: K lança fogo por 20 s. Açaí congela. Evite os espinhos do besouro!"
 	elif x<4496:hint.text="Outra planta muda o cipó. Balance e solte no impulso para alcançar a próxima ilha."
-	elif x<5184:hint.text="Prepare-se para o ringue! I: mochila  •  Ative a bandeira antes de Hiena HaHa."
-	elif not _boss_defeated:hint.text="Hiena HaHa: J / X rebate o barril. Nos socos, passe por cima e ataque por trás!"
-	elif not _rescue_ready:hint.text="Hiena HaHa derrotada! Vá até Remi e use J / X para abrir o cadeado."
+	elif x<5184:hint.text="Prepare-se para o ringue! I: mochila  •  Ative a bandeira antes de Triple H."
+	elif not _boss_defeated:hint.text="Triple H: J / X rebate o barril. Nos socos, passe por cima e ataque por trás!"
+	elif not _rescue_ready:hint.text="Triple H derrotado! Vá até Remi e use J / X para abrir o cadeado."
 	else:hint.text="Remi está livre! Aproxime-se dele para conversar."
 
 func _on_boss_defeated() -> void:
