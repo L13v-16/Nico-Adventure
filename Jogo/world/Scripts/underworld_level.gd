@@ -114,7 +114,7 @@ func _process(delta:float) -> void:
 	# A câmera acompanha a subida da luta para manter a cabeça do guardião
 	# abaixo da HUD, sem perder o patamar seguro que Nico precisa alcançar.
 	var arena_y:float=-65
-	if arena and boss.phase==2:arena_y=lerpf(-65,-220,smoothstep(2,18,boss._phase_time))
+	if arena and boss.phase==2:arena_y=boss.arena_floor_y()-155
 	elif arena and boss.phase>=3:arena_y=-220
 	if arena and boss.phase==5:arena_y=-312
 	var arena_x:float=7145 if arena and boss.phase==5 else clampf((x + boss.position.x) * 0.5 + signf(boss.position.x-x)*25, 6740, 7180)

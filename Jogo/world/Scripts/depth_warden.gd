@@ -48,6 +48,7 @@ var _landing_grace:=0.0
 var _arena_cycle:=0
 var _phase2_parries:=0
 var _parry_stun:=0.0
+var _ring_pattern:Node2D
 func _ready() -> void:
 	process_physics_priority=-30
 	add_to_group("enemies")
@@ -155,10 +156,12 @@ func _clear_gates() -> void:
 	_gates.clear()
 func reset_encounter() -> void:
 	if is_dead():return
+	if phase!=5:_end_ring_pattern()
 	_center_clock=-1;_center_cooldown=0;_landing_grace=0;_parry_stun=0
 	_arena_cycle=0;_phase2_parries=0;collision_layer=4
 	if is_instance_valid(_entrance): _entrance.finish()
 	if phase == 5 and is_instance_valid(cylinder):
+		collision_layer=0
 		_clear_projectiles()
 		cylinder._recover()
 		return
@@ -258,7 +261,7 @@ func _physics_process(delta:float) -> void:
 		_tick_center_jump(delta)
 		_update_bar();queue_redraw();return
 	if phase==2:
-		_tick_lava_arena()
+		_tick_lava_arena(delta)
 	elif _vulnerable>0:
 		_sprite.play(&"stuck" if phase==1 else &"exposed")
 	else:
@@ -293,15 +296,18 @@ func _physics_process(delta:float) -> void:
 						_vulnerable=2.6
 						Fx.popup(Vector2(_target_x, 52), "CORRENTE PRESA!", Color("ffe2a2"), 9)
 	if phase>=2 and _player.position.y+11>lava_y and _phase_time>0.5:_player.take_damage(1,Vector2(_player.position.x,lava_y+20))
-	if _landing_grace<=0 and _vulnerable<=0 and state != "recover" and _player.position.distance_to(position+Vector2(0,-22))<48:_player.take_damage(1,position)
+	if phase!=2 and _landing_grace<=0 and _vulnerable<=0 and state != "recover" and _player.position.distance_to(position+Vector2(0,-22))<48:_player.take_damage(1,position)
 	if _invulnerable > 0.43 and phase != 2: _sprite.play(&"hurt")
 	_update_bar()
 	queue_redraw()
 func _update_bar() -> void:
 	_fill.size.x=492*health/MAX_HEALTH
-	_phase_caption.text="%d / 5 · CARCEREIRO · " % phase + ["", "CORRENTES", "PISO ÚNICO · DEVOLVIDOS %d / 2" % _phase2_parries, "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
+	_phase_caption.text="%d / 5 · CARCEREIRO · " % phase + ["", "CORRENTES", "ANEL DE CORRENTES · %d / 7" % _phase2_parries, "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
 	_caption.text=_advice()
 	_fill.color = Color("a7e5f4") if brittle else (Color("ffba75") if heated else Color("e4bb8d"))
+	if phase==2:
+		_fill.size.x=492*maxf(0,7-_phase2_parries)/7.0
+		_fill.color=Color("b4ec92")
 func arena_floor_y() -> float:
 	return _rising_floor.floor_height() if phase==2 and is_instance_valid(_rising_floor) else (100.0 if phase==1 else UPPER_FLOOR)
 func _begin_center_jump() -> void:
@@ -331,46 +337,49 @@ func _tick_center_jump(delta:float) -> void:
 		_sprite.play(&"recover")
 		if _center_clock>=2.0:
 			_center_clock=-1;_center_cooldown=3;_landing_grace=1;state="idle";_timer=2
-func _tick_lava_arena() -> void:
-	_ensure_rising_floor()
+func _ensure_ring_pattern() -> void:
+	if is_instance_valid(_ring_pattern):return
+	_ring_pattern=preload("res://world/Scripts/warden_ring_pattern.gd").new()
+	_ring_pattern.boss=self
+	get_parent().add_child(_ring_pattern)
+	# O guardião está no centro ao fundo; a passagem à frente fica livre.
+	collision_layer=0;z_index=0
+	_sprite.scale=_normal_scale*1.25
+	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+func _end_ring_pattern() -> void:
+	if is_instance_valid(_ring_pattern):_ring_pattern.queue_free()
+	_ring_pattern=null
+	collision_layer=4;z_index=3
+	_sprite.scale=_normal_scale
+	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+func _tick_lava_arena(delta:float) -> void:
+	_ensure_rising_floor();_ensure_ring_pattern()
+	collision_layer=0
 	position.y=arena_floor_y();lava_y=position.y+70
-	if _parry_stun>0:
-		_sprite.play(&"hurt")
+	if _parry_stun>0:_sprite.play(&"hurt")
 	else:
-		_sprite.play(&"chain_cast" if _cast_anim>0 or _cast_warn else &"lava")
-		if _timer<=1.0 and not _cast_warn:
-			_cast_warn=true;_cast_target=_player.position;Sfx.alert()
-		if _timer<=0:
-			_clear_projectiles()
-			if _arena_cycle%2==0:_cast_chain()
-			else:
-				Sfx.play("warden_slam",-8)
-				for direction in [-1.0,1.0]:
-					var wave:=preload("res://world/Scripts/underworld_shockwave.gd").new()
-					wave.position=Vector2(position.x,arena_floor_y());wave.speed=direction*165;wave.floor_owner=self
-					get_parent().add_child(wave)
-			_arena_cycle+=1;_timer=4.0;_cast_warn=false
-	if _phase_time>=18 and _phase2_parries>=2:
+		_ring_pattern.tick(delta)
+		_sprite.play(&"chain_cast" if _ring_pattern.beat in ["rain","charge","orb"] else (&"slam" if _ring_pattern.beat=="sweep" else &"lava"))
+	if _phase_time>=18 and _phase2_parries>=7:
+		_end_ring_pattern()
 		phase=3;position.y=UPPER_FLOOR;_phase_time=0;state="idle";_timer=1.8;health=9
 		_upper_unlocked=true;_cast_warn=false;_clear_projectiles()
 		_player.respawn_position=Vector2(6950,UPPER_FLOOR-11)
-		Fx.popup(Vector2(6990,UPPER_FLOOR-110),"PATAMAR SEGURO · FOGO E GELO!",Color("bce6d6"),9)
+		Fx.popup(Vector2(6990,UPPER_FLOOR-110),"SELOS QUEBRADOS · FOGO E GELO!",Color("bce6d6"),9)
 func receive_returned_chain() -> void:
 	if not active or phase!=2 or is_dead():return
-	_phase2_parries=mini(2,_phase2_parries+1);_parry_stun=1.2;_timer=maxf(_timer,2.3);_cast_warn=false
+	_phase2_parries=mini(7,_phase2_parries+1);_parry_stun=1.3;_timer=maxf(_timer,2.3);_cast_warn=false
 	Sfx.play("warden_hurt",-7)
-	Fx.burst(position+Vector2(0,-55),Color("b9efff"),12,100)
-	Fx.popup(position+Vector2(0,-125),"DEVOLVIDO! %d / 2" % _phase2_parries,Color("c2f2ff"),10)
+	Fx.burst(position+Vector2(0,-55),Color("c6ff99"),12,100)
+	Fx.popup(position+Vector2(0,-125),"DEVOLVIDO! %d / 7" % _phase2_parries,Color("d8ffad"),10)
+	_ensure_ring_pattern()
+	_ring_pattern.on_return()
 func _advice() -> String:
 	if _center_clock>=0:return "ELE VAI SALTAR AO CENTRO · Afaste-se do círculo"
 	if _vulnerable>0 and phase < 5:return "J / X NA CORRENTE PRESA!" if phase == 1 else "ATAQUE O PONTO FRACO!"
 	match phase:
 		1:return "Pule a onda; J / X no fecho dourado da corrente presa"
-		2:
-			if _phase2_parries>=2:return "Bom! O piso leva você ao patamar · desvie do próximo ataque"
-			if _parry_stun>0:return "ACERTOU! · Prepare-se para devolver o próximo gancho"
-			if _cast_warn:return "GANCHO AZUL · J / X PARA DEVOLVER" if _arena_cycle%2==0 else "ONDA NO PISO · PULE!"
-			return "J / X rebate o gancho azul · devolva 2 · o piso sobe sozinho"
+		2:return _ring_pattern.advice() if is_instance_valid(_ring_pattern) else "CORRA · PULE · J / X REBATE A ESFERA VERDE"
 		3:return "GELO nas correntes!" if heated else "FOGO na armadura!"
 		4:return "Atraia para o círculo dourado e use C: JOSÉ"
 		5:return "CANHÃO %d / 3 · %s · %s · K: ativar" % [mini(cylinder.hits+1,3),"DIREITA" if cylinder.hits==1 else "ESQUERDA","GELO" if cylinder.hits==1 else "FOGO"]
@@ -423,8 +432,10 @@ func take_damage(amount:float,_source:Vector2) -> void:
 		_timer=2.4;state="idle";_arena_cycle=0;_phase2_parries=0;_parry_stun=0
 		_clear_projectiles()
 		_ensure_rising_floor()
+		_ensure_ring_pattern()
+		_begin_center_jump()
 		Sfx.play("warden_rise",-7)
-		Fx.popup(_player.position+Vector2(0,-50),"PISO ÚNICO · J / X DEVOLVE O GANCHO AZUL",Color("ffe2aa"),9)
+		Fx.popup(_player.position+Vector2(0,-50),"ANEL DE CORRENTES · CORRA, PULE E DEVOLVA!",Color("ffe2aa"),9)
 	elif phase==3 and health<=3:
 		health=3
 		phase=4
@@ -507,15 +518,6 @@ func _draw() -> void:
 		var center:=to_local(Vector2(ARENA_CENTER,arena_floor_y()))
 		draw_arc(center,48,PI,TAU,20,Color("ffe5ad"),2)
 		draw_line(center+Vector2(-48,0),center+Vector2(48,0),Color("e6b97e"),3)
-	if active and phase==2 and _cast_warn:
-		var floor_y:=arena_floor_y()
-		if _arena_cycle%2==0:
-			var at:=to_local(Vector2(position.x+_side*62,floor_y-18))
-			draw_arc(at,13,0,TAU,16,Color("a9efff"),2)
-			draw_line(at,at+Vector2(_side*44,0),Color("a9efff"),2)
-		else:
-			var at:=to_local(Vector2(position.x,floor_y))
-			draw_line(at+Vector2(-80,-2),at+Vector2(80,-2),Color("ffbd79"),3)
 	if active and phase != 2 and phase < 5 and (state == "slam" or _vulnerable > 0):
 		var hand := Vector2(_side * 50, -22)
 		var pinned := to_local(Vector2(_target_x, 100 if phase == 1 else UPPER_FLOOR))

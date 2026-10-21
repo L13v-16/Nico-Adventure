@@ -562,3 +562,10 @@ Nas extremidades, o chefe anuncia um salto ao centro. Afaste-se do círculo; ele
 Na segunda etapa há um piso único que sobe sozinho. As escadas e correntes de escalada foram retiradas. Pule as ondas e rebata os ganchos azuis com J/X: duas devoluções completam o objetivo da etapa. Observe o aviso de um segundo e o contador da HUD.
 Na Última Corrente, oito plataformas substituem as 24 anteriores: seis apoios laterais e duas pontes largas. Todas permanecem sólidas. A HUD mostra o lado, número e elemento do próximo canhão; K dispara e Q alterna entre fogo e gelo. A sequência é fogo, gelo, fogo.
 Validação: 83 verificações na janela Vulkan, 73 de transporte pelo piso sem saltar, 65 da fase completa e cinco capturas revisadas. Saves isolados; o progresso do jogador não é usado nos testes.
+
+V51 — ANEL DE CORRENTES, INSPIRADO EM MECHA-BANDICOOT
+A segunda etapa do Carcereiro alterna três ações: correr para sair das miras laranjas das ferragens, pular a corrente que varre o chão e rebater a esfera verde com J/X. O chefe fica ao fundo, no centro, com a passagem livre à frente e uma mureta curva de basalto atrás. O piso sobe sozinho.
+Devolva sete esferas. A segunda quebra o selo da varredura; a quarta quebra o selo da chuva. Esses ataques deixam de aparecer e cada selo quebrado recupera um coração. As três últimas devoluções abrem a etapa da armadura. A barra verde e o contador mostram o progresso.
+Câmera ajustada à altura real do piso. A retomada dos canhões mantém o tamanho do guardião. Fogo/gelo, a ajuda de José, os canhões e a fuga montada continuam no combate.
+Referência: Crash Twinsanity Hands-On, GameSpot, 7/9/2004 — https://www.gamespot.com/articles/crash-twinsanity-hands-on/1100-6106483/
+Validação: 51 verificações na janela, 73 do piso ascendente, 66 da fase completa e seis capturas. Percurso natural da segunda etapa com sete rebates reais e zero dano, sem forçar invulnerabilidade. Saves de teste isolados.
