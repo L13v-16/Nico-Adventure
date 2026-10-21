@@ -1,7 +1,8 @@
 extends Control
 ## Screen-space finale: the original actors and their physics stay untouched.
-const DURATION := 19.2
-const BEATS := [0.0, 3.2, 6.2, 9.5, 11.7, 15.3, DURATION]
+const DEFEAT_DURATION:=6.4
+const DURATION := 25.6
+const BEATS := [0.0, 3.2, 6.2, 9.5, 11.7, 15.3, 19.2]
 const Art = preload("res://world/Scripts/underworld_art.gd")
 const ChainArt = preload("res://world/Scripts/underworld_chain_art.gd")
 const Ui = preload("res://world/Scripts/ui_style.gd")
@@ -40,6 +41,13 @@ var _bound := false
 var _mounted_nico := false
 var _mounted_jose := false
 var _seat_cache: Dictionary = {}
+var _defeat_clock:=0.0
+var _defeat_cues:Dictionary={}
+
+func _anchor_monster() -> void:
+	var texture:Texture2D=monster.sprite_frames.get_frame_texture(monster.animation,monster.frame)
+	var foot:float=preload("res://world/Arte/Underworld/V59/guardian_feet.tres").get_meta("feet").get(texture.resource_path,texture.get_height())
+	monster.position=Vector2(-texture.get_width()*.5*monster.scale.x,-foot*monster.scale.y)
 
 func _seat(x: float, foot_x := 0.0, foot_y := 0.0) -> Vector2:
 	# Use the current frame's opaque back, rather than letting riders hover
@@ -71,7 +79,15 @@ func _ready() -> void:
 	rig = Node2D.new()
 	rig.name = "MountedParty"
 	add_child(rig)
-	monster = Art.actor("boss", 225)
+	monster = AnimatedSprite2D.new()
+	monster.centered=false
+	monster.sprite_frames=preload("res://world/Arte/Underworld/V59/guardian.tres")
+	monster.material=Art.Base.material()
+	monster.material.set_shader_parameter("alpha_cutoff",.94)
+	var sample:Texture2D=monster.sprite_frames.get_frame_texture(&"idle",0)
+	monster.scale=Vector2.ONE*(225.0/sample.get_width())
+	monster.frame_changed.connect(_anchor_monster)
+	monster.animation_changed.connect(_anchor_monster)
 	monster.name = "Carcereiro"
 	monster.flip_h = true
 	rig.add_child(monster)
@@ -113,14 +129,22 @@ func _ready() -> void:
 	update_scene(0)
 
 func next_beat(time: float) -> float:
+	for at in [1.2,2.4,4.4,DEFEAT_DURATION]:
+		if at>time+.1:return at
 	for at: float in BEATS:
-		if at > time + 0.1: return at
+		if at+DEFEAT_DURATION > time + 0.1: return at+DEFEAT_DURATION
 	return DURATION
 
 func update_scene(time: float) -> void:
 	if _restored: return
+	_defeat_clock=clampf(time,0,DURATION)
+	if time<DEFEAT_DURATION:
+		_update_defeat(time)
+		return
+	time=clampf(time-DEFEAT_DURATION,0,19.2)
+	monster.flip_h=true
 	var last := clock
-	clock = clampf(time, 0, DURATION)
+	clock = time
 	stage = "approach" if time < 2.2 else ("taming" if time < 6.2 else ("mounting" if time < 9.5 else ("departure" if time < 13.3 else "crossing")))
 	_throw = smoothstep(2.2, 3.1, time)
 	_bound = time >= 3.1
@@ -139,6 +163,7 @@ func update_scene(time: float) -> void:
 		rig.position = Vector2(382 + maxf(time - 9.5, 0) * 17, 246 + (sin(time * 13) * 2 if time > 3.1 and time < 5.8 else 0)).round()
 	rig.rotation = sin(leap * TAU) * -0.07 if leap > 0 and leap < 1 else 0.0
 	monster.play(&"freed" if time < 5.8 else (&"idle" if time < 9.5 else &"walk"))
+	_anchor_monster()
 	var breathing := Vector2(0, roundf(sin(time * 3) * 1.0))
 	var nico_support := _seat(-42, 5.4, 1.2)
 	var jose_support := _seat(3)
@@ -171,6 +196,28 @@ func update_scene(time: float) -> void:
 	queue_redraw()
 	_front.queue_redraw()
 
+func _update_defeat(time:float) -> void:
+	clock=0;stage="defeat";_throw=0;_bound=false
+	_mounted_nico=false;_mounted_jose=false
+	rig.scale=Vector2.ONE;rig.rotation=0
+	rig.position=Vector2(382+smoothstep(0,1.2,time)*16,246)
+	monster.flip_h=false
+	monster.play(&"hurt" if time<1.2 else (&"defeat" if time<4.4 else &"freed"))
+	_anchor_monster()
+	# A diminishing tremor stays horizontal; the feet remain on the floor.
+	if time<2.4:rig.position.x+=roundf(sin(time*36)*maxf(0,1-time/2.4)*3)
+	rider.scale=Vector2.ONE*1.2;rider.position=Vector2(157,244);rider.rotation=0
+	anim.play(&"idle")
+	jose_rider.position=Vector2(220,246);jose_rider.scale=Vector2.ONE;jose_rider.rotation=0
+	jose.play(&"idle")
+	_speaker.text="Nico" if time<2.4 else "José"
+	_line.text="Acabou... as correntes da empresa se partiram!" if time<2.4 else ("Calma, grandão. A gente também quer sair daqui." if time<4.4 else "Ele está exausto. Nico, eu tenho uma ideia...")
+	_portrait.texture=load("res://world/Arte/Nico/hud_1.png") if time<2.4 else load("res://world/Arte/Underworld/jose_portrait_talk.tres" if int(time*5)%2==0 else "res://world/Arte/Underworld/jose_portrait_neutral.tres")
+	for event in [[0.0,"hurt","warden_hurt"],[1.2,"collapse","warden_slam"],[2.4,"chains","warden_break"],[4.4,"freed","warden_freed"]]:
+		if time>=event[0] and not _defeat_cues.has(event[1]):
+			_defeat_cues[event[1]]=true;Sfx.play(event[2],-7)
+	queue_redraw();_front.queue_redraw()
+
 func _draw() -> void:
 	if clock < 11.25:
 		draw_texture_rect(CAVE, Rect2(0, -22, 640, 360), false, Color("c1adbd"))
@@ -190,7 +237,7 @@ func _draw() -> void:
 		draw_set_transform(rig.position, rig.rotation, rig.scale)
 		draw_texture_rect(ChainArt.BACK, Rect2(-34, -80, 76, 18), false)
 		draw_set_transform(Vector2.ZERO)
-	elif clock < 2.2:
+	elif clock < 2.2 and stage!="defeat":
 		draw_texture_rect(ChainArt.COIL, Rect2(267, 236, 22, 10), false)
 
 func _chain(from: Vector2, to: Vector2, sag: float) -> void:
@@ -210,13 +257,20 @@ func _draw_front() -> void:
 			var hook := hand.lerp(neck, _throw) + Vector2(0, -sin(_throw * PI) * 36)
 			_front.draw_texture_rect(ChainArt.HOOK, Rect2(hook - Vector2(5, 6), Vector2(10, 17)), false)
 	_front.draw_rect(Rect2(0, 0, 640, 27), Color("151221"))
-	_front.draw_string(ThemeDB.fallback_font, Vector2(20, 18), "UM TRANSPORTE IMPROVÁVEL", HORIZONTAL_ALIGNMENT_LEFT, 450, 11, Color("f8c690"))
+	_front.draw_string(ThemeDB.fallback_font, Vector2(20, 18), "O GUARDIÃO CAIU" if stage=="defeat" else "UM TRANSPORTE IMPROVÁVEL", HORIZONTAL_ALIGNMENT_LEFT, 450, 11, Color("f8c690"))
 	_front.draw_string(ThemeDB.fallback_font, Vector2(470, 18), "E / Enter: avançar · Esc: pular", HORIZONTAL_ALIGNMENT_RIGHT, 152, 8, Color("c5b5c9"))
 	_front.draw_rect(Rect2(0, 284, 640, 76), Color("181423"))
 	_front.draw_rect(Rect2(18, 284, 604, 1), Color("a78573"))
+	if stage=="defeat":
+		# Broken links fall away before José throws his own reins.
+		var drop:=smoothstep(1.2,3.3,_defeat_clock)
+		for i in 7:
+			var at:=Vector2(350+(i-3)*17*(1+drop),189+drop*55+sin(i*1.7)*8)
+			_front.draw_texture_rect(ChainArt.CLASP,Rect2(at,Vector2(7,12)),false,Color(1,1,1,1-drop*.6))
+		return
 	var transition := maxf(0, 1 - absf(clock - 11.25) / 0.45)
 	if transition > 0: _front.draw_rect(Rect2(0, 27, 640, 257), Color(0.06, 0.04, 0.1, transition))
-	var end_fade := smoothstep(18.35, DURATION, clock)
+	var end_fade := smoothstep(18.35, 19.2, clock)
 	if end_fade > 0: _front.draw_rect(Rect2(0, 27, 640, 257), Color(0.06, 0.04, 0.1, end_fade))
 
 func restore() -> void:

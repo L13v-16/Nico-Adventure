@@ -52,6 +52,7 @@ var _phase2_parries:=0
 var _parry_stun:=0.0
 var final_seals:Node2D
 var _ring_pattern:Node2D
+var _floor_break:CanvasLayer
 func _ready() -> void:
 	process_physics_priority=-30
 	add_to_group("enemies")
@@ -186,6 +187,7 @@ func _clear_gates() -> void:
 	_gates.clear()
 func reset_encounter() -> void:
 	if is_dead():return
+	if is_instance_valid(_floor_break):_floor_break.finish()
 	if phase==6:
 		_begin_final_seals();return
 	if phase!=5:_end_ring_pattern()
@@ -263,10 +265,7 @@ func _physics_process(delta:float) -> void:
 		_sprite.play(&"hurt" if _vulnerable > 0 else (&"roar" if cylinder._warning > 0 else &"exposed"))
 		_sprite.modulate = Color.WHITE
 		_sprite.flip_h = false
-		_fill.size.x = 492 * maxf(0, 3 - cylinder.hits) / 3.0
-		_phase_caption.text = "5 / 6 · CANHÕES DA TORRE · CANHÕES %d / 3" % cylinder.hits
-		_caption.text = _advice()
-		_fill.color = Color("a2d9ee") if cylinder.hits == 1 else Color("f4ac71")
+		_update_bar()
 		queue_redraw()
 		return
 	_timer-=delta
@@ -336,6 +335,13 @@ func _physics_process(delta:float) -> void:
 	queue_redraw()
 func _update_bar() -> void:
 	if phase==6:return
+	if phase==5:
+		if not is_instance_valid(cylinder):return
+		_fill.size.x=492*maxf(0,3-cylinder.hits)/3.0
+		_phase_caption.text="5 / 6 · CANHÕES DA TORRE · CANHÕES %d / 3" % cylinder.hits
+		_caption.text=_advice()
+		_fill.color=Color("a2d9ee") if cylinder.hits==1 else Color("f4ac71")
+		return
 	_fill.size.x=492*health/MAX_HEALTH
 	_phase_caption.text="%d / 6 · CARCEREIRO · " % phase + ["", "CORRENTES", "ANEL DE CORRENTES · %d / 7" % _phase2_parries, "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
 	_caption.text=_advice()
@@ -526,6 +532,9 @@ func _begin_cylinder() -> void:
 	cylinder.name = "WardenCylinder"
 	cylinder.boss = self
 	get_parent().add_child(cylinder)
+	_floor_break=preload("res://world/Scripts/warden_floor_break.gd").new()
+	_floor_break.name="WardenFloorBreak";_floor_break.boss=self
+	get_parent().add_child(_floor_break)
 func _begin_final_seals() -> void:
 	if is_instance_valid(cylinder):cylinder.set_physics_process(false);cylinder.queue_free()
 	if is_instance_valid(final_seals):final_seals.set_physics_process(false);final_seals.queue_free()
