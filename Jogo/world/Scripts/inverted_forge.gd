@@ -9,7 +9,10 @@ var gate:StaticBody2D
 var _label:Label
 var _flash:=0.0
 var _machine:AnimatedSprite2D
+var hall:Node2D
 func _ready() -> void:
+	hall=preload("res://world/Scripts/forge_hall.gd").new()
+	hall.name="ForgeHall";hall.forge=self;add_child(hall)
 	_machine=Art.actor("V35/forge",112)
 	_machine.name="ForgeSprite"
 	add_child(_machine)
@@ -35,6 +38,7 @@ func _ready() -> void:
 	_update()
 func activate(element:String) -> bool:
 	if complete:return false
+	if not is_inside():return false
 	if not power_ready:
 		_flash=0.7
 		return false
@@ -65,6 +69,7 @@ func _process(delta:float) -> void:
 	_machine.modulate=Color(1,0.65,0.55) if _flash>0 else Color.WHITE
 	queue_redraw()
 func _draw() -> void:
+	if not is_inside():return
 	draw_texture_rect(preload("res://world/Arte/Underworld/V35/forge_pipe.tres"),Rect2(-103,-7,206,6),false)
 	# Quatro cavidades no chão mostram a sequência mesmo antes da ativação.
 	for i in 4:
@@ -79,3 +84,6 @@ func _draw() -> void:
 		draw_rect(Rect2(at+Vector2(-3,-3),Vector2(4,2)),light)
 		draw_rect(Rect2(at+Vector2(-3,3),Vector2(7,2)),base.darkened(0.35))
 		if i<progress:draw_arc(at,8,0,TAU,24,light,1)
+
+func is_inside() -> bool:
+	return is_instance_valid(hall) and hall.inside

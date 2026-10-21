@@ -4,6 +4,8 @@ signal defeated
 signal encounter_started
 const Art=preload("res://world/Scripts/underworld_art.gd")
 const MAX_HEALTH:=12.0
+const BOOT_FEET=preload("res://world/Arte/Underworld/V59/guardian_feet.tres")
+const OPENING_SPAWN:=Vector2(6800,89)
 const MARKER_X:=7150.0
 const UPPER_FLOOR:=-160.0
 const ARENA_CENTER:=6960.0
@@ -64,10 +66,13 @@ func _ready() -> void:
 	collider.position.y=-52
 	add_child(collider)
 	_sprite=Art.actor("boss",162)
-	_sprite.sprite_frames = preload("res://world/Arte/Underworld/V53/guardian.tres")
+	_sprite.sprite_frames = preload("res://world/Arte/Underworld/V59/guardian.tres")
 	_normal_scale = _sprite.scale
 	add_child(_sprite)
+	_sprite.frame_changed.connect(_anchor_guardian)
+	_sprite.animation_changed.connect(_anchor_guardian)
 	_sprite.play(&"idle")
+	_anchor_guardian()
 	_pedestal=AnimatableBody2D.new()
 	_pedestal.collision_layer=0
 	_pedestal.collision_mask=0
@@ -126,6 +131,7 @@ func _build_bar() -> void:
 func start_encounter() -> void:
 	if active or is_dead():return
 	active=true
+	stage_opening()
 	_timer=1.3
 	state="idle"
 	for x in [6450.0,7470.0]:
@@ -149,6 +155,29 @@ func start_encounter() -> void:
 		_entrance.boss = self
 		get_parent().add_child(_entrance)
 	else: Sfx.play("warden_chain", -7)
+func _anchor_guardian() -> void:
+	var texture:Texture2D=_sprite.sprite_frames.get_frame_texture(_sprite.animation,_sprite.frame)
+	if texture==null:return
+	var feet:Dictionary=BOOT_FEET.get_meta("feet")
+	var foot:float=feet.get(texture.resource_path,texture.get_height())
+	_sprite.position=Vector2(-texture.get_width()*.5*_sprite.scale.x,-foot*_sprite.scale.y)
+	_sprite.set_meta("ground_art_offset",_sprite.position)
+func stage_opening() -> void:
+	position=Vector2(7100,100);velocity=Vector2.ZERO
+	_player.release_vine(false);_player._cancel_attack()
+	_player.position=OPENING_SPAWN;_player.respawn_position=OPENING_SPAWN
+	_player.velocity=Vector2.ZERO;_player._hitstun_timer=0
+	_player._spring_lock=0;_player._jump_buffer_timer=0;_player._camera_look=0
+	_player._facing=1;_player.anim.flip_h=false;_player.anim.play(&"idle")
+	_player._invulnerability_timer=maxf(_player._invulnerability_timer,1.5)
+	var jose:CharacterBody2D=get_parent().get_node("Jose")
+	jose.position=OPENING_SPAWN+Vector2(-42,11);jose.velocity=Vector2.ZERO
+	jose.state="idle";jose._target=null;jose._safe_spot=jose.position
+	jose._sprite.flip_h=false;jose._sprite.play(&"idle")
+	var camera:Camera2D=_player.get_node("Camera2D")
+	_player._camera_base_offset=Vector2(6975,-65)-_player.position
+	camera.offset=_player._camera_base_offset;camera.zoom=Vector2.ONE*.9
+	camera.reset_smoothing();camera.force_update_scroll()
 func _clear_projectiles() -> void:
 	for shot in get_tree().get_nodes_in_group("underworld_projectiles"):shot.queue_free()
 func _clear_gates() -> void:
@@ -215,7 +244,7 @@ func reset_encounter() -> void:
 	_cast_anim = 0
 	_sprite.play(&"idle")
 	_sprite.scale = _normal_scale
-	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_anchor_guardian()
 	collision_layer = 4
 	_pedestal.hide()
 	_pedestal.collision_layer=0
@@ -322,7 +351,7 @@ func _begin_center_jump() -> void:
 	state="center_windup"
 	if phase==2:
 		_sprite.scale=_normal_scale*1.25
-		preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+		_anchor_guardian()
 	_clear_projectiles()
 	Sfx.play("warden_chain",-9)
 func _has_returning_chain() -> bool:
@@ -354,13 +383,13 @@ func _ensure_ring_pattern() -> void:
 	# O guardião está no centro ao fundo; a passagem à frente fica livre.
 	collision_layer=0;z_index=0
 	_sprite.scale=_normal_scale*1.25
-	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_anchor_guardian()
 func _end_ring_pattern() -> void:
 	if is_instance_valid(_ring_pattern):_ring_pattern.queue_free()
 	_ring_pattern=null
 	collision_layer=4;z_index=3
 	_sprite.scale=_normal_scale
-	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_anchor_guardian()
 func _tick_lava_arena(delta:float) -> void:
 	_ensure_rising_floor();_ensure_ring_pattern()
 	collision_layer=0
@@ -379,7 +408,7 @@ func _play_ring_pose(animation:StringName) -> void:
 	var size:=_normal_scale*1.25*(.8 if String(animation).begins_with("ring_") else 1.0)
 	if not _sprite.scale.is_equal_approx(size):
 		_sprite.scale=size
-		preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+		_anchor_guardian()
 	_sprite.play(animation)
 	if is_instance_valid(_ring_pattern):_ring_pattern.queue_redraw()
 func receive_returned_chain() -> bool:
@@ -491,7 +520,7 @@ func _begin_cylinder() -> void:
 	collision_layer = 0
 	_sprite.scale = _normal_scale * 1.6
 	_sprite.play(&"exposed")
-	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_anchor_guardian()
 	_player.heal_full()
 	cylinder = preload("res://world/Scripts/warden_cylinder.gd").new()
 	cylinder.name = "WardenCylinder"
@@ -504,7 +533,7 @@ func _begin_final_seals() -> void:
 	phase=6;health=3;active=true;state="final_seals";_phase_time=0;_center_clock=-1
 	_vulnerable=0;_invulnerable=0;collision_layer=4;lava_y=165
 	position=Vector2(7100,UPPER_FLOOR);velocity=Vector2.ZERO
-	_sprite.scale=_normal_scale;_sprite.play(&"guard");preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_sprite.scale=_normal_scale;_sprite.play(&"guard");_anchor_guardian()
 	_ensure_rising_floor()
 	_player.position=Vector2(6960,UPPER_FLOOR-11);_player.respawn_position=_player.position
 	_player.velocity=Vector2.ZERO;_player.heal_full();_player._invulnerability_timer=1.5
@@ -540,7 +569,7 @@ func _defeat() -> void:
 	position.y=UPPER_FLOOR
 	_sprite.play(&"freed")
 	_sprite.scale = _normal_scale
-	preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_anchor_guardian()
 	Sfx.play("warden_freed", -3)
 	if is_instance_valid(cylinder):
 		_player.position = Vector2(7280, UPPER_FLOOR - 11)

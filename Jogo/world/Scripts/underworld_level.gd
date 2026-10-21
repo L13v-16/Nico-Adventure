@@ -109,9 +109,10 @@ func _process(delta:float) -> void:
 	var x:float=player.position.x
 	var boss:Node2D=$Boss
 	var arena:bool=boss.active
+	var in_forge:bool=$Forge.is_inside()
 	var camera:=player.get_node("Camera2D") as Camera2D
 	var arena_zoom:float=0.9 if boss.phase==5 else clampf(640.0 / (absf(x-boss.position.x)+180.0),0.74,0.9)
-	camera.zoom=camera.zoom.lerp(Vector2.ONE*(arena_zoom if arena else 1.5),1-exp(-delta*4))
+	camera.zoom=camera.zoom.lerp(Vector2.ONE*(arena_zoom if arena else (.95 if in_forge else 1.5)),1-exp(-delta*4))
 	# A câmera acompanha a subida da luta para manter a cabeça do guardião
 	# abaixo da HUD, sem perder o patamar seguro que Nico precisa alcançar.
 	var arena_y:float=-65
@@ -120,6 +121,7 @@ func _process(delta:float) -> void:
 	if arena and boss.phase==5:arena_y=-312
 	var arena_x:float=7145 if arena and boss.phase==5 else clampf((x + boss.position.x) * 0.5 + signf(boss.position.x-x)*25, 6740, 7180)
 	var desired:=Vector2(arena_x-x-float(player._camera_look),arena_y-player.position.y) if arena else Vector2(55,-38)
+	if in_forge:desired=$Forge.hall.camera_target()-player.position-Vector2(player._camera_look,0)
 	player._camera_base_offset=player._camera_base_offset.lerp(desired,1-exp(-delta*5))
 	camera.limit_top=-750 if arena and boss.phase==5 else -550
 	if player.position.y>210 and x<6450:player.take_damage(3,Vector2(x,240))
@@ -130,7 +132,7 @@ func _process(delta:float) -> void:
 	elif x<2200:hint.text="Observe as faíscas antes da erupção! A seta azul marca um gêiser que lança Nico para cima."
 	elif x<3376:hint.text="Use os gêiseres de impulso para alcançar as partes altas. C: José derruba pilares frágeis."
 	elif x<3904:hint.text="Santuário dos Contrários: receba fogo e gelo. K: disparar  ·  Q: alternar"
-	elif x<4944:hint.text="Forja: fogo na válvula laranja, gelo na azul; repita. K: disparar · Q: alternar. Evite o vapor."
+	elif x<4944:hint.text="Forja: fogo na válvula laranja, gelo na azul; repita. K: disparar · Q: alternar. Evite o vapor." if in_forge else "E na porta: entre na Forja Invertida com José. Resolva o mecanismo para abrir a saída."
 	elif x<6144:hint.text="As rochas bloqueiam tridentes! C: derrube o pilar para criar uma ponte sobre a lava."
 	elif x<6450:hint.text="I: mochila  ·  Ative a bandeira antes de enfrentar o Carcereiro."
 	elif arena:hint.text=boss._advice()+"  ·  K: disparo  ·  Q: elemento  ·  C: José"

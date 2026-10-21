@@ -37,7 +37,9 @@ static func build(parent:Node) -> void:
 		[7,38,Vector2(6475,100)],[6,190,Vector2(6650,100)],
 		[7,38,Vector2(7420,100)],[14,24,Vector2(7630,100)],
 		[13,19,Vector2(7945,100)]
-	]:prop(parent,item[0],item[1],item[2],far if item[0] in [6,7,12,15] else near)
+	]:
+		if item[2].x>4010 and item[2].x<4810:continue
+		prop(parent,item[0],item[1],item[2],far if item[0] in [6,7,12,15] else near)
 	for item in [
 		[1,22,Vector2(54,100)],[3,18,Vector2(700,100)],[2,17,Vector2(852,100)],
 		[0,24,Vector2(1354,100)],[3,19,Vector2(1665,100)],[1,21,Vector2(2180,100)],
@@ -47,9 +49,12 @@ static func build(parent:Node) -> void:
 		[4,30,Vector2(5230,100)],[2,16,Vector2(5440,100)],[3,17,Vector2(5885,100)],
 		[9,25,Vector2(6180,100)],[0,30,Vector2(6420,100)],
 		[2,18,Vector2(6950,100)],[1,24,Vector2(7340,100)],[0,28,Vector2(7990,100)]
-	]:prop(parent,item[0],item[1],item[2],near)
+	]:
+		if item[2].x>4010 and item[2].x<4810:continue
+		prop(parent,item[0],item[1],item[2],near)
 	# Pontas e correntes presas aos arcos/suportes, sem peças suspensas no vazio.
 	for at in [Vector2(1455,4),Vector2(2710,-63),Vector2(5390,1),Vector2(6650,-30)]:
 		prop(parent,5,43,at,far,true)
 	for at in [Vector2(168,-10),Vector2(1970,4),Vector2(4059,-7),Vector2(5764,-1)]:
+		if at.x>4010 and at.x<4810:continue
 		prop(parent,8,15,at,far,true)

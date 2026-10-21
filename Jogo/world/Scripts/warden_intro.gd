@@ -73,10 +73,12 @@ func _restore() -> void:
 	_level.pause_menu.can_open = true
 	_level.get_node("HUD").visible = _hud_visible
 	if is_instance_valid(boss):
-		boss.position = Vector2(7100, 100)
+		boss.stage_opening()
 		boss._sprite.modulate = Color.WHITE
 		boss._sprite.play(&"guard")
+		boss._anchor_guardian()
 		boss._timer = 1.4
+		boss._update_bar()
 		boss._bar.show()
 		var camera: Camera2D = boss._player.get_node("Camera2D")
 		# Return to a view containing both actors, including the arena entrance.

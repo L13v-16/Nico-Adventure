@@ -36,7 +36,7 @@ static func build(level:Node2D) -> void:
 		rock.behavior=info[1]
 		rock.travel=info[2]
 		level.add_child(rock)
-	for info in [[Vector2(700,100),false,0.0],[Vector2(1530,100),false,1.5],[Vector2(2100,100),true,0.3],[Vector2(2830,36),false,2.0],[Vector2(3070,36),true,1.2],[Vector2(5360,100),false,2.3],[Vector2(6530,100),true,0.0]]:
+	for info in [[Vector2(700,100),false,0.0],[Vector2(1530,100),false,1.5],[Vector2(2100,100),true,0.3],[Vector2(2830,36),false,2.0],[Vector2(3070,36),true,1.2],[Vector2(5360,100),false,2.3]]:
 		var geyser:=preload("res://world/Scripts/lava_geyser.gd").new()
 		geyser.position=info[0]
 		geyser.launch_geyser=info[1]
@@ -68,13 +68,12 @@ static func build(level:Node2D) -> void:
 	gate.name="ForgeGate"
 	gate.collision_layer=1
 	gate.collision_mask=0
-	gate.position=Vector2(4910,-70)
+	gate.position=Vector2(4684,-110)
 	var shape:=RectangleShape2D.new()
 	shape.size=Vector2(24,420)
 	var collider:=CollisionShape2D.new()
 	collider.shape=shape
 	gate.add_child(collider)
-	gate.add_child(Art.prop(6,Vector2(24,270),Vector2(-12,-100)))
 	level.add_child(gate)
 	forge.gate=gate
 	for info in [[Vector2(4150,100),0.0],[Vector2(4670,100),1.8]]:
