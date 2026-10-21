@@ -1,8 +1,8 @@
 extends Node2D
 ## Arena contínua inspirada no ritmo de Mecha-Bandicoot: correr, saltar, devolver.
-const Chains=preload("res://world/Scripts/underworld_chain_art.gd")
 const Hazard=preload("res://world/Scripts/warden_ring_hazard.gd")
 const Tiles=preload("res://world/Scripts/underworld_tiles.gd")
+const RingArt=preload("res://world/Scripts/warden_ring_art.gd")
 var boss:CharacterBody2D
 var beat:="rest"
 var clock:=0.0
@@ -79,31 +79,35 @@ func advice() -> String:
 	if boss._phase2_parries>=7:return "SELOS QUEBRADOS · O piso leva você ao patamar"
 	if boss._parry_stun>0:
 		if boss._phase2_parries>=4:return "DOIS SELOS QUEBRADOS · Devolva as últimas esferas!"
-		return "ACERTOU! · Os selos quebram em 2 e 4 devoluções"
+		return "ACERTOU! · Máximo de 1 acerto por atordoamento"
 	match beat:
 		"rain":return "CHUVA DE FERRAGENS · Corra para sair das miras laranjas"
 		"sweep":return "CORRENTE RASTEIRA · Pule por cima da varredura"
 		"charge":return "ESFERA VERDE · Prepare J / X para devolver"
 		"orb":return "J / X REBATE A ESFERA VERDE · Acerte de frente!"
 	return "CORRA · PULE · DEVOLVA · %d / 7" % boss._phase2_parries
+func guardian_pose() -> StringName:
+	match beat:
+		"rain":return &"ring_rain"
+		"sweep":return &"ring_sweep_ready" if clock<.95 else &"ring_sweep_release"
+		"charge":return &"ring_charge"
+		"orb":return &"ring_cast"
+	return &"ring_rest"
 func _draw() -> void:
 	if not is_instance_valid(boss) or not boss.active or boss.phase!=2:return
 	for i in 2:
 		var at:=boss.position+Vector2(-67 if i==0 else 67,-85)
+		var actor:AnimatedSprite2D=boss._sprite
+		var frame:Texture2D=actor.sprite_frames.get_frame_texture(actor.animation,actor.frame)
+		var key:="seal_left" if i==0 else "seal_right"
+		if frame.has_meta(key):
+			var anchor:Vector2=frame.get_meta(key)
+			anchor.x*=-1 if actor.flip_h else 1
+			at=boss.position+anchor*actor.scale
 		var destroyed:bool=boss._phase2_parries>=(2 if i==0 else 4)
-		if not destroyed:
-			draw_texture_rect(Chains.CLASP,Rect2(at-Vector2(12,15),Vector2(24,30)),false)
-			draw_arc(at,19,0,TAU,16,Color("ffc887"),2)
-		else:
-			Chains.strand(self,at,at+Vector2(-12 if i==0 else 12,20),5,7,Color("706577"))
-			if break_flash>0:draw_arc(at,20+(1.4-break_flash)*25,0,TAU,16,Color(.75,1,.6,break_flash/1.4),2)
-	if beat=="charge":
-		var at:=boss.position+Vector2(0,-88)
-		var r:=6+clampf(clock/1.25,0,1)*14
-		draw_arc(at,r,0,TAU,16,Color("b6ff8e"),3)
-		for i in 6:
-			var a:=i*TAU/6+clock*2
-			draw_rect(Rect2(at+Vector2(cos(a),sin(a))*r-Vector2.ONE*2,Vector2.ONE*4),Color("d9ffb4"))
+		var cracked:bool=boss._phase2_parries>=(1 if i==0 else 3)
+		RingArt.draw_sprite(self,14 if destroyed else (13 if cracked else 12),at,52)
+		if destroyed and break_flash>0:RingArt.draw_sprite(self,15,at,52+(1.4-break_flash)*24,false,Color(1,1,1,break_flash/1.4))
 func _draw_rear() -> void:
 	if not is_instance_valid(boss) or not boss.active or boss.phase!=2:return
 	var floor_y:float=boss.arena_floor_y()

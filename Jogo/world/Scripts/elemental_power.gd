@@ -70,7 +70,10 @@ func swap() -> void:
 func cast() -> bool:
 	refresh_available()
 	if not can_control() or cooldown>0 or not can_use(selected):return false
-	cooldown=0.42
+	var minimum:float=_player.get_attack_cooldown_floor()
+	if minimum>0 and _player._attack_cooldown>0:return false
+	cooldown=maxf(.42,minimum)
+	if minimum>0:_player._attack_cooldown=maxf(_player._attack_cooldown,minimum)
 	var shot:=preload("res://world/Scripts/elemental_projectile.gd").new()
 	shot.element=selected
 	shot.freeze_duration=maxf(3.0,_player.equipment.get_freeze_duration())

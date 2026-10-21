@@ -493,10 +493,14 @@ func is_attacking() -> bool:
 func _start_attack() -> void:
 	_attack_buffer_timer = 0.0
 	_attack_elapsed = 0.0
-	_attack_cooldown = ATTACK_COOLDOWN * equipment.get_attack_cooldown_multiplier()
+	_attack_cooldown = maxf(ATTACK_COOLDOWN * equipment.get_attack_cooldown_multiplier(),get_attack_cooldown_floor())
 	_attack_facing = _facing
 	_attack_hit_targets.clear()
 	Sfx.swing()
+
+func get_attack_cooldown_floor() -> float:
+	var level:=get_parent()
+	return level.nico_attack_cooldown_floor() if level.has_method("nico_attack_cooldown_floor") else 0.0
 
 
 func _cancel_attack() -> void:

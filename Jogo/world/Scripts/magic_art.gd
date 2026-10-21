@@ -35,6 +35,8 @@ static func reanchor(sprite: AnimatedSprite2D) -> void:
 		var configured=sprite.material.get_shader_parameter("alpha_cutoff")
 		if configured is float:cutoff=configured
 	var key:=str(texture.get_instance_id())+":"+str(cutoff)
+	if not _foot_cache.has(key) and texture.has_meta("ground_foot"):
+		_foot_cache[key]=float(texture.get_meta("ground_foot"))
 	if not _foot_cache.has(key):
 		var stored:Dictionary=_contacts.get(texture.resource_path,{})
 		var cutoff_key:=str(roundi(cutoff*100))

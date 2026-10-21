@@ -63,7 +63,7 @@ func _ready() -> void:
 	collider.position.y=-52
 	add_child(collider)
 	_sprite=Art.actor("boss",162)
-	_sprite.sprite_frames = preload("res://world/Arte/Underworld/V44/guardian.tres")
+	_sprite.sprite_frames = preload("res://world/Arte/Underworld/V53/guardian.tres")
 	_normal_scale = _sprite.scale
 	add_child(_sprite)
 	_sprite.play(&"idle")
@@ -314,6 +314,9 @@ func _begin_center_jump() -> void:
 	_center_clock=0;_center_from=position.x
 	_cast_warn=false;_vulnerable=0;velocity=Vector2.ZERO
 	state="center_windup"
+	if phase==2:
+		_sprite.scale=_normal_scale*1.25
+		preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
 	_clear_projectiles()
 	Sfx.play("warden_chain",-9)
 func _has_returning_chain() -> bool:
@@ -356,30 +359,43 @@ func _tick_lava_arena(delta:float) -> void:
 	_ensure_rising_floor();_ensure_ring_pattern()
 	collision_layer=0
 	position.y=arena_floor_y();lava_y=position.y+70
-	if _parry_stun>0:_sprite.play(&"hurt")
+	if _parry_stun>0:_play_ring_pose(&"hurt")
 	else:
 		_ring_pattern.tick(delta)
-		_sprite.play(&"chain_cast" if _ring_pattern.beat in ["rain","charge","orb"] else (&"slam" if _ring_pattern.beat=="sweep" else &"lava"))
+		_play_ring_pose(_ring_pattern.guardian_pose())
 	if _phase_time>=18 and _phase2_parries>=7:
 		_end_ring_pattern()
 		phase=3;position.y=UPPER_FLOOR;_phase_time=0;state="idle";_timer=1.8;health=9
 		_upper_unlocked=true;_cast_warn=false;_clear_projectiles()
 		_player.respawn_position=Vector2(6950,UPPER_FLOOR-11)
 		Fx.popup(Vector2(6990,UPPER_FLOOR-110),"SELOS QUEBRADOS · FOGO E GELO!",Color("bce6d6"),9)
-func receive_returned_chain() -> void:
-	if not active or phase!=2 or is_dead():return
+func _play_ring_pose(animation:StringName) -> void:
+	var size:=_normal_scale*1.25*(.8 if String(animation).begins_with("ring_") else 1.0)
+	if not _sprite.scale.is_equal_approx(size):
+		_sprite.scale=size
+		preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	_sprite.play(animation)
+	if is_instance_valid(_ring_pattern):_ring_pattern.queue_redraw()
+func receive_returned_chain() -> bool:
+	# Uma devolução vale um ponto: dano extra e projéteis simultâneos não
+	# podem somar vários acertos durante o mesmo atordoamento.
+	if not active or phase!=2 or is_dead() or _parry_stun>0 or _center_clock>=0 or _phase2_parries>=7:return false
 	_phase2_parries=mini(7,_phase2_parries+1);_parry_stun=1.3;_timer=maxf(_timer,2.3);_cast_warn=false
 	Sfx.play("warden_hurt",-7)
 	Fx.burst(position+Vector2(0,-55),Color("c6ff99"),12,100)
 	Fx.popup(position+Vector2(0,-125),"DEVOLVIDO! %d / 7" % _phase2_parries,Color("d8ffad"),10)
 	_ensure_ring_pattern()
 	_ring_pattern.on_return()
+	return true
 func _advice() -> String:
 	if _center_clock>=0:return "ELE VAI SALTAR AO CENTRO · Afaste-se do círculo"
 	if _vulnerable>0 and phase < 5:return "J / X NA CORRENTE PRESA!" if phase == 1 else "ATAQUE O PONTO FRACO!"
 	match phase:
 		1:return "Pule a onda; J / X no fecho dourado da corrente presa"
-		2:return _ring_pattern.advice() if is_instance_valid(_ring_pattern) else "CORRA · PULE · J / X REBATE A ESFERA VERDE"
+		2:
+			var advice:String=_ring_pattern.advice() if is_instance_valid(_ring_pattern) else "CORRA · PULE · J / X REBATE A ESFERA VERDE"
+			var remaining:float=maxf(_player._attack_cooldown,_player.elements.cooldown)
+			return advice+(" · NICO: %.1fs"%remaining if remaining>0 else " · J/X: PRONTO")
 		3:return "GELO nas correntes!" if heated else "FOGO na armadura!"
 		4:return "Atraia para o círculo dourado e use C: JOSÉ"
 		5:return "CANHÃO %d / 3 · %s · %s · K: ativar" % [mini(cylinder.hits+1,3),"DIREITA" if cylinder.hits==1 else "ESQUERDA","GELO" if cylinder.hits==1 else "FOGO"]
@@ -419,7 +435,7 @@ func take_element(element:String,source:Vector2) -> void:
 		Fx.burst(position+Vector2(0,-60),Color("b6f1ff"),20,150)
 		Sfx.play("warden_break", -5)
 func take_damage(amount:float,_source:Vector2) -> void:
-	if not active or is_dead() or phase==5 or amount<=0 or _invulnerable>0 or _vulnerable<=0:return
+	if not active or is_dead() or phase in [2,5] or amount<=0 or _invulnerable>0 or _vulnerable<=0:return
 	_invulnerable=0.65
 	health=maxf(0,health-amount)
 	Sfx.play("warden_hurt", -5)

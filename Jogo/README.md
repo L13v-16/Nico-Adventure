@@ -439,3 +439,13 @@ O Açaí Congelante da mochila também libera o disparo de gelo durante seus 30 
 As instruções da praia, da floresta, da loja e da mochila explicam K e Q. A HUD mostra o elemento disponível e sua duração sem cobrir o painel do açaí ou as instruções do chefão. Frutas não gravam domínio permanente. Antes do altar, os poderes continuam dependendo delas; o altar libera fogo e gelo sem limite de tempo. Pausa preserva os contadores e respawn limpa os efeitos temporários.
 
 Validação: 55 verificações na janela Vulkan com seis capturas, incluindo coleta real de açaí na praia e fruta-do-dragão na floresta, K/Q reais, congelamento de rato e caranguejo, bloqueio por parede, duração, renovação, troca automática, compras/consumo na mochila, relíquia, pausa, respawn e domínio do altar. Mais 66 verificações da fase completa do Submundo, incluindo disparos reais na forja, na armadura e nos canhões. Saves isolados em todos os testes.
+
+## Novos sprites do Anel de Correntes e recarga de Nico (v53)
+
+Duas novas spritesheets em `world/Arte/Underworld/V53/` acrescentam oito poses do Carcereiro e 16 sprites de ataques/efeitos: ferragens com impacto, bola de espinhos em quatro quadros, esfera verde pulsante, selos intactos/rachados/quebrados e faísca de devolução. As poses distinguem preparação, chuva, varredura, carga, disparo e recuperação. Os selos acompanham os pulsos em cada pose e direção. O PNG original e seu alpha foram preservados; recortes, pivôs, hashes e prompts exatos acompanham a arte, criada com imagegen integrado a partir do próprio jogo.
+
+Na segunda etapa, Nico tem uma recarga mínima de um segundo, compartilhada entre o ataque J/X e o disparo K. Alternar entre eles ou equipar luvas não elimina a espera. A instrução do chefe mostra o tempo restante e avisa quando J/X está pronto. As outras fases mantêm suas recargas anteriores.
+
+Uma devolução vale um acerto por atordoamento. Devoluções simultâneas ou durante a mesma janela não acumulam progresso, e bônus de dano não pulam os sete acertos do Anel de Correntes. A janela seguinte volta a aceitar uma devolução depois que o atordoamento termina. A chuva, a varredura, a quebra dos selos, o piso ascendente, fogo/gelo, José e os canhões mantêm o fluxo da luta.
+
+Validação: 95 verificações na janela Vulkan, incluindo os oito apoios/âncoras, recarga real de J e K, bloqueio da alternância, luvas, velocidade fora da arena, limite por atordoamento, devoluções nos dois sentidos, sprites e limpeza; nove capturas revisadas. Mais 66 verificações da fase completa com altar, forja, José, combate, canhões, chave e fuga. Percurso natural da segunda etapa com sete devoluções reais e zero dano, sem forçar invulnerabilidade. Saves isolados.

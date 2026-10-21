@@ -71,6 +71,8 @@ func _dialogue(mode:String,node_name:String) -> void:
 	add_child(dialogue)
 	await dialogue.finished
 func has_elemental_mastery() -> bool:return temple_seen
+func nico_attack_cooldown_floor() -> float:
+	return 1.0 if $Boss.active and $Boss.phase==2 else 0.0
 func _temple() -> void:
 	_temple_busy=true
 	intro_active=true

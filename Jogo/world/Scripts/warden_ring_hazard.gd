@@ -1,6 +1,7 @@
 extends Node2D
 ## Ferragens: a mira para antes da queda; a corrente rasteira permite saltar.
 const Chains=preload("res://world/Scripts/underworld_chain_art.gd")
+const RingArt=preload("res://world/Scripts/warden_ring_art.gd")
 var boss:CharacterBody2D
 var kind:="rain"
 var direction:=1.0
@@ -39,17 +40,14 @@ func _draw() -> void:
 			draw_arc(Vector2(0,-2),radius,PI,TAU,16,ink,2)
 			draw_line(Vector2(-24,0),Vector2(24,0),ink,2)
 			for y in range(-96,-18,14):draw_rect(Rect2(-1,y,2,5),Color(ink,.5))
-		if clock>=.9:
+		if clock>=.9 and clock<1.35:
 			var y:=lerpf(-180,-4,clampf((clock-.9)/.45,0,1))
-			Chains.strand(self,Vector2(0,y-44),Vector2(0,y),6)
-			draw_texture_rect(Chains.CLASP,Rect2(-12,y-18,24,26),false)
+			RingArt.draw_sprite(self,0 if clock<1.2 else 1,Vector2(0,y),54)
+		elif clock>=1.35:RingArt.draw_sprite(self,2 if clock<1.5 else 3,Vector2.ZERO,70)
 	else:
 		if clock<.95:
 			draw_line(Vector2.ZERO,Vector2(direction*125,0),ink,3)
 			draw_polyline(PackedVector2Array([Vector2(direction*100,-10),Vector2(direction*125,0),Vector2(direction*100,10)]),ink,2)
 		else:
-			Chains.strand(self,Vector2(-direction*80,-8),Vector2(0,-8),7,4)
-			draw_set_transform(Vector2(0,-13),clock*direction*7)
-			draw_texture_rect(Chains.COIL,Rect2(-18,-18,36,36),false)
-			draw_set_transform(Vector2.ZERO)
-			draw_line(Vector2(-18,-1),Vector2(18,-1),ink,2)
+			Chains.strand(self,Vector2(-direction*80,-10),Vector2(-direction*24,-10),6,3)
+			RingArt.draw_sprite(self,4+int(clock*10)%4,Vector2(0,-20),70,direction<0)

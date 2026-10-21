@@ -576,3 +576,9 @@ Açaí Congelante libera gelo por 30 segundos e prolonga o congelamento dos golp
 O gelo alcança inimigos baixos e respeita paredes. Caranguejos congelados continuam sendo derrotados com um salto sobre o casco. A HUD, Arara Minas e Oliver explicam os novos controles.
 O altar continua necessário para liberar os dois poderes sem limite de tempo. Frutas não antecipam esse domínio. Pausa preserva os tempos; respawn remove os efeitos temporários.
 Validação: 55 verificações na janela com seis capturas e 66 da fase completa do Submundo. Saves de teste isolados.
+
+V53 — SPRITES DA SEGUNDA ETAPA E RECARGA DO NICO
+O Carcereiro ganhou oito novas poses para a chuva, varredura, carga da esfera, disparo e recuperação. Outros 16 sprites animam ferragens, impactos, bola de espinhos, esfera verde e selos. Os selos acompanham os pulsos do chefe. Arte e prompts: world/Arte/Underworld/V53/; criada com imagegen integrado, mantendo os PNGs e o alpha originais.
+Na segunda etapa, Nico espera 1 segundo entre ataques. J/X e K compartilham essa recarga; alternar os botões ou usar luvas não contorna o limite. A HUD indica o tempo e quando o ataque está pronto. Fora desta etapa, as recargas continuam como antes.
+Cada atordoamento aceita uma devolução válida. Devoluções extras na mesma janela não somam acertos, e dano aumentado não pula os sete acertos do anel. Os outros trechos do combate continuam.
+Validação: 95 verificações na janela, nove capturas, 66 da fase completa e percurso natural com sete devoluções e zero dano. Saves de teste isolados.

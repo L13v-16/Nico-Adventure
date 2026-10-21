@@ -1,0 +1,64 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_03.tres" id="f3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_04.tres" id="f4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_05.tres" id="f5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_06.tres" id="f6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_07.tres" id="f7"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_08.tres" id="f8"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_09.tres" id="f9"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_10.tres" id="f10"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_11.tres" id="f11"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_12.tres" id="f12"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_13.tres" id="f13"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_14.tres" id="f14"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_frame_15.tres" id="f15"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_00.tres" id="n0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_01.tres" id="n1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_02.tres" id="n2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_03.tres" id="n3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_04.tres" id="n4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_05.tres" id="n5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_06.tres" id="n6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_07.tres" id="n7"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_08.tres" id="n8"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_09.tres" id="n9"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_10.tres" id="n10"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_11.tres" id="n11"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_12.tres" id="n12"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_13.tres" id="n13"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_14.tres" id="n14"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/action_15.tres" id="n15"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_00.tres" id="r0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_01.tres" id="r1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_02.tres" id="r2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_03.tres" id="r3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_04.tres" id="r4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_05.tres" id="r5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_06.tres" id="r6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_07.tres" id="r7"]
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f1")}], "loop": true, "name": &"idle", "speed": 3},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f2")}, {"duration": 1.0, "texture": ExtResource("f3")}], "loop": true, "name": &"walk", "speed": 5},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n0")}, {"duration": 1.0, "texture": ExtResource("n1")}, {"duration": 1.0, "texture": ExtResource("n2")}, {"duration": 1.0, "texture": ExtResource("n3")}], "loop": false, "name": &"windup", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n4")}, {"duration": 1.0, "texture": ExtResource("n5")}, {"duration": 1.0, "texture": ExtResource("n6")}], "loop": false, "name": &"slam", "speed": 6.25},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n7")}, {"duration": 1.0, "texture": ExtResource("n8")}], "loop": true, "name": &"stuck", "speed": 2.6},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n8")}, {"duration": 1.0, "texture": ExtResource("n9")}, {"duration": 1.0, "texture": ExtResource("n10")}, {"duration": 1.0, "texture": ExtResource("n11")}], "loop": false, "name": &"recover", "speed": 6.15},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f8")}], "loop": true, "name": &"lava", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f9")}, {"duration": 1.0, "texture": ExtResource("n11")}], "loop": true, "name": &"guard", "speed": 2},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f10")}], "loop": true, "name": &"heated", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f11")}], "loop": true, "name": &"frozen", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f12")}], "loop": true, "name": &"exposed", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n12")}, {"duration": 1.0, "texture": ExtResource("n13")}], "loop": false, "name": &"hurt", "speed": 8},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n14")}, {"duration": 1.0, "texture": ExtResource("n15")}], "loop": true, "name": &"roar", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("n1")}, {"duration": 1.0, "texture": ExtResource("n2")}, {"duration": 1.0, "texture": ExtResource("n3")}, {"duration": 1.0, "texture": ExtResource("n4")}], "loop": false, "name": &"chain_cast", "speed": 8},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f14")}], "loop": false, "name": &"defeat", "speed": 4},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f15")}], "loop": true, "name": &"freed", "speed": 3},
+{"frames": [{"duration": 1.0, "texture": ExtResource("r0")}, {"duration": 1.0, "texture": ExtResource("r1")}], "loop": true, "name": &"ring_rain", "speed": 3.5},
+{"frames": [{"duration": 1.0, "texture": ExtResource("r2")}], "loop": true, "name": &"ring_sweep_ready", "speed": 1},
+{"frames": [{"duration": 1.0, "texture": ExtResource("r3")}], "loop": true, "name": &"ring_sweep_release", "speed": 1},
+{"frames": [{"duration": 1.0, "texture": ExtResource("r4")}, {"duration": 1.0, "texture": ExtResource("r5")}], "loop": false, "name": &"ring_charge", "speed": 1.6},
+{"frames": [{"duration": 0.35, "texture": ExtResource("r6")}, {"duration": 1.0, "texture": ExtResource("r7")}], "loop": false, "name": &"ring_cast", "speed": 3},
+{"frames": [{"duration": 1.0, "texture": ExtResource("r7")}], "loop": true, "name": &"ring_rest", "speed": 1}]
