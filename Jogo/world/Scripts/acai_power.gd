@@ -1,5 +1,5 @@
 extends Area2D
-## Açaí: proteção, dano dobrado e golpes congelantes por 12 segundos, sem curar.
+## Açaí: gelo em K, proteção, dano dobrado e golpes congelantes por 12 segundos.
 ## Cada fruto é consumido uma vez. Outro fruto renova o efeito sem acumular.
 
 const ART_PATH := "res://world/Arte/Beach/acai.png"

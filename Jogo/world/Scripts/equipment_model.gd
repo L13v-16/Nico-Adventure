@@ -124,12 +124,13 @@ func toggle_item(item_id: String) -> Dictionary:
 			return _result(false, "Não é possível usar o açaí agora. Ele continua na mochila.")
 		_owned[item_id] = get_quantity(item_id) - 1
 		changed.emit()
-		return _result(true, "Açaí de Viagem ativo! Proteção e ataque dobrado por 12 s.")
+		return _result(true, "Açaí de Viagem: K dispara gelo por 12 s, com proteção e ataque dobrado.")
 	if item_id == "frozen_acai":
 		_owned[item_id] = get_quantity(item_id) - 1
 		_frost_left = FROST_DURATION
+		_player.elements.refresh_available("ice")
 		changed.emit()
-		return _result(true, "Açaí Congelante ativo por 30 s. Acerte golpes para congelar inimigos!")
+		return _result(true, "Açaí Congelante: K dispara gelo por 30 s; golpes e disparos congelam por mais tempo!")
 	if is_equipped(item_id):
 		_equipped.erase(item["slot"])
 		changed.emit()

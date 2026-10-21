@@ -8,7 +8,7 @@ const LINES := [
 	{"speaker":"Nico", "text":"Foi o lobo do crachá dourado que levou nossos amigos. Ele veio para cá?", "tip":"O CRACHÁ DOURADO", "detail":"Lobo da corporação\nO líder do sequestro", "icon":"wolf"},
 	{"speaker":"Arara Minas", "text":"Ele é o chefe da corporação. Mandou Urus, o Urubu, vigiar a Tartaruga. Primeiro vamos libertá-la; depois seguimos o rastro do lobo.", "tip":"GUARDIÃO DO CAIS", "detail":"Urus, o Urubu\nVigia a Tartaruga", "icon":"urus"},
 	{"speaker":"Arara Minas", "text":"Cuidado com os caranguejos: pule e caia sobre o casco para derrotá-los. Socos não funcionam, e encostar de lado machuca.", "tip":"CARANGUEJOS", "detail":"Pule sobre o casco!\nEvite o contato lateral", "icon":"crab"},
-	{"speaker":"Arara Minas", "text":"O açaí dá poder de gelo: seus ataques congelam os inimigos por um tempo. Use essa chance para atravessar com calma.", "tip":"PODER DO AÇAÍ", "detail":"Golpes congelantes\nO efeito é temporário", "icon":"acai"},
+	{"speaker":"Arara Minas", "text":"O açaí libera o poder de gelo! Segure K para lançar gelo e congelar inimigos à distância. O efeito dura 12 segundos; os golpes de perto também congelam.", "tip":"PODER DO AÇAÍ", "detail":"K: disparar gelo\nDuração: 12 segundos", "icon":"acai"},
 	{"speaker":"Arara Minas", "text":"Espere as jangadas se aproximarem e toque nas bandeiras. Contra Urus, pule dentro dos canhões e escolha a hora certa para ser lançado nele.", "tip":"CONTRA URUS", "detail":"Escolha o canhão\nEspere a mira verde", "icon":"cannon"},
 	{"speaker":"Nico", "text":"Entendi! Vou resgatar a Tartaruga. Nos vemos no cais, Arara Minas!", "tip":"PRÓXIMO PASSO", "detail":"Atravesse a praia\nLiberte a Tartaruga", "icon":"turtle"},
 ]

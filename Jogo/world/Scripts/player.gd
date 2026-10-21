@@ -679,6 +679,7 @@ func get_attack_damage() -> float:
 
 func set_acai_power(power: Node) -> void:
 	_active_acai=power
+	if is_instance_valid(elements):elements.refresh_available("ice" if is_instance_valid(power) else "")
 	_update_freeze_hud()
 
 
@@ -712,7 +713,7 @@ func _update_freeze_hud() -> void:
 	var boss:=get_parent().get_node_or_null("Boss")
 	_freeze_canvas.position.y=90 if is_instance_valid(boss) and boss.get("active")==true else 58
 	var title:="AÇAÍ 2× · %ds"%int(ceilf(regular)) if regular>0 else "AÇAÍ GELADO · %ds"%int(ceilf(boost))
-	var detail:="Gelo %ds"%int(equipment.get_freeze_duration())
+	var detail:="Golpes: gelo %ds"%int(equipment.get_freeze_duration())
 	if regular>0 and boost>0:detail+=" · Gelado %ds"%int(ceilf(boost))
 	_freeze_status.text=title+"\n"+detail
 	_freeze_canvas.queue_redraw()

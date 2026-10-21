@@ -293,7 +293,7 @@ func _buy(item_id: String) -> void:
 		return
 	var message: String = {
 		"heart": "Um coração recuperado. Boa viagem!",
-		"acai": "Açaí pronto! Proteção e golpes congelantes por 12 s.",
+		"acai": "Açaí pronto! K: gelo, proteção e golpes congelantes por 12 s.",
 		"shield": "Escudo equipado: absorve os próximos 3 golpes."
 	}[item_id]
 	_show_feedback(message, true)
@@ -528,7 +528,7 @@ func _build_menu() -> void:
 	for item_id: String in ["heart", "acai", "shield"]:
 		var name_and_description: Array = {
 			"heart": ["Coração", "Recupera 1 coração."],
-			"acai": ["Açaí", "Proteção e golpes congelantes por 12 segundos."],
+			"acai": ["Açaí", "K: gelo, proteção e golpes congelantes por 12 segundos."],
 			"shield": ["Escudo", "Absorve 3 golpes; quedas no mar não contam."]
 		}[item_id]
 		_add_stock_row("supplies", item_id, name_and_description[0], name_and_description[1], "")

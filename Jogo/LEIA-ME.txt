@@ -569,3 +569,10 @@ Devolva sete esferas. A segunda quebra o selo da varredura; a quarta quebra o se
 Câmera ajustada à altura real do piso. A retomada dos canhões mantém o tamanho do guardião. Fogo/gelo, a ajuda de José, os canhões e a fuga montada continuam no combate.
 Referência: Crash Twinsanity Hands-On, GameSpot, 7/9/2004 — https://www.gamespot.com/articles/crash-twinsanity-hands-on/1100-6106483/
 Validação: 51 verificações na janela, 73 do piso ascendente, 66 da fase completa e seis capturas. Percurso natural da segunda etapa com sete rebates reais e zero dano, sem forçar invulnerabilidade. Saves de teste isolados.
+
+V52 — AÇAÍ: GELO / FRUTA-DO-DRAGÃO: FOGO
+K dispara o poder da fruta coletada. Açaí normal e Açaí de Viagem: gelo por 12 segundos; fruta-do-dragão: fogo por 20 segundos. Se ambos estiverem ativos, Q alterna. Ao terminar um deles, Nico seleciona automaticamente o que ainda estiver disponível.
+Açaí Congelante libera gelo por 30 segundos e prolonga o congelamento dos golpes e dos disparos. Gelo Duradouro também melhora os disparos. A proteção e o ataque dobrado do açaí normal continuam.
+O gelo alcança inimigos baixos e respeita paredes. Caranguejos congelados continuam sendo derrotados com um salto sobre o casco. A HUD, Arara Minas e Oliver explicam os novos controles.
+O altar continua necessário para liberar os dois poderes sem limite de tempo. Frutas não antecipam esse domínio. Pausa preserva os tempos; respawn remove os efeitos temporários.
+Validação: 55 verificações na janela com seis capturas e 66 da fase completa do Submundo. Saves de teste isolados.

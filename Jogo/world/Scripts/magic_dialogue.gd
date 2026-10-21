@@ -8,7 +8,7 @@ const ARRIVAL := [
 	["Arara Minas","Os cogumelos vermelhos são elásticos. Caia sobre o chapéu e eles vão lançar você muito mais alto que um salto comum!","VERMELHO: IMPULSO ALTO"],
 	["Arara Minas","Aproxime-se da ponta de um cipó e aperte E para agarrar. Use A / D ou as setas para ganhar balanço. Espaço / W solta com um salto!","E: AGARRAR  ·  DIREÇÃO: BALANÇAR"],
 	["Arara Minas","Alguns cipós passeiam sozinhos. Toque nas plantas luminosas para mudar a posição de outros. Observe antes de saltar!","PLANTAS VIVAS MUDAM O CAMINHO"],
-	["Arara Minas","A fruta-do-dragão cresce nesta floresta! Ela permite lançar fogo por 20 segundos. Recolha uma e segure K para disparar. O efeito termina quando o tempo acaba.","FRUTA-DO-DRAGÃO  ·  K: FOGO POR 20 SEGUNDOS"],
+	["Arara Minas","A fruta-do-dragão cresce nesta floresta! Ela permite lançar fogo por 20 segundos. Recolha uma e segure K para disparar. O açaí libera gelo: se os dois estiverem ativos, Q troca o elemento. As frutas são temporárias.","FRUTA-DO-DRAGÃO  ·  K: FOGO POR 20 SEGUNDOS"],
 	["Arara Minas","Hiena HaHa, a Triple H, montou um ringue! J / X rebate o barril e a deixa tonta. Nos socos, pule sobre ela e acerte por trás! Os cogumelos dos postes ajudam a passar por cima.","REBATA O BARRIL  ·  SOCOS: ACERTE POR TRÁS"],
 	["Nico","Vou ter cuidado com os besouros espinhosos e as mariposas. Hiena HaHa, já estou chegando!","J / X: ATACAR  ·  BANDEIRAS: RETORNO"],
 ]
