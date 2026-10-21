@@ -87,5 +87,5 @@ func _draw_scene() -> void:
 		if kind=="urus":line="Urus: Esta ilha tem dono. Quero ver alcançar meu voo!" if clock<3.8 else "Nico: Vou escolher o canhão certo e libertar a Tartaruga!"
 		else:line="Triple H: Ninguém sai do meu ringue com o cinturão!" if clock<3.8 else "Nico: Remi vem comigo. Seu barril vai voltar para você!"
 		_canvas.draw_string(font,Vector2(22,315),line,HORIZONTAL_ALIGNMENT_CENTER,596,12,Color("f2e8db"))
-		_canvas.draw_string(font,Vector2(22,336),"Mira verde: pule no canhão" if kind=="urus" else "J / X: rebater barril · Socos: ataque por trás",HORIZONTAL_ALIGNMENT_CENTER,596,10,Color("bbd6d5"))
+		_canvas.draw_string(font,Vector2(22,336),"Mira verde: pule no canhão" if kind=="urus" else "Barril: J / X · Socos: por trás · Final: trampolins",HORIZONTAL_ALIGNMENT_CENTER,596,10,Color("bbd6d5"))
 	_canvas.draw_string(font,Vector2(428,354),"Enter / E / Esc: pular",HORIZONTAL_ALIGNMENT_RIGHT,188,9,Color("b5abbb"))

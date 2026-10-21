@@ -1,6 +1,7 @@
 extends Node2D
 const PATH := "res://world/Arte/Magic/V26/"
 var locked := false
+var spring_side := 0
 var _art:Node2D
 var _textures:Dictionary={}
 func _ready() -> void:
@@ -16,6 +17,9 @@ func _ready() -> void:
 func set_locked(value:bool) -> void:
 	locked=value
 	_art.queue_redraw()
+func set_spring_side(value:int) -> void:
+	spring_side=value
+	_art.queue_redraw()
 func _paint() -> void:
 	for x in range(0,672,96):
 		_art.draw_texture_rect(_textures.mat,Rect2(x,0,96,31),false)
@@ -30,3 +34,10 @@ func _paint() -> void:
 		_art.draw_line(Vector2(x,-49),Vector2(x-14 if x<100 else x+14,-23),Color("6c3b50"),5)
 	# O limite superior visível do tablado coincide com o chão físico y=64.
 	_art.draw_rect(Rect2(0,-1,672,2),Color("c7a0e4"))
+	if spring_side!=0:
+		var x:=26 if spring_side<0 else 646
+		var gold:=Color("ffe2ac")
+		_art.draw_rect(Rect2(x-3,-104,6,17),gold)
+		_art.draw_line(Vector2(x-11,-92),Vector2(x,-81),gold,3)
+		_art.draw_line(Vector2(x,-81),Vector2(x+11,-92),gold,3)
+		_art.draw_rect(Rect2(x-24,-21,48,3),gold)

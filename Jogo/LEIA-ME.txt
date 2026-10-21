@@ -635,3 +635,15 @@ Triple H agora perde no máximo um ponto de vida por atordoamento em ambas as et
 Arte em world/Arte/Equipment/V57/shop_items.png; prompt exato e procedência em PROMPT.txt e regions.json. O PNG gerado foi preservado byte a byte; seis recortes AtlasTexture nativos integram os ícones à loja e à mochila. Os sprites originais do protagonista permanecem intactos.
 
 Validação: 76 verificações de loja, efeitos, mochila, recarga, persistência, rollback e limite por atordoamento; repetidas na janela Vulkan com três capturas (79 verificações). Outras 51 verificações dos três chefes, 64 de mecânicas do Submundo, sete do chá junto à recarga do Carcereiro e duas capturas adicionais da loja. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+## Triple H: terceiro round com trampolins (v58)
+
+A luta agora tem três etapas. No segundo round, a preparação do barril depois do salto central passou de 1,1 s para 3,2 s, com contagem na barra do chefe. As ondas continuam vindo antes do barril. O limite de um ponto de dano por atordoamento continua valendo nos dois primeiros rounds.
+
+O terceiro round começa depois dos três acertos da segunda etapa, antes da derrota ou da liberação de Remi. Triple H assume a guarda, se posiciona perto de um dos cantos, anuncia um salto e solta ondas baixas ao aterrissar. Em seguida há sete segundos para usar o trampolim indicado pela seta dourada e cair sobre a cabeça dele. Se a oportunidade passar, ele repete o aviso e o salto; a luta nunca fica sem abertura.
+
+São necessários três mergulhos, alternando trampolim esquerdo, direito e esquerdo. A indicação troca a cada acerto, e o chefe corre para a posição correspondente, sempre apoiado no tablado. Golpes comuns, poderes, barris e saltos sem impulso do trampolim não causam dano nesta etapa. O impulso precisa vir do lado indicado, ganhar altura e terminar em uma queda sobre a cabeça. O sinal é consumido no acerto e cancelado ao tocar o chão, receber dano ou demorar demais. Os três acertos não podem ser pulados por bônus de ataque.
+
+Foram reutilizadas as animações de corrida, guarda, antecipação, salto, dano, atordoamento e derrota do próprio Triple H. Os trampolins existentes continuam nas hastes laterais do ringue, com suas animações e som; setas e marcações são efeitos nativos do Godot. A apresentação do chefe e a dica da fase agora mencionam os trampolins. A derrota só acontece após a terceira etapa, mantém o corpo no tablado, apaga as marcações, abre as barreiras e libera a jaula de Remi. Morrer reinicia a luta como antes, sem guardar impulsos antigos.
+
+Validação: 51 verificações de transições, limite de dano, espera do barril, bloqueio de atalhos, impulso, troca de lados, derrota, resgate e reinício; execução na janela Vulkan com seis capturas (57 verificações). Os três acertos foram feitos com física e controles reais: salto do piso até os trampolins e direção no ar, sem teletransporte durante o voo. Todos os testes usam APPDATA separado; saves reais não foram lidos nem alterados.

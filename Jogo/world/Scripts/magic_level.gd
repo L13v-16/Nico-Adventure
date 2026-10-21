@@ -68,7 +68,9 @@ func _process(delta: float) -> void:
 	elif x<3700:hint.text="Fruta-do-dragão: K lança fogo por 20 s. Açaí congela. Evite os espinhos do besouro!"
 	elif x<4496:hint.text="Outra planta muda o cipó. Balance e solte no impulso para alcançar a próxima ilha."
 	elif x<5184:hint.text="Prepare-se para o ringue! I: mochila  •  Ative a bandeira antes de Triple H."
-	elif not _boss_defeated:hint.text="Triple H: J / X rebate o barril. Nos socos, passe por cima e ataque por trás!"
+	elif not _boss_defeated:
+		if $Boss.phase==3:hint.text="Use o trampolim indicado, direcione Nico no ar e caia na cabeça! Depois, troque de lado."
+		else:hint.text="Triple H: J / X rebate o barril. Nos socos, passe por cima e ataque por trás!"
 	elif not _rescue_ready:hint.text="Triple H derrotado! Vá até Remi e use J / X para abrir o cadeado."
 	else:hint.text="Remi está livre! Aproxime-se dele para conversar."
 

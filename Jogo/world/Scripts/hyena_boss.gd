@@ -8,7 +8,15 @@ const RIGHT := 5800.0
 const FLOOR := 64.0
 const MAX_HEALTH := 8.0
 const MAX_DAMAGE_PER_STUN := 1.0
+const ROUND_TWO_BARREL_DELAY := 3.2
+const SPRING_ROUND_HEALTH := 3.0
+const SPRING_FLIGHT_LIMIT := 2.2
 var _stun_damage := 0.0
+var _spring_side := -1
+var _spring_armed := false
+var _spring_high := false
+var _spring_air_time := 0.0
+var _ring_springs: Array[Node2D] = []
 var phase := 1
 var _entrance_seen := false
 var _entrance: CanvasLayer
@@ -54,6 +62,10 @@ func _ready() -> void:
 	add_child(_sprite)
 	_player=get_tree().get_first_node_in_group("player") as CharacterBody2D
 	_player.respawned.connect(reset_encounter)
+	for spring in get_tree().get_nodes_in_group("spring_mushrooms"):
+		if spring.get_parent()==get_parent() and spring.position.x>5000:
+			_ring_springs.append(spring)
+			spring.bounced.connect(_on_ring_spring.bind(spring))
 	_build_bar()
 
 func _build_bar() -> void:
@@ -112,6 +124,7 @@ func reset_encounter() -> void:
 	if is_dead():return
 	if is_instance_valid(_entrance):_entrance.finish()
 	phase=1;_rope_bounces=0;_stun_hit=false;_stun_damage=0
+	_clear_spring_launch();_spring_side=-1
 	_clear_gates()
 	active=false
 	health=MAX_HEALTH
@@ -134,7 +147,9 @@ func _clear_gates() -> void:
 		if is_instance_valid(gate):gate.queue_free()
 	_arena_gates.clear()
 	var ring:=get_parent().get_node_or_null("HyenaRing")
-	if ring!=null:ring.set_locked(false)
+	if ring!=null:
+		ring.set_locked(false)
+		ring.set_spring_side(0)
 
 func _physics_process(delta: float) -> void:
 	if is_dead():return
@@ -147,6 +162,28 @@ func _physics_process(delta: float) -> void:
 	_shock=maxf(0,_shock-delta)
 	_sprite.modulate=Color("ffc4eb") if _invulnerability>0 else Color.WHITE
 	match state:
+		"spring_intro":
+			_play(&"guard")
+			if _timer<=0:_position_for_spring()
+		"spring_position":
+			_play(&"run")
+			var gap:=_target_x-position.x
+			_direction=signf(gap)
+			position.x=move_toward(position.x,_target_x,220*delta)
+			if absf(gap)<4:_set_state("spring_warning",1.1)
+		"spring_warning":
+			_play(&"windup")
+			if _timer<=0:
+				_set_state("leap",1.5)
+				velocity=Vector2(0,-340)
+		"spring_guard":
+			_play(&"guard")
+			if _timer<=0:
+				_clear_spring_launch()
+				_set_state("spring_warning",1.1)
+		"spring_recovery":
+			_play(&"hurt" if _invulnerability>0.64 else &"stunned")
+			if _timer<=0:_position_for_spring()
 		"rope_warning":
 			_play(&"kick_windup")
 			if _timer<=0:_set_state("rope_run",4.0);velocity=Vector2(_direction*290,0)
@@ -227,15 +264,21 @@ func _physics_process(delta: float) -> void:
 			Fx.burst(global_position,Color("d7b1fa"),20,180)
 			if _player.is_on_floor() and absf(_player.global_position.x-position.x)<105:_player.take_damage(1,global_position)
 			velocity=Vector2.ZERO
-			if phase==2:
+			if phase>=2:
 				for direction in [-1.0,1.0]:
 					var wave:=preload("res://world/Scripts/ring_shockwave.gd").new()
 					wave.owner_boss=self;wave.position=position;wave.speed=direction*170;get_parent().add_child(wave)
-				_direction=signf(_player.position.x-position.x);_target_x=clampf(_player.position.x,LEFT+25,RIGHT-25)
-				_set_state("throw_warning",1.1)
+				if phase==3:
+					_set_state("spring_guard",7.0)
+				else:
+					_direction=signf(_player.position.x-position.x);_target_x=clampf(_player.position.x,LEFT+25,RIGHT-25)
+					_set_state("throw_warning",ROUND_TWO_BARREL_DELAY)
 			else:_set_state("recovery",0.8)
+	if phase==3:
+		_tick_spring_launch(delta)
+		if _try_spring_stomp(delta) and is_dead():return
 	_sync_facing()
-	_fill.size.x=428*health/(3.0 if phase==2 else MAX_HEALTH)
+	_fill.size.x=428*health/(3.0 if phase>=2 else MAX_HEALTH)
 	var advice:="Rebata o barril ou ataque por trás dos socos"
 	if state=="stunned":advice="VULNERÁVEL! J / X ou pule na cabeça"
 	if state=="stunned" and _stun_hit:advice="LIMITE DO ATORDOAMENTO! Afaste-se e conquiste outra abertura"
@@ -247,10 +290,16 @@ func _physics_process(delta: float) -> void:
 		if state.begins_with("rope"):advice="CORRIDA NAS CORDAS · PULE!"
 		elif state=="leap_warning":advice="SALTO NO CENTRO · AFASTE-SE!"
 		elif state=="leap":advice="PULE A ONDA · DEPOIS REBATA O BARRIL"
-	_caption.text="TRIPLE H · %d / 2 · "%phase+advice
+		elif state=="throw_warning":advice="BARRIL EM %.1f s · PREPARE J / X"%maxf(0,_timer)
+	if phase==3:
+		var side_name:="ESQUERDO" if _spring_side<0 else "DIREITO"
+		advice="TRAMPOLIM %s → CAIA NA CABEÇA!"%side_name
+		if state in ["spring_warning","leap"]:advice="PULE A ONDA · TRAMPOLIM "+side_name
+		elif state=="spring_recovery":advice="ACERTO! AGORA USE O OUTRO TRAMPOLIM"
+	_caption.text="TRIPLE H · %d / 3 · "%phase+advice
 	if not _player.is_dead() and absf(_player.global_position.x-position.x)<36:
 		var feet:float=_player.global_position.y+11
-		if state=="stunned" and _player.velocity.y>50 and feet>position.y-88 and feet<position.y-44:
+		if phase<3 and state=="stunned" and _player.velocity.y>50 and feet>position.y-88 and feet<position.y-44:
 			take_damage(_player.get_attack_damage(),_player.global_position)
 			_player.launch_from_spring(390)
 		elif _invulnerability<=0 and _player.global_position.y>position.y-60 and _player.global_position.y<position.y+15:
@@ -265,6 +314,8 @@ func _set_state(value:String,duration:float) -> void:
 	_throws=0
 
 func _prepare_attack() -> void:
+	if phase==3:
+		_position_for_spring();return
 	if phase==2:
 		_rope_bounces=0;_direction=1 if position.x<(LEFT+RIGHT)*.5 else -1
 		_set_state("rope_warning",1.1);Sfx.alert();return
@@ -313,6 +364,7 @@ func _play(animation:StringName) -> void:
 	Art.reanchor(_sprite)
 
 func _stun(duration:float=2.5) -> void:
+	if phase==3:return
 	if state=="stunned":return
 	_stun_hit=false
 	_stun_damage=0
@@ -328,6 +380,7 @@ func _sync_facing() -> void:
 
 func receive_reflected_barrel() -> void:
 	if not active or is_dead():return
+	if phase==3:return
 	if state=="stunned":return
 	# A grounded stagger is earned by reflecting an actual thrown barrel.
 	position.y=FLOOR
@@ -336,6 +389,9 @@ func receive_reflected_barrel() -> void:
 
 func take_damage(amount: float, source: Vector2) -> void:
 	if not active or is_dead() or amount<=0 or _invulnerability>0:return
+	if phase==3:
+		Fx.popup(global_position+Vector2(0,-100),"USE O TRAMPOLIM!",Color("f7ccaa"),9)
+		return
 	if state!="stunned":
 		if state in ["punch","punch_recovery"] and (source.x-position.x)*_direction < -8 and absf(source.y-position.y)<95:
 			_stun(2.5)
@@ -358,29 +414,87 @@ func take_damage(amount: float, source: Vector2) -> void:
 		phase=2;health=3;_clear_projectiles();velocity=Vector2.ZERO;position.y=FLOOR
 		_set_state("idle",2.0);_stun_hit=false;_stun_damage=0
 		_player.heal_one();Sfx.alert()
-		Fx.popup(position+Vector2(0,-110),"ÚLTIMO ROUND!",Color("ffe2ac"),10)
+		Fx.popup(position+Vector2(0,-110),"SEGUNDO ROUND!",Color("ffe2ac"),10)
+	elif health<=0 and phase==2:
+		_begin_spring_round()
 	elif is_dead():
-		active=false
-		velocity=Vector2.ZERO
-		position.y=FLOOR
-		_clear_projectiles()
-		state="defeated"
-		collision_layer=0
-		_clear_gates()
-		_bar.hide()
-		_sprite.modulate=Color.WHITE
-		_play(&"defeat")
-		Sfx.enemy_death()
-		died.emit()
-		defeated.emit()
+		_defeat()
+	queue_redraw()
+
+func _begin_spring_round() -> void:
+	phase=3;health=SPRING_ROUND_HEALTH
+	_clear_projectiles();_clear_spring_launch()
+	velocity=Vector2.ZERO;position.y=FLOOR
+	_spring_side=-1;_stun_hit=false;_stun_damage=0
+	_set_state("spring_intro",2.8)
+	get_parent().get_node("HyenaRing").set_spring_side(_spring_side)
+	_player.heal_one();Sfx.alert()
+	Fx.popup(position+Vector2(0,-110),"ROUND 3 · TRAMPOLINS!",Color("ffe2ac"),11)
+
+func _position_for_spring() -> void:
+	_clear_spring_launch()
+	# Keep the champion on the mat, within a comfortable spring-powered jump.
+	_target_x=5360.0 if _spring_side<0 else 5680.0
+	velocity=Vector2.ZERO
+	_set_state("spring_position",3.0)
+	get_parent().get_node("HyenaRing").set_spring_side(_spring_side)
+
+func _on_ring_spring(player:CharacterBody2D,spring:Node2D) -> void:
+	if phase!=3 or not active or is_dead() or player!=_player:return
+	_clear_spring_launch()
+	if state not in ["spring_position","spring_warning","leap","spring_guard"]:return
+	var side:=-1 if spring.position.x<(LEFT+RIGHT)*.5 else 1
+	if side!=_spring_side or absf(player.position.x-spring.position.x)>32:return
+	_spring_armed=true
+	Fx.popup(spring.position+Vector2(0,-60),"CAIA NA CABEÇA!",Color("c6ffe5"),9)
+
+func _clear_spring_launch() -> void:
+	_spring_armed=false;_spring_high=false;_spring_air_time=0
+
+func _tick_spring_launch(delta:float) -> void:
+	if not _spring_armed:return
+	_spring_air_time+=delta
+	if _player.is_dead() or _player._hitstun_timer>0 or _spring_air_time>SPRING_FLIGHT_LIMIT or (_spring_air_time>.12 and _player.is_on_floor()):
+		_clear_spring_launch();return
+	if _player.position.y+11<FLOOR-132:_spring_high=true
+
+func _try_spring_stomp(delta:float) -> bool:
+	if state!="spring_guard" or not _spring_armed or not _spring_high or _invulnerability>0:return false
+	var feet:float=_player.position.y+11
+	var head:=position.y-76
+	if _player.velocity.y<=50 or absf(_player.position.x-position.x)>44 or feet<head-8 or feet>head+maxf(20,_player.velocity.y*delta+10):return false
+	_clear_spring_launch()
+	health=maxf(0,health-1)
+	_invulnerability=.8
+	_player.launch_from_spring(320)
+	_player._invulnerability_timer=maxf(_player._invulnerability_timer,.45)
+	Sfx.hit();Fx.burst(position+Vector2(0,-76),Color("ffe2ac"),18,160)
+	if is_dead():_defeat()
+	else:
+		_spring_side=-_spring_side
+		get_parent().get_node("HyenaRing").set_spring_side(_spring_side)
+		_set_state("spring_recovery",1.4)
+	return true
+
+func _defeat() -> void:
+	active=false;velocity=Vector2.ZERO;position.y=FLOOR
+	_clear_projectiles();_clear_spring_launch()
+	state="defeated";collision_layer=0
+	_clear_gates();_bar.hide();_sprite.modulate=Color.WHITE
+	_play(&"defeat");Sfx.enemy_death()
+	died.emit();defeated.emit()
 	queue_redraw()
 
 func is_dead() -> bool:
 	return health<=0
 
 func _draw() -> void:
-	if state in ["warning","leap_warning","punch_warning","kick_warning","throw_warning"]:
-		var at:=Vector2(_target_x-global_position.x,0) if state in ["leap_warning","throw_warning"] else Vector2(0,-85)
+	if phase==3 and active and state=="spring_guard":
+		var color:=Color("ffe2ac") if _spring_armed else Color("c4a3ec")
+		draw_line(Vector2(-8,-101),Vector2(0,-93),color,3)
+		draw_line(Vector2(0,-93),Vector2(8,-101),color,3)
+	if state in ["warning","leap_warning","punch_warning","kick_warning","throw_warning","spring_warning"]:
+		var at:=Vector2(_target_x-global_position.x,0) if state in ["leap_warning","throw_warning","spring_warning"] else Vector2(0,-85)
 		draw_rect(Rect2(at+Vector2(-16,-3),Vector2(32,3)),Color("ffa3a9"))
 		draw_rect(Rect2(at+Vector2(-2,-20),Vector2(4,11)),Color("ffe4b5"))
 		draw_rect(Rect2(at+Vector2(-2,-5),Vector2(4,4)),Color("ffe4b5"))
