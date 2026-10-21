@@ -46,7 +46,7 @@ static func build(parent:Node) -> void:
 		[9,24,Vector2(3950,100)],[1,23,Vector2(4270,100)],[0,25,Vector2(4880,100)],
 		[4,30,Vector2(5230,100)],[2,16,Vector2(5440,100)],[3,17,Vector2(5885,100)],
 		[9,25,Vector2(6180,100)],[0,30,Vector2(6420,100)],
-		[2,18,Vector2(6950,-160)],[1,24,Vector2(7340,-160)],[0,28,Vector2(7990,100)]
+		[2,18,Vector2(6950,100)],[1,24,Vector2(7340,100)],[0,28,Vector2(7990,100)]
 	]:prop(parent,item[0],item[1],item[2],near)
 	# Pontas e correntes presas aos arcos/suportes, sem peças suspensas no vazio.
 	for at in [Vector2(1455,4),Vector2(2710,-63),Vector2(5390,1),Vector2(6650,-30)]:

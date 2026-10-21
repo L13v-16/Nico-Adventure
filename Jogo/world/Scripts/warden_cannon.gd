@@ -56,7 +56,8 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO)
 	var color := Color("ffbc6b") if element == "fire" else Color("a4edff")
 	if enabled and not spent:
-		draw_string(ThemeDB.fallback_font, Vector2(-38, -61), "FOGO" if element == "fire" else "GELO", HORIZONTAL_ALIGNMENT_CENTER, 76, 9, color)
+		var label:="%d · %s" % [stage.cannons.find(self)+1,"FOGO" if element=="fire" else "GELO"]
+		draw_string(ThemeDB.fallback_font, Vector2(-38, -61), label, HORIZONTAL_ALIGNMENT_CENTER, 76, 9, color)
 		draw_arc(Vector2(0, -24), 29 + sin(_clock * 4) * 2, 0, TAU, 16, Color(color, 0.23), 1)
 	elif spent:
 		draw_string(ThemeDB.fallback_font, Vector2(-30, -52), "ATIVADO", HORIZONTAL_ALIGNMENT_CENTER, 60, 8, Color("b8ecbc"))

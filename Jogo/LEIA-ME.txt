@@ -556,3 +556,9 @@ Dezesseis quadros cobrem repouso/piscar, quatro passos, preparação, dois quadr
 Os mesmos recursos atualizam o Submundo, os diálogos, a Coleção e as cutscenes de sequestro/apresentação/fuga. Arte final, prompts, referência e metadados em world/Arte/Underworld/V46/. Criados com imagegen integrado; os PNGs gerados foram preservados sem edição.
 
 Validação: comparação renderizada com os sprites originais de Nico, apoio de todos os quadros, diálogos e Coleção, oito momentos da fuga montada e regressão completa com cabeçadas reais, forja, batalha, canhões e conclusão. Todos os testes usam saves isolados.
+
+V50 — CARCEREIRO: ARENA MAIS CLARA
+Nas extremidades, o chefe anuncia um salto ao centro. Afaste-se do círculo; ele deixa um intervalo de recuperação ao aterrissar e não foge durante a abertura de ataque.
+Na segunda etapa há um piso único que sobe sozinho. As escadas e correntes de escalada foram retiradas. Pule as ondas e rebata os ganchos azuis com J/X: duas devoluções completam o objetivo da etapa. Observe o aviso de um segundo e o contador da HUD.
+Na Última Corrente, oito plataformas substituem as 24 anteriores: seis apoios laterais e duas pontes largas. Todas permanecem sólidas. A HUD mostra o lado, número e elemento do próximo canhão; K dispara e Q alterna entre fogo e gelo. A sequência é fogo, gelo, fogo.
+Validação: 83 verificações na janela Vulkan, 73 de transporte pelo piso sem saltar, 65 da fase completa e cinco capturas revisadas. Saves isolados; o progresso do jogador não é usado nos testes.

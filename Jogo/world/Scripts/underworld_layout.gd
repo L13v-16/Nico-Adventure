@@ -7,9 +7,6 @@ static func build(level:Node2D) -> void:
 	terrain.name="Level"
 	level.add_child(terrain)
 	for info in GROUND:_ground(terrain,Vector2(info.x,info.y),info.z,440,false)
-	_ground(terrain,Vector2(6590,28),110,14,true)
-	_ground(terrain,Vector2(6740,-62),110,14,true)
-	_ground(terrain,Vector2(6895,-160),500,18,true)
 	var scenery:=Node2D.new()
 	scenery.name="Scenery"
 	scenery.z_index=-1
@@ -85,11 +82,7 @@ static func build(level:Node2D) -> void:
 		steam.position=info[0]
 		steam.phase=info[1]
 		level.add_child(steam)
-	for info in [[Vector2(6555,-235),260.0],[Vector2(6870,-325),270.0]]:
-		var chain:=preload("res://world/Scripts/underworld_chain.gd").new()
-		chain.position=info[0]
-		chain.length=info[1]
-		level.add_child(chain)
+	# A arena usa somente o piso inteiro; a torre final monta sua própria rota.
 	var boss:=preload("res://world/Scripts/depth_warden.gd").new()
 	boss.name="Boss"
 	boss.position=Vector2(7100,100)

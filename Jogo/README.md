@@ -407,3 +407,13 @@ Dezesseis quadros cobrem repouso/piscar, quatro passos, preparação, dois quadr
 Os mesmos recursos atualizam o Submundo, os diálogos, a Coleção e as cutscenes de sequestro/apresentação/fuga. Arte final, prompts, referência e metadados em world/Arte/Underworld/V46/. Criados com imagegen integrado; os PNGs gerados foram preservados sem edição.
 
 Validação: comparação renderizada com os sprites originais de Nico, apoio de todos os quadros, diálogos e Coleção, oito momentos da fuga montada e regressão completa com cabeçadas reais, forja, batalha, canhões e conclusão. Todos os testes usam saves isolados.
+
+## Carcereiro: arena mais clara (v50)
+
+Quando alcança uma extremidade da arena, o Carcereiro anuncia um salto ao centro com um círculo no chão. Há preparação, arco de salto e recuperação; Nico pode reposicionar-se sem receber dano de contato durante o salto. O chefe não foge enquanto está vulnerável nem quando um gancho devolvido está a caminho.
+
+A segunda etapa tem um único piso que sobe sozinho, sem escadas de plataformas ou correntes de escalada. A lava permanece abaixo do chão. Os ataques alternam um gancho azul, rebatido com o ataque básico J/X, e ondas baixas que se evitam saltando. Cada ataque tem um segundo de aviso. Devolva dois ganchos para deixar o chefe atordoado e liberar a etapa da armadura após a subida; o contador e as instruções aparecem na HUD. A retomada superior continua disponível depois dessa etapa.
+
+Na Última Corrente, a estrutura foi reduzida de 24 para oito plataformas: seis apoios laterais e duas pontes móveis mais largas. Todas continuam sólidas durante a órbita. Nico aparece à frente do guardião para ficar visível, e a HUD indica número do canhão, lado e elemento. A sequência continua fogo → gelo → fogo, com K para disparar e Q para alternar; José, a chave e a fuga montada permanecem integrados. Os dois pequenos props que ficavam sobre as antigas plataformas da arena foram apoiados no chão.
+
+Validação: 83 verificações na janela Vulkan, incluindo oito saltos ao centro, contra-ataques com J real nos dois sentidos, danos de ganchos não rebatidos, progressão da segunda etapa, travessia com saltos normais e transporte pelas pontes, canhões e restauração visual. Mais 73 verificações do piso ascendente sem saltar e 65 da fase completa, com José, forja, combate e fuga. Cinco capturas foram revisadas. Todos os testes usam saves isolados.

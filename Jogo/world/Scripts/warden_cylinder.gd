@@ -1,6 +1,6 @@
 extends Node2D
-## A cylindrical scaffold: orbiting one-way ledges have a front and a rear.
-## Stable outer landings provide a readable climbing route and recovery points.
+## Rota curta: seis patamares laterais e duas pontes largas orbitando o chefe.
+## Todas as colisões permanecem ativas; a profundidade muda apenas o tom.
 const Cannon = preload("res://world/Scripts/warden_cannon.gd")
 const Tiles = preload("res://world/Scripts/underworld_tiles.gd")
 var boss: CharacterBody2D
@@ -14,18 +14,21 @@ var cannons: Array[StaticBody2D] = []
 var _beams: Array[Dictionary] = []
 var _safe := Vector2(-178, -11)
 var _finish_left := -1.0
+var _old_player_z:=0
 
 func _ready() -> void:
 	process_physics_priority = -20
 	add_to_group("warden_cylinders")
 	position = Vector2(7145, -160)
-	for tier in 4:
+	_old_player_z=boss._player.z_index
+	boss._player.z_index=6
+	for tier in range(1,4):
 		for side in [-1.0, 1.0]:
-			_landing(Vector2(side * 170, -tier * 60.0), 88)
-		for part in 4:
-			var ledge := _landing(Vector2.ZERO, 68, true)
+			_landing(Vector2(side * 170, -tier * 60.0), 104)
+		if tier<3:
+			var ledge := _landing(Vector2.ZERO, 112, true)
 			ledge.set_meta("tier", tier)
-			ledge.set_meta("angle", part * TAU / 4 + tier * 0.7)
+			ledge.set_meta("angle", -PI/2+.18 if tier==1 else PI/2-.18)
 			_orbits.append(ledge)
 	for i in 3:
 		var cannon := Cannon.new()
@@ -72,14 +75,12 @@ func _physics_process(delta: float) -> void:
 	_clock += delta
 	for ledge in _orbits:
 		var tier: int = ledge.get_meta("tier")
-		var angle: float = ledge.get_meta("angle") + _clock * (0.32 if tier % 2 == 0 else -0.28)
+		var angle: float = ledge.get_meta("angle") + _clock * (0.28 if tier==1 else -0.28)
 		var front := cos(angle) >= -0.1
-		var rider: bool = absf(boss._player.global_position.x - ledge.global_position.x) < 38 and absf(boss._player.global_position.y + 11 - ledge.global_position.y) < 9 and boss._player.velocity.y >= -5
 		ledge.position = Vector2(sin(angle) * 128, -tier * 60 - 26 + cos(angle) * 7)
-		ledge.z_index = 2 if front else -2
-		ledge.modulate = Color.WHITE if front else Color("5d526d")
-		# Never remove the platform under a rider as it rounds the cylinder.
-		ledge.collision_layer = 1 if front or rider else 0
+		ledge.z_index = 4
+		ledge.modulate = Color.WHITE if front else Color("b5a8bf")
+		ledge.collision_layer = 1
 	var player: CharacterBody2D = boss._player
 	if player.is_on_floor() and absf(player.position.x - position.x) > 125 and player.position.y < position.y - 20:
 		_safe = Vector2(-178 if player.position.x < position.x else 178, roundf((player.position.y + 11 - position.y) / 60) * 60 - 11)
@@ -112,6 +113,9 @@ func _recover() -> void:
 	player._invulnerability_timer = 1.4
 	_warning = 0
 	_attack = 2.8
+
+func _exit_tree() -> void:
+	if is_instance_valid(boss) and is_instance_valid(boss._player):boss._player.z_index=_old_player_z
 
 func _on_cannon(cannon: StaticBody2D) -> void:
 	if not boss.active or boss.phase != 5 or hits >= 3: return

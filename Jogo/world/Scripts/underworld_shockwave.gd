@@ -1,8 +1,10 @@
 extends Node2D
 var speed:=190.0
+var floor_owner:Node
 var life:=3.6
 func _ready() -> void:add_to_group("underworld_projectiles")
 func _physics_process(delta:float) -> void:
+	if is_instance_valid(floor_owner):position.y=floor_owner.arena_floor_y()
 	life-=delta
 	position.x+=speed*delta
 	if life<=0:queue_free();return

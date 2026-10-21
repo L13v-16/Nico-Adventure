@@ -135,7 +135,7 @@ func _process(delta:float) -> void:
 	elif arena:hint.text=boss._advice()+"  ·  K: disparo  ·  Q: elemento  ·  C: José"
 	elif not key_collected:hint.text="Recolha a Chave das Profundezas no alto da arena para abrir a saída."
 	else:hint.text="Chave das Profundezas obtida! Siga para a passagem da corporação à direita."
-	if arena and boss.phase==5:hint.text="Salte pelas plataformas de pedra  ·  Canhões: FOGO → GELO → FOGO  ·  K: disparar  ·  Q: alternar"
+	if arena and boss.phase==5:hint.text=boss._advice()+" · Espere a ponte chegar · Q: elemento"
 	if x>7730:_on_finish_entered(player)
 	queue_redraw()
 func _unhandled_input(event:InputEvent) -> void:
