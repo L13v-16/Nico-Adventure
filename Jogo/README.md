@@ -594,3 +594,14 @@ Duas imagens novas foram geradas com imagegen integrado e preservadas integralme
 Os dois quadros de dano começavam abaixo do topo real do desenho na spritesheet. Os recortes nativos agora incluem a cabeça, os chifres, os efeitos de impacto, os punhos e as correntes, com três pixels de margem. Foram recuperados 14 pixels de altura no primeiro quadro e 22 no segundo, além dos detalhes laterais que ficavam fora do recorte anterior. O ponto de apoio das botas foi recalculado para os dois quadros, mantendo o chefe no chão ao mudar de animação, virar de lado ou usar as escalas maiores do anel e dos canhões.
 
 A correção reutiliza a imagem original integralmente; nenhuma das 405 imagens do jogo foi alterada ou gerada novamente. Validação: 26 verificações de dano real, recortes, dimensões, ambos os lados, três escalas e retorno à pose normal; execução Vulkan com quatro capturas, totalizando 30 verificações. As 64 verificações da regressão completa do Submundo também passaram. Testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+
+## Entradas refinadas de Urus e Triple H (v67)
+
+As duas apresentações agora possuem encenação própria, com cenário opaco, movimento suave de aproximação, nomes estilizados, falas em duas etapas com revelação gradual e transições de abertura/encerramento. A duração passou para 8,2 segundos para dar tempo de ler o desafio e a resposta de Nico. Enter, E ou Esc continuam pulando a cena depois dos primeiros 0,35 s.
+
+Urus entra em voo rasante, passa diante de Nico e volta a pairar acima da praia. Uma sombra acompanha o voo, o mar tem movimento discreto e um canhão aparece no primeiro plano. Os sons das asas e da apresentação seguem os momentos da ação. Triple H corre, prepara o salto, aterrissa no ringue com poeira, tremor e oscilação das cordas, provoca Nico e assume a guarda. O quadro invertido do início do salto foi corrigido para manter a direção do olhar. Passos, impacto e sino acompanham a entrada. Nico responde olhando para o chefe, sem receber dano fictício.
+
+As imagens existentes foram reutilizadas, mantendo a proporção e o alinhamento dos pés. As 405 imagens do projeto permanecem intactas. A encenação usa atores próprios; posições, vida e câmera da jogabilidade não são modificadas. Durante a apresentação, as HUDs ficam ocultas, o combate e o cronômetro param e a música continua. Ao terminar, pular ou remover a cena, os estados anteriores são restaurados.
+
+Validação: 40 verificações de encenação, falas, sons únicos, orientação, música, HUD, término e remoção; execução Vulkan com sete capturas, totalizando 47 verificações. Regressões: 17 verificações de Urus e 51 da luta completa de Triple H, incluindo os três trampolins finais e o resgate de Remi. Testes usam APPDATA isolado; saves reais não foram lidos ou alterados.
