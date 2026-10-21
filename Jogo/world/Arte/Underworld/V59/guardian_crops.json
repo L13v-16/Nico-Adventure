@@ -200,12 +200,19 @@
       248
     ],
     "new": [
-      26,
-      940,
-      287,
-      248
+      23,
+      923,
+      297,
+      268
     ],
-    "excluded_bottom": 0
+    "excluded_bottom": 0,
+    "revision": 66,
+    "padding": 3,
+    "restored_top_pixels": 14,
+    "logical_size": [
+      330,
+      342
+    ]
   },
   {
     "id": 13,
@@ -216,12 +223,19 @@
       248
     ],
     "new": [
-      354,
-      940,
-      268,
-      248
+      351,
+      915,
+      274,
+      276
     ],
-    "excluded_bottom": 0
+    "excluded_bottom": 0,
+    "revision": 66,
+    "padding": 3,
+    "restored_top_pixels": 22,
+    "logical_size": [
+      330,
+      342
+    ]
   },
   {
     "id": 14,

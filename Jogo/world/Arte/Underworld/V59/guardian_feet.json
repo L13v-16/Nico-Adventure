@@ -121,15 +121,17 @@
   },
   {
     "texture": "res://world/Arte/Underworld/V59/action_12.tres",
-    "alpha_foot": 248.0,
-    "boot_foot": 248.0,
-    "difference": 0.0
+    "alpha_foot": 273.0,
+    "boot_foot": 273.0,
+    "difference": 0.0,
+    "revision": 66
   },
   {
     "texture": "res://world/Arte/Underworld/V59/action_13.tres",
-    "alpha_foot": 248.0,
-    "boot_foot": 248.0,
-    "difference": 0.0
+    "alpha_foot": 273.0,
+    "boot_foot": 273.0,
+    "difference": 0.0,
+    "revision": 66
   },
   {
     "texture": "res://world/Arte/Underworld/V59/action_14.tres",

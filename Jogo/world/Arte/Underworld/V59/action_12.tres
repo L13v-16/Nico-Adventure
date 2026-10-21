@@ -2,6 +2,6 @@
 [ext_resource type="Texture2D" path="res://world/Arte/Underworld/V44/guardian_actions.png" id="1"]
 [resource]
 atlas = ExtResource("1")
-region = Rect2(26, 940, 287, 248)
-margin = Rect2(26.0, 0.0, 27.0, 66.0)
+region = Rect2(23, 923, 297, 268)
+margin = Rect2(31, 8, 33, 74)
 filter_clip = true
