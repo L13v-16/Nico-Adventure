@@ -449,3 +449,15 @@ Na segunda etapa, Nico tem uma recarga mínima de um segundo, compartilhada entr
 Uma devolução vale um acerto por atordoamento. Devoluções simultâneas ou durante a mesma janela não acumulam progresso, e bônus de dano não pulam os sete acertos do Anel de Correntes. A janela seguinte volta a aceitar uma devolução depois que o atordoamento termina. A chuva, a varredura, a quebra dos selos, o piso ascendente, fogo/gelo, José e os canhões mantêm o fluxo da luta.
 
 Validação: 95 verificações na janela Vulkan, incluindo os oito apoios/âncoras, recarga real de J e K, bloqueio da alternância, luvas, velocidade fora da arena, limite por atordoamento, devoluções nos dois sentidos, sprites e limpeza; nove capturas revisadas. Mais 66 verificações da fase completa com altar, forja, José, combate, canhões, chave e fuga. Percurso natural da segunda etapa com sete devoluções reais e zero dano, sem forçar invulnerabilidade. Saves isolados.
+
+## Caravana, mochila persistente e final direto (v54)
+
+A vitória sobre o Carcereiro inicia diretamente a cutscene em que José doma o guardião e os dois partem montados nele. O portal final e a coleta obrigatória da chave foram removidos; a recompensa e a conclusão ficam registradas automaticamente, mesmo se o último disparo acontecer durante um salto.
+
+Oliver Gancho recebe Nico no começo da praia, da floresta mágica e do Submundo. A primeira fase, do resgate da Arara Minas, continua sem caravana. As lojas ficam sobre terreno seguro e os primeiros inimigos foram afastados do espaço de compra. A caravana ainda parte quando Nico segue viagem.
+
+Equipamentos, roupas, peças equipadas e quantidades de suprimentos acompanham Nico entre fases e ao continuar uma partida. Usar um consumível ou gastar a Folha Protetora também fica salvo, sem regenerar itens na próxima ilha. A mochila abre com I. Os efeitos temporários das frutas mantêm sua duração e não recomeçam na fase seguinte. Nova campanha limpa a mochila junto com o progresso.
+
+Compras gravam saldo e inventário na mesma transação. Uma falha de gravação preserva cerejas e itens. Saves anteriores continuam compatíveis e o histórico de cerejas do modo livre permanece preservado.
+
+Validação: 86 verificações na janela Vulkan, sete capturas, trocas reais de mapa, compras, equipamentos, consumo, respawn, recarga do save, limites de estoque, saves antigos/inválidos, nova campanha, duas falhas de gravação simuladas, partida da caravana e encerramento automático. Mais 63 verificações da fase completa do Submundo, incluindo altar, forja, José, combate e canhões. Todos os testes usam APPDATA isolado, sem ler nem alterar saves reais.

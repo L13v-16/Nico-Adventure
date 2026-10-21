@@ -88,15 +88,8 @@ static func build(level:Node2D) -> void:
 	boss.position=Vector2(7100,100)
 	boss.z_index=3
 	level.add_child(boss)
-	var key:=preload("res://world/Scripts/depth_key.gd").new()
-	key.name="DepthKey"
-	level.add_child(key)
-	var exit:=preload("res://world/Scripts/underworld_exit.gd").new()
-	exit.name="ExitPortal"
-	exit.position=Vector2(7820,100)
-	level.add_child(exit)
 	var caravan:=preload("res://prefabs/caravan_shop.tscn").instantiate()
-	caravan.position=Vector2(6250,100)
+	caravan.position=Vector2(400,100)
 	caravan.travel_offset=Vector2(8,0)
 	level.add_child(caravan)
 	var item_scene:=preload("res://prefabs/item.tscn")

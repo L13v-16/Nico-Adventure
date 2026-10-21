@@ -269,6 +269,12 @@ func _on_finish_entered(body: Node2D) -> void:
 		return
 	if not player.is_on_floor() or absf(player.global_position.y + 11.0 - finish_floor_y) > 3.0:
 		return
+	_complete_level()
+
+
+## A vitória do chefe também pode concluir a fase durante um salto.
+func _complete_level() -> void:
+	if completed or player.is_dead():return
 	completed = true
 	_timing = false
 	pause_menu.can_open = false

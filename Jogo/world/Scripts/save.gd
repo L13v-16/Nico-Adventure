@@ -7,6 +7,7 @@ extends Node
 ## saldo de cerejas disponível para compras entre as fases.
 ## O volume de áudio continua em user://settings.cfg, cuidada pelo Sfx.
 
+const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
 const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4"]
@@ -30,6 +31,8 @@ var _free_mode := false
 var _collected_cherries: Dictionary = {}
 var _legacy_cherry_locks: Dictionary = {}
 var _story_flags: Dictionary = {}
+var _owned_equipment: Dictionary = {}
+var _equipped_equipment: Dictionary = {}
 
 
 func _ready() -> void:
@@ -135,6 +138,43 @@ func try_spend_cherries(amount: int) -> bool:
 	return true
 
 
+## Wallet and backpack share one atomic write: a failed purchase keeps both.
+func get_equipment_state() -> Dictionary:
+	return {"owned": _owned_equipment.duplicate(), "equipped": _equipped_equipment.duplicate()}
+
+
+func commit_equipment_state(owned: Dictionary, equipped: Dictionary, cost: int = 0) -> bool:
+	if cost < 0 or cost > _cherry_balance:return false
+	var clean := _sanitize_equipment(owned, equipped)
+	if clean.owned != owned or clean.equipped != equipped:return false
+	var previous := get_equipment_state()
+	var balance := _cherry_balance
+	_owned_equipment = owned.duplicate()
+	_equipped_equipment = equipped.duplicate()
+	_cherry_balance -= cost
+	if not _save():
+		_owned_equipment = previous.owned
+		_equipped_equipment = previous.equipped
+		_cherry_balance = balance
+		return false
+	return true
+
+
+func _sanitize_equipment(owned: Variant, equipped: Variant) -> Dictionary:
+	var stock: Dictionary = {}
+	var slots: Dictionary = {}
+	if owned is Dictionary:
+		for id in owned:
+			if id is String and Catalog.ITEMS.has(id) and owned[id] is int and owned[id] > 0:
+				stock[id] = mini(owned[id], 3 if Catalog.is_consumable(id) else 1)
+	if equipped is Dictionary:
+		for slot in equipped:
+			var id: Variant = equipped[slot]
+			if id is String and stock.has(id) and not Catalog.is_consumable(id) and Catalog.ITEMS[id].slot == slot:
+				slots[slot] = id
+	return {"owned": stock, "equipped": slots}
+
+
 func get_level_stats(level_id: String) -> Dictionary:
 	return _levels.get(level_id, {})
 
@@ -177,6 +217,8 @@ func mark_level_complete(level_id: String, stats: Dictionary) -> Dictionary:
 func reset_progress() -> void:
 	_levels.clear()
 	_story_flags.clear()
+	_owned_equipment.clear()
+	_equipped_equipment.clear()
 	_collected_cherries.clear()
 	_legacy_cherry_locks.clear()
 	_free_mode=false
@@ -279,6 +321,8 @@ func _load() -> void:
 	# Recarregar também é seguro após apagar/trocar o arquivo de save.
 	_levels.clear()
 	_story_flags.clear()
+	_owned_equipment.clear()
+	_equipped_equipment.clear()
 	_seen_intro = false
 	_fullscreen = false
 	_camera_shake = true
@@ -302,6 +346,9 @@ func _load() -> void:
 	if saved_balance is int:
 		_cherry_balance = maxi(saved_balance, 0)
 	_campaign_started = bool(config.get_value("progress", "started", false))
+	var equipment := _sanitize_equipment(config.get_value("equipment", "owned", {}), config.get_value("equipment", "equipped", {}))
+	_owned_equipment = equipment.owned
+	_equipped_equipment = equipment.equipped
 	var saved_levels: Variant = config.get_value("progress", "levels", [])
 	if not (saved_levels is Array or saved_levels is PackedStringArray):
 		return
@@ -350,6 +397,9 @@ func _save() -> bool:
 	config.set_value("progress", "started", _campaign_started)
 	config.set_value("progress", "story_flags", _story_flags.keys())
 	config.set_value("wallet", "cherries", _cherry_balance)
+	config.set_value("equipment", "version", 1)
+	config.set_value("equipment", "owned", _owned_equipment)
+	config.set_value("equipment", "equipped", _equipped_equipment)
 	config.set_value("progress", "levels", _levels.keys())
 	config.set_value("video", "fullscreen", _fullscreen)
 	config.set_value("video", "camera_shake", _camera_shake)

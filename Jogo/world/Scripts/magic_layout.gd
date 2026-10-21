@@ -65,7 +65,7 @@ static func build(level: Node2D) -> void:
 		if point.x>5000:spring.launch_speed=610
 		level.add_child(spring)
 	for point in CHECKPOINTS:_checkpoint(level.get_node("Checkpoints"),point)
-	var enemy_spots:=[Vector3(380,100,170),Vector3(1580,64,150),Vector3(2300,64,170),Vector3(3280,32,150),Vector3(4650,64,140)]
+	var enemy_spots:=[Vector3(515,100,100),Vector3(1580,64,150),Vector3(2300,64,170),Vector3(3280,32,150),Vector3(4650,64,140)]
 	for info in enemy_spots:
 		var enemy:=preload("res://world/Scripts/magic_enemy.gd").new()
 		enemy.position=Vector2(info.x,info.y)
@@ -110,7 +110,7 @@ static func build(level: Node2D) -> void:
 	boss.position=Vector2(5616,64)
 	level.add_child(boss)
 	var caravan:=preload("res://prefabs/caravan_shop.tscn").instantiate()
-	caravan.position=Vector2(4880,64)
+	caravan.position=Vector2(280,100)
 	caravan.travel_offset=Vector2(12,0)
 	level.add_child(caravan)
 	for point in [Vector2(2340,30),Vector2(5030,30)]:

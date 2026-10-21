@@ -582,3 +582,15 @@ O Carcereiro ganhou oito novas poses para a chuva, varredura, carga da esfera, d
 Na segunda etapa, Nico espera 1 segundo entre ataques. J/X e K compartilham essa recarga; alternar os botões ou usar luvas não contorna o limite. A HUD indica o tempo e quando o ataque está pronto. Fora desta etapa, as recargas continuam como antes.
 Cada atordoamento aceita uma devolução válida. Devoluções extras na mesma janela não somam acertos, e dano aumentado não pula os sete acertos do anel. Os outros trechos do combate continuam.
 Validação: 95 verificações na janela, nove capturas, 66 da fase completa e percurso natural com sete devoluções e zero dano. Saves de teste isolados.
+
+## Caravana, mochila persistente e final direto (v54)
+
+A vitória sobre o Carcereiro inicia diretamente a cutscene em que José doma o guardião e os dois partem montados nele. O portal final e a coleta obrigatória da chave foram removidos; a recompensa e a conclusão ficam registradas automaticamente, mesmo se o último disparo acontecer durante um salto.
+
+Oliver Gancho recebe Nico no começo da praia, da floresta mágica e do Submundo. A primeira fase, do resgate da Arara Minas, continua sem caravana. As lojas ficam sobre terreno seguro e os primeiros inimigos foram afastados do espaço de compra. A caravana ainda parte quando Nico segue viagem.
+
+Equipamentos, roupas, peças equipadas e quantidades de suprimentos acompanham Nico entre fases e ao continuar uma partida. Usar um consumível ou gastar a Folha Protetora também fica salvo, sem regenerar itens na próxima ilha. A mochila abre com I. Os efeitos temporários das frutas mantêm sua duração e não recomeçam na fase seguinte. Nova campanha limpa a mochila junto com o progresso.
+
+Compras gravam saldo e inventário na mesma transação. Uma falha de gravação preserva cerejas e itens. Saves anteriores continuam compatíveis e o histórico de cerejas do modo livre permanece preservado.
+
+Validação: 86 verificações na janela Vulkan, sete capturas, trocas reais de mapa, compras, equipamentos, consumo, respawn, recarga do save, limites de estoque, saves antigos/inválidos, nova campanha, duas falhas de gravação simuladas, partida da caravana e encerramento automático. Mais 63 verificações da fase completa do Submundo, incluindo altar, forja, José, combate e canhões. Todos os testes usam APPDATA isolado, sem ler nem alterar saves reais.

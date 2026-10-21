@@ -13,7 +13,6 @@ func _ready() -> void:
 	$Forge.solved.connect(func():_show_notice("Forja funcionando! A passagem está aberta."))
 	$Boss.defeated.connect(_on_boss_defeated)
 	$Boss.encounter_started.connect(func():_show_notice(""))
-	$DepthKey.collected.connect(func():key_collected=true;$ExitPortal.unlocked=true;_show_notice("Chave das Profundezas! Siga para a saída à direita."))
 	player.shop_shield_changed.connect(func(hits:int):game_hud.set_shop_shield(hits))
 	super._ready()
 func _polish_terrain() -> void:pass
@@ -133,12 +132,10 @@ func _process(delta:float) -> void:
 	elif x<3904:hint.text="Santuário dos Contrários: receba fogo e gelo. K: disparar  ·  Q: alternar"
 	elif x<4944:hint.text="Forja: fogo na válvula laranja, gelo na azul; repita. K: disparar · Q: alternar. Evite o vapor."
 	elif x<6144:hint.text="As rochas bloqueiam tridentes! C: derrube o pilar para criar uma ponte sobre a lava."
-	elif x<6450:hint.text="Oliver está por aqui. E: loja  ·  I: mochila  ·  Ative a bandeira antes de enfrentar o Carcereiro."
+	elif x<6450:hint.text="I: mochila  ·  Ative a bandeira antes de enfrentar o Carcereiro."
 	elif arena:hint.text=boss._advice()+"  ·  K: disparo  ·  Q: elemento  ·  C: José"
-	elif not key_collected:hint.text="Recolha a Chave das Profundezas no alto da arena para abrir a saída."
-	else:hint.text="Chave das Profundezas obtida! Siga para a passagem da corporação à direita."
+	else:hint.text="O Carcereiro guarda a saída. Prepare os poderes e chame José!"
 	if arena and boss.phase==5:hint.text=boss._advice()+" · Espere a ponte chegar · Q: elemento"
-	if x>7730:_on_finish_entered(player)
 	queue_redraw()
 func _unhandled_input(event:InputEvent) -> void:
 	if intro_active or completed or get_tree().paused:return
@@ -163,12 +160,14 @@ func _command_jose() -> bool:
 	_selected_target=target
 	return $Jose.command(target)
 func _on_boss_defeated() -> void:
-	$DepthKey.reveal(Vector2(7320,-160))
-	_show_notice("Correntes quebradas! Recolha a Chave das Profundezas.")
-	player.heal_full()
+	# The final cannon can defeat him while Nico is airborne. No exit trigger.
+	_on_finish_entered.call_deferred(player)
 func _on_finish_entered(body:Node2D) -> void:
-	if not key_collected or not $Boss.is_dead():return
-	super._on_finish_entered(body)
+	if body != player or completed or not $Boss.is_dead() or player.is_dead():return
+	key_collected=true
+	Save.set_story_flag("depth_key")
+	player.heal_full()
+	_complete_level()
 func _start_finale(stats:Dictionary,new_record:bool) -> void:
 	_show_notice("")
 	$HUD.hide()

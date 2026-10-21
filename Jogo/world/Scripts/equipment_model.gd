@@ -1,5 +1,5 @@
 extends Node
-## Itens pertencem à tentativa atual; peças compradas sobrevivem ao respawn.
+## A mochila e as peças equipadas acompanham Nico entre fases e partidas.
 
 signal changed
 
@@ -15,6 +15,9 @@ var _transaction_busy := false
 
 func _ready() -> void:
 	_player = get_parent()
+	var stored := Save.get_equipment_state()
+	_owned = stored.owned
+	_equipped = stored.equipped
 	_player.respawned.connect(_clear_temporary)
 	_player.died.connect(_clear_temporary)
 	_build_presentations.call_deferred()
@@ -98,55 +101,70 @@ func buy_item(item_id: String) -> Dictionary:
 	if _player.get_cherry_balance() < price:
 		return _result(false, "Cerejas insuficientes. Escolha outro item antes de seguir viagem.")
 	_transaction_busy = true
-	if not _player.try_spend_cherries(price):
+	var stock := _owned.duplicate()
+	var slots := _equipped.duplicate()
+	stock[item_id] = get_quantity(item_id) + 1
+	if not Catalog.is_consumable(item_id):slots[item["slot"]] = item_id
+	if not _commit(stock, slots, price):
 		_transaction_busy = false
-		return _result(false, "Saldo insuficiente para esta compra.")
-	_owned[item_id] = get_quantity(item_id) + 1
-	if not Catalog.is_consumable(item_id):
-		_equipped[item["slot"]] = item_id
-	changed.emit()
+		return _result(false, "Não foi possível salvar a compra. Suas cerejas foram mantidas.")
+	_player.cherries_spent += price
+	_player.cherry_balance_changed.emit(_player.get_cherry_balance())
 	_transaction_busy = false
 	return _result(true, "%s %s" % [item["name"], "guardado na mochila [I]. Use quando precisar." if Catalog.is_consumable(item_id) else "comprado e equipado! Troque pela mochila [I]."])
 
 
 func toggle_item(item_id: String) -> Dictionary:
-	if not Catalog.ITEMS.has(item_id) or not owns(item_id) or _player.is_dead():
+	if _transaction_busy or not Catalog.ITEMS.has(item_id) or not owns(item_id) or _player.is_dead():
 		return _result(false, "Você não tem este item na mochila.")
 	var item: Dictionary = Catalog.ITEMS[item_id]
-	if item_id == "honey_biscuit":
-		if not _player.heal_one(): return _result(false, "Vida cheia! O biscoito continua na mochila.")
-		_owned[item_id] = get_quantity(item_id) - 1
-		changed.emit()
-		return _result(true, "Biscoito de Mel: 1 coração recuperado!")
-	if item_id == "travel_acai":
+	var stock := _owned.duplicate()
+	var slots := _equipped.duplicate()
+	if Catalog.is_consumable(item_id):
+		if item_id == "honey_biscuit" and _player.health >= _player.MAX_HEALTH:
+			return _result(false, "Vida cheia! O biscoito continua na mochila.")
 		var level := _player.get_parent()
-		if not level.has_method("buy_acai_power") or not level.buy_acai_power():
+		if item_id == "travel_acai" and (not level.has_method("buy_acai_power") or level.completed or level.intro_active):
 			return _result(false, "Não é possível usar o açaí agora. Ele continua na mochila.")
-		_owned[item_id] = get_quantity(item_id) - 1
-		changed.emit()
-		return _result(true, "Açaí de Viagem: K dispara gelo por 12 s, com proteção e ataque dobrado.")
-	if item_id == "frozen_acai":
-		_owned[item_id] = get_quantity(item_id) - 1
+		if get_quantity(item_id) > 1:stock[item_id] = get_quantity(item_id) - 1
+		else:stock.erase(item_id)
+		if not _commit(stock, slots):return _save_rejected()
+		if item_id == "honey_biscuit":
+			_player.heal_one()
+			return _result(true, "Biscoito de Mel: 1 coração recuperado!")
+		if item_id == "travel_acai":
+			level.buy_acai_power()
+			return _result(true, "Açaí de Viagem: K dispara gelo por 12 s, com proteção e ataque dobrado.")
 		_frost_left = FROST_DURATION
 		_player.elements.refresh_available("ice")
 		changed.emit()
 		return _result(true, "Açaí Congelante: K dispara gelo por 30 s; golpes e disparos congelam por mais tempo!")
-	if is_equipped(item_id):
-		_equipped.erase(item["slot"])
-		changed.emit()
-		return _result(true, "%s guardado." % item["name"])
-	_equipped[item["slot"]] = item_id
-	changed.emit()
-	return _result(true, "%s equipado!" % item["name"])
+	var was_equipped := is_equipped(item_id)
+	if was_equipped:slots.erase(item["slot"])
+	else:slots[item["slot"]] = item_id
+	if not _commit(stock, slots):return _save_rejected()
+	return _result(true, "%s %s" % [item["name"], "guardado." if was_equipped else "equipado!"])
 
 
 func consume_leaf() -> bool:
-	if not is_equipped("leaf") or not owns("leaf"):
-		return false
-	_equipped.erase("charm")
-	_owned.erase("leaf")
+	if not is_equipped("leaf") or not owns("leaf"):return false
+	var stock := _owned.duplicate()
+	var slots := _equipped.duplicate()
+	slots.erase("charm")
+	stock.erase("leaf")
+	return _commit(stock, slots)
+
+
+func _commit(stock: Dictionary, slots: Dictionary, cost: int = 0) -> bool:
+	if not Save.commit_equipment_state(stock, slots, cost):return false
+	_owned = stock
+	_equipped = slots
 	changed.emit()
 	return true
+
+
+func _save_rejected() -> Dictionary:
+	return _result(false, "Não foi possível salvar a mochila. Seus itens foram mantidos.")
 
 
 func open_inventory() -> void:
