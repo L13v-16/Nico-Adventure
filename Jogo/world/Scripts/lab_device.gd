@@ -19,6 +19,8 @@ var _sprite:Sprite2D
 var _player:CharacterBody2D
 var _home:=Vector2.ZERO
 var _beam_x:=0.0
+var _state_picture:=""
+var _lever_time:=0.0
 const Art=preload("res://world/Scripts/lab_art.gd")
 func _ready() -> void:
 	add_to_group("lab_devices");_home=position;clock=phase
@@ -34,8 +36,8 @@ func _ready() -> void:
 		if kind=="injector" or (kind=="mover" and circuit=="arena"):_body.collision_layer=0
 	if kind in ["gate","cover","conveyor"]:
 		_body=StaticBody2D.new();_body.collision_layer=1;_body.collision_mask=0
-		var shape:=RectangleShape2D.new();shape.size=Vector2(width*.7,92 if kind=="gate" else (42 if kind=="cover" else 8))
-		var collider:=CollisionShape2D.new();collider.shape=shape;collider.position.y=-46 if kind=="gate" else (-21 if kind=="cover" else 3)
+		var shape:=RectangleShape2D.new();shape.size=Vector2(width*(.85 if kind=="cover" else .7),92 if kind=="gate" else (62 if kind=="cover" else 8))
+		var collider:=CollisionShape2D.new();collider.shape=shape;collider.position.y=-46 if kind=="gate" else (-31 if kind=="cover" else 3)
 		_body.add_child(collider);add_child(_body)
 		if kind=="conveyor":_body.position.y=-1;_body.constant_linear_velocity=Vector2(82,0)
 	if kind=="mover":
@@ -46,8 +48,24 @@ func _ready() -> void:
 	if kind=="rescue":
 		var bear:=Art.Art.actor(preload("res://world/Arte/Amigos/urso.tres"),64)
 		bear.name="Urso";bear.position+=Vector2(0,-6);bear.z_index=1;bear.modulate=Color("c8e6d8");add_child(bear);bear.play(&"idle")
+	if kind=="injector":
+		var arm:=Art.prop("injector",100);arm.z_index=-1;arm.position.x+=24;add_child(arm)
+	_update_state_art()
+func _update_state_art() -> void:
+	var picture:=""
+	var boss:Node=get_parent().get_node_or_null("Boss")
+	if kind=="lever":picture="state_%02d"%(1 if _lever_time>0 else (2 if reversed else 0))
+	elif kind=="heat":picture="state_%02d"%(5 if boss.heated>0 else 4)
+	elif kind=="cold":picture="state_%02d"%(7 if boss.cooled>0 else 6)
+	elif kind=="injector":picture="state_%02d"%(11 if boss.injector_reversed else (10 if boss.injector_cold else (9 if boss.injector_heat else 8)))
+	if picture.is_empty() or picture==_state_picture:return
+	_state_picture=picture;_sprite.texture=Art.texture(picture)
+	var drawn_width:=64.0 if kind=="lever" else width
+	var ratio:=drawn_width/_sprite.texture.get_width();_sprite.scale=Vector2.ONE*ratio
+	_sprite.position=Vector2(-drawn_width*.5,-float(_sprite.texture.get_meta("ground_foot",348))*ratio)
 func _physics_process(delta:float) -> void:
 	clock+=delta;frozen_left=maxf(0,frozen_left-delta);disabled_left=maxf(0,disabled_left-delta);boost_left=maxf(0,boost_left-delta);_cooldown=maxf(0,_cooldown-delta)
+	_lever_time=maxf(0,_lever_time-delta);_update_state_art()
 	if temporary_life>0:
 		temporary_life-=delta
 		if temporary_life<=0:queue_free();return
@@ -101,6 +119,7 @@ func interact() -> bool:
 			else:activated=true;_body.set_deferred("collision_layer",0);_sprite.texture=Art.texture("door_open");Sfx.play("lab_door",-8)
 		"lever":
 			reversed=not reversed
+			_lever_time=.14;_update_state_art()
 			for device in get_tree().get_nodes_in_group("lab_devices"):
 				if device!=self and device.circuit==circuit:device.reversed=not device.reversed;device.disabled_left=8
 			level._show_notice("Circuito invertido: esteiras e braços mudaram de direção. Segurança suspensa por 8 s.");Sfx.select()

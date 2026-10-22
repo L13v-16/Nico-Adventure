@@ -16,6 +16,7 @@ func _physics_process(delta:float) -> void:
 	var next:=global_position+flight*delta
 	var query:=PhysicsRayQueryParameters2D.create(global_position,next,1|2|4)
 	if friendly:
+		query.hit_from_inside=true
 		var player:=get_tree().get_first_node_in_group("player") as CollisionObject2D
 		if player!=null:query.exclude=[player.get_rid()]
 	var hit:=get_world_2d().direct_space_state.intersect_ray(query)
@@ -27,8 +28,9 @@ func _physics_process(delta:float) -> void:
 			target.take_damage(1,global_position)
 			if net:target._hitstun_timer=maxf(target._hitstun_timer,.45)
 		if not friendly and not net and hit.normal.y<-.5:
-			get_parent().spawn_pool(hit.position+Vector2(0,1),"toxic",6,70)
+			var pool:Node2D=get_parent().spawn_pool(hit.position+Vector2(0,1),"toxic",6,70)
+			if is_instance_valid(owner_boss):pool.set_meta("boss_owner_id",owner_boss.get_instance_id())
 		queue_free();return
 	global_position=next
 	if not friendly and not net:flight.y+=75*delta
-	_sprite.flip_h=flight.x>0
+	_sprite.flip_h=flight.x<0

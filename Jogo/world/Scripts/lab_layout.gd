@@ -25,9 +25,9 @@ static func build(level:Node2D) -> void:
 	for info in GROUND:
 		for x in range(int(info.x+95),int(info.x+info.z-60),95):
 			if x<490 or x>6020:continue
-			var item:=item_scene.instantiate();item.cherry_id="lab:floor:%d"%x;item.position=Vector2(x,68);level.get_node("items").add_child(item)
+			var item:=item_scene.instantiate();item.cherry_id="lab:floor:%d"%x;item.position=Vector2(x,23 if absf(x-620)<35 else 85);level.get_node("items").add_child(item)
 	for i in 3:
 		for j in 4:
-			var item:=item_scene.instantiate();item.cherry_id="lab:bonus:%d:%d"%[i,j];item.position=Vector2([1040,2690,4790][i]+j*26,[-1,-68,-23][i]);level.get_node("items").add_child(item)
+			var item:=item_scene.instantiate();item.cherry_id="lab:bonus:%d:%d"%[i,j];item.position=Vector2([1040,2690,4790][i]+j*26,[13,-55,-10][i]);level.get_node("items").add_child(item)
 static func ground(parent:Node,at:Vector2,width:float,depth:float,one_way:bool,variant:int) -> void:
 	var floor:=preload("res://world/Scripts/lab_terrain.gd").new();floor.position=at;floor.width=width;floor.depth=depth;floor.platform=one_way;floor.variant=variant;parent.add_child(floor)

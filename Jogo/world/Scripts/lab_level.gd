@@ -3,6 +3,7 @@ var access_card:=false
 var _rescued:=false
 var _ambience:=4.0
 func _ready() -> void:
+	$Player.z_index=5
 	if not InputMap.has_action("lab_throw"):
 		InputMap.add_action("lab_throw");var key:=InputEventKey.new();key.physical_keycode=KEY_F;InputMap.action_add_event("lab_throw",key)
 	preload("res://world/Scripts/lab_layout.gd").build(self)
@@ -39,8 +40,7 @@ func _process(delta:float) -> void:
 	var camera:Camera2D=player.get_node("Camera2D")
 	var boss:Node2D=$Boss
 	notice.position.y=145 if boss.active else 56
-	camera.zoom=camera.zoom.lerp(Vector2.ONE*(.92 if boss.active else 1.5),1-exp(-delta*4))
-	player._camera_base_offset=player._camera_base_offset.lerp(Vector2(6600-player.position.x-float(player._camera_look),-player.position.y) if boss.active else Vector2(50,-40),1-exp(-delta*5))
+	frame_camera(delta)
 	if player.position.y>300:player.take_damage(3,Vector2(player.position.x,330))
 	_ambience-=delta
 	if _ambience<=0 and not get_tree().paused:_ambience=9;Sfx.play("lab_machine",-21)
@@ -50,9 +50,24 @@ func _process(delta:float) -> void:
 	elif player.position.x<3072:hint.text="GELO: ponte sobre líquidos · FOGO no gelo: impulso · Roxo: quique · Azul: escorrega."
 	elif player.position.x<4608:hint.text="Fábrica · E inverte circuitos · GELO pausa as máquinas · Observe o aviso das prensas."
 	else:hint.text="Pesquisa avançada · E: registros LG-17 · Sua segurança é nossa 17ª prioridade."
+func frame_camera(delta:float,snap:bool=false) -> void:
+	var camera:Camera2D=player.get_node("Camera2D")
+	var fighting:bool=$Boss.active
+	var factor:=1.0 if snap else 1-exp(-delta*6)
+	camera.zoom=camera.zoom.lerp(Vector2.ONE*(.9 if fighting else 1.5),factor)
+	var desired:=Vector2(50,-40)
+	if fighting:
+		var half_width:float=320.0/camera.zoom.x
+		var center:=clampf(player.position.x+player._facing*45,6160+half_width-100,7040-half_width+100)
+		desired=Vector2(center-player.position.x-player._camera_look,20-player.position.y)
+	player._camera_base_offset=player._camera_base_offset.lerp(desired,factor)
+	if snap:
+		camera.offset=player._camera_base_offset+Vector2(player._camera_look,0)
+		camera.reset_smoothing();camera.force_update_scroll()
 func _physics_process(_delta:float) -> void:
 	if not intro_active and not completed and player.elements.can_control() and Input.is_action_just_pressed("lab_throw"):$Boss.throw_serum()
 func _unhandled_input(event:InputEvent) -> void:
+	if event.is_echo():return
 	if intro_active or completed or get_tree().paused or not event.is_action_pressed("interagir"):return
 	for shop in get_tree().get_nodes_in_group("caravan_shops"):
 		if shop.get_parent()==self and shop._can_open():return

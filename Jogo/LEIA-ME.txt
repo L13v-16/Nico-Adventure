@@ -753,3 +753,16 @@ A derrota tem uma cutscene de derretimento cartunesco, com pernas e cauda virand
 A campanha, o botão Continuar, a Coleção e o modo livre agora incluem cinco ilhas. Saves anteriores preservam saldo, equipamentos, resultados e histórico de cerejas, e continuam no laboratório após concluir o Submundo. O modo livre exige concluir também o laboratório; cerejas da quinta ilha usam identificadores persistentes para impedir coletas duplicadas.
 
 Arte: cinco spritesheets/cenários criados com imagegen integrado, em world/Arte/Lab/V68. Os PNGs originais e sua transparência foram preservados integralmente; a integração usa recortes AtlasTexture e máscaras nativas de renderização para separar os poucos limites sobrepostos da folha. PROMPTS.txt registra os prompts e regions.json os recortes e hashes. Todas as 405 imagens anteriores permanecem intactas. Testes usam APPDATA dedicado, sem ler ou alterar saves reais.
+
+
+## Leitura do laboratório e correções de Largato (v69)
+
+As cerejas do percurso agora ficam 17 pixels mais baixas, permitindo coleta ao caminhar. As cerejas das plataformas foram alinhadas à altura de Nico ao pousar. A cereja que ficava dentro da caixa de cobertura foi colocada sobre ela, e sua colisão passou a acompanhar a altura visível. Os identificadores das cerejas permanecem iguais, preservando o histórico do modo livre e o saldo.
+
+Somente os painéis do fundo recebem desfoque leve, menor saturação e contraste. Piso, plataformas, personagens, máquinas e HUD continuam nítidos. As alavancas possuem estados à direita, vertical e à esquerda, com uma transição curta por interação. Terminais e injetor agora exibem sprites diferentes para espera, aquecimento, resfriamento e doses disponíveis.
+
+Os quatro tipos de inimigos ganharam 24 poses novas. Os ataques têm um segundo de antecipação, mantêm a direção anunciada e só disparam depois de iniciar a animação. Há poses próprias de recuperação e dano; o lagarto avisa o ataque com a garganta inflada e não acerta pelas costas. O congelamento e as derrotas continuam funcionando.
+
+A câmera da arena acompanha Nico dentro de limites seguros, em vez de deixar a entrada fora da tela. O início do combate reposiciona Nico com segurança, e o reinício restaura seu enquadramento. Nico é desenhado à frente das máquinas. Largato se desloca suavemente entre etapas, marca a direção da cauda e concede uma janela maior na descida. A inundação alterna aviso, perigo e intervalo seguro; GELO a desativa. Seringas lançadas dentro da colisão do chefe agora registram o acerto. Reiniciar elimina os projéteis e as poças temporárias do chefe.
+
+Arte: duas novas spritesheets geradas pelo imagegen integrado, enemy_actions.png e device_states.png, em world/Arte/Lab/V69. Os PNGs e sua transparência foram preservados integralmente; recortes e exclusão de poses vizinhas usam AtlasTexture e shader nativos. PROMPTS.txt e regions.json registram os prompts, recortes e hashes. As 410 imagens anteriores permanecem intactas. Todos os testes usam APPDATA isolado e não acessam saves reais.

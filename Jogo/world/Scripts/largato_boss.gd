@@ -33,6 +33,7 @@ var _serum_cooldown:=0.0
 var _machine_timer:=0.0
 var _hazard_x:=0.0
 var _warning_left:=0.0
+var _empty_notice:=0.0
 var _lift:Sprite2D
 var _sprite:AnimatedSprite2D
 var _base_scale:=Vector2.ONE
@@ -57,6 +58,9 @@ func _ready() -> void:
 func start_encounter() -> void:
 	if active or dead or dying:return
 	active=true;phase=1;health=4;timer=1.6;state="idle";_spent_window=false
+	_player.position=Vector2(clampf(_player.position.x,LEFT+95,RIGHT-95),89)
+	_player.velocity=Vector2.ZERO;_player._invulnerability_timer=maxf(.25,_player._invulnerability_timer)
+	get_parent().frame_camera(0,true)
 	_player.respawn_position=Vector2(6080,89)
 	for x in [6125.0,7072.0]:
 		var gate:=StaticBody2D.new();gate.collision_layer=1;gate.collision_mask=0;gate.position=Vector2(x,0)
@@ -71,13 +75,13 @@ func _physics_process(delta:float) -> void:
 	if not active:
 		if _player.position.x>LEFT and _player.position.x<RIGHT and not _player.is_dead():start_encounter()
 		return
-	_clock+=delta;timer-=delta;vulnerable=maxf(0,vulnerable-delta);_invulnerable=maxf(0,_invulnerable-delta);_serum_cooldown=maxf(0,_serum_cooldown-delta)
+	_clock+=delta;timer-=delta;vulnerable=maxf(0,vulnerable-delta);_invulnerable=maxf(0,_invulnerable-delta);_serum_cooldown=maxf(0,_serum_cooldown-delta);_empty_notice=maxf(0,_empty_notice-delta)
 	_sprite.modulate=Color("c5f4b0") if _invulnerable>0 else Color.WHITE
-	_sprite.flip_h=_player.position.x>position.x
+	_sprite.flip_h=(_side>0) if phase==1 and state in ["warning","tail","shoot"] else _player.position.x>position.x
 	if phase==1:_tick_containment(delta)
 	elif phase==2:_tick_overload(delta)
 	else:_tick_final(delta)
-	if phase!=2 and _player.global_position.distance_to(global_position+Vector2(0,-20))<34 and vulnerable<=0:_player.take_damage(1,position)
+	if phase==1 and _player.global_position.distance_to(global_position+Vector2(0,-20))<34 and vulnerable<=0:_player.take_damage(1,position)
 	_caption.text="LARGATO · DIRETOR DE PESQUISA
 "+_advice()
 	_fill.size.x=428*(health/(4 if phase==1 else 3))
@@ -95,7 +99,7 @@ func _tick_containment(delta:float) -> void:
 			if position.x<LEFT+90:_side=1
 			if position.x>RIGHT-90:_side=-1
 			if timer<=0:
-				_attack_number+=1;_side=signf(_player.position.x-position.x);state="warning";timer=.8;_sprite.play(&"windup");Sfx.play("lab_scan",-9)
+				_attack_number+=1;_side=-1.0 if _player.position.x<position.x else 1.0;state="warning";timer=.8;_sprite.play(&"windup");Sfx.play("lab_scan",-9)
 		"warning":
 			_sprite.play(&"windup")
 			if timer<=0:
@@ -104,7 +108,8 @@ func _tick_containment(delta:float) -> void:
 				elif _attack_number%2==0:state="shoot";timer=.4;_shoot(_player.position);_sprite.play(&"shoot")
 				else:state="tail";timer=.38;_sprite.play(&"tail")
 		"tail":
-			if absf(_player.position.x-position.x)<108 and _player.position.y>FLOOR-42:_player.take_damage(1,position)
+			var distance:float=(_player.position.x-position.x)*_side
+			if distance>0 and distance<108 and _player.position.y>FLOOR-42:_player.take_damage(1,position)
 			if timer<=0:_open_window(1.9)
 		"shoot":
 			if timer<=0:_open_window(1.7)
@@ -116,10 +121,10 @@ func _open_window(seconds:float) -> void:
 func _tick_overload(delta:float) -> void:
 	heated=maxf(0,heated-delta);cooled=maxf(0,cooled-delta);_machine_timer-=delta
 	var open:=vulnerable>0
-	position.y=move_toward(position.y,FLOOR if open else -12,190*delta);position.x=CENTER
+	position.y=move_toward(position.y,FLOOR if open else -12,190*delta);position.x=move_toward(position.x,CENTER,240*delta)
 	_sprite.play(&"hurt" if _invulnerable>0 else (&"idle" if open else &"operate"))
 	if heated>0 and cooled>0 and not open and not _spent_window:
-		_open_window(3.5);get_parent()._show_notice("Máquinas estabilizadas! Ataque Largato enquanto ele desce.");Sfx.play("lab_door",-8)
+		_open_window(4.8);get_parent()._show_notice("Máquinas estabilizadas! Ataque Largato enquanto ele desce.");Sfx.play("lab_door",-8)
 	if vulnerable<=0 and state=="opening":
 		state="idle";heated=0;cooled=0;_spent_window=false
 	if _machine_timer<=0:
@@ -129,15 +134,16 @@ func _tick_overload(delta:float) -> void:
 		if _warning_left<=0:
 			if absf(_player.position.x-_hazard_x)<30 and _player.position.y>FLOOR-55:_player.take_damage(1,Vector2(_hazard_x,FLOOR))
 			_shoot(_player.position+Vector2(-70,0));_shoot(_player.position+Vector2(70,0))
-	if cooled<=0 and vulnerable<=0 and _clock>5 and _player.position.y+11>FLOOR-2 and _player.position.x>LEFT+125 and _player.position.x<RIGHT-125:
+	if flood_active() and _player.position.y+11>FLOOR-2 and _player.position.x>LEFT+125 and _player.position.x<RIGHT-125:
 		_player.take_damage(1,Vector2(_player.position.x,FLOOR+22))
+func flood_active() -> bool:return phase==2 and cooled<=0 and vulnerable<=0 and fposmod(_clock,10)>6.5 and fposmod(_clock,10)<9
 func _tick_final(delta:float) -> void:
-	position=Vector2(CENTER+190,FLOOR);_sprite.play(&"inject" if _invulnerable>0 else &"taunt")
+	position=position.move_toward(Vector2(CENTER+190,FLOOR),200*delta);_sprite.play(&"inject" if _invulnerable>0 else &"taunt")
 	var squash:float=1-serum_hits*.07+sin(_clock*9)*serum_hits*.012
 	_sprite.scale=_base_scale*Vector2(1+serum_hits*.035,squash);preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
 	if timer<=0:_shoot(_player.position);timer=2.7
-	if _serum_cooldown<=0 and injector_reversed and syringe_ammo==0:
-		get_parent()._show_notice("Sem dose? Volte ao injetor e aperte E para recarregar.");_serum_cooldown=4
+	if _empty_notice<=0 and injector_reversed and syringe_ammo==0:
+		get_parent()._show_notice("Sem dose? Volte ao injetor e aperte E para recarregar.");_empty_notice=4
 func _shoot(target:Vector2) -> void:
 	var shot:=preload("res://world/Scripts/lab_projectile.gd").new();shot.owner_boss=self
 	var side:float=signf(target.x-position.x);shot.position=position+Vector2(side*32,-28);shot.flight=(target-shot.position).normalized()*210;get_parent().add_child(shot);Sfx.play("lab_dart",-8)
@@ -151,6 +157,7 @@ func take_element(element:String,source:Vector2) -> void:take_damage(1,source)
 func freeze_for(_seconds:float) -> void:pass
 func _begin_overload() -> void:
 	phase=2;health=3;state="idle";vulnerable=0;_clock=0;_spent_window=false;_machine_timer=3
+	_clear_attacks();_invulnerable=1.0
 	get_parent().show_lab_notice("Largato: Você não entende. Isto é um procedimento perfeitamente aprovado! FOGO à esquerda, GELO à direita.",7)
 	Sfx.play("lab_alarm",-7)
 func machine_element(kind:String,element:String) -> void:
@@ -165,6 +172,7 @@ func _begin_final() -> void:
 	get_parent().get_node("LabInjector")._body.set_deferred("collision_layer",16)
 	for terminal in ["LabHeat","LabCold"]:get_parent().get_node(terminal)._body.set_deferred("collision_layer",0)
 	phase=3;health=3;state="final";vulnerable=0;_clock=0;timer=3;heated=0;cooled=0;_warning_left=0
+	_clear_attacks();_invulnerable=1.0
 	get_parent().show_lab_notice("Largato: Pare de destruir meu laboratório! O orçamento já foi reduzido duas vezes! Inverta o injetor: FOGO, GELO e E.",7)
 func reverse_injector() -> bool:
 	if not active or phase!=3:return false
@@ -190,6 +198,8 @@ func _defeat() -> void:
 func _clear_attacks() -> void:
 	for shot in get_tree().get_nodes_in_group("lab_projectiles"):
 		if shot.owner_boss==self:shot.queue_free()
+	for pool in get_tree().get_nodes_in_group("lab_devices"):
+		if pool.get_meta("boss_owner_id",0)==get_instance_id():pool.queue_free()
 func _clear_gates() -> void:
 	for gate in _gates:
 		if is_instance_valid(gate):gate.queue_free()
@@ -201,6 +211,7 @@ func reset_encounter() -> void:
 	get_parent().get_node("LabInjector")._body.set_deferred("collision_layer",0)
 	for terminal in ["LabHeat","LabCold"]:get_parent().get_node(terminal)._body.set_deferred("collision_layer",4|16)
 	_lift.hide();position=Vector2(CENTER+170,FLOOR);collision_layer=4;_sprite.scale=_base_scale;_sprite.modulate=Color.WHITE;_sprite.play(&"idle");_bar.hide()
+	_attack_number=0;_side=-1;_serum_cooldown=0;_empty_notice=0;queue_redraw();get_parent().frame_camera(0,true)
 func is_dead() -> bool:return dead
 func _advice() -> String:
 	if phase==1:return "1/3 · Pule a cauda e ataque na recuperação."
@@ -209,10 +220,16 @@ func _advice() -> String:
 func _draw() -> void:
 	if not active:return
 	if vulnerable>0 and not _spent_window:draw_arc(Vector2(0,-70),10,0,TAU,20,Color("ffe49c"),2)
-	if phase==1 and state=="warning":draw_rect(Rect2(-100,-2,200,3),Color("ffbc70",absf(sin(_clock*14))))
+	if phase==1 and state=="warning":draw_rect(Rect2(0 if _side>0 else -108,-2,108,3),Color("ffbc70",absf(sin(_clock*14))))
 	if phase==2:
 		draw_line(Vector2(0,FLOOR-position.y),Vector2(0,5),Color("172333"),12)
 		draw_line(Vector2(0,FLOOR-position.y),Vector2(0,5),Color("adb9c4"),6)
 		var level_x:float=LEFT-position.x
-		draw_rect(Rect2(level_x+125,FLOOR-position.y+2,RIGHT-LEFT-250,28),Color("98e6ef") if cooled>0 else Color("63d36b",.7))
+		var cycle:=fposmod(_clock,10)
+		if cooled>0 or flood_active():
+			var color:=Color("98e6ef") if cooled>0 else Color("63d36b",.85)
+			draw_rect(Rect2(level_x+125,FLOOR-position.y+2,RIGHT-LEFT-250,10),color)
+			for x in range(125,int(RIGHT-LEFT-125),12):draw_rect(Rect2(level_x+x,FLOOR-position.y+sin(_clock*4+x)*2,8,3),color.lightened(.3))
+		elif cycle>5 and cycle<6.5 and vulnerable<=0:
+			for x in range(125,int(RIGHT-LEFT-125),20):draw_rect(Rect2(level_x+x,FLOOR-position.y-2,12,3),Color("ffbc70",absf(sin(_clock*10))))
 		if _warning_left>0:draw_rect(Rect2(_hazard_x-position.x-27,FLOOR-position.y-3,54,4),Color("ffc376",absf(sin(_clock*18))))
