@@ -766,3 +766,7 @@ Os quatro tipos de inimigos ganharam 24 poses novas. Os ataques têm um segundo 
 A câmera da arena acompanha Nico dentro de limites seguros, em vez de deixar a entrada fora da tela. O início do combate reposiciona Nico com segurança, e o reinício restaura seu enquadramento. Nico é desenhado à frente das máquinas. Largato se desloca suavemente entre etapas, marca a direção da cauda e concede uma janela maior na descida. A inundação alterna aviso, perigo e intervalo seguro; GELO a desativa. Seringas lançadas dentro da colisão do chefe agora registram o acerto. Reiniciar elimina os projéteis e as poças temporárias do chefe.
 
 Arte: duas novas spritesheets geradas pelo imagegen integrado, enemy_actions.png e device_states.png, em world/Arte/Lab/V69. Os PNGs e sua transparência foram preservados integralmente; recortes e exclusão de poses vizinhas usam AtlasTexture e shader nativos. PROMPTS.txt e regions.json registram os prompts, recortes e hashes. As 410 imagens anteriores permanecem intactas. Todos os testes usam APPDATA isolado e não acessam saves reais.
+
+SALAS DO LABORATÓRIO — v70
+
+E nas portas entra em outro ambiente: recepção, experimentação, fábrica e pesquisa. Cada sala tem paredes, cenário e câmera próprios. Encontre o cartão na recepção para entrar. Use a porta de chegada para voltar ao setor anterior. Os itens coletados e os estados das máquinas continuam salvos durante a visita; as chegadas atualizam o ponto de retorno e a música continua tocando. Durante a luta de Largato, as saídas ficam bloqueadas.

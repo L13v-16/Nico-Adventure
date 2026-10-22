@@ -115,8 +115,7 @@ func interact() -> bool:
 	var level:=get_parent()
 	match kind:
 		"gate":
-			if not level.access_card:level._show_notice("É necessário o cartão laranja do setor de segurança.")
-			else:activated=true;_body.set_deferred("collision_layer",0);_sprite.texture=Art.texture("door_open");Sfx.play("lab_door",-8)
+			if is_instance_valid(level.rooms):level.rooms.travel(self)
 		"lever":
 			reversed=not reversed
 			_lever_time=.14;_update_state_art()
@@ -170,5 +169,7 @@ func _draw() -> void:
 		var cycle:=fposmod(clock,4.2);var low:float=smoothstep(2.65,2.9,cycle)*(1-smoothstep(3.35,3.7,cycle)) if frozen_left<=0 else 0
 		draw_rect(Rect2(-width*.3,-80+low*62,width*.6,10),Color("c6cbd1"))
 		if cycle>2 and cycle<2.8:draw_rect(Rect2(-width*.4,-1,width*.8,3),Color("ffb05d",absf(sin(clock*12))))
-	if kind in ["lever","gate","record","injector","rescue"] and absf(_player.position.x-position.x)<58:
-		draw_string(ThemeDB.fallback_font,Vector2(-26,-72),"E · "+{"lever":"inverter","gate":"acesso","record":"registro","injector":"injetor","rescue":"Urso"}[kind],HORIZONTAL_ALIGNMENT_LEFT,120,8,Color("ffe6b7"))
+	if kind in ["lever","gate","record","injector","rescue"] and _player.position.distance_to(position)<76:
+		var action:String={"lever":"inverter","gate":"entrar","record":"registro","injector":"injetor","rescue":"Urso"}[kind]
+		if kind=="gate" and is_instance_valid(get_parent().rooms):action=get_parent().rooms.door_label(roundi(position.x))
+		draw_string(ThemeDB.fallback_font,Vector2(-90,26 if kind=="gate" else -72),"E · "+action,HORIZONTAL_ALIGNMENT_CENTER,180,8,Color("ffe6b7"))

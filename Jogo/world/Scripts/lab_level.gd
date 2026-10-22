@@ -2,6 +2,7 @@ extends "res://world/Scripts/level.gd"
 var access_card:=false
 var _rescued:=false
 var _ambience:=4.0
+var rooms:Node2D
 func _ready() -> void:
 	$Player.z_index=5
 	if not InputMap.has_action("lab_throw"):
@@ -12,6 +13,7 @@ func _ready() -> void:
 	$HUD/Notice.add_theme_font_size_override("font_size",10)
 	$HUD/Notice.size.y=46
 	super._ready()
+	rooms=preload("res://world/Scripts/lab_rooms.gd").new();rooms.name="Rooms";add_child(rooms)
 func _polish_terrain() -> void:pass
 func _spawn_fragments() -> void:
 	total_secrets=3
@@ -56,6 +58,13 @@ func frame_camera(delta:float,snap:bool=false) -> void:
 	var factor:=1.0 if snap else 1-exp(-delta*6)
 	camera.zoom=camera.zoom.lerp(Vector2.ONE*(.9 if fighting else 1.5),factor)
 	var desired:=Vector2(50,-40)
+	if not fighting and is_instance_valid(rooms):
+		var bounds:Vector2=rooms.BOUNDS[rooms.current]
+		var half_width:float=320.0/camera.zoom.x
+		var origin:=clampf(player.position.x,bounds.x+half_width,bounds.y-half_width)
+		var center:=clampf(player.position.x+player._facing*50,bounds.x+half_width,bounds.y-half_width)
+		# Camera2D applies offset after its limits; cancel look-ahead at walls.
+		desired.x=center-origin-player._camera_look
 	if fighting:
 		var half_width:float=320.0/camera.zoom.x
 		var center:=clampf(player.position.x+player._facing*45,6160+half_width-100,7040-half_width+100)
@@ -65,10 +74,12 @@ func frame_camera(delta:float,snap:bool=false) -> void:
 		camera.offset=player._camera_base_offset+Vector2(player._camera_look,0)
 		camera.reset_smoothing();camera.force_update_scroll()
 func _physics_process(_delta:float) -> void:
+	if is_instance_valid(rooms) and rooms.transitioning:return
 	if not intro_active and not completed and player.elements.can_control() and Input.is_action_just_pressed("lab_throw"):$Boss.throw_serum()
 func _unhandled_input(event:InputEvent) -> void:
 	if event.is_echo():return
 	if intro_active or completed or get_tree().paused or not event.is_action_pressed("interagir"):return
+	if is_instance_valid(rooms) and rooms.transitioning:return
 	for shop in get_tree().get_nodes_in_group("caravan_shops"):
 		if shop.get_parent()==self and shop._can_open():return
 	var closest:Node2D;var distance:=65.0
@@ -87,6 +98,12 @@ func rescue_urso() -> void:
 	_rescued=true;Save.set_story_flag("urso_rescued");player.heal_full();_complete_level()
 func _on_finish_entered(body:Node2D) -> void:
 	if body==player and _rescued and not completed:rescue_urso()
+func _on_checkpoint_entered(body:Node2D,checkpoint) -> void:
+	# Area callbacks queued before a door teleport may arrive in the next room.
+	if is_instance_valid(rooms):
+		if rooms.sector_at(checkpoint.global_position.x)!=rooms.current:return
+		if player.global_position.distance_to(checkpoint.global_position)>90:return
+	super._on_checkpoint_entered(body,checkpoint)
 func _start_finale(stats:Dictionary,new_record:bool) -> void:
 	_show_notice("");player.velocity=Vector2.ZERO;get_tree().paused=true
 	_finale=preload("res://world/Scripts/lab_cutscene.gd").new();_finale.mode="ending";_finale.level=self;_finale.name="UrsoRescue"
