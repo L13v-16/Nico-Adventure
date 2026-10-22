@@ -23,7 +23,7 @@ func _ready() -> void:
 	_old_pause=get_tree().paused;_old_intro=level.intro_active;_old_timing=level._timing;_old_hud=level.get_node("HUD").visible;_old_menu=level.pause_menu.can_open
 	_boss_hud=level.get_node("Boss")._bar.visible;level.get_node("Boss")._bar.hide()
 	get_tree().paused=true;level.intro_active=true;level._timing=false;level.pause_menu.can_open=false;level.get_node("HUD").hide();Sfx.begin_dialogue_music(self)
-	var backing:=ColorRect.new();backing.size=Vector2(640,360);backing.color=Color("151e2c");backing.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(backing)
+	var backing:=ColorRect.new();backing.z_index=-30;backing.size=Vector2(640,360);backing.color=Color("151e2c");backing.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(backing)
 	_stage=Node2D.new();add_child(_stage)
 	var background:=Sprite2D.new();background.texture=Art.texture("background_00" if mode=="arrival" else "background_03");background.centered=false;background.z_index=-10;background.position=Vector2(0,8);background.scale=Vector2(640.0/768,240.0/384);_stage.add_child(background)
 	for x in range(0,640,80):
