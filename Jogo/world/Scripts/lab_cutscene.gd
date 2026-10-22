@@ -16,6 +16,7 @@ var _old_timing:=false
 var _old_hud:=true
 var _old_menu:=true
 var _boss_hud:=false
+var _arrival:Node2D
 const Art=preload("res://world/Scripts/lab_art.gd")
 const FLOOR:=247.0
 func _ready() -> void:
@@ -25,21 +26,24 @@ func _ready() -> void:
 	get_tree().paused=true;level.intro_active=true;level._timing=false;level.pause_menu.can_open=false;level.get_node("HUD").hide();Sfx.begin_dialogue_music(self)
 	var backing:=ColorRect.new();backing.z_index=-30;backing.size=Vector2(640,360);backing.color=Color("151e2c");backing.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(backing)
 	_stage=Node2D.new();add_child(_stage)
-	var background:=Sprite2D.new();background.texture=Art.texture("background_00" if mode=="arrival" else "background_03");background.centered=false;background.z_index=-10;background.position=Vector2(0,8);background.scale=Vector2(640.0/768,240.0/384);_stage.add_child(background)
+	if mode=="arrival":
+		_arrival=preload("res://world/Scripts/lab_arrival_scene.gd").new();_arrival.player_frames=level.player.anim.sprite_frames;_stage.add_child(_arrival)
+	else:_build_regular_scene()
+	_canvas=Control.new();_canvas.z_index=10;_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE;_canvas.draw.connect(_draw_scene);add_child(_canvas)
+	_update_scene()
+func _build_regular_scene() -> void:
+	var background:=Sprite2D.new();background.texture=Art.texture("background_03");background.centered=false;background.z_index=-10;background.position=Vector2(0,8);background.scale=Vector2(640.0/768,240.0/384);_stage.add_child(background)
 	for x in range(0,640,80):
 		var floor_art:=Art.prop("floor_00",82,true);floor_art.position+=Vector2(x+40,FLOOR);_stage.add_child(floor_art)
 	_nico=Art.Art.actor(level.player.anim.sprite_frames,48);_nico.position+=Vector2(124,FLOOR);_nico.play(&"idle");_stage.add_child(_nico)
 	_rig=Node2D.new();_rig.position=Vector2(438,FLOOR);_stage.add_child(_rig)
-	if mode=="arrival":_actor=Art.Art.actor(preload("res://world/Arte/Underworld/jose.tres"),64)
-	elif mode=="ending":_actor=Art.Art.actor(preload("res://world/Arte/Amigos/urso.tres"),98)
+	if mode=="ending":_actor=Art.Art.actor(preload("res://world/Arte/Amigos/urso.tres"),98)
 	else:_actor=Art.actor("largato",184)
 	_rig.add_child(_actor);_actor.play(&"idle")
 	if mode in ["boss","melt"]:
 		var machine:=Art.prop("injector",115);machine.position+=Vector2(545,FLOOR);_machine_back(machine)
-	_canvas=Control.new();_canvas.z_index=10;_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE;_canvas.draw.connect(_draw_scene);add_child(_canvas)
-	_update_scene()
 func _machine_back(machine:Node2D) -> void:_stage.add_child(machine);machine.z_index=-1
-func duration() -> float:return 11.5 if mode=="melt" else (9.0 if mode=="boss" else 8.5)
+func duration() -> float:return 13.3 if mode=="arrival" else (11.5 if mode=="melt" else (9.0 if mode=="boss" else 8.5))
 func _process(delta:float) -> void:
 	clock+=delta;_update_scene()
 	if clock>=duration():finish()
@@ -55,7 +59,7 @@ func _update_scene() -> void:
 	elif mode=="boss":
 		_rig.position.x=lerpf(610,438,smoothstep(0,1.4,clock));_actor.play(&"run" if clock<1.4 else (&"taunt" if clock<6 else &"shoot"));Art.Art.reanchor(_actor)
 		_sound(1.5,"lab_door",-10)
-	elif mode=="arrival":_actor.play(&"idle");_actor.flip_h=true
+	elif mode=="arrival":_arrival.update_scene(clock)
 	else:_actor.play(&"idle");_actor.flip_h=true
 	_canvas.queue_redraw()
 func _unhandled_input(event:InputEvent) -> void:
@@ -79,9 +83,7 @@ func _draw_scene() -> void:
 	var title:="LABORATÓRIO DOS EXECUTIVOS"
 	var speaker:="";var line:="";var subline:=""
 	if mode=="arrival":
-		speaker="JOSÉ" if clock<4.2 else "NICO"
-		line="O grandão segura a entrada. Eu cuido da nossa rota de fuga." if clock<4.2 else "Urso está aqui dentro. Vou encontrar a câmara de pesquisa."
-		subline="Entrada de serviço · Fogo e gelo continuam disponíveis."
+		var words:Array[String]=_arrival.dialogue();speaker=words[0];line=words[1];subline=words[2]
 	elif mode=="boss":
 		title="LARGATO · DIRETOR DE PESQUISA"
 		speaker="LARGATO" if clock<3.4 or clock>6.1 else "NICO"
@@ -105,4 +107,5 @@ func _draw_scene() -> void:
 	_canvas.draw_string(font,Vector2(31,330),subline,HORIZONTAL_ALIGNMENT_LEFT,590,9,Color("aebfca"))
 	_canvas.draw_string(font,Vector2(470,352),"E / Enter / Esc: pular",HORIZONTAL_ALIGNMENT_LEFT,170,8,Color("acb6c4"))
 	var fade:=1-smoothstep(0,.35,clock)
+	if mode=="arrival":fade=maxf(fade,smoothstep(12.75,13.3,clock))
 	if fade>0:_canvas.draw_rect(Rect2(0,0,640,360),Color(ink,fade))

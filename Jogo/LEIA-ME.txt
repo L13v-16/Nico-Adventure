@@ -770,3 +770,7 @@ Arte: duas novas spritesheets geradas pelo imagegen integrado, enemy_actions.png
 SALAS DO LABORATÓRIO — v70
 
 E nas portas entra em outro ambiente: recepção, experimentação, fábrica e pesquisa. Cada sala tem paredes, cenário e câmera próprios. Encontre o cartão na recepção para entrar. Use a porta de chegada para voltar ao setor anterior. Os itens coletados e os estados das máquinas continuam salvos durante a visita; as chegadas atualizam o ponto de retorno e a música continua tocando. Durante a luta de Largato, as saídas ficam bloqueadas.
+
+CHEGADA AO LABORATÓRIO — v71
+
+Nico e José chegam montados no Carcereiro. Eles descem e o monstro arrebenta a porta de serviço, com destroços, poeira, rugido e som de impacto. Nico entra, enquanto José e o guardião protegem a saída. A nova cena dura 13,3 segundos e pode ser pulada com E, Enter ou Esc. O tremor respeita a opção da câmera. Saves antigos também mostram a nova chegada uma vez, preservando o progresso e o saldo.

@@ -32,8 +32,8 @@ func show_lab_notice(message:String,seconds:float=5) -> void:
 	_show_notice(message);_notice_time=seconds
 func _start_sequence() -> void:
 	var skip:=Save.consume_skip_intro()
-	if not skip or not Save.has_story_flag("lab_arrived"):
-		var arrival:=preload("res://world/Scripts/lab_cutscene.gd").new();arrival.mode="arrival";arrival.level=self;arrival.name="LabArrival";add_child(arrival);await arrival.finished;Save.set_story_flag("lab_arrived")
+	if not skip or not Save.has_story_flag("lab_entrance_breached"):
+		var arrival:=preload("res://world/Scripts/lab_cutscene.gd").new();arrival.mode="arrival";arrival.level=self;arrival.name="LabArrival";add_child(arrival);await arrival.finished;Save.set_story_flag("lab_arrived");Save.set_story_flag("lab_entrance_breached")
 	_begin_intro()
 func _process(delta:float) -> void:
 	_update_notice(delta)
