@@ -17,7 +17,7 @@ level_id = "fase_4"
 level_name = "Fase 4 — O Submundo"
 par_time = 360.0
 finish_floor_y = 100.0
-next_level_scene = ""
+next_level_scene = "res://world/lab_05.tscn"
 intro_title = "O SUBMUNDO"
 intro_act = 4
 

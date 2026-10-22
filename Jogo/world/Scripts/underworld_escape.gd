@@ -15,7 +15,7 @@ const LINES := [
 	["José", "Vou tentar domar esse grandão! Estas correntes vão servir de rédeas."],
 	["José", "Sobe, Nico! Eu seguro as correntes."],
 	["Nico", "Segura firme, José!"],
-	["José", "Próxima ilha! Ainda temos amigos para encontrar."],
+	["José", "O laboratório dos executivos! Urso pode estar preso lá."],
 	["Nico", "Vamos, grandão!"],
 ]
 var player: CharacterBody2D

@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V68/enemies.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(1217, 298, 292, 218)
+margin = Rect2(78, 90, 156, 134)
+filter_clip = true
+metadata/ground_foot = 305
+metadata/walk_top = 3

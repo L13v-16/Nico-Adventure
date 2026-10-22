@@ -605,3 +605,18 @@ Urus entra em voo rasante, passa diante de Nico e volta a pairar acima da praia.
 As imagens existentes foram reutilizadas, mantendo a proporção e o alinhamento dos pés. As 405 imagens do projeto permanecem intactas. A encenação usa atores próprios; posições, vida e câmera da jogabilidade não são modificadas. Durante a apresentação, as HUDs ficam ocultas, o combate e o cronômetro param e a música continua. Ao terminar, pular ou remover a cena, os estados anteriores são restaurados.
 
 Validação: 41 verificações de encenação, falas, sons únicos, orientação, música, HUD, término e remoção; execução Vulkan com sete capturas, totalizando 48 verificações. Regressões: 17 verificações de Urus e 51 da luta completa de Triple H, incluindo os três trampolins finais e o resgate de Remi. Testes usam APPDATA isolado; saves reais não foram lidos ou alterados.
+
+
+## Laboratório dos Executivos — resgate de Urso (v68)
+
+A quinta ilha continua diretamente após a fuga do Submundo. Urso continua sendo o urso-pardo da Coleção; a tartaruga idosa permanece resgatada na praia. A fase tem quatro setores: recepção e segurança, experimentação, fábrica de modificações e pesquisa avançada. Cartão de acesso, portas, câmeras bloqueadas por caixas, lasers previsíveis, alavancas, esteiras reversíveis, braços com plataformas e prensas compõem o percurso. Dez checkpoints dividem a travessia; Oliver recebe Nico na entrada.
+
+Os líquidos verdes são perigosos, os roxos funcionam como trampolins e os azuis alteram a aderência. GELO solidifica vazamentos e pausa máquinas; FOGO no líquido congelado cria um impulso de pressão. Tanques quebrados liberam cobaias. Os quatro novos inimigos possuem animações: cobaia saltadora, drone de contenção, técnico com rede e lagarto com ataque de língua. Nico mantém os poderes já aprendidos no santuário da ilha anterior.
+
+Largato é o cientista híbrido de gato e lagarto, com jaleco, óculos e seringa exagerada. Na primeira etapa, alterne esquivas de cauda, saltos e disparos com ataques nas recuperações. Na segunda, FOGO no terminal esquerdo e GELO no direito estabilizam a máquina e fazem a plataforma do chefe descer; cada abertura aceita um ponto de dano. A inundação deixa as bordas seguras, os impactos têm aviso e plataformas oferecem alternativas. Na última dose, aqueça e resfrie o injetor e use E para inverter o equipamento. F arremessa as três doses LG-17; é possível voltar ao injetor para recarregar após errar. O soro afeta especificamente o enxerto experimental do próprio Largato.
+
+A derrota tem uma cutscene de derretimento cartunesco, com pernas e cauda virando gosma, jaleco suspenso e óculos caindo. Só depois disso a câmara de Urso abre. E junto dele confirma o resgate e mostra o encerramento. Há música sintetizada própria para exploração e combate, efeitos de máquinas e silêncio no último momento da derrota.
+
+A campanha, o botão Continuar, a Coleção e o modo livre agora incluem cinco ilhas. Saves anteriores preservam saldo, equipamentos, resultados e histórico de cerejas, e continuam no laboratório após concluir o Submundo. O modo livre exige concluir também o laboratório; cerejas da quinta ilha usam identificadores persistentes para impedir coletas duplicadas.
+
+Arte: cinco spritesheets/cenários criados com imagegen integrado, em world/Arte/Lab/V68. Os PNGs originais e sua transparência foram preservados integralmente; a integração usa recortes AtlasTexture e máscaras nativas de renderização para separar os poucos limites sobrepostos da folha. PROMPTS.txt registra os prompts e regions.json os recortes e hashes. Todas as 405 imagens anteriores permanecem intactas. Testes usam APPDATA dedicado, sem ler ou alterar saves reais.

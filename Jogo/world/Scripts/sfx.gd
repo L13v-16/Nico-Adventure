@@ -215,6 +215,15 @@ func _build_streams() -> void:
 	_streams["intro_impact"] = _synth(.42,130,28,Wave.TRIANGLE,.6,.002,.37,0,.5)
 	_streams["intro_ring_bell"] = _synth(.65,1320,1290,Wave.SINE,.35,.001,.6,.012,.04)
 	_streams["intro_reveal"] = _sequence([[196,.08],[294,.08],[392,.24]],Wave.TRIANGLE,.3,.008,.15)
+	_streams["lab_machine"] = _synth(1.1,52,48,Wave.TRIANGLE,.12,.18,.3,0,.12)
+	_streams["lab_alarm"] = _sequence([[660,.12],[440,.12],[660,.12],[440,.2]],Wave.SQUARE,.18,.01,.06)
+	_streams["lab_scan"] = _synth(.16,940,1400,Wave.SINE,.22,.005,.12)
+	_streams["lab_door"] = _synth(.42,180,65,Wave.NOISE,.2,.03,.3)
+	_streams["lab_dart"] = _synth(.13,760,170,Wave.TRIANGLE,.32,.002,.1,0,.3)
+	_streams["lab_pressure"] = _synth(.48,150,600,Wave.NOISE,.25,.03,.3)
+	_streams["lab_splash"] = _synth(.4,160,40,Wave.TRIANGLE,.35,.002,.35,0,.55)
+	_streams["lab_bubble"] = _sequence([[110,.08],[190,.1],[75,.13]],Wave.SINE,.27,.006,.07)
+	_streams["lab_clink"] = _synth(.18,1720,1300,Wave.SINE,.3,.001,.16,.01)
 	_streams["sky_fall"] = _synth(2.9,760,55,Wave.TRIANGLE,0.38,0.06,0.7,0.04,0.3)
 	# The guardian has a heavier palette than ordinary enemies. Every cue is
 	# event-driven (never restarted every frame), through the normal SFX bus.

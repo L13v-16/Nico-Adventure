@@ -10,13 +10,14 @@ extends Node
 const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
-const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4"]
+const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4", "fase_5"]
 const MAX_CHERRY_BALANCE := 9223372036854775807
 const RANK_ORDER := ["D", "C", "B", "A", "S"]
 const FIRST_LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_LEVEL_SCENE := "res://world/beach_02.tscn"
 const MAGIC_LEVEL_SCENE := "res://world/magic_03.tscn"
 const UNDERWORLD_LEVEL_SCENE := "res://world/underworld_04.tscn"
+const LAB_LEVEL_SCENE := "res://world/lab_05.tscn"
 
 ## Guardado no arquivo: id da fase -> dicionário de resultados.
 var _levels: Dictionary = {}
@@ -86,7 +87,7 @@ func has_story_flag(flag: String) -> bool:
 	return _story_flags.has(flag)
 
 func set_story_flag(flag: String) -> bool:
-	if flag not in ["jose_rescued", "elemental_mastery", "depth_key"]:return false
+	if flag not in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_largato_defeated", "urso_rescued"]:return false
 	if _story_flags.has(flag):return true
 	_story_flags[flag]=true
 	if not _save():
@@ -185,6 +186,8 @@ func completed_count() -> int:
 
 ## Retoma o resgate seguinte sem apagar as ilhas nem a carteira existentes.
 func get_continue_scene() -> String:
+	if is_level_completed("fase_4") or is_level_completed("fase_5"):
+		return LAB_LEVEL_SCENE
 	if is_level_completed("fase_3") or is_level_completed("fase_4"):
 		return UNDERWORLD_LEVEL_SCENE
 	if is_level_completed("fase_2"):
@@ -341,7 +344,7 @@ func _load() -> void:
 	var saved_flags:Variant=config.get_value("progress","story_flags",[])
 	if saved_flags is Array or saved_flags is PackedStringArray:
 		for flag in saved_flags:
-			if flag in ["jose_rescued", "elemental_mastery", "depth_key"]:_story_flags[flag]=true
+			if flag in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_largato_defeated", "urso_rescued"]:_story_flags[flag]=true
 	var saved_balance: Variant = config.get_value("wallet", "cherries", 0)
 	if saved_balance is int:
 		_cherry_balance = maxi(saved_balance, 0)

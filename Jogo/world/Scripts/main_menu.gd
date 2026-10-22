@@ -8,6 +8,7 @@ const LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_SCENE := "res://world/beach_02.tscn"
 const MAGIC_SCENE := "res://world/magic_03.tscn"
 const UNDERWORLD_SCENE := "res://world/underworld_04.tscn"
+const LAB_SCENE := "res://world/lab_05.tscn"
 const LEVEL_ID := "fase_1"
 
 const LOGO_TEXTURE := preload("res://world/Arte/logo.png")
@@ -323,22 +324,25 @@ func _open_free_mode(_unused = null) -> void:
 
 
 func _build_free_mode(column: VBoxContainer) -> void:
+	column.add_theme_constant_override("separation",5)
 	column.add_child(UiStyle.label("Revisite as ilhas e explore no seu ritmo.", 11, UiStyle.MUTED_COLOR))
 	column.add_child(UiStyle.label("Saldo de cerejas: %d" % Save.get_cherry_balance(), 11, UiStyle.GOLD_COLOR))
 	column.add_child(UiStyle.label("Cerejas já coletadas não reaparecem.",10,UiStyle.MUTED_COLOR))
+	var choices:=GridContainer.new();choices.columns=2;choices.add_theme_constant_override("h_separation",8);choices.add_theme_constant_override("v_separation",6);column.add_child(choices)
 	var phases := [
 		{"n": 1, "name": "A Floresta", "scene": LEVEL_SCENE},
 		{"n": 2, "name": "Costa das Marés", "scene": BEACH_SCENE},
 		{"n": 3, "name": "Floresta Violeta", "scene": MAGIC_SCENE},
 		{"n": 4, "name": "O Submundo", "scene": UNDERWORLD_SCENE},
+		{"n": 5, "name": "Laboratório dos Executivos", "scene": LAB_SCENE},
 	]
 	for phase: Dictionary in phases:
 		var text := "%d. %s" % [int(phase["n"]), String(phase["name"])]
 		var button := UiStyle.button(text)
-		button.custom_minimum_size = Vector2(300.0, 0.0)
+		button.custom_minimum_size = Vector2(230.0, 30.0)
 		button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		button.pressed.connect(_on_action_pressed.bind(_play_free_scene.bind(String(phase["scene"]))))
-		column.add_child(button)
+		choices.add_child(button)
 
 
 func _open_collection(_unused = null) -> void:
@@ -366,7 +370,7 @@ func _play_resume() -> void:
 
 
 func _play_free_scene(scene: String) -> void:
-	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE, UNDERWORLD_SCENE]:
+	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE, UNDERWORLD_SCENE, LAB_SCENE]:
 		return
 	_start_level(true, scene, true)
 

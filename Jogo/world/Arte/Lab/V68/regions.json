@@ -1,0 +1,1065 @@
+{
+  "mode": "built-in imagegen",
+  "sources": {
+    "largato": {
+      "path": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-67f5c4d1-e808-4194-91ed-bb2c84ea463c.png",
+      "sha256": "d4ab86e37719319600e92ca4af7d0989bf75dc2d66d322ca774e0cef67b8c49c"
+    },
+    "enemies": {
+      "path": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-dd4a6ce2-3069-4905-9c4d-b23fe4b83c67.png",
+      "sha256": "853538ad42c9645bae9d4caf774311564c1d1828863f1afa0ef5b9e31b1a98e7"
+    },
+    "tiles": {
+      "path": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-925a7042-e147-4ab5-9772-ddd9348e00d6.png",
+      "sha256": "8670adc02f5714923d964db086e0c5aa546145c603f77fe827369568fcfad6a5"
+    },
+    "props": {
+      "path": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-c3d6f084-4a09-4586-a09e-7ac4671d2e97.png",
+      "sha256": "b3916eab0e01b25615250676cecb3535b4f5815c4039bf15b90c8567a892cc6a"
+    },
+    "backgrounds": {
+      "path": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-bcdd1ea4-38d9-4a54-ad7f-bbf63077aaaf.png",
+      "sha256": "9e9083a477b47a3a70b28bcdae469290e37b2841512be17627ee3a40a25e96cb"
+    }
+  },
+  "frames": [
+    {
+      "name": "largato_00",
+      "source": "largato",
+      "region": [
+        108,
+        12,
+        216,
+        246
+      ],
+      "margin": [
+        116,
+        60,
+        232,
+        106
+      ],
+      "foot": 303
+    },
+    {
+      "name": "largato_01",
+      "source": "largato",
+      "region": [
+        478,
+        13,
+        217,
+        245
+      ],
+      "margin": [
+        115,
+        61,
+        231,
+        107
+      ],
+      "foot": 303
+    },
+    {
+      "name": "largato_02",
+      "source": "largato",
+      "region": [
+        838,
+        45,
+        281,
+        206
+      ],
+      "margin": [
+        83,
+        93,
+        167,
+        146
+      ],
+      "foot": 296
+    },
+    {
+      "name": "largato_03",
+      "source": "largato",
+      "region": [
+        1229,
+        45,
+        271,
+        213
+      ],
+      "margin": [
+        88,
+        93,
+        177,
+        139
+      ],
+      "foot": 303
+    },
+    {
+      "name": "largato_04",
+      "source": "largato",
+      "region": [
+        49,
+        298,
+        311,
+        207
+      ],
+      "margin": [
+        68,
+        90,
+        137,
+        145
+      ],
+      "foot": 294
+    },
+    {
+      "name": "largato_05",
+      "source": "largato",
+      "region": [
+        405,
+        308,
+        363,
+        195
+      ],
+      "margin": [
+        42,
+        100,
+        85,
+        157
+      ],
+      "foot": 292
+    },
+    {
+      "name": "largato_06",
+      "source": "largato",
+      "region": [
+        815,
+        278,
+        311,
+        219
+      ],
+      "margin": [
+        68,
+        70,
+        137,
+        133
+      ],
+      "foot": 286
+    },
+    {
+      "name": "largato_07",
+      "source": "largato",
+      "region": [
+        1180,
+        311,
+        320,
+        194
+      ],
+      "margin": [
+        64,
+        103,
+        128,
+        158
+      ],
+      "foot": 294
+    },
+    {
+      "name": "largato_08",
+      "source": "largato",
+      "region": [
+        59,
+        527,
+        279,
+        222
+      ],
+      "margin": [
+        84,
+        63,
+        169,
+        130
+      ],
+      "foot": 282
+    },
+    {
+      "name": "largato_09",
+      "source": "largato",
+      "region": [
+        470,
+        525,
+        239,
+        231
+      ],
+      "margin": [
+        104,
+        61,
+        209,
+        121
+      ],
+      "foot": 289
+    },
+    {
+      "name": "largato_10",
+      "source": "largato",
+      "region": [
+        842,
+        514,
+        247,
+        239
+      ],
+      "margin": [
+        100,
+        50,
+        201,
+        113
+      ],
+      "foot": 286
+    },
+    {
+      "name": "largato_11",
+      "source": "largato",
+      "region": [
+        1248,
+        521,
+        222,
+        235
+      ],
+      "margin": [
+        113,
+        57,
+        226,
+        117
+      ],
+      "foot": 289
+    },
+    {
+      "name": "largato_12",
+      "source": "largato",
+      "region": [
+        85,
+        757,
+        240,
+        256
+      ],
+      "margin": [
+        104,
+        37,
+        208,
+        96
+      ],
+      "foot": 290
+    },
+    {
+      "name": "largato_13",
+      "source": "largato",
+      "region": [
+        413,
+        814,
+        356,
+        179
+      ],
+      "margin": [
+        46,
+        94,
+        92,
+        173
+      ],
+      "foot": 270
+    },
+    {
+      "name": "largato_14",
+      "source": "largato",
+      "region": [
+        816,
+        783,
+        292,
+        222
+      ],
+      "margin": [
+        78,
+        63,
+        156,
+        130
+      ],
+      "foot": 282
+    },
+    {
+      "name": "largato_15",
+      "source": "largato",
+      "region": [
+        1173,
+        893,
+        335,
+        106
+      ],
+      "margin": [
+        56,
+        173,
+        113,
+        246
+      ],
+      "foot": 276
+    },
+    {
+      "name": "enemies_00",
+      "source": "enemies",
+      "region": [
+        39,
+        20,
+        252,
+        239
+      ],
+      "margin": [
+        98,
+        68,
+        196,
+        113
+      ],
+      "foot": 304
+    },
+    {
+      "name": "enemies_01",
+      "source": "enemies",
+      "region": [
+        419,
+        37,
+        258,
+        222
+      ],
+      "margin": [
+        95,
+        85,
+        190,
+        130
+      ],
+      "foot": 304
+    },
+    {
+      "name": "enemies_02",
+      "source": "enemies",
+      "region": [
+        766,
+        6,
+        311,
+        253
+      ],
+      "margin": [
+        68,
+        54,
+        137,
+        99
+      ],
+      "foot": 304
+    },
+    {
+      "name": "enemies_03",
+      "source": "enemies",
+      "region": [
+        1162,
+        136,
+        354,
+        132
+      ],
+      "margin": [
+        47,
+        184,
+        94,
+        220
+      ],
+      "foot": 313
+    },
+    {
+      "name": "enemies_04",
+      "source": "enemies",
+      "region": [
+        45,
+        295,
+        262,
+        205
+      ],
+      "margin": [
+        93,
+        87,
+        186,
+        147
+      ],
+      "foot": 289
+    },
+    {
+      "name": "enemies_05",
+      "source": "enemies",
+      "region": [
+        427,
+        292,
+        270,
+        206
+      ],
+      "margin": [
+        89,
+        84,
+        178,
+        146
+      ],
+      "foot": 287
+    },
+    {
+      "name": "enemies_06",
+      "source": "enemies",
+      "region": [
+        844,
+        292,
+        267,
+        215
+      ],
+      "margin": [
+        90,
+        84,
+        181,
+        137
+      ],
+      "foot": 296
+    },
+    {
+      "name": "enemies_07",
+      "source": "enemies",
+      "region": [
+        1217,
+        298,
+        292,
+        218
+      ],
+      "margin": [
+        78,
+        90,
+        156,
+        134
+      ],
+      "foot": 305
+    },
+    {
+      "name": "enemies_08",
+      "source": "enemies",
+      "region": [
+        9,
+        538,
+        351,
+        209
+      ],
+      "margin": [
+        48,
+        74,
+        97,
+        143
+      ],
+      "foot": 280
+    },
+    {
+      "name": "enemies_09",
+      "source": "enemies",
+      "region": [
+        399,
+        533,
+        351,
+        212
+      ],
+      "margin": [
+        48,
+        69,
+        97,
+        140
+      ],
+      "foot": 278,
+      "native_clip_box": [
+        710,
+        535,
+        90,
+        98
+      ]
+    },
+    {
+      "name": "enemies_10",
+      "source": "enemies",
+      "region": [
+        810,
+        530,
+        344,
+        217
+      ],
+      "margin": [
+        52,
+        66,
+        104,
+        135
+      ],
+      "foot": 280
+    },
+    {
+      "name": "enemies_11",
+      "source": "enemies",
+      "region": [
+        1160,
+        612,
+        363,
+        135
+      ],
+      "margin": [
+        42,
+        148,
+        85,
+        217
+      ],
+      "foot": 280
+    },
+    {
+      "name": "enemies_12",
+      "source": "enemies",
+      "region": [
+        27,
+        785,
+        344,
+        208
+      ],
+      "margin": [
+        52,
+        65,
+        104,
+        144
+      ],
+      "foot": 270
+    },
+    {
+      "name": "enemies_13",
+      "source": "enemies",
+      "region": [
+        381,
+        856,
+        369,
+        128
+      ],
+      "margin": [
+        39,
+        136,
+        79,
+        224
+      ],
+      "foot": 261,
+      "native_clip_box": [
+        720,
+        786,
+        160,
+        125
+      ]
+    },
+    {
+      "name": "enemies_14",
+      "source": "enemies",
+      "region": [
+        732,
+        786,
+        438,
+        219
+      ],
+      "margin": [
+        5,
+        66,
+        10,
+        133
+      ],
+      "foot": 282,
+      "native_clip_box": [
+        660,
+        914,
+        132,
+        110
+      ]
+    },
+    {
+      "name": "enemies_15",
+      "source": "enemies",
+      "region": [
+        1251,
+        787,
+        259,
+        217
+      ],
+      "margin": [
+        94,
+        67,
+        189,
+        135
+      ],
+      "foot": 281
+    },
+    {
+      "name": "tank",
+      "source": "props",
+      "region": [
+        54,
+        10,
+        273,
+        271
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 268
+    },
+    {
+      "name": "tank_broken",
+      "source": "props",
+      "region": [
+        408,
+        9,
+        312,
+        272
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 269
+    },
+    {
+      "name": "vat",
+      "source": "props",
+      "region": [
+        773,
+        9,
+        373,
+        272
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 269
+    },
+    {
+      "name": "injector",
+      "source": "props",
+      "region": [
+        1175,
+        26,
+        327,
+        255
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 252
+    },
+    {
+      "name": "heat",
+      "source": "props",
+      "region": [
+        38,
+        316,
+        312,
+        222
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 219
+    },
+    {
+      "name": "cold",
+      "source": "props",
+      "region": [
+        419,
+        317,
+        302,
+        221
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 218
+    },
+    {
+      "name": "door",
+      "source": "props",
+      "region": [
+        781,
+        308,
+        346,
+        230
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 227
+    },
+    {
+      "name": "door_open",
+      "source": "props",
+      "region": [
+        1169,
+        308,
+        341,
+        230
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 227
+    },
+    {
+      "name": "camera",
+      "source": "props",
+      "region": [
+        75,
+        578,
+        215,
+        226
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 223
+    },
+    {
+      "name": "laser",
+      "source": "props",
+      "region": [
+        407,
+        603,
+        304,
+        202
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 199
+    },
+    {
+      "name": "press",
+      "source": "props",
+      "region": [
+        782,
+        549,
+        326,
+        256
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 253
+    },
+    {
+      "name": "arm",
+      "source": "props",
+      "region": [
+        1183,
+        572,
+        335,
+        233
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 230
+    },
+    {
+      "name": "card",
+      "source": "props",
+      "region": [
+        133,
+        859,
+        143,
+        121
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 118
+    },
+    {
+      "name": "lever",
+      "source": "props",
+      "region": [
+        408,
+        827,
+        214,
+        161
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 158
+    },
+    {
+      "name": "syringe",
+      "source": "props",
+      "region": [
+        767,
+        872,
+        348,
+        93
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 90
+    },
+    {
+      "name": "net",
+      "source": "props",
+      "region": [
+        1173,
+        844,
+        304,
+        150
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 147
+    },
+    {
+      "name": "floor_00",
+      "source": "tiles",
+      "region": [
+        17,
+        259,
+        368,
+        219
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 216
+    },
+    {
+      "name": "floor_01",
+      "source": "tiles",
+      "region": [
+        399,
+        259,
+        363,
+        219
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 216
+    },
+    {
+      "name": "floor_02",
+      "source": "tiles",
+      "region": [
+        776,
+        259,
+        363,
+        220
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 217
+    },
+    {
+      "name": "floor_03",
+      "source": "tiles",
+      "region": [
+        1153,
+        259,
+        367,
+        220
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 217
+    },
+    {
+      "name": "platform",
+      "source": "tiles",
+      "region": [
+        26,
+        761,
+        426,
+        149
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 146
+    },
+    {
+      "name": "column",
+      "source": "tiles",
+      "region": [
+        468,
+        534,
+        190,
+        434
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 431
+    },
+    {
+      "name": "conveyor",
+      "source": "tiles",
+      "region": [
+        685,
+        802,
+        567,
+        160
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 157
+    },
+    {
+      "name": "crate",
+      "source": "tiles",
+      "region": [
+        1278,
+        728,
+        230,
+        234
+      ],
+      "margin": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "foot": 231
+    },
+    {
+      "name": "background_00",
+      "source": "backgrounds",
+      "region": [
+        0,
+        0,
+        764,
+        384
+      ],
+      "margin": [
+        0,
+        0,
+        4,
+        0
+      ],
+      "foot": 380
+    },
+    {
+      "name": "background_01",
+      "source": "backgrounds",
+      "region": [
+        773,
+        0,
+        763,
+        384
+      ],
+      "margin": [
+        0,
+        0,
+        5,
+        0
+      ],
+      "foot": 380
+    },
+    {
+      "name": "background_02",
+      "source": "backgrounds",
+      "region": [
+        0,
+        517,
+        764,
+        359
+      ],
+      "margin": [
+        0,
+        25,
+        4,
+        25
+      ],
+      "foot": 380
+    },
+    {
+      "name": "background_03",
+      "source": "backgrounds",
+      "region": [
+        773,
+        517,
+        763,
+        359
+      ],
+      "margin": [
+        0,
+        25,
+        5,
+        25
+      ],
+      "foot": 380
+    }
+  ]
+}

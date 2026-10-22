@@ -17,8 +17,8 @@ const CHARACTERS := [
  {"id":"oliver", "name":"Oliver Gancho", "short":"Oliver", "art":"Caravan/V23/oliver_idle_1_v23", "portrait":"Caravan/V23/oliver_portrait_v23", "bio":"O rato de tapa-olho da caravana. Troca provisões, equipamentos e roupas por cerejas.", "where":"Encontro: caravana móvel da praia."},
  {"id":"remi", "name":"Remi", "short":"Remi", "art":"Magic/remi_idle.tres", "portrait":"Magic/remi_portrait.tres", "bio":"Um esquilo de cauda fofa, pelagem castanha e lenço azul. Conhece as árvores e os segredos das ilhas.", "where":"Resgate: Floresta Violeta, após Triple H."},
  {"id":"jose", "name":"José, o Bode", "short":"José", "art":"Underworld/jose_idle.tres", "portrait":"Underworld/jose_portrait_neutral.tres", "bio":"Um bode forte de chifres curvos e lenço laranja. Suas cabeçadas quebram paredes, derrubam pilares e empurram objetos pesados.", "where":"Resgate: início do Submundo. Depois, acompanha Nico até a saída."},
- {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "portrait":"Friends/V47/urso_portrait_neutral.tres", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Nico ainda procura a ilha onde ele está."},
- {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Também foi capturado pela corporação.", "where":"Nico ainda procura a ilha onde ele está."},
+ {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "portrait":"Friends/V47/urso_portrait_neutral.tres", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Mantido em testes de resistência no Laboratório dos Executivos."},
+ {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Também foi capturado pela corporação.", "where":"Ainda desaparecido em outra instalação da corporação."},
 ]
 var _cards:Array[Button]=[]
 var _tabs:Array[Button]=[]
@@ -102,8 +102,8 @@ func _build() -> void:
  var title:=UiStyle.label("COLEÇÃO",20,CREAM,HORIZONTAL_ALIGNMENT_LEFT)
  title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  header.add_child(title)
- var completed_islands:=int(Save.is_level_completed("fase_1"))+int(Save.is_level_completed("fase_2"))+int(Save.is_level_completed("fase_3"))+int(Save.is_level_completed("fase_4"))
- var summary:=UiStyle.label("%d / 4 ILHAS" % completed_islands,10,MINT)
+ var completed_islands:=int(Save.is_level_completed("fase_1"))+int(Save.is_level_completed("fase_2"))+int(Save.is_level_completed("fase_3"))+int(Save.is_level_completed("fase_4"))+int(Save.is_level_completed("fase_5"))
+ var summary:=UiStyle.label("%d / 5 ILHAS" % completed_islands,10,MINT)
  summary.name="CollectionIslandCount"
  summary.custom_minimum_size.x=82
  header.add_child(summary)
@@ -231,12 +231,19 @@ func _build_friends() -> Control:
  return content
 
 func _build_islands() -> Control:
+ var scroll:=ScrollContainer.new()
+ scroll.name="IslandScroll"
+ scroll.focus_mode=Control.FOCUS_ALL
+ scroll.custom_minimum_size.y=202
+ scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
  var content:=HBoxContainer.new()
+ scroll.add_child(content)
  content.custom_minimum_size.y=202
  content.add_theme_constant_override("separation",10)
- for phase in [{"id":"fase_1","name":"Vale das Copas","art":"fundo_meio"},{"id":"fase_2","name":"Costa das Marés","art":"Beach/beach_background"},{"id":"fase_3","name":"Floresta Violeta","art":"Magic/magic_background"},{"id":"fase_4","name":"O Submundo","art":"Underworld/underworld_background"}]:
+ for phase in [{"id":"fase_1","name":"Vale das Copas","art":"fundo_meio"},{"id":"fase_2","name":"Costa das Marés","art":"Beach/beach_background"},{"id":"fase_3","name":"Floresta Violeta","art":"Magic/magic_background"},{"id":"fase_4","name":"O Submundo","art":"Underworld/underworld_background"},{"id":"fase_5","name":"Laboratório","art":"Lab/V68/background_03.tres"}]:
   var panel:=PanelContainer.new()
   panel.name="Island_"+phase.id
+  panel.custom_minimum_size.x=148
   panel.size_flags_horizontal=Control.SIZE_EXPAND_FILL
   panel.add_theme_stylebox_override("panel",_style(Color("152e32"),LINE,1,10))
   content.add_child(panel)
@@ -270,7 +277,7 @@ func _build_islands() -> Control:
    best.add_child(UiStyle.label("%d:%02d"%[seconds/60,seconds%60],16,CREAM,HORIZONTAL_ALIGNMENT_LEFT))
    column.add_child(UiStyle.label("%d cerejas  ·  %d segredos"%[int(stats.get("cherries",0)),int(stats.get("secrets",0))],11,CREAM,HORIZONTAL_ALIGNMENT_LEFT))
    column.add_child(UiStyle.label("%d inimigos  ·  %d mortes"%[int(stats.get("enemies",0)),int(stats.get("deaths",0))],10,MUTED,HORIZONTAL_ALIGNMENT_LEFT))
- return content
+ return scroll
 
 func character_state(id:String) -> Dictionary:
  match id:
@@ -283,6 +290,9 @@ func character_state(id:String) -> Dictionary:
   "remi":
    if Save.is_level_completed("fase_3"):return {"text":"Resgatado na Floresta Violeta", "short":"RESGATADO", "color":MINT}
    return {"text":"Próximo resgate" if Save.is_level_completed("fase_2") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
+  "urso":
+   if Save.has_story_flag("urso_rescued") or Save.is_level_completed("fase_5"):return {"text":"Resgatado no Laboratório dos Executivos", "short":"RESGATADO", "color":MINT}
+   return {"text":"Próximo resgate" if Save.is_level_completed("fase_4") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
   "jose":
    if Save.has_story_flag("jose_rescued") or Save.is_level_completed("fase_4"):return {"text":"Resgatado no Submundo · companheiro", "short":"RESGATADO", "color":MINT}
    return {"text":"Próximo resgate" if Save.is_level_completed("fase_3") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
@@ -320,5 +330,8 @@ func _wire_focus() -> void:
   card.focus_neighbor_top=_cards[i-4].get_path() if i>=4 else _tabs[0].get_path()
   card.focus_neighbor_bottom=_cards[i+4].get_path() if i<4 else _back.get_path()
  _tabs[0].focus_neighbor_bottom=_cards[0].get_path()
- _tabs[1].focus_neighbor_bottom=_back.get_path()
+ var island_scroll:=_pages[1] as ScrollContainer
+ _tabs[1].focus_neighbor_bottom=island_scroll.get_path()
+ island_scroll.focus_neighbor_top=_tabs[1].get_path()
+ island_scroll.focus_neighbor_bottom=_back.get_path()
  _back.focus_neighbor_top=_tabs[1].get_path()
