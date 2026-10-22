@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://b75gr7c1se22w"]
+
+[ext_resource type="Script" uid="uid://dl2tfl2kkcyj4" path="res://world/Scripts/crate.gd" id="1_blrca"]
+[ext_resource type="Texture2D" uid="uid://bgv1eyrcrkjdn" path="res://Sunny-land-files/assets/environment/Props/crate.png" id="1_f802r"]
+[ext_resource type="Texture2D" uid="uid://d4b60dfyuwvk" path="res://Sunny-land-files/assets/Characters/Foxy/crate-part01.png" id="2_tqnft"]
+[ext_resource type="Texture2D" uid="uid://ipcttunc10rt" path="res://Sunny-land-files/assets/Characters/Foxy/crate-part02.png" id="3_uo0v1"]
+[ext_resource type="Texture2D" uid="uid://cklbiu4b6ne74" path="res://Sunny-land-files/assets/Characters/Foxy/crate-part03.png" id="4_5mv01"]
+[ext_resource type="Texture2D" uid="uid://ddgp2ca7x07im" path="res://Sunny-land-files/assets/Characters/Foxy/crate-part04.png" id="5_uwb4c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0i88t"]
+size = Vector2(16, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckb4l"]
+size = Vector2(16, 6)
+
+[node name="crate" type="StaticBody2D" unique_id=1264394322]
+collision_mask = 2
+script = ExtResource("1_blrca")
+pieces = Array[Texture2D]([ExtResource("2_tqnft"), ExtResource("3_uo0v1"), ExtResource("4_5mv01"), ExtResource("5_uwb4c")])
+hitpoints = null
+
+[node name="texture" type="Sprite2D" parent="." unique_id=919192797]
+texture = ExtResource("1_f802r")
+
+[node name="colision" type="CollisionShape2D" parent="." unique_id=1857283582]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_0i88t")
+
+[node name="head_decetor" type="Area2D" parent="." unique_id=902883145]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="head_decetor" unique_id=253417870]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_ckb4l")
