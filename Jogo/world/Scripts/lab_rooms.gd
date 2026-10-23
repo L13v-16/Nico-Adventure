@@ -1,9 +1,11 @@
 extends Node2D
 ## Persistent room instances: no scene reload, no duplicate enemies or rewards.
-const BOUNDS:=[Vector2(-128,1480),Vector2(1500,3620),Vector2(3650,5440),Vector2(5480,7600)]
+const BOUNDS:=[Vector2(-128,1050),Vector2(1500,2580),Vector2(3650,4770),Vector2(5480,7600)]
+const BASE_Y:=[100.0,-330.0,-810.0,-1290.0]
+const EXIT_Y:=[-330.0,-810.0,-1290.0,-1290.0]
 const TITLES:=["Recepção e segurança","Setor de experimentação","Fábrica de modificações","Pesquisa avançada"]
 # Source door x: destination room, safe arrival x, facing, destination label.
-const ROUTES:={1430:[1,1610,1],1550:[0,1365,-1],3570:[2,3765,1],3700:[1,3505,-1],5390:[3,5600,1],5530:[2,5325,-1]}
+const ROUTES:={600:[1,1630,1,-341],1550:[0,685,-1,-341],1730:[2,3780,1,-821],3700:[1,1630,-1,-821],4540:[3,5620,1,-1301],5530:[2,4450,-1,-1301]}
 var current:=0
 var transitioning:=false
 var cooldown:=0.0
@@ -11,10 +13,11 @@ var rooms:Array[Node2D]=[]
 var _fade:ColorRect
 var _caption:Label
 var _level:Node2D
+var _visited:={0:true}
 func _ready() -> void:
 	_level=get_parent()
 	for i in 4:
-		var room:=preload("res://world/lab_room.tscn").instantiate();room.sector=i;room.bounds=BOUNDS[i];room.title=TITLES[i]
+		var room:=preload("res://world/lab_room.tscn").instantiate();room.sector=i;room.bounds=BOUNDS[i];room.title=TITLES[i];room.base_y=BASE_Y[i];room.top_y=EXIT_Y[i]-240
 		room.name="Sector%d"%(i+1);add_child(room);rooms.append(room)
 	var overlay:=CanvasLayer.new();overlay.layer=35;add_child(overlay)
 	_fade=ColorRect.new();_fade.size=Vector2(640,360);_fade.color=Color("101a26");_fade.modulate.a=0
@@ -47,7 +50,9 @@ func travel(door:Node2D) -> bool:
 	_caption.text=TITLES[int(route[0])].to_upper();Sfx.play("lab_door",-8)
 	var tween:=create_tween();tween.tween_property(_fade,"modulate:a",1,.18)
 	await tween.finished
-	current=int(route[0]);actor.position=Vector2(route[1],89);actor.respawn_position=actor.position
+	current=int(route[0]);actor.position=Vector2(route[1],route[3]);actor.respawn_position=actor.position
+	if current==1 and not _visited.has(current):actor.elements.refresh_available("ice")
+	_visited[current]=true
 	# A checkpoint in an earlier room must not prevent a newly reached flag saving.
 	_level.active_checkpoint=null
 	actor._hitstun_timer=0;actor._spring_lock=0;actor._jump_buffer_timer=0;actor._facing=float(route[2]);actor._camera_look=0
@@ -56,14 +61,14 @@ func travel(door:Node2D) -> bool:
 	await get_tree().create_timer(.12).timeout
 	tween=create_tween();tween.tween_property(_fade,"modulate:a",0,.26);await tween.finished
 	actor.process_mode=Node.PROCESS_MODE_INHERIT;actor.set_physics_process(true);transitioning=false;cooldown=.5;_level.pause_menu.can_open=true
-	_level.show_lab_notice(TITLES[current]+" · E na porta permite voltar ao setor anterior.",4)
+	_level.show_lab_notice(TITLES[current]+" · Siga os elevadores e as cerejas para subir.",4)
 	return true
 func _process(delta:float) -> void:cooldown=maxf(0,cooldown-delta)
 func _on_respawn() -> void:
 	current=sector_at(_level.player.position.x);refresh_presence();apply_camera();_level.frame_camera(0,true)
 func refresh_presence() -> void:
 	for i in 4:rooms[i].visible=i==current
-	for group in ["lab_devices","lab_enemies"]:
+	for group in ["lab_devices","lab_enemies","lab_lifts"]:
 		for node in get_tree().get_nodes_in_group(group):
 			if node.get_parent()!=_level:continue
 			var present:bool=sector_at(node.position.x)==current
@@ -73,4 +78,4 @@ func refresh_presence() -> void:
 func apply_camera() -> void:
 	var camera:Camera2D=_level.player.get_node("Camera2D")
 	camera.limit_left=int(BOUNDS[current].x);camera.limit_right=int(BOUNDS[current].y)
-	camera.limit_top=-300;camera.limit_bottom=220
+	camera.limit_top=int(EXIT_Y[current]-240);camera.limit_bottom=int(BASE_Y[current]+220)

@@ -3,6 +3,7 @@ var access_card:=false
 var _rescued:=false
 var _ambience:=4.0
 var rooms:Node2D
+var lessons:Dictionary={}
 func _ready() -> void:
 	$Player.z_index=5
 	if not InputMap.has_action("lab_throw"):
@@ -17,7 +18,7 @@ func _ready() -> void:
 func _polish_terrain() -> void:pass
 func _spawn_fragments() -> void:
 	total_secrets=3
-	for at in [Vector2(1070,-10),Vector2(2750,-80),Vector2(4830,-30)]:
+	for at in preload("res://world/Scripts/lab_layout.gd").SECRETS:
 		var fragment:Node2D=FRAGMENT_SCRIPT.new();fragment.position=at;fragment.collected.connect(_on_secret_collected);add_child(fragment)
 func has_elemental_mastery() -> bool:return true
 func nico_attack_cooldown_floor() -> float:return .65 if $Boss.active else 0.0
@@ -28,6 +29,12 @@ func spawn_enemy(at:Vector2,species:String,released:bool=false) -> Node2D:
 	return enemy
 func spawn_pool(at:Vector2,type:String,life:float=-1,width:float=100) -> Node2D:
 	var pool:=preload("res://world/Scripts/lab_device.gd").new();pool.kind="chemical";pool.chemical=type;pool.position=at;pool.width=width;pool.temporary_life=life;add_child(pool);return pool
+func spawn_lab_effect(at:Vector2,type:String,width:float=44) -> void:
+	var holder:=Node2D.new();holder.position=at;holder.z_index=7;add_child(holder)
+	var effect:=preload("res://world/Scripts/lab_effect.gd").new();effect.style=type;effect.drawn_width=width;holder.add_child(effect)
+func elemental_hud_text(element:String) -> String:
+	if not is_instance_valid(rooms) or rooms.current==0:return ""
+	return "K: "+("GELO" if element=="ice" else "FOGO")+"   Q: alternar"
 func show_lab_notice(message:String,seconds:float=5) -> void:
 	_show_notice(message);_notice_time=seconds
 func _start_sequence() -> void:
@@ -41,17 +48,35 @@ func _process(delta:float) -> void:
 	if _timing:_elapsed+=delta
 	var camera:Camera2D=player.get_node("Camera2D")
 	var boss:Node2D=$Boss
-	notice.position.y=145 if boss.active else 56
+	notice.position.y=145 if boss.active else 76
 	frame_camera(delta)
-	if player.position.y>300:player.take_damage(3,Vector2(player.position.x,330))
+	if player.position.y>rooms.BASE_Y[rooms.current]+230:player.take_damage(3,player.position+Vector2(0,30))
 	_ambience-=delta
 	if _ambience<=0 and not get_tree().paused:_ambience=9;Sfx.play("lab_machine",-21)
 	if boss.active:hint.text=boss._advice()+" · K: poder · Q: alternar"
 	elif boss.is_dead():hint.text="E junto de Urso: abrir a câmara e resgatá-lo."
-	elif player.position.x<1536:hint.text="SEGURANÇA · E: porta/alavanca · GELO: sensores · Caixas servem de cobertura."
-	elif player.position.x<3072:hint.text="GELO: ponte sobre líquidos · FOGO no gelo: impulso · Roxo: quique · Azul: escorrega."
-	elif player.position.x<4608:hint.text="Fábrica · E inverte circuitos · GELO pausa as máquinas · Observe o aviso das prensas."
-	else:hint.text="Pesquisa avançada · E: registros LG-17 · Sua segurança é nossa 17ª prioridade."
+	else:hint.text=lesson_hint()
+func lesson_hint() -> String:
+	match rooms.current:
+		0:
+			if player.position.y>0:return "Pise no elevador azul. Ele espera Nico embarcar e sobe sozinho."
+			if not access_card:return "O cartão está neste andar. Toque nele para liberar a porta de cima."
+			if player.position.y>-280:return "Siga as cerejas. O elevador para no alto até você sair."
+			return "E na porta: entrar no próximo setor. Seu retorno será salvo na chegada."
+		1:
+			if player.position.y>-470:
+				if player.position.x>2150:return "A ponte ficou para trás. Suba no próximo elevador."
+				if not lessons.has("ice_bridge"):return "Verde borbulhando é veneno. K usa GELO; Q alterna o poder se precisar."
+				return "O gelo virou uma ponte sólida. Atravesse antes de a crosta derreter."
+			if player.position.y>-700:return "O mesmo GELO paralisa inimigos. Observe o aviso antes do ataque."
+			return "Pule para a porta superior. O próximo setor continua a subida."
+		2:
+			if not lessons.has("circuit"):return "E na alavanca liga o circuito do primeiro elevador. Observe a seta azul."
+			if player.position.y>-920:return "Circuito ligado. Atravesse a esteira e embarque no elevador à direita."
+			if player.position.y>-1080:return "A prensa avisa com luz âmbar. Espere ou use GELO para pará-la."
+			if player.position.y>-1240:return "O elevador da direita leva à saída. O sensor à esquerda protege cerejas extras."
+			return "Último patamar: o inimigo anuncia o disparo. A porta leva à pesquisa."
+	return "Pesquisa avançada · E nos registros. A câmara de Urso está além da arena."
 func frame_camera(delta:float,snap:bool=false) -> void:
 	var camera:Camera2D=player.get_node("Camera2D")
 	var fighting:bool=$Boss.active
@@ -65,10 +90,17 @@ func frame_camera(delta:float,snap:bool=false) -> void:
 		var center:=clampf(player.position.x+player._facing*50,bounds.x+half_width,bounds.y-half_width)
 		# Camera2D applies offset after its limits; cancel look-ahead at walls.
 		desired.x=center-origin-player._camera_look
+		var half_height:=180.0/camera.zoom.y
+		var low:=float(camera.limit_top)+half_height;var high:=float(camera.limit_bottom)-half_height
+		var vertical:=clampf(player.velocity.y/player.MAX_FALL_SPEED,-1,1)*20
+		desired.y=clampf(player.position.y-55,low,high)-clampf(player.position.y,low,high)-vertical
 	if fighting:
 		var half_width:float=320.0/camera.zoom.x
 		var center:=clampf(player.position.x+player._facing*45,6160+half_width-100,7040-half_width+100)
-		desired=Vector2(center-player.position.x-player._camera_look,20-player.position.y)
+		var half_height:=180.0/camera.zoom.y
+		var origin_y:=clampf(player.position.y,camera.limit_top+half_height,camera.limit_bottom-half_height)
+		var vertical:=clampf(player.velocity.y/player.MAX_FALL_SPEED,-1,1)*20
+		desired=Vector2(center-player.position.x-player._camera_look,$Boss.FLOOR-80-origin_y-vertical)
 	player._camera_base_offset=player._camera_base_offset.lerp(desired,factor)
 	if snap:
 		camera.offset=player._camera_base_offset+Vector2(player._camera_look,0)

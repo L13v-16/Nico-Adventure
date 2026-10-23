@@ -85,7 +85,9 @@ func take_element(element:String,source:Vector2) -> void:
 	take_damage(1,source)
 	if element=="ice":freeze_for(3)
 func freeze_for(seconds:float) -> void:
-	if not is_dead():frozen_left=maxf(frozen_left,seconds)
+	if not is_dead():
+		if frozen_left<=0:get_parent().spawn_lab_effect(position+Vector2(0,-18),"freeze",46)
+		frozen_left=maxf(frozen_left,seconds)
 func is_dead() -> bool:return health<=0
 func _draw() -> void:
 	if is_dead():return

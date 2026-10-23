@@ -21,6 +21,7 @@ var _home:=Vector2.ZERO
 var _beam_x:=0.0
 var _state_picture:=""
 var _lever_time:=0.0
+var _chemical_art:AnimatedSprite2D
 const Art=preload("res://world/Scripts/lab_art.gd")
 func _ready() -> void:
 	add_to_group("lab_devices");_home=position;clock=phase
@@ -50,6 +51,10 @@ func _ready() -> void:
 		bear.name="Urso";bear.position+=Vector2(0,-6);bear.z_index=1;bear.modulate=Color("c8e6d8");add_child(bear);bear.play(&"idle")
 	if kind=="injector":
 		var arm:=Art.prop("injector",100);arm.z_index=-1;arm.position.x+=24;add_child(arm)
+	if kind=="gate":_body.collision_layer=0 # Recessed doors; room walls seal the shaft.
+	if kind=="chemical":
+		_chemical_art=preload("res://world/Scripts/lab_effect.gd").new();_chemical_art.drawn_width=width;add_child(_chemical_art)
+		_set_ice_collision(false)
 	_update_state_art()
 func _update_state_art() -> void:
 	var picture:=""
@@ -82,6 +87,8 @@ func _physics_process(delta:float) -> void:
 	if kind=="card" and _player.global_position.distance_to(global_position+Vector2(0,-16))<30:
 		get_parent().access_card=true;get_parent()._show_notice("Cartão de acesso obtido. E na porta de segurança.");Sfx.checkpoint();queue_free();return
 	if kind=="chemical":
+		var art_state:="ice" if frozen_left>0 else "poison"
+		if _chemical_art.style!=art_state:_chemical_art.set_style(art_state)
 		if frozen_left>0:_set_ice_collision(true)
 		else:_set_ice_collision(false)
 		if near and _cooldown<=0:
@@ -89,11 +96,13 @@ func _physics_process(delta:float) -> void:
 			elif frozen_left>0:pass
 			elif chemical=="bounce":_player.launch_from_spring(470);_cooldown=.6;Sfx.jump()
 			elif chemical=="slip":_player.velocity.x+=signf(_player.velocity.x+1)*65*delta
-			else:_player.take_damage(1,position)
+			else:
+				if _player._invulnerability_timer<=0:get_parent().spawn_lab_effect(_player.position,"splash",42)
+				_player.take_damage(1,position);_cooldown=.6
 	elif kind=="laser" and frozen_left<=0 and disabled_left<=0:
 		var cycle:=fposmod(clock,3.6)
 		if cycle>2.1 and cycle<3.2 and absf(_player.position.x-position.x)<9 and _player.position.y>position.y-85 and _player.position.y<position.y:_player.take_damage(1,position)
-	elif kind=="camera" and not activated and frozen_left<=0 and disabled_left<=0:
+	elif kind=="camera" and not activated and frozen_left<=0 and disabled_left<=0 and absf(_player.position.y-position.y)<95:
 		_beam_x=sin(clock*.7)*90
 		if _cooldown<=0 and absf(_player.position.x-position.x-_beam_x)<35 and absf(_player.velocity.x)>45:
 			var query:=PhysicsRayQueryParameters2D.create(global_position+Vector2(0,-22),_player.global_position,1)
@@ -121,7 +130,9 @@ func interact() -> bool:
 			_lever_time=.14;_update_state_art()
 			for device in get_tree().get_nodes_in_group("lab_devices"):
 				if device!=self and device.circuit==circuit:device.reversed=not device.reversed;device.disabled_left=8
-			level._show_notice("Circuito invertido: esteiras e braços mudaram de direção. Segurança suspensa por 8 s.");Sfx.select()
+			for lift in get_tree().get_nodes_in_group("lab_lifts"):
+				if lift.circuit==circuit:lift.enable()
+			level.lessons["circuit"]=true;level._show_notice("Circuito ligado: o elevador azul está pronto. A esteira mudou de sentido.");Sfx.select()
 		"record":level.show_lab_notice("REGISTRO LG-17: o estabilizador pertence ao enxerto de Largato. Calor abre a injeção; frio permite inverter o fluxo.",8)
 		"injector":return level.get_node("Boss").reverse_injector()
 		"rescue":
@@ -131,10 +142,13 @@ func interact() -> bool:
 	return true
 func take_element(element:String,_source:Vector2) -> void:
 	if kind=="chemical":
-		if element=="ice":frozen_left=8;boost_left=0
-		elif frozen_left>0:frozen_left=0;boost_left=2.2
+		if element=="ice":
+			if frozen_left<=0:get_parent().spawn_lab_effect(position,"freeze",64);Sfx.play("lab_clink",-10)
+			frozen_left=12;boost_left=0;get_parent().lessons["ice_bridge"]=true
+		elif frozen_left>0:
+			frozen_left=0;boost_left=2.2;get_parent().show_lab_notice("FOGO no gelo libera pressão. Cuidado: a ponte vai derreter.",4)
 	elif kind in ["heat","cold","injector"]:get_parent().get_node("Boss").machine_element(kind,element)
-	elif element=="ice":freeze_for(5)
+	elif element=="ice":get_parent().spawn_lab_effect(position+Vector2(0,-18),"freeze",44);freeze_for(5)
 	elif kind=="tank" or kind=="camera":take_damage(1,_source)
 func take_damage(amount:float,_source:Vector2) -> void:
 	if kind not in ["tank","camera"] or activated:return
@@ -148,14 +162,9 @@ func take_damage(amount:float,_source:Vector2) -> void:
 func freeze_for(seconds:float) -> void:frozen_left=maxf(frozen_left,seconds)
 func _draw() -> void:
 	if kind=="chemical":
-		var color:=Color("62d768") if chemical=="toxic" else (Color("c87adb") if chemical=="bounce" else Color("589ee5"))
-		if frozen_left>0:color=Color("a5e6f4")
-		draw_rect(Rect2(-width/2,0,width,13),color.darkened(.4));draw_rect(Rect2(-width/2,-2,width,4),color)
-		for i in 6:
-			var x:float=-width/2+fposmod(i*23+clock*13,width)
-			draw_circle(Vector2(x,3+sin(clock*3+i)*2),2,Color(color.lightened(.25),.8))
-		if boost_left>0:
-			for i in 9:draw_circle(Vector2(sin(i+clock)*10,-fposmod(clock*75+i*9,65)),2,Color("d8e6e9",.65))
+		if frozen_left>0:
+			var ink:=Color("9aebff") if frozen_left>2 else Color("f1ce7c")
+			draw_rect(Rect2(-18,-39,36,3),Color("132d3e"));draw_rect(Rect2(-18,-39,36*clampf(frozen_left/12,0,1),3),ink)
 	elif kind=="mover" and is_instance_valid(_platform):
 		draw_line(Vector2(0,-16),_platform.position+Vector2(-25,5),Color("172333"),9)
 		draw_line(Vector2(0,-16),_platform.position+Vector2(-25,5),Color("c1cbd0"),5)

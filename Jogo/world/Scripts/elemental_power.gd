@@ -89,6 +89,9 @@ func _update_hud() -> void:
 	_hud.visible=not _player._finished and has_any() and not get_tree().paused and _player.get_parent().get("intro_active")!=true
 	var boss:=_player.get_parent().get_node_or_null("Boss")
 	var in_boss:bool=is_instance_valid(boss) and boss.get("active")==true
+	if _player.get_parent().has_method("elemental_hud_text"):
+		_label.text=_player.get_parent().elemental_hud_text(selected);_label.position=Vector2(12,132 if in_boss else 52)
+		_hud.visible=_hud.visible and not _label.text.is_empty();return
 	_label.position.y=(134 if in_boss else 100) if ice_time_left()>0 else (102 if in_boss else 91)
 	var title:="FOGO" if selected=="fire" else "GELO"
 	if has_mastery():_label.text="K: "+title+"   Q: alternar\nPoderes do altar · sem consumir itens"

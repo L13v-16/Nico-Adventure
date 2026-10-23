@@ -4,7 +4,7 @@ signal defeated
 const LEFT:=6160.0
 const RIGHT:=7040.0
 const CENTER:=6600.0
-const FLOOR:=100.0
+const FLOOR:=-1290.0
 var active:=false
 var dead:=false
 var dying:=false
@@ -58,12 +58,12 @@ func _ready() -> void:
 func start_encounter() -> void:
 	if active or dead or dying:return
 	active=true;phase=1;health=4;timer=1.6;state="idle";_spent_window=false
-	_player.position=Vector2(clampf(_player.position.x,LEFT+95,RIGHT-95),89)
+	_player.position=Vector2(clampf(_player.position.x,LEFT+95,RIGHT-95),FLOOR-11)
 	_player.velocity=Vector2.ZERO;_player._invulnerability_timer=maxf(.25,_player._invulnerability_timer)
 	get_parent().frame_camera(0,true)
-	_player.respawn_position=Vector2(6080,89)
+	_player.respawn_position=Vector2(6080,FLOOR-11)
 	for x in [6125.0,7072.0]:
-		var gate:=StaticBody2D.new();gate.collision_layer=1;gate.collision_mask=0;gate.position=Vector2(x,0)
+		var gate:=StaticBody2D.new();gate.collision_layer=1;gate.collision_mask=0;gate.position=Vector2(x,FLOOR-100)
 		var collider:=CollisionShape2D.new();var shape:=RectangleShape2D.new();shape.size=Vector2(12,440);collider.shape=shape;gate.add_child(collider);get_parent().add_child(gate);_gates.append(gate)
 	_bar.show()
 	if not _entrance_seen:
@@ -73,7 +73,7 @@ func _physics_process(delta:float) -> void:
 	_lift.visible=active and phase==2
 	if dead or dying:return
 	if not active:
-		if _player.position.x>LEFT and _player.position.x<RIGHT and not _player.is_dead():start_encounter()
+		if _player.position.x>LEFT and _player.position.x<RIGHT and absf(_player.position.y-FLOOR)<220 and not _player.is_dead():start_encounter()
 		return
 	_clock+=delta;timer-=delta;vulnerable=maxf(0,vulnerable-delta);_invulnerable=maxf(0,_invulnerable-delta);_serum_cooldown=maxf(0,_serum_cooldown-delta);_empty_notice=maxf(0,_empty_notice-delta)
 	_sprite.modulate=Color("c5f4b0") if _invulnerable>0 else Color.WHITE
@@ -121,7 +121,7 @@ func _open_window(seconds:float) -> void:
 func _tick_overload(delta:float) -> void:
 	heated=maxf(0,heated-delta);cooled=maxf(0,cooled-delta);_machine_timer-=delta
 	var open:=vulnerable>0
-	position.y=move_toward(position.y,FLOOR if open else -12,190*delta);position.x=move_toward(position.x,CENTER,240*delta)
+	position.y=move_toward(position.y,FLOOR if open else FLOOR-112,190*delta);position.x=move_toward(position.x,CENTER,240*delta)
 	_sprite.play(&"hurt" if _invulnerable>0 else (&"idle" if open else &"operate"))
 	if heated>0 and cooled>0 and not open and not _spent_window:
 		_open_window(4.8);get_parent()._show_notice("Máquinas estabilizadas! Ataque Largato enquanto ele desce.");Sfx.play("lab_door",-8)
