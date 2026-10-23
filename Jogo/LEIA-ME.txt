@@ -778,3 +778,14 @@ Nico e José chegam montados no Carcereiro. Eles descem e o monstro arrebenta a 
 LABORATÓRIO VERTICAL — v72
 
 A fase agora sobe por sete elevadores e patamares até a pesquisa. Pise na plataforma azul para embarcar; ela espera no alto até Nico sair e retorna se você perder a viagem. Siga as cerejas. Primeiro você aprende os elevadores e pega o cartão; no setor seguinte, GELO transforma o veneno verde em ponte por 12 segundos. Depois vêm os inimigos e, em outro setor, a alavanca e a prensa. As instruções aparecem uma de cada vez. Os novos sprites mostram o veneno borbulhando, a crosta de gelo, os impactos e os estados dos elevadores. Checkpoints, saldo e histórico das cerejas continuam preservados.
+
+REVISÃO DE LARGATO — v73
+Os ataques de cauda, seringa e salto têm avisos distintos e mira fixa.
+O HUD identifica o ataque, a recuperação e o estado dos mecanismos.
+Cada abertura aceita um acerto. Os terminais duram 18 segundos.
+Estabilizar FOGO e GELO limpa os perigos do chefe e concede 5,4 segundos
+para a descida e o contra-ataque, sem inundação ou ataques simultâneos.
+Poças e inundação usam os sprites animados de veneno e gelo.
+No final, siga FOGO, GELO e E no injetor; F arremessa as doses LG-17.
+Há um segundo entre arremessos; E no injetor repõe as doses gratuitamente.
+Largato também prepara seus disparos finais e é interrompido pelo soro.

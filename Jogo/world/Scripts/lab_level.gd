@@ -81,7 +81,8 @@ func frame_camera(delta:float,snap:bool=false) -> void:
 	var camera:Camera2D=player.get_node("Camera2D")
 	var fighting:bool=$Boss.active
 	var factor:=1.0 if snap else 1-exp(-delta*6)
-	camera.zoom=camera.zoom.lerp(Vector2.ONE*(.9 if fighting else 1.5),factor)
+	var fight_zoom:=clampf(640.0/(absf(player.position.x-$Boss.position.x)+200),.70,.9)
+	camera.zoom=camera.zoom.lerp(Vector2.ONE*(fight_zoom if fighting else 1.5),factor)
 	var desired:=Vector2(50,-40)
 	if not fighting and is_instance_valid(rooms):
 		var bounds:Vector2=rooms.BOUNDS[rooms.current]
@@ -96,7 +97,7 @@ func frame_camera(delta:float,snap:bool=false) -> void:
 		desired.y=clampf(player.position.y-55,low,high)-clampf(player.position.y,low,high)-vertical
 	if fighting:
 		var half_width:float=320.0/camera.zoom.x
-		var center:=clampf(player.position.x+player._facing*45,6160+half_width-100,7040-half_width+100)
+		var center:=clampf((player.position.x+$Boss.position.x)*.5,6160+half_width-100,7040-half_width+100)
 		var half_height:=180.0/camera.zoom.y
 		var origin_y:=clampf(player.position.y,camera.limit_top+half_height,camera.limit_bottom-half_height)
 		var vertical:=clampf(player.velocity.y/player.MAX_FALL_SPEED,-1,1)*20
