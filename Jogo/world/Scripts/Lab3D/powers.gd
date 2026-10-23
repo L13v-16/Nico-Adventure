@@ -30,6 +30,7 @@ func cast() -> bool:
 	if minimum>0 and p._attack_cooldown>0:return false
 	cooldown=maxf(.5*p.equipment.get_element_cooldown_multiplier(),minimum);p._attack_cooldown=maxf(p._attack_cooldown,minimum)
 	cooldown_duration=cooldown
+	p.play_element_cast(selected)
 	var target:Node3D=level.find_target(p.global_position+Vector3.UP,p.forward,23,true)
 	var shot:=preload("res://world/Scripts/Lab3D/projectile.gd").new();shot.friendly=true;shot.element=selected;shot.source=p
 	shot.position=p.global_position+Vector3.UP*1.15+p.forward*.7

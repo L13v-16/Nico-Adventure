@@ -255,6 +255,9 @@ static func guardian() -> Node3D:
 	_animation(root)
 	return root
 static func instantiate(kind:String) -> Node3D:
+	if kind in ["nico","largato"]:
+		var imported:="res://world/Models/ImportedV81/"+kind+".tscn"
+		if ResourceLoader.exists(imported):return load(imported).instantiate()
 	var path:="res://world/Models/Lab3D/"+kind+".tscn"
 	if ResourceLoader.exists(path):return load(path).instantiate()
 	return guardian() if kind=="guardian" else (character(kind) if kind in ["nico","wolf","largato","urso","jose","oliver","technician","mutant","lizard"] else prop(kind))

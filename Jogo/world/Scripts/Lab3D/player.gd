@@ -31,6 +31,8 @@ var _collider:CollisionShape3D
 var _landing:Node3D
 var _spin_ring:MeshInstance3D
 var _land_squash:=0.0
+var _cast_pose:=0.0
+var _cast_element:="ice"
 var forward:=Vector3.FORWARD
 var respawn_position:=Vector3.ZERO
 var acai_left:=0.0
@@ -60,7 +62,7 @@ func _physics_process(delta:float) -> void:
 	if _dead or _finished or get_parent().intro_active:
 		_landing.hide();_spin_ring.hide();return
 	_invulnerability_timer=maxf(0,_invulnerability_timer-delta);_attack_cooldown=maxf(0,_attack_cooldown-delta);_hitstun=maxf(0,_hitstun-delta)
-	_slide_cooldown=maxf(0,_slide_cooldown-delta);acai_left=maxf(0,acai_left-delta)
+	_slide_cooldown=maxf(0,_slide_cooldown-delta);acai_left=maxf(0,acai_left-delta);_cast_pose=maxf(0,_cast_pose-delta)
 	model.visible=_invulnerability_timer<=0 or fposmod(_invulnerability_timer,.13)>.035
 	var grounded:=is_on_floor()
 	if grounded:_air_jump_used=false
@@ -118,12 +120,22 @@ func _update_visuals(delta:float,carrying:bool) -> void:
 	_land_squash=maxf(0,_land_squash-delta)
 	var yaw:=atan2(-forward.x,-forward.z)
 	model.rotation.y=yaw+_spin_angle if _attack_time>0 else lerp_angle(model.rotation.y,yaw,1-exp(-delta*18))
-	model.scale=Vector3(1.08,.52,1.18) if _capsule.height<1.7 else (Vector3(1.14,.80,1.14) if _land_squash>0 else Vector3.ONE)
+	model.scale=Vector3(1.04,.58,1.08) if _capsule.height<1.7 else (Vector3(1.04,.94,1.04) if _land_squash>0 else Vector3.ONE)
 	model.rotation.x=-.28 if _slamming else 0.0
 	_spin_ring.visible=_attack_time>0
-	if carrying and _hitstun<=0:_anim.play("carry_run" if is_on_floor() and Vector2(velocity.x,velocity.z).length()>.4 else "carry_idle")
-	else:_anim.play("spin" if _attack_time>0 else ("hurt" if _hitstun>0 else ("slam" if _slamming else ("jump" if not is_on_floor() else ("run" if Vector2(velocity.x,velocity.z).length()>.4 else "idle")))))
-	_anim.speed_scale=1.0
+	var running:bool=is_on_floor() and Vector2(velocity.x,velocity.z).length()>.4
+	var clip:="run" if running else "idle"
+	if not is_on_floor():clip="fall" if velocity.y<0 else ("double_jump" if _air_jump_used else "jump")
+	if _capsule.height<1.7:clip="slide"
+	if carrying:clip="carry_run" if running else "carry_idle"
+	if _cast_pose>0:clip="cast_"+_cast_element
+	if _slamming:clip="slam"
+	if _attack_time>0:clip="spin"
+	if _hitstun>0:clip="hurt"
+	_anim.play(clip)
+	_anim.speed_scale=clampf(Vector2(velocity.x,velocity.z).length()/RUN_SPEED,.65,1.4) if clip in ["run","carry_run"] else 1.0
+func play_element_cast(element:String) -> void:
+	_cast_pose=.32;_cast_element=element
 func _set_low(low:bool) -> bool:
 	if not low and _capsule.height<1.7:
 		var shape:=CapsuleShape3D.new();shape.radius=.36;shape.height=1.75
@@ -167,7 +179,7 @@ func take_damage(amount:float,source:Vector3) -> void:
 	var away:Vector3=(global_position-source);away.y=0;velocity=away.normalized()*6+Vector3.UP*4
 	get_parent().shake(.18)
 	if health<=0:
-		_dead=true;died.emit();await get_tree().create_timer(.65).timeout
+		_dead=true;model.visible=true;_anim.play("death");died.emit();await get_tree().create_timer(.65).timeout
 		if is_inside_tree():respawn()
 func fall_back() -> void:
 	if _dead:return
@@ -183,7 +195,7 @@ func reset_traversal(force_stand:bool=true) -> void:
 	_slide_left=0;_slide_cooldown=0;_slamming=false;_slam_left=0;_air_jump_used=false;_jump_buffer=0;_coyote=0
 	if force_stand:_capsule.height=1.75;_collider.position.y=.88
 	else:_set_low(false)
-	model.scale=Vector3(1.08,.52,1.18) if _capsule.height<1.7 else Vector3.ONE;model.rotation.x=0
+	model.scale=Vector3(1.04,.58,1.08) if _capsule.height<1.7 else Vector3.ONE;model.rotation.x=0;_cast_pose=0
 	_landing.hide()
 func is_dead() -> bool:return _dead
 func get_equipment() -> Node:return equipment
@@ -206,6 +218,7 @@ func heal_one() -> bool:
 	health+=1;health_changed.emit(health,MAX_HEALTH);return true
 func heal_full() -> void:health=MAX_HEALTH;health_changed.emit(health,MAX_HEALTH)
 func _carry_animations() -> void:
+	if model.has_meta("meshy_rig"):return
 	# A private library keeps the shared editable model and other actors untouched.
 	var library:AnimationLibrary=_anim.get_animation_library("").duplicate(true)
 	_anim.remove_animation_library("");_anim.add_animation_library("",library)

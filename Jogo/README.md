@@ -727,3 +727,6 @@ Enigmas resolvidos e cartões recolhidos ficam salvos na campanha. Ao carregar, 
 
 HUD elemental v80: ícones de fogo e gelo, seleção com Q, disparo com K,
 recarga real e duração das frutas. Os poderes permanentes não usam contador.
+
+Modelos v81: Nico e Largato usam os GLB fornecidos no laboratório 3D, com
+texturas preservadas, rigs de 18 ossos e animações procedurais de jogo/cutscene.

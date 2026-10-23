@@ -63,6 +63,7 @@ func _physics_process(delta:float) -> void:
 	if phase==1:_containment(delta)
 	elif phase==2:_overload(delta)
 	else:_last_dose(delta)
+	if _invulnerable>0:model.get_node("Animations").play("hurt")
 func _containment(delta:float) -> void:
 	if _state=="jump":
 		_jump_t+=delta;var t:=clampf(_jump_t/.95,0,1);position=_jump_from.lerp(_aim,t)+Vector3.UP*sin(t*PI)*5

@@ -120,7 +120,7 @@ func _arrival(delta:float) -> void:
 func _meltdown(delta:float) -> void:
 	var boss:Node3D=level.boss;var at:Vector3=boss.position
 	_view(at+Vector3(4.5-clock*.12,2.5,6),at+Vector3.UP*.9)
-	_pose(boss.model,"hurt" if clock<3 else "operate",delta)
+	_pose(boss.model,"hurt" if clock<3 else "melt",delta)
 	var melt:=smoothstep(2.2,6.5,clock);boss.model.scale=Vector3(1.25+melt*.8,1.25*(1-melt),1.25+melt*.8)
 	if not _cast.has("puddle"):
 		var puddle:=Art.cylinder(self,"Puddle",at+Vector3.UP*.025,1.7,.05,"81b969");puddle.scale=Vector3.ZERO;_cast.puddle=puddle
