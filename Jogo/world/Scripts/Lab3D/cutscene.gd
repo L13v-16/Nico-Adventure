@@ -74,10 +74,15 @@ func _update(delta:float) -> void:
 func _arrival(delta:float) -> void:
 	var monster:Node3D=_cast.guardian
 	var approach:=smoothstep(0,2.2,clock);monster.position=Vector3(0,0,lerpf(20,14,approach))
+	var charge:=smoothstep(4.4,5.3,clock)
+	if clock>=4.4:monster.position.z=lerpf(14,10.3,charge)
+	monster.rotation.x=-sin(charge*PI)*.12 if clock<6.3 else 0.0
 	var drop:=smoothstep(2.2,3.8,clock)
-	_cast.nico.position=Vector3(-1.6,4.05,monster.position.z-.05).lerp(Vector3(-3,0,15),drop)+Vector3.UP*sin(drop*PI)*1.5
-	_cast.jose.position=Vector3(1.6,4.05,monster.position.z-.05).lerp(Vector3(3,0,14.5),drop)+Vector3.UP*sin(drop*PI)*1.2
 	_pose(monster,"run" if clock<2.2 or (clock>4.4 and clock<5.3) else ("attack" if clock>=5.3 and clock<5.8 else "idle"),delta*.6)
+	# Follow the actual animated shoulder pivots, including the guardian's body bob.
+	var left:Node3D=monster.get_node("Rig/ArmL");var right:Node3D=monster.get_node("Rig/ArmR")
+	_cast.nico.global_position=(left.global_transform*Vector3(0,.38,0)).lerp(Vector3(-3,0,15),drop)+Vector3.UP*sin(drop*PI)*1.5
+	_cast.jose.global_position=(right.global_transform*Vector3(0,.38,0)).lerp(Vector3(3,0,14.5),drop)+Vector3.UP*sin(drop*PI)*1.2
 	_pose(_cast.nico,"jump" if drop>0 and drop<1 else "idle",delta);_pose(_cast.jose,"talk",delta)
 	if clock>=5.3:
 		level.open_service_door();var blast:=clampf(clock-5.3,0,.9)
@@ -85,7 +90,6 @@ func _arrival(delta:float) -> void:
 			var side:=-1.0 if i==0 else 1.0;var leaf:Node3D=level.front_door.get_child(i)
 			leaf.position=Vector3(side*(1.35+4*blast),maxf(.22,2.4+4*blast-8*blast*blast),3*blast);leaf.rotation=Vector3(blast/.9*PI/2,0,side*blast*.45)
 	if clock<6.3:
-		var charge:=smoothstep(4.4,5.3,clock);monster.position.z=lerpf(14,10.3,charge);monster.rotation.x=-sin(charge*PI)*.12
 		_view(Vector3(9,4.8,8).lerp(Vector3(7,3.8,16),smoothstep(2,5.3,clock)),Vector3(0,2.2,lerpf(17,11,smoothstep(2,5.3,clock))))
 	else:
 		level.open_service_door()
