@@ -1,0 +1,80 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pt5o6"]
+albedo_color = Color(0.16078432, 0.23529412, 0.31764707, 1)
+roughness = 0.68
+
+[sub_resource type="SphereMesh" id="SphereMesh_44rub"]
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3m5r0"]
+albedo_color = Color(0.42745098, 0.8784314, 0.92941177, 1)
+roughness = 0.68
+emission_enabled = true
+emission = Color(0.42745098, 0.8784314, 0.92941177, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ehmkh"]
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oasbp"]
+albedo_color = Color(0.5647059, 0.6431373, 0.67058825, 1)
+metallic = 0.4
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_gx8yu"]
+size = Vector3(0.6, 0.12, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hux6i"]
+albedo_color = Color(0.21960784, 0.35686275, 0.4392157, 1)
+metallic = 0.35
+roughness = 0.68
+
+[sub_resource type="TorusMesh" id="TorusMesh_hlg36"]
+inner_radius = 0.306
+outer_radius = 0.36
+rings = 20
+ring_segments = 6
+
+[sub_resource type="BoxMesh" id="BoxMesh_m3wmk"]
+size = Vector3(0.6, 0.12, 0.15)
+
+[sub_resource type="TorusMesh" id="TorusMesh_v17nd"]
+inner_radius = 0.306
+outer_radius = 0.36
+rings = 20
+ring_segments = 6
+
+[node name="Drone" type="Node3D" unique_id=420389223]
+metadata/model_kind = "drone"
+
+[node name="Core" type="MeshInstance3D" parent="." unique_id=1374457266]
+transform = Transform3D(1, 0, 0, 0, 0.65, 0, 0, 0, 0.75, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_pt5o6")
+mesh = SubResource("SphereMesh_44rub")
+
+[node name="Lens" type="MeshInstance3D" parent="." unique_id=1737163597]
+transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.13, 0, 0, -0.4)
+material_override = SubResource("StandardMaterial3D_3m5r0")
+mesh = SubResource("SphereMesh_ehmkh")
+
+[node name="Arm" type="MeshInstance3D" parent="." unique_id=768752592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
+material_override = SubResource("StandardMaterial3D_oasbp")
+mesh = SubResource("BoxMesh_gx8yu")
+
+[node name="Rotor" type="MeshInstance3D" parent="." unique_id=1973337960]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.88, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_hux6i")
+mesh = SubResource("TorusMesh_hlg36")
+
+[node name="@MeshInstance3D@112" type="MeshInstance3D" parent="." unique_id=1630638747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0)
+material_override = SubResource("StandardMaterial3D_oasbp")
+mesh = SubResource("BoxMesh_m3wmk")
+
+[node name="@MeshInstance3D@113" type="MeshInstance3D" parent="." unique_id=1075318046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.88, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_hux6i")
+mesh = SubResource("TorusMesh_v17nd")

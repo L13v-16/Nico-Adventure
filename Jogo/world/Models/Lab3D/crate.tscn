@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kid8t"]
+albedo_color = Color(0.4862745, 0.6039216, 0.62352943, 1)
+metallic = 0.4
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_fs7n7"]
+size = Vector3(1.4, 1.4, 1.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kioai"]
+albedo_color = Color(0.8352941, 0.827451, 0.7294118, 1)
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_duwxy"]
+size = Vector3(0.12, 1.4, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_323cr"]
+size = Vector3(0.12, 1.4, 0.08)
+
+[node name="Crate" type="Node3D" unique_id=1458681601]
+metadata/model_kind = "crate"
+
+[node name="Crate" type="MeshInstance3D" parent="." unique_id=665106856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+material_override = SubResource("StandardMaterial3D_kid8t")
+mesh = SubResource("BoxMesh_fs7n7")
+
+[node name="Brace" type="MeshInstance3D" parent="." unique_id=1351267206]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, 0.7, -0.72)
+material_override = SubResource("StandardMaterial3D_kioai")
+mesh = SubResource("BoxMesh_duwxy")
+
+[node name="@MeshInstance3D@119" type="MeshInstance3D" parent="." unique_id=794528859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64, 0.7, -0.72)
+material_override = SubResource("StandardMaterial3D_kioai")
+mesh = SubResource("BoxMesh_323cr")

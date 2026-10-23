@@ -1,0 +1,55 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ne81u"]
+albedo_color = Color(0.85490197, 0.24313726, 0.4, 1)
+roughness = 0.68
+
+[sub_resource type="SphereMesh" id="SphereMesh_3fwgs"]
+radial_segments = 12
+rings = 6
+
+[sub_resource type="SphereMesh" id="SphereMesh_3es4u"]
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n0h6r"]
+albedo_color = Color(0.3372549, 0.5568628, 0.30588236, 1)
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w5rsx"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 0.5
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4gxb"]
+albedo_color = Color(0.5137255, 0.72156864, 0.3764706, 1)
+roughness = 0.68
+
+[sub_resource type="SphereMesh" id="SphereMesh_u5qy0"]
+radial_segments = 12
+rings = 6
+
+[node name="Cherry" type="Node3D" unique_id=1518663419]
+metadata/model_kind = "cherry"
+
+[node name="Fruit" type="MeshInstance3D" parent="." unique_id=520080224]
+transform = Transform3D(0.33, 0, 0, 0, 0.36, 0, 0, 0, 0.34, -0.15, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_ne81u")
+mesh = SubResource("SphereMesh_3fwgs")
+
+[node name="@MeshInstance3D@111" type="MeshInstance3D" parent="." unique_id=1263417831]
+transform = Transform3D(0.33, 0, 0, 0, 0.36, 0, 0, 0, 0.34, 0.15, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_ne81u")
+mesh = SubResource("SphereMesh_3es4u")
+
+[node name="Stem" type="MeshInstance3D" parent="." unique_id=912215510]
+transform = Transform3D(0.9553365, 0.29552022, 0, -0.29552022, 0.9553365, 0, 0, 0, 1, 0, 0.34, 0)
+material_override = SubResource("StandardMaterial3D_n0h6r")
+mesh = SubResource("CylinderMesh_w5rsx")
+
+[node name="Leaf" type="MeshInstance3D" parent="." unique_id=432702217]
+transform = Transform3D(0.3, 0, 0, 0, 0.06, 0, 0, 0, 0.12, 0.14, 0.52, 0)
+material_override = SubResource("StandardMaterial3D_r4gxb")
+mesh = SubResource("SphereMesh_u5qy0")

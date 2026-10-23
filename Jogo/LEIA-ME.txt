@@ -795,3 +795,18 @@ A entrada do laboratório ganhou um cartão animado próprio, com escudo
 dourado da corporação, título completo em duas linhas e número da ilha.
 A placa da fachada usa a mesma identidade e identifica a entrada de serviço.
 Texto e emblema permanecem nítidos ao mudar o tamanho da janela.
+
+
+## Laboratório em 3D (v75)
+
+A quinta ilha agora usa cenário, personagens e colisões tridimensionais, com câmera em terceira pessoa. Nico e José chegam montados no Carcereiro; a pancada na porta provoca um tremor na contenção. O lobo da corporação e Largato assistem à eclosão de um experimento e acionam a emergência. A cena pode ser pulada com E, Enter ou Esc e aparece uma vez também nos saves anteriores.
+
+WASD ou setas movem Nico em profundidade; Espaço pula; Shift acelera enquanto houver energia, que se recupera. Segure o botão direito e mova o mouse para girar a câmera; ao soltar, ela se recentraliza. J/X/clique ataca e, no ar, aproxima Nico de um inimigo visível à frente. K lança o elemento, Q alterna fogo e gelo, E interage e I abre a mochila.
+
+A recepção ensina corrida, cartão e elevador. A contenção apresenta uma ponte de veneno que pode ser congelada antes dos primeiros inimigos. A fábrica combina alavanca, esteira, prensa congelável, plataforma móvel e elevador até a cobertura. Portas levam a salas reais e permitem voltar. Trilhos e faixas luminosas indicam apoios; checkpoints recuperam um coração. Há três registros opcionais em rotas laterais.
+
+Largato luta na cobertura do prédio: cauda, seringas e salto com posição anunciada; depois mecanismos de fogo e gelo fazem seu suporte descer; por último, Nico inverte o injetor e arremessa LG-17 com F. Cada abertura aceita um ponto de dano, os terminais duram 18 segundos e há um segundo entre doses. A arena tem cobertura baixa para a inundação e a câmera enquadra os dois combatentes. O derretimento cartunesco precede o resgate de Urso, o urso-pardo.
+
+Oliver, compras, mochila, saldo, resultados e desbloqueio do modo livre usam os sistemas existentes. Os identificadores antigos das cerejas foram mantidos: frutas já coletadas não voltam nem dão saldo repetido no modo livre. As quatro primeiras ilhas continuam com sua jogabilidade 2D.
+
+Arte 3D: 23 cenas nativas editáveis em world/Models/Lab3D, com malhas volumétricas, materiais e personagens articulados com AnimationPlayer. A construção dos modelos fica em world/Scripts/Lab3D/models.gd; tools/rebuild_lab_models.gd reconstrói as cenas. Não são sprites virados para a câmera. Todos os 414 PNGs anteriores foram preservados. A implementação anterior do laboratório está arquivada em world/lab_05_legacy_2d.tscn; a campanha continua usando world/lab_05.tscn. Testes usam APPDATA dedicado e não acessam saves reais.
