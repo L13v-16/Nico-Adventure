@@ -801,7 +801,7 @@ Texto e emblema permanecem nítidos ao mudar o tamanho da janela.
 
 A quinta ilha agora usa cenário, personagens e colisões tridimensionais, com câmera em terceira pessoa. Nico e José chegam montados no Carcereiro; a pancada na porta provoca um tremor na contenção. O lobo da corporação e Largato assistem à eclosão de um experimento e acionam a emergência. A cena pode ser pulada com E, Enter ou Esc e aparece uma vez também nos saves anteriores.
 
-WASD ou setas movem Nico em profundidade; Espaço pula; Shift acelera enquanto houver energia, que se recupera. Segure o botão direito e mova o mouse para girar a câmera; ao soltar, ela se recentraliza. J/X/clique ataca e, no ar, aproxima Nico de um inimigo visível à frente. K lança o elemento, Q alterna fogo e gelo, E interage e I abre a mochila.
+WASD ou setas movem Nico em profundidade. Espaço pula; pressione de novo no ar para um pulo duplo. Soltar o botão encurta o salto. J/X/clique faz um ataque giratório no chão ou no ar. Shift ou Ctrl desliza no chão em movimento e faz uma queda forte no ar. A câmera acompanha o corredor e antecipa o percurso; botão direito e mouse permitem inspecionar o cenário. K lança o elemento, Q alterna fogo e gelo, E interage e I abre a mochila.
 
 A recepção ensina corrida, cartão e elevador. A contenção apresenta uma ponte de veneno que pode ser congelada antes dos primeiros inimigos. A fábrica combina alavanca, esteira, prensa congelável, plataforma móvel e elevador até a cobertura. Portas levam a salas reais e permitem voltar. Trilhos e faixas luminosas indicam apoios; checkpoints recuperam um coração. Há três registros opcionais em rotas laterais.
 
@@ -828,3 +828,16 @@ Três novos setores de 70 metros levam da fábrica à cobertura: arquivo e logí
 E pega, solta ou encaixa células de energia. Nico segura a célula com uma pose própria de braços e caminhada; solte-a para atacar ou usar poderes. Morrer ou sair da sala devolve a célula não instalada ao seu lugar seguro. Células encaixadas mantêm portões abertos. FOGO seguido de GELO no relé térmico ergue uma ponte hidráulica sólida de 16 metros. GELO interrompe ventiladores e escâneres; linhas de aviso anunciam os disparos, e cobertura física bloqueia a detecção.
 
 A chegada usa os sprites 2D originais. A pancada do Carcereiro na porta causa interferências e revela a versão 3D; o lobo e Largato presenciam a eclosão. A batalha continua na cobertura. Após o resgate, a realidade se estabiliza e Nico e Urso reaparecem em pixel art 2D antes dos resultados. As cenas podem ser puladas e restauram controles e música corretamente. Nenhum PNG anterior foi alterado.
+
+
+## Controle de plataformas inspirado em Crash (v78)
+
+O laboratório usa corrida a 7,2 m/s, aceleração e frenagem curtas, controle no ar, altura variável de salto, tolerância após sair da borda e comando de pulo antecipado antes do pouso. O pulo duplo pode ser usado uma vez no ar e é restaurado no chão ou ao quicar. O giro atinge ao redor de Nico, com braços abertos, duas voltas visuais, rastro e um acerto por alvo a cada ativação. O movimento aéreo acompanha os comandos do jogador.
+
+Shift/Ctrl desliza por um intervalo curto, com uma cápsula de colisão realmente menor. Nico só volta a ficar em pé quando há espaço. No ar, o mesmo botão prepara uma queda forte com impacto no chão. Dano, portas e checkpoints limpam essas ações para evitar estados presos. Um marcador dourado indica a superfície de pouso sob Nico e desaparece sobre abismos. A câmera fica mais afastada e inclinada, antecipa o corredor e retorna suavemente após uma inspeção com o mouse.
+
+A recepção apresenta uma caixa quebrável, três degraus para experimentar o pulo duplo e uma passagem baixa opcional. Outros setores combinam caixas com os mecanismos existentes. Duas caixas elásticas ajudam a explorar as varandas laterais; elas só lançam Nico quando ele cai sobre a tampa. Novos modelos supply_crate e bounce_crate têm painéis, ferragens, rebites e tampas distintas. O gerador tools/rebuild_lab_models.gd reconstrói os 35 modelos.
+
+Pular sobre inimigos comuns causa dano e faz Nico quicar; o ataque giratório oferece outra opção. Largato mantém suas três etapas, sinais de ataque e limite de um ponto por abertura. Baterias ocupam as mãos, reduzem a corrida e permitem apenas o pulo simples. As caixas quebradas ficam abertas durante a visita e não geram saldo; as 84 cerejas conservam seus identificadores e a regra do modo livre. Algumas cerejas existentes foram posicionadas sobre os degraus para guiar a rota opcional.
+
+A chegada em 2D, a mudança para 3D após a pancada na porta e o encerramento em 2D continuam integrados à campanha. Os controles das quatro primeiras ilhas são preservados.

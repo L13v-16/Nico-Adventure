@@ -58,7 +58,7 @@ func _physics_process(delta:float) -> void:
 					var run:Vector3=(_aim-global_position).normalized()*8;velocity.x=run.x;velocity.z=run.z;velocity.y=4
 		"attack":
 			_model.get_node("Animations").play("attack")
-			if species!="technician" and gap.length()<1.7:player.take_damage(1,global_position)
+			if species!="technician" and gap.length()<1.7 and not (player.velocity.y<-.5 and gap.y>1.0):player.take_damage(1,global_position)
 			if _timer<=0:_state="recovery";_timer=1.5;velocity.x=0;velocity.z=0
 		"recovery":
 			_model.get_node("Animations").play("idle")
@@ -74,3 +74,8 @@ func take_damage(amount:float,_source:Vector3) -> void:
 	if health<=0:
 		dead=true;collision_layer=0;level.defeated+=1
 		var tween:=create_tween();tween.tween_property(_model,"scale",Vector3.ONE*.05,.25);tween.tween_callback(queue_free)
+
+func stomp(source:Vector3) -> bool:
+	if dead or _invulnerable>0:return false
+	take_damage(1.0,source);_state="recovery";_timer=1.25;velocity.x=0;velocity.z=0
+	return true

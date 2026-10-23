@@ -24,7 +24,7 @@ var rescue_chamber:Node3D
 var front_door:Node3D
 var camera:Camera3D
 var camera_yaw:=0.0
-var _pitch:=-.28
+var _pitch:=-.40
 var _orbit_idle:=0.0
 var _camera_rig:Node3D
 var _pitch_rig:Node3D
@@ -34,7 +34,7 @@ var _status:Label
 var _notice:Label
 var _sector_label:Label
 var _fade:ColorRect
-var _boost_bar:ColorRect
+var _move_status:Label
 var _boss_back:ColorRect
 var _target_ring:MeshInstance3D
 var _notice_left:=0.0
@@ -99,9 +99,8 @@ func _hud_setup() -> void:
 	_status.z_index=2
 	_boss_back=ColorRect.new();_boss_back.position=Vector2(96,57);_boss_back.size=Vector2(448,61);_boss_back.color=Color("101e2b",.92);_boss_back.z_index=1;_boss_back.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(_boss_back);_boss_back.hide()
 	_notice=_ui_label(Vector2(80,133),Vector2(480,36),10);_notice.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;_notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	var bg:=ColorRect.new();bg.position=Vector2(13,317);bg.size=Vector2(100,5);bg.color=Color("233c4a");hud.add_child(bg)
-	_boost_bar=ColorRect.new();_boost_bar.position=bg.position;_boost_bar.size=bg.size;_boost_bar.color=Color("7edbcf");hud.add_child(_boost_bar)
-	_ui_label(Vector2(13,302),Vector2(230,14),8).text="SHIFT: ACELERAR · BOTÃO DIR.: CÂMERA"
+	_move_status=_ui_label(Vector2(13,302),Vector2(600,20),8)
+	_move_status.text="ESPAÇO ×2: PULO DUPLO · J: GIRO · SHIFT/CTRL: DESLIZE / QUEDA"
 	var overlay:=CanvasLayer.new();overlay.layer=75;add_child(overlay);_fade=ColorRect.new();_fade.color=Color("101e2b",0);_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);_fade.mouse_filter=Control.MOUSE_FILTER_IGNORE;overlay.add_child(_fade)
 func _ui_label(at:Vector2,size:Vector2,font_size:int) -> Label:
 	var label:=Label.new();label.add_theme_font_size_override("font_size",font_size);label.add_theme_color_override("font_color",Color("f4e7cb"));label.add_theme_color_override("font_shadow_color",Color("101b29"));label.add_theme_constant_override("shadow_offset_x",1);label.add_theme_constant_override("shadow_offset_y",1);label.add_theme_constant_override("line_spacing",2);label.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(label);label.position=at;label.size=size;return label
@@ -112,7 +111,7 @@ func _start_sequence() -> void:
 		Save.set_story_flag("lab_arrived");Save.set_story_flag("lab_entrance_breached");Save.set_story_flag("lab_3d_hatching_seen");Save.set_story_flag("lab_dimension_breach_seen")
 	else:open_service_door()
 	get_tree().paused=true;pause_menu.can_open=false;game_hud.start_intro();await game_hud.intro_finished
-	intro_active=false;get_tree().paused=false;pause_menu.can_open=true;Sfx.start();notice("WASD ou setas: mover · Espaço: pular · Shift: acelerar. E fala com Oliver.")
+	intro_active=false;get_tree().paused=false;pause_menu.can_open=true;Sfx.start();notice("WASD ou setas: mover · Espaço: pular · Espaço de novo: pulo duplo · J: giro. E fala com Oliver.")
 func play_cutscene(kind:String) -> Node3D:
 	var sequence:=preload("res://world/Scripts/Lab3D/cutscene.gd").new();sequence.name="Lab3DCutscene";sequence.level=self;sequence.mode=kind;_cutscene=sequence
 	if kind=="melt":sequence.finished.connect(_boss_melted,CONNECT_ONE_SHOT)
@@ -130,11 +129,11 @@ func _process(delta:float) -> void:
 	_status.visible=boss.active;_boss_back.visible=boss.active;_sector_label.visible=not boss.active
 	_status.text="LARGATO / ETAPA %d / VIDA %d\n%s"%[boss.phase,int(boss.health),boss.status()]
 	_sector_label.text=Layout.NAMES[sector]+"\nK: "+("GELO" if player.elements.selected=="ice" else "FOGO")+" · Q: alternar"
-	_boost_bar.size.x=player.boost
+	_move_status.modulate=Color("9ae4db") if player._attack_time>0 else Color("f4e7cb")
 	_hint.text=hint_text()
 	pause_menu.set_summary("Laboratório 3D · %d corações · %d cerejas"%[player.health,Save.get_cherry_balance()])
-	var target:=find_target(player.position+Vector3.UP,player.forward,11 if not player.is_on_floor() else 20,player.is_on_floor())
-	_target_ring.visible=is_instance_valid(target) and (not player.is_on_floor() or Input.is_action_pressed("element_cast"))
+	var target:=find_target(player.position+Vector3.UP,player.forward,20,true)
+	_target_ring.visible=is_instance_valid(target) and Input.is_action_pressed("element_cast")
 	if is_instance_valid(target):_target_ring.global_position=target.aim_point()+Vector3.UP*.4;_target_ring.look_at(camera.global_position,Vector3.UP);_target_ring.rotate_object_local(Vector3.RIGHT,PI/2)
 	if is_instance_valid(wagon) and not _shop_gone:
 		var distance:=player.global_position.distance_to(wagon.global_position)
@@ -145,12 +144,13 @@ func _physics_process(_delta:float) -> void:
 	if Input.is_action_just_pressed("lab_throw"):boss.throw_serum()
 func _update_camera(delta:float) -> void:
 	_orbit_idle+=delta;_shake=maxf(0,_shake-delta)
-	var follow:Vector3=player.position+Vector3.UP*1.65
+	var follow:Vector3=player.position+Vector3.UP*1.6+Vector3(clampf(player.velocity.x*.12,-.8,.8),0,-1.8)
 	if boss.active:
 		follow=follow.lerp(boss.position+Vector3.UP*1.3,.32)
 		_arm.spring_length=lerpf(_arm.spring_length,clampf(player.position.distance_to(boss.position)*.4+8,9,16),1-exp(-delta*4))
-	else:_arm.spring_length=lerpf(_arm.spring_length,8.0,1-exp(-delta*4))
-	if _orbit_idle>2 and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):camera_yaw=lerp_angle(camera_yaw,0.0,1-exp(-delta*1.5))
+	else:_arm.spring_length=lerpf(_arm.spring_length,9.5,1-exp(-delta*4))
+	if _orbit_idle>1.5 and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		camera_yaw=lerp_angle(camera_yaw,0.0,1-exp(-delta*3));_pitch=lerpf(_pitch,-.40,1-exp(-delta*3))
 	_camera_rig.position=_camera_rig.position.lerp(follow,1-exp(-delta*10));_camera_rig.rotation.y=camera_yaw;_pitch_rig.rotation.x=_pitch
 	if _shake>0 and Save.is_camera_shake_enabled():camera.h_offset=sin(_time*80)*_shake*.12;camera.v_offset=cos(_time*70)*_shake*.08
 	else:camera.h_offset=0;camera.v_offset=0
@@ -185,7 +185,7 @@ func _drop_carried(reset_to_home:bool) -> void:
 func enter_sector(index:int) -> void:
 	if _transitioning or boss.active or index<0 or index>=Layout.ORIGINS.size() or index==sector:return
 	_drop_carried(true)
-	_transitioning=true;intro_active=true;player.velocity=Vector3.ZERO;player._cancel_attack();Sfx.play("lab_door",-10)
+	_transitioning=true;intro_active=true;player.velocity=Vector3.ZERO;player._cancel_attack();player.reset_traversal();Sfx.play("lab_door",-10)
 	var tween:=create_tween();tween.tween_property(_fade,"color:a",1.0,.18);await tween.finished
 	var backwards:=Layout.ROUTE.find(index)<Layout.ROUTE.find(sector)
 	sector=index;checkpoint_sector=index;player.position=Layout.ORIGINS[index]+Layout.landing(index,backwards);player.respawn_position=player.position;player.forward=Vector3.FORWARD;camera_yaw=0
@@ -231,7 +231,7 @@ func _respawned() -> void:
 	_drop_carried(true)
 	sector=checkpoint_sector;_refresh_sectors();boss.reset_encounter();snap_camera()
 func hint_text() -> String:
-	if boss.active:return "WASD / setas: mover · Espaço: pular · J: atacar · K: poder · Q: alternar · F: dose"
+	if boss.active:return "WASD / setas: mover · Espaço: pular · J: giro · K: poder · Q: alternar · F: dose"
 	var nearby:Node3D;var nearest:=4.5
 	for object in get_tree().get_nodes_in_group("lab3d_expansion"):
 		if object.sector!=sector or object==carried_cell:continue
@@ -241,8 +241,10 @@ func hint_text() -> String:
 	if is_instance_valid(carried_cell):return "Carregando bateria · E no encaixe para instalar · E longe de objetos para soltar."
 	if sector==0:
 		if not _shop_gone and player.position.distance_to(wagon.global_position)<4:return "E: conversar com Oliver Gancho · I: mochila"
-		return "Pegue o cartão, embarque no elevador e use E na porta superior."
-	if sector==1:return "K: GELO forma ponte no veneno · J no ar: investida no inimigo marcado · E: porta"
+		for crate in get_tree().get_nodes_in_group("lab3d_crates"):
+			if crate.sector==sector and not crate.dead and player.position.distance_to(crate.global_position)<5:return crate.hint()
+		return "Espaço ×2: pulo duplo · J: giro quebra caixas · pegue o cartão e suba no elevador."
+	if sector==1:return "K: GELO forma ponte no veneno · Pule nos inimigos ou use J: giro · E: porta"
 	if sector==2:return "E: alavanca · GELO: prensa · a porta superior leva ao arquivo da corporação."
 	if sector==4:return "Procure a bateria e instale-a no encaixe para abrir o arquivo. E examina registros."
 	if sector==5:return "FOGO aquece o regulador; GELO estabiliza o circuito e ergue a ponte."

@@ -9,3 +9,5 @@ O gerador é `world/Scripts/Lab3D/models.gd`. Para reconstruir as cenas a partir
 Revisão v76: detalhes de personagens, armadura e objetos estão separados em `character_details.gd`, `guardian_details.gd` e `prop_details.gd`. O gerador integra os três módulos antes de gravar as cenas. Os detalhes são filhos dos pivôs de animação; nomes legíveis e estáveis permitem substituir formas antigas sem deixar malhas duplicadas.
 
 V77 acrescenta 10 cenas de aparelhos e cenário, geradas por expansion_models.gd, totalizando 33 modelos.
+
+V78 acrescenta supply_crate e bounce_crate, construídos por precision_props.gd e editáveis nas respectivas cenas .tscn. Total: 35 modelos.

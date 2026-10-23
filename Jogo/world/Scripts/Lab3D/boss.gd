@@ -47,7 +47,7 @@ func aim_point() -> Vector3:return global_position+Vector3.UP*1.25
 func accepts(_element:String) -> bool:return active and not dead and not dying and phase<3
 func start_encounter() -> void:
 	if active or dead or dying:return
-	active=true;level.player.heal_full();level.player._invulnerability_timer=2;level.player.velocity=Vector3.ZERO
+	active=true;level.player.heal_full();level.player._invulnerability_timer=2;level.player.velocity=Vector3.ZERO;level.player.reset_traversal()
 	level.player.respawn_position=Vector3(0,level.roof_y+.05,-226);level.checkpoint_sector=3
 	if not _intro_seen:
 		_intro_seen=true;level.play_cutscene("boss")
@@ -175,7 +175,7 @@ func status() -> String:
 	if phase<3 and vulnerable>0:return "Acerto confirmado · aguarde a próxima abertura" if _spent else "VULNERÁVEL · %.1f s · um acerto por abertura"%vulnerable
 	if phase==1:
 		if _state=="warning":return "SALTO: saia do círculo" if _attack%3==0 else ("SERINGA: desvie da mira" if _attack%2==0 else "CAUDA: pule ou saia do alcance")
-		return "Desvie dos golpes e ataque na recuperação. J no ar faz uma investida."
+		return "Desvie dos golpes e ataque na recuperação. J gira no chão ou no ar; aproxime-se nas aberturas."
 	if phase==2:return "FOGO à esquerda: %s  |  GELO à direita: %s"%[("OK %ds"%ceili(heated)) if heated>0 else "aguardando",("OK %ds"%ceili(cooled)) if cooled>0 else "aguardando"]
 	if injector_reversed:return "F: LG-17 · %d doses · %d/3 acertos · E no injetor recarrega"%[syringe_ammo,serum_hits]
 	return "Injetor: use GELO e aperte E" if injector_heat else "Injetor à esquerda: FOGO → GELO → E → F"

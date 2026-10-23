@@ -64,8 +64,7 @@ static func build(level:Node3D) -> void:
 	device(level,0,"door",Vector3(0,3,-42),{"destination":1})
 	device(level,0,"checkpoint",Vector3(3,0,-23))
 	device(level,0,"fragment",Vector3(-7,0,-28))
-	device(level,0,"boost",Vector3(0,0,-11))
-	Art.label(first,"SHIFT · CORRER\nESPAÇO · PULAR",Vector3(0,.12,-8),28,"254c5c").rotation.x=-PI/2
+	Art.label(first,"J · GIRO\nESPAÇO ×2 · PULO DUPLO",Vector3(0,.12,-8),28,"254c5c").rotation.x=-PI/2
 	Art.label(first,"Sua segurança é nossa 17ª prioridade.",Vector3(-6,3,-3),24,"e9c785")
 	# Forecourt, facade and two independent leaves used by the breach cinematic.
 	level.front_door=Node3D.new();level.front_door.name="ServiceDoor";level.front_door.position=Vector3(0,0,8);first.add_child(level.front_door)
@@ -164,6 +163,7 @@ static func build(level:Node3D) -> void:
 	Art.label(roof,"PESQUISA AVANÇADA\nPROCEDIMENTOS PERFEITAMENTE APROVADOS",Vector3(0,3.5,-33.5),31,"eccc8a")
 	_cherries(level)
 	load("res://world/Scripts/Lab3D/expansion_layout.gd").build(level)
+	load("res://world/Scripts/Lab3D/precision_layout.gd").build(level)
 static func _cherries(level:Node3D) -> void:
 	var ids:Array[String]=[]
 	for s in preload("res://world/Scripts/lab_layout.gd").GROUND:

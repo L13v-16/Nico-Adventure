@@ -129,7 +129,7 @@ func _physics_process(delta:float) -> void:
 				elif frozen_left<=0:player.take_damage(1,global_position)
 		"lift","ferry":_tick_lift(delta,player)
 		"conveyor":
-			if near:player.position+=Vector3(0,0,(3 if reversed else -3)*delta)
+			if near:player.move_and_collide(Vector3(0,0,(2 if reversed else -2)*delta))
 		"press":
 			var cycle:=fposmod(clock,4.8);var lowered:=cycle>3.0 and cycle<3.65 and frozen_left<=0
 			_body.position.y=move_toward(_body.position.y,.55 if lowered else 3.5,20*delta)
@@ -146,7 +146,7 @@ func _physics_process(delta:float) -> void:
 		"spring":
 			if near and _cooldown<=0:player.velocity.y=16;_cooldown=1;Sfx.jump()
 		"boost":
-			if near:player.velocity.z=-18;player.boost=minf(100,player.boost+30*delta)
+			pass # Legacy pads no longer force movement in the precision controller.
 		"heat","cold","injector":
 			var confirmed:bool=(level.boss.heated>0 if kind=="heat" else level.boss.cooled>0) if kind!="injector" else level.boss.injector_reversed
 			_label.modulate=Color("9ce4bd") if confirmed else Color("f2deb0")
