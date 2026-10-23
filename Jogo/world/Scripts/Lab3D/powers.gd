@@ -13,7 +13,7 @@ func has_ice() -> bool:return true
 func has_any() -> bool:return true
 func can_use(_element:String) -> bool:return true
 func can_control() -> bool:
-	var p:=get_parent();return not get_tree().paused and not p.is_dead() and not p._finished and not p.get_parent().intro_active
+	var p:=get_parent();return not get_tree().paused and not p.is_dead() and not p._finished and not p.get_parent().intro_active and not is_instance_valid(p.get_parent().carried_cell)
 func grant_fruit(seconds:float=20) -> void:temporary_fire=seconds;selected="fire"
 func refresh_available(preferred:String="") -> void:
 	if preferred!="":selected=preferred

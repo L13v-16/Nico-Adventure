@@ -8,6 +8,7 @@ var pause_on_focus_loss:=true
 var intro_active:=true
 var completed:=false
 var access_card:=false
+var carried_cell:Node3D
 var sector:=0
 var checkpoint_sector:=0
 var roof_y:=26.0
@@ -47,7 +48,7 @@ var _results:CanvasLayer
 var total_gems:=0
 var total_enemies:=0
 var cherry_ids:Array[String]=[]
-var total_secrets:=3
+var total_secrets:=6
 var secrets_found:=0
 var defeated:=0
 var deaths:=0
@@ -76,7 +77,7 @@ func _world() -> void:
 	var sun:=DirectionalLight3D.new();sun.rotation_degrees=Vector3(-48,-32,0);sun.light_color=Color("ffedd2");sun.light_energy=.95;sun.shadow_enabled=true;sun.directional_shadow_max_distance=90;add_child(sun)
 	Art.box(self,"Ocean",Vector3(0,-13,-120),Vector3(1000,.2,1000),"387d99",.25)
 	for i in 22:
-		var side:=-1 if i%2 else 1;var x:float=side*(45+i%4*12);var z:float=-25-i*14;var h:float=20+i%6*8
+		var side:=-1 if i%2 else 1;var x:float=(145+i%4*12) if side>0 else -(45+i%4*12);var z:float=-25-i*14;var h:float=20+i%6*8
 		var tower:=Art.box(self,"DistantBuilding",Vector3(x,h*.5-8,z),Vector3(12,h,15),"678292")
 		var facade:=ShaderMaterial.new();facade.shader=preload("res://world/Scripts/Lab3D/city.gdshader");tower.material_override=facade
 		Art.box(self,"TowerRoof",Vector3(x,h-7.5,z),Vector3(12.5,.7,15.5),"334e63",.3)
@@ -106,9 +107,9 @@ func _ui_label(at:Vector2,size:Vector2,font_size:int) -> Label:
 	var label:=Label.new();label.add_theme_font_size_override("font_size",font_size);label.add_theme_color_override("font_color",Color("f4e7cb"));label.add_theme_color_override("font_shadow_color",Color("101b29"));label.add_theme_constant_override("shadow_offset_x",1);label.add_theme_constant_override("shadow_offset_y",1);label.add_theme_constant_override("line_spacing",2);label.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(label);label.position=at;label.size=size;return label
 func _start_sequence() -> void:
 	var skip:=Save.consume_skip_intro()
-	if not skip or not Save.has_story_flag("lab_3d_hatching_seen"):
+	if not skip or not Save.has_story_flag("lab_dimension_breach_seen"):
 		var sequence:=play_cutscene("arrival");await sequence.finished
-		Save.set_story_flag("lab_arrived");Save.set_story_flag("lab_entrance_breached");Save.set_story_flag("lab_3d_hatching_seen")
+		Save.set_story_flag("lab_arrived");Save.set_story_flag("lab_entrance_breached");Save.set_story_flag("lab_3d_hatching_seen");Save.set_story_flag("lab_dimension_breach_seen")
 	else:open_service_door()
 	get_tree().paused=true;pause_menu.can_open=false;game_hud.start_intro();await game_hud.intro_finished
 	intro_active=false;get_tree().paused=false;pause_menu.can_open=true;Sfx.start();notice("WASD ou setas: mover · Espaço: pular · Shift: acelerar. E fala com Oliver.")
@@ -162,17 +163,32 @@ func _unhandled_input(event:InputEvent) -> void:
 	if intro_active or completed or get_tree().paused or not event.is_action_pressed("interagir"):return
 	if sector==0 and not _shop_gone and player.position.distance_to(wagon.global_position)<4:shop.open();get_viewport().set_input_as_handled();return
 	var closest:Node3D;var distance:=2.7
+	# A held battery must not steal E from the socket immediately ahead of Nico.
+	if is_instance_valid(carried_cell):
+		for object in get_tree().get_nodes_in_group("lab3d_expansion"):
+			if object.sector==sector and object.kind=="power_socket" and not object.active and player.position.distance_to(object.global_position)<3.0:
+				if object.interact():get_viewport().set_input_as_handled();return
 	for object in get_tree().get_nodes_in_group("lab3d_devices"):
 		if object.sector!=sector or object.kind not in ["door","lever","injector","rescue","record"]:continue
 		var gap:float=player.position.distance_to(object.global_position)
 		if gap<distance:closest=object;distance=gap
+	for object in get_tree().get_nodes_in_group("lab3d_expansion"):
+		if object.sector!=sector or object==carried_cell or object.kind not in ["power_cell","power_socket","thermal_relay","archive_console","blast_gate"]:continue
+		if object.kind=="power_cell" and object.active:continue
+		var gap:float=player.position.distance_to(object.global_position)
+		if gap<distance:closest=object;distance=gap
 	if closest!=null and closest.interact():get_viewport().set_input_as_handled()
+	elif is_instance_valid(carried_cell):_drop_carried(false);get_viewport().set_input_as_handled()
+func _drop_carried(reset_to_home:bool) -> void:
+	if is_instance_valid(carried_cell) and carried_cell.has_method("drop"):carried_cell.drop(reset_to_home)
+	carried_cell=null
 func enter_sector(index:int) -> void:
-	if _transitioning or boss.active or index<0 or index>3:return
+	if _transitioning or boss.active or index<0 or index>=Layout.ORIGINS.size() or index==sector:return
+	_drop_carried(true)
 	_transitioning=true;intro_active=true;player.velocity=Vector3.ZERO;player._cancel_attack();Sfx.play("lab_door",-10)
 	var tween:=create_tween();tween.tween_property(_fade,"color:a",1.0,.18);await tween.finished
-	var backwards:=index<sector
-	sector=index;checkpoint_sector=index;player.position=Layout.ORIGINS[index]+(Vector3(0,[3.08,5.08,8.08,0.08][index],-39.6) if backwards else Vector3(0,.08,-3));player.respawn_position=player.position;player.forward=Vector3.FORWARD;camera_yaw=0
+	var backwards:=Layout.ROUTE.find(index)<Layout.ROUTE.find(sector)
+	sector=index;checkpoint_sector=index;player.position=Layout.ORIGINS[index]+Layout.landing(index,backwards);player.respawn_position=player.position;player.forward=Vector3.FORWARD;camera_yaw=0
 	_refresh_sectors();snap_camera();player._invulnerability_timer=1.2
 	tween=create_tween();tween.tween_property(_fade,"color:a",0.0,.25);await tween.finished
 	intro_active=false;_transitioning=false;notice(Layout.NAMES[sector])
@@ -212,14 +228,25 @@ func _wallet() -> void:
 func _health(current:int,maximum:int) -> void:
 	if game_hud!=null:game_hud.set_health(current,maximum);game_hud.set_shop_shield(player.shop_shield_hits)
 func _respawned() -> void:
+	_drop_carried(true)
 	sector=checkpoint_sector;_refresh_sectors();boss.reset_encounter();snap_camera()
 func hint_text() -> String:
 	if boss.active:return "WASD / setas: mover · Espaço: pular · J: atacar · K: poder · Q: alternar · F: dose"
+	var nearby:Node3D;var nearest:=4.5
+	for object in get_tree().get_nodes_in_group("lab3d_expansion"):
+		if object.sector!=sector or object==carried_cell:continue
+		var distance:float=player.position.distance_to(object.global_position)
+		if distance<nearest and object.hint()!="":nearby=object;nearest=distance
+	if nearby!=null:return nearby.hint()
+	if is_instance_valid(carried_cell):return "Carregando bateria · E no encaixe para instalar · E longe de objetos para soltar."
 	if sector==0:
 		if not _shop_gone and player.position.distance_to(wagon.global_position)<4:return "E: conversar com Oliver Gancho · I: mochila"
 		return "Pegue o cartão, embarque no elevador e use E na porta superior."
 	if sector==1:return "K: GELO forma ponte no veneno · J no ar: investida no inimigo marcado · E: porta"
-	if sector==2:return "E: alavanca · GELO: prensa · embarque na plataforma para cruzar e subir à cobertura."
+	if sector==2:return "E: alavanca · GELO: prensa · a porta superior leva ao arquivo da corporação."
+	if sector==4:return "Procure a bateria e instale-a no encaixe para abrir o arquivo. E examina registros."
+	if sector==5:return "FOGO aquece o regulador; GELO estabiliza o circuito e ergue a ponte."
+	if sector==6:return "Use as coberturas entre as varreduras. GELO pausa sensores e ventiladores."
 	return "E junto de Urso para resgatá-lo." if boss.dead else "A cobertura é a arena de Largato. Siga para o centro."
 func buy_acai_power() -> bool:player.elements.refresh_available("ice");player.acai_left=12;return true
 func _boss_melted() -> void:
@@ -234,11 +261,12 @@ func rescue_urso() -> void:
 	var new_record:bool=previous.is_empty() or Save.rank_index(best.rank)>Save.rank_index(previous.get("rank","D"))
 	player.position=rescue_chamber.global_position+Vector3(3,0,2);player.model.look_at(rescue_chamber.global_position,Vector3.UP)
 	var finale:=play_cutscene("ending");await finale.finished
+	hud.hide()
 	get_tree().paused=true;_results=preload("res://world/Scripts/results_screen.gd").new();add_child(_results)
 	_results.setup("URSO RESGATADO!",level_name,stats,new_record,false);_results.replay_requested.connect(restart);_results.menu_requested.connect(to_menu);Sfx.finish()
 func _build_stats() -> Dictionary:
 	var ratio:=float(player.gems)/maxi(1,total_gems)
-	return {"rank":Save.compute_rank((ratio+float(defeated)/maxi(1,total_enemies)+float(secrets_found)/total_secrets)/3,_time,360,deaths),"time":_time,"cherries":player.gems,"enemies":defeated,"secrets":secrets_found,"deaths":deaths,"total_cherries":total_gems,"total_enemies":total_enemies,"total_secrets":total_secrets,"perfect":player.gems>=total_gems}
+	return {"rank":Save.compute_rank((ratio+float(defeated)/maxi(1,total_enemies)+float(secrets_found)/total_secrets)/3,_time,720,deaths),"time":_time,"cherries":player.gems,"enemies":defeated,"secrets":secrets_found,"deaths":deaths,"total_cherries":total_gems,"total_enemies":total_enemies,"total_secrets":total_secrets,"perfect":player.gems>=total_gems}
 func restart() -> void:get_tree().paused=false;Save.request_play(true,Save.is_free_mode());get_tree().reload_current_scene()
 func to_menu() -> void:get_tree().paused=false;get_tree().change_scene_to_file("res://world/main_menu.tscn")
 func _notification(what:int) -> void:

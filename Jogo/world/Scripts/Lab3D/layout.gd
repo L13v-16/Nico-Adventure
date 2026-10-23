@@ -1,7 +1,12 @@
 extends RefCounted
 const Art=preload("res://world/Scripts/Lab3D/models.gd")
-const ORIGINS:=[Vector3(0,0,0),Vector3(0,6,-74),Vector3(0,14,-148),Vector3(0,26,-224)]
-const NAMES:=["RECEPÇÃO E SEGURANÇA","SETOR DE CONTENÇÃO","FÁBRICA DE MODIFICAÇÕES","COBERTURA · PESQUISA AVANÇADA"]
+const ORIGINS:=[Vector3(0,0,0),Vector3(0,6,-74),Vector3(0,14,-148),Vector3(0,26,-224),Vector3(70,18,-74),Vector3(70,22,-148),Vector3(70,26,-224)]
+const NAMES:=["RECEPÇÃO E SEGURANÇA","SETOR DE CONTENÇÃO","FÁBRICA DE MODIFICAÇÕES","COBERTURA · PESQUISA AVANÇADA","ARQUIVO E LOGÍSTICA","JARDIM BIOTÉRMICO","OBSERVATÓRIO DE SEGURANÇA"]
+const ROUTE:=[0,1,2,4,5,6,3]
+static func landing(index:int,backwards:bool) -> Vector3:
+	if not backwards:return Vector3(0,.08,-3)
+	if index>=4:return Vector3(0,.08,-58)
+	return Vector3(0,[3.08,5.08,8.08,0.08][index],-39.6)
 static func solid(parent:Node3D,at:Vector3,size:Vector3,color:String="435669",metal:float=.3) -> StaticBody3D:
 	var body:=StaticBody3D.new();body.position=at;body.collision_layer=1;body.collision_mask=0;parent.add_child(body)
 	var shape:=BoxShape3D.new();shape.size=size;var col:=CollisionShape3D.new();col.shape=shape;body.add_child(col)
@@ -114,7 +119,7 @@ static func build(level:Node3D) -> void:
 	device(level,2,"ferry",Vector3(0,0,-26),{"enabled":false,"circuit":"factory","travel":Vector3(0,0,-8)})
 	device(level,2,"checkpoint",Vector3(3,0,-24))
 	device(level,2,"lift",Vector3(0,0,-37),{"rise":8.0})
-	device(level,2,"door",Vector3(0,8,-42.7),{"destination":3})
+	device(level,2,"door",Vector3(0,8,-42.7),{"destination":4})
 	device(level,2,"door",Vector3(0,0,4),{"destination":1})
 	device(level,2,"fragment",Vector3(8,0,-19.5))
 	device(level,2,"laser",Vector3(7,0,-18),{"width":4.0})
@@ -147,7 +152,7 @@ static func build(level:Node3D) -> void:
 		var vent:=solid(roof,Vector3(x,.45,-21),Vector3(3.2,.9,3.2),"778e93",.5)
 		for i in 5:Art.box(vent,"Grille",Vector3(-1.1+i*.55,.48,0),Vector3(.18,.05,2.5),"334e63")
 	device(level,3,"checkpoint",Vector3(4,0,0))
-	device(level,3,"door",Vector3(10,0,1),{"destination":2})
+	device(level,3,"door",Vector3(10,0,1),{"destination":6})
 	device(level,3,"heat",Vector3(-10,0,-17))
 	device(level,3,"cold",Vector3(10,0,-17))
 	device(level,3,"injector",Vector3(-9,0,-3))
@@ -158,6 +163,7 @@ static func build(level:Node3D) -> void:
 		Art.ball(roof,"Beacon",Vector3(side*12,6,-31),Vector3(.22,.22,.22),"edbe7c",1)
 	Art.label(roof,"PESQUISA AVANÇADA\nPROCEDIMENTOS PERFEITAMENTE APROVADOS",Vector3(0,3.5,-33.5),31,"eccc8a")
 	_cherries(level)
+	load("res://world/Scripts/Lab3D/expansion_layout.gd").build(level)
 static func _cherries(level:Node3D) -> void:
 	var ids:Array[String]=[]
 	for s in preload("res://world/Scripts/lab_layout.gd").GROUND:

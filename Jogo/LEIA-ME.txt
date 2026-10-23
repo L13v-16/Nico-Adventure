@@ -819,3 +819,12 @@ Os 23 modelos do laboratório foram refinados mantendo seus pivôs, escala, coli
 O Carcereiro tem placas de pedra sobrepostas, visor, presas, runa em losango, fissuras, grilhões e proteções nas articulações. Seus ombros continuam apoiando Nico e José na chegada. Máquinas, drone, caravana, tanque, alavanca e demais objetos receberam instrumentos, válvulas, tubulações, ferragens e acabamentos. Os nomes dos nós são estáveis e todos os detalhes seguem os pivôs das respectivas partes.
 
 Os módulos character_details.gd, guardian_details.gd e prop_details.gd complementam models.gd. As cenas .tscn continuam editáveis e podem ser reconstruídas por tools/rebuild_lab_models.gd. Caudas e chifres usam malhas contínuas fechadas; o aumento de suavidade foi concentrado nas formas curvas. Nenhum dos 414 PNGs anteriores foi modificado. A progressão, o saldo, os poderes e a batalha mantêm o comportamento da versão anterior.
+
+
+## Laboratório ampliado e transição dimensional (v77)
+
+Três novos setores de 70 metros levam da fábrica à cobertura: arquivo e logística, jardim biotérmico e observatório de segurança. O percurso agora tem sete ambientes, mais que o dobro da extensão anterior, com 10 modelos novos, 24 cerejas adicionais de IDs persistentes e três novos registros opcionais. Os checkpoints e as portas permitem voltar sem perder o estado dos mecanismos.
+
+E pega, solta ou encaixa células de energia. Nico segura a célula com uma pose própria de braços e caminhada; solte-a para atacar ou usar poderes. Morrer ou sair da sala devolve a célula não instalada ao seu lugar seguro. Células encaixadas mantêm portões abertos. FOGO seguido de GELO no relé térmico ergue uma ponte hidráulica sólida de 16 metros. GELO interrompe ventiladores e escâneres; linhas de aviso anunciam os disparos, e cobertura física bloqueia a detecção.
+
+A chegada usa os sprites 2D originais. A pancada do Carcereiro na porta causa interferências e revela a versão 3D; o lobo e Largato presenciam a eclosão. A batalha continua na cobertura. Após o resgate, a realidade se estabiliza e Nico e Urso reaparecem em pixel art 2D antes dos resultados. As cenas podem ser puladas e restauram controles e música corretamente. Nenhum PNG anterior foi alterado.

@@ -104,7 +104,7 @@ func _physics_process(delta:float) -> void:
 	match kind:
 		"fragment":
 			_art.rotation.y+=delta
-			if not collected and (gap+Vector3(0,-.7,0)).length()<1.25:collected=true;level.secrets_found+=1;Sfx.checkpoint();level.notice("Registro secreto encontrado: %d/3."%level.secrets_found);queue_free()
+			if not collected and (gap+Vector3(0,-.7,0)).length()<1.25:collected=true;level.secrets_found+=1;Sfx.checkpoint();level.notice("Registro secreto encontrado: %d/%d."%[level.secrets_found,level.total_secrets]);queue_free()
 		"cherry":
 			_art.rotation.y+=delta;_art.position.y=.8+sin(clock*3)*.08
 			var radius:float=player.equipment.get_magnet_radius()/25.0

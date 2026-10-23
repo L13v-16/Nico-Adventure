@@ -87,7 +87,7 @@ func has_story_flag(flag: String) -> bool:
 	return _story_flags.has(flag)
 
 func set_story_flag(flag: String) -> bool:
-	if flag not in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_largato_defeated", "urso_rescued"]:return false
+	if flag not in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued"]:return false
 	if _story_flags.has(flag):return true
 	_story_flags[flag]=true
 	if not _save():
@@ -344,7 +344,7 @@ func _load() -> void:
 	var saved_flags:Variant=config.get_value("progress","story_flags",[])
 	if saved_flags is Array or saved_flags is PackedStringArray:
 		for flag in saved_flags:
-			if flag in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_largato_defeated", "urso_rescued"]:_story_flags[flag]=true
+			if flag in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued"]:_story_flags[flag]=true
 	var saved_balance: Variant = config.get_value("wallet", "cherries", 0)
 	if saved_balance is int:
 		_cherry_balance = maxi(saved_balance, 0)

@@ -17,6 +17,8 @@ var _old_menu:=true
 var _egg:Node3D
 var _halves:Array[Node3D]=[]
 var _inner:Node3D
+var _flat_layer:CanvasLayer
+var _flat:Node2D
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
 	_old_pause=get_tree().paused;_old_intro=level.intro_active;_old_hud=level.hud.visible;_old_menu=level.pause_menu.can_open
@@ -24,6 +26,10 @@ func _ready() -> void:
 	_camera=Camera3D.new();_camera.fov=53;_camera.near=.08;_camera.far=400;add_child(_camera);_camera.make_current()
 	_ui=CanvasLayer.new();_ui.layer=90;add_child(_ui);_canvas=Control.new();_canvas.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE;_canvas.draw.connect(_draw);_ui.add_child(_canvas)
 	if mode=="arrival":_build_arrival()
+	if mode in ["arrival","ending"]:
+		_flat_layer=CanvasLayer.new();_flat_layer.layer=88;add_child(_flat_layer)
+		var backdrop:=ColorRect.new();backdrop.color=Color("183344");backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);_flat_layer.add_child(backdrop)
+		_flat=preload("res://world/Scripts/Lab3D/dimensional_scene.gd").new();_flat.z_index=50;_flat.ending=mode=="ending";_flat_layer.add_child(_flat)
 	_update(0)
 func _actor(kind:String,parent:Node3D,at:Vector3,scale:float=1.0) -> Node3D:
 	var model:=Art.instantiate(kind);model.position=at;model.scale=Vector3.ONE*scale;parent.add_child(model);_cast[kind]=model;return model
@@ -62,6 +68,10 @@ func _sound(at:float,id:String,volume:float=-10) -> void:
 func _view(at:Vector3,target:Vector3) -> void:
 	_camera.global_position=at;_camera.look_at(target,Vector3.UP)
 func _update(delta:float) -> void:
+	if _flat!=null:
+		_flat.scale=_canvas.get_viewport_rect().size/Vector2(640,360)
+		_flat.update_scene(clock)
+		_flat_layer.visible=(clock<5.3 or (clock<6.3 and fposmod(clock*8,1)>.25+(clock-5.3)*.6)) if mode=="arrival" else clock>=.55
 	if mode=="arrival":_arrival(delta)
 	elif mode=="boss":
 		var boss:Node3D=level.boss;boss.model.rotation.y=PI;_pose(boss.model,"operate" if clock>4 else "talk",delta)
@@ -134,6 +144,12 @@ func _words() -> Array[String]:
 func _draw() -> void:
 	var rect:=_canvas.get_viewport_rect();var scale:=rect.size/Vector2(640,360);_canvas.draw_set_transform(Vector2.ZERO,0,scale)
 	_canvas.draw_rect(Rect2(0,0,640,27),Color("0e1c2a"));_canvas.draw_rect(Rect2(0,280,640,80),Color("0e1c2a"))
+	var distortion:=maxf(0,1-absf(clock-5.8)/.5) if mode=="arrival" else (maxf(0,1-clock/.9) if mode=="ending" else 0.0)
+	if distortion>0:
+		for i in 13:
+			var y:=32+fposmod(i*31+floor(clock*12)*17,241)
+			_canvas.draw_rect(Rect2(fposmod(i*83+clock*110,640),y,65+i%4*35,2+i%3),Color(.22,.9,.9,distortion*.38))
+		_canvas.draw_string(ThemeDB.fallback_font,Vector2(205,165),"RECONSTRUINDO REALIDADE..." if mode=="arrival" else "REALIDADE RESTAURADA",HORIZONTAL_ALIGNMENT_LEFT,300,11,Color("c5f1e9",distortion))
 	var words:=_words();var font:=ThemeDB.fallback_font
 	_canvas.draw_string(font,Vector2(20,18),"LABORATÓRIO / "+("A ECLOSÃO" if mode=="arrival" else ("COBERTURA" if mode=="boss" else ("URSO RESGATADO" if mode=="ending" else "PROTOCOLO ENCERRADO"))),HORIZONTAL_ALIGNMENT_LEFT,600,11,Color("eccb87"))
 	_canvas.draw_rect(Rect2(20,293,3,41),Color("dfb65e"));_canvas.draw_string(font,Vector2(31,301),words[0],HORIZONTAL_ALIGNMENT_LEFT,590,10,Color("dfb65e"))
@@ -154,6 +170,9 @@ func finish() -> void:
 		level.boss.model.hide()
 		for key in ["puddle","glasses","badge"]:
 			if _cast.has(key):_cast[key].show();_cast[key].scale=Vector3.ONE;_cast[key].reparent(level)
+	if mode=="ending" and _flat_layer!=null:
+		# Keep the restored 2D world behind the results, rather than revealing 3D again.
+		_flat_layer.show();_flat_layer.layer=0;_flat_layer.reparent(level)
 	_restore();finished.emit();queue_free()
 func _restore() -> void:
 	if get_tree()==null:return

@@ -32,6 +32,7 @@ func _ready() -> void:
 	var shape:=CapsuleShape3D.new();shape.radius=.36;shape.height=1.75
 	var collider:=CollisionShape3D.new();collider.shape=shape;collider.position.y=.88;add_child(collider)
 	model=preload("res://world/Scripts/Lab3D/models.gd").instantiate("nico");add_child(model);_anim=model.get_node("Animations")
+	_carry_animations()
 	equipment=preload("res://world/Scripts/equipment_model.gd").new();equipment.name="Equipment";add_child(equipment)
 	elements=preload("res://world/Scripts/Lab3D/powers.gd").new();elements.name="Elements";add_child(elements)
 	respawn_position=position
@@ -73,10 +74,14 @@ func _physics_process(delta:float) -> void:
 		if old>.24 and _attack_time<=.24 and _homing_left<=0:_melee()
 	move_and_slide()
 	if _homing_left>0 and is_on_wall():_homing_left=0
-	_anim.play("attack" if _attack_time>0 else ("hurt" if _hitstun>0 else ("jump" if not is_on_floor() else ("run" if Vector2(velocity.x,velocity.z).length()>.4 else "idle"))))
+	if is_instance_valid(get_parent().carried_cell) and _hitstun<=0:
+		_anim.play("carry_run" if is_on_floor() and Vector2(velocity.x,velocity.z).length()>.4 else "carry_idle")
+	else:
+		_anim.play("attack" if _attack_time>0 else ("hurt" if _hitstun>0 else ("jump" if not is_on_floor() else ("run" if Vector2(velocity.x,velocity.z).length()>.4 else "idle"))))
 	_anim.speed_scale=1.5 if boosting else 1.0
 	if position.y<get_parent().sector_floor()-8:fall_back()
 func attack() -> void:
+	if is_instance_valid(get_parent().carried_cell):get_parent().notice("Nico está com as mãos ocupadas. E para soltar a célula.");return
 	_attack_cooldown=maxf(.55*equipment.get_attack_cooldown_multiplier(),get_attack_cooldown_floor());_attack_time=.38;Sfx.swing()
 	if not is_on_floor():
 		_homing=get_parent().find_target(global_position+Vector3.UP,forward,11,false)
@@ -126,6 +131,17 @@ func heal_one() -> bool:
 	if health>=MAX_HEALTH:return false
 	health+=1;health_changed.emit(health,MAX_HEALTH);return true
 func heal_full() -> void:health=MAX_HEALTH;health_changed.emit(health,MAX_HEALTH)
+func _carry_animations() -> void:
+	# A private library keeps the shared editable model and other actors untouched.
+	var library:AnimationLibrary=_anim.get_animation_library("").duplicate(true)
+	_anim.remove_animation_library("");_anim.add_animation_library("",library)
+	for pair in [["idle","carry_idle"],["run","carry_run"]]:
+		var animation:Animation=library.get_animation(pair[0]).duplicate(true)
+		for track in animation.get_track_count():
+			var path:=str(animation.track_get_path(track))
+			if not path.begins_with("Rig/Arm"):continue
+			for key in animation.track_get_key_count(track):animation.track_set_key_value(track,key,Vector3(1.1,0,.25 if path.contains("ArmL") else -.25))
+		library.add_animation(pair[1],animation)
 func grant_shop_shield(hits:int) -> bool:
 	if shop_shield_hits>0:return false
 	shop_shield_hits=hits;health_changed.emit(health,MAX_HEALTH);return true
