@@ -3,9 +3,10 @@ extends Node
 var selected:="fire"
 var temporary_fire:=0.0
 var cooldown:=0.0
+var cooldown_duration:=.42
 var _player:CharacterBody2D
 var _hud:CanvasLayer
-var _label:Label
+var _view:Control
 func _ready() -> void:
 	_player=get_parent()
 	for pair in [["element_swap",KEY_Q],["element_cast",KEY_K],["jose_command",KEY_C]]:
@@ -17,16 +18,9 @@ func _ready() -> void:
 	_hud=CanvasLayer.new()
 	_hud.layer=23
 	add_child(_hud)
-	_label=Label.new()
-	_label.position=Vector2(12,102)
-	_label.size=Vector2(225,29)
-	_label.add_theme_font_size_override("font_size",9)
-	_label.add_theme_color_override("font_color",Color("ffe4b5"))
-	_label.add_theme_color_override("font_shadow_color",Color("171321"))
-	_label.add_theme_constant_override("shadow_offset_x",1)
-	_label.add_theme_constant_override("shadow_offset_y",1)
-	_label.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	_hud.add_child(_label)
+	_view=preload("res://world/Scripts/elemental_hud.gd").new()
+	_view.powers=self
+	_hud.add_child(_view)
 	_player.respawned.connect(func():temporary_fire=0;cooldown=0)
 	_update_hud()
 func has_mastery() -> bool:
@@ -73,6 +67,7 @@ func cast() -> bool:
 	var minimum:float=_player.get_attack_cooldown_floor()
 	if minimum>0 and _player._attack_cooldown>0:return false
 	cooldown=maxf(.42*_player.equipment.get_element_cooldown_multiplier(),minimum)
+	cooldown_duration=cooldown
 	if minimum>0:_player._attack_cooldown=maxf(_player._attack_cooldown,minimum)
 	var shot:=preload("res://world/Scripts/elemental_projectile.gd").new()
 	shot.element=selected
@@ -85,16 +80,4 @@ func cast() -> bool:
 	Sfx.swing()
 	return true
 func _update_hud() -> void:
-	if _label==null:return
-	_hud.visible=not _player._finished and has_any() and not get_tree().paused and _player.get_parent().get("intro_active")!=true
-	var boss:=_player.get_parent().get_node_or_null("Boss")
-	var in_boss:bool=is_instance_valid(boss) and boss.get("active")==true
-	if _player.get_parent().has_method("elemental_hud_text"):
-		_label.text=_player.get_parent().elemental_hud_text(selected);_label.position=Vector2(12,132 if in_boss else 52)
-		_hud.visible=_hud.visible and not _label.text.is_empty();return
-	_label.position.y=(134 if in_boss else 100) if ice_time_left()>0 else (102 if in_boss else 91)
-	var title:="FOGO" if selected=="fire" else "GELO"
-	if has_mastery():_label.text="K: "+title+"   Q: alternar\nPoderes do altar · sem consumir itens"
-	elif has_fire() and has_ice():_label.text="K: "+title+"   Q: alternar\nAçaí: %ds · Fruta-do-dragão: %ds"%[int(ceilf(ice_time_left())),int(ceilf(temporary_fire))]
-	elif has_ice():_label.text="K: GELO · %ds\nPoder do açaí"%int(ceilf(ice_time_left()))
-	else:_label.text="K: FOGO · %ds\nFruta-do-dragão"%int(ceilf(temporary_fire))
+	if is_instance_valid(_view):_view.refresh()

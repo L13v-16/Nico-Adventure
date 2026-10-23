@@ -100,7 +100,7 @@ func _temple() -> void:
 	get_tree().paused=false
 	pause_menu.can_open=true
 	_timing=true
-	_show_notice("Poderes do altar! K: disparar · Q: alternar fogo/gelo" if saved else "Altar ativado nesta partida. Não foi possível salvar o aprendizado.")
+	_show_notice("Fogo e gelo despertados! K: lançar · Q: alternar" if saved else "Altar ativado nesta partida. Não foi possível salvar o aprendizado.")
 	player._camera_base_offset=camera.offset
 	camera.position_smoothing_enabled=true
 func _process(delta:float) -> void:

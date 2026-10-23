@@ -724,3 +724,6 @@ O cartão da recepção continua abrindo a primeira porta. Três outras saídas 
 Os botões reconhecem um pouso sobre a superfície: correr pela lateral ou usar giro não os ativa. Tubos luminosos indicam quando há energia/refrigeração. Cada contato gira e acende ao confirmar a ordem. Novos modelos card_dispenser, puzzle_plate e spin_fuse são editáveis, reutilizados nas salas e reconstruídos pelo gerador, totalizando 38 modelos nativos.
 
 Enigmas resolvidos e cartões recolhidos ficam salvos na campanha. Ao carregar, os circuitos correspondentes são restaurados, evitando portões ou pontes bloqueados. Morrer e voltar às salas não remove os cartões. No modo livre, cada nova visita à fase reinicia os enigmas, mas conserva o acesso conquistado durante a visita. Os cartões não criam cerejas, não alteram o equipamento e não usam novos identificadores de frutas. Saves anteriores continuam compatíveis.
+
+HUD elemental v80: ícones de fogo e gelo, seleção com Q, disparo com K,
+recarga real e duração das frutas. Os poderes permanentes não usam contador.

@@ -1,7 +1,13 @@
 extends Node
 var selected:="ice"
 var cooldown:=0.0
+var cooldown_duration:=.5
 var temporary_fire:=0.0
+var _hud:CanvasLayer
+var _view:Control
+func _ready() -> void:
+	_hud=CanvasLayer.new();_hud.layer=23;add_child(_hud)
+	_view=preload("res://world/Scripts/elemental_hud.gd").new();_view.powers=self;_hud.add_child(_view)
 func _process(delta:float) -> void:
 	cooldown=maxf(0,cooldown-delta);temporary_fire=maxf(0,temporary_fire-delta)
 	if not can_control():return
@@ -23,6 +29,7 @@ func cast() -> bool:
 	var minimum:float=p.get_attack_cooldown_floor()
 	if minimum>0 and p._attack_cooldown>0:return false
 	cooldown=maxf(.5*p.equipment.get_element_cooldown_multiplier(),minimum);p._attack_cooldown=maxf(p._attack_cooldown,minimum)
+	cooldown_duration=cooldown
 	var target:Node3D=level.find_target(p.global_position+Vector3.UP,p.forward,23,true)
 	var shot:=preload("res://world/Scripts/Lab3D/projectile.gd").new();shot.friendly=true;shot.element=selected;shot.source=p
 	shot.position=p.global_position+Vector3.UP*1.15+p.forward*.7

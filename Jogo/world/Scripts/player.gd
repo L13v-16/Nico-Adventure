@@ -81,10 +81,7 @@ var _camera: Camera2D
 var _camera_base_offset: Vector2
 var equipment: Node
 var _freeze_hud: CanvasLayer
-var _freeze_canvas: Control
-var _freeze_status: Label
 var _active_acai: Node
-const ACAI_ICON := preload("res://world/Arte/Beach/acai.png")
 var _vine: Node2D
 var _vine_cooldown := 0.0
 var _spring_lock := 0.0
@@ -688,50 +685,12 @@ func set_acai_power(power: Node) -> void:
 
 
 func _make_freeze_hud() -> void:
-	_freeze_hud = CanvasLayer.new()
-	_freeze_hud.name = "FrostAcaiHud"
-	_freeze_hud.layer = 24
+	# Retained as a visibility handle for cutscenes; powers share ElementalHUD.
+	_freeze_hud=CanvasLayer.new()
+	_freeze_hud.name="FrostAcaiHud"
+	_freeze_hud.layer=24
 	add_child(_freeze_hud)
-	_freeze_canvas = Control.new()
-	_freeze_canvas.position = Vector2(12,58)
-	_freeze_canvas.size = Vector2(188,38)
-	_freeze_canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_freeze_canvas.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
-	_freeze_canvas.draw.connect(_draw_freeze_hud)
-	_freeze_hud.add_child(_freeze_canvas)
-	_freeze_status = Label.new()
-	_freeze_status.position = Vector2(28,2)
-	_freeze_status.size = Vector2(156,25)
-	_freeze_status.add_theme_font_size_override("font_size",9)
-	_freeze_status.add_theme_color_override("font_color",Color("d9faff"))
-	_freeze_status.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	_freeze_canvas.add_child(_freeze_status)
-	_update_freeze_hud()
 
 
 func _update_freeze_hud() -> void:
-	if not is_instance_valid(_freeze_status) or not is_instance_valid(equipment):return
-	var regular:float=_active_acai.get_time_left() if is_instance_valid(_active_acai) else 0.0
-	var boost:float=equipment.get_frost_boost_left()
-	_freeze_canvas.visible=not _finished and (regular>0 or boost>0)
-	var boss:=get_parent().get_node_or_null("Boss")
-	_freeze_canvas.position.y=90 if is_instance_valid(boss) and boss.get("active")==true else 58
-	var title:="AÇAÍ 2× · %ds"%int(ceilf(regular)) if regular>0 else "AÇAÍ GELADO · %ds"%int(ceilf(boost))
-	var detail:="Golpes: gelo %ds"%int(equipment.get_freeze_duration())
-	if regular>0 and boost>0:detail+=" · Gelado %ds"%int(ceilf(boost))
-	_freeze_status.text=title+"\n"+detail
-	_freeze_canvas.queue_redraw()
-
-
-func _draw_freeze_hud() -> void:
-	_freeze_canvas.draw_rect(Rect2(0,0,188,38),Color("101f30"))
-	_freeze_canvas.draw_rect(Rect2(0,0,188,38),Color("648d9e"),false,1)
-	_freeze_canvas.draw_texture_rect(ACAI_ICON,Rect2(4,5,20,20),false)
-	var regular:float=_active_acai.get_time_left() if is_instance_valid(_active_acai) else 0.0
-	var boost:float=equipment.get_frost_boost_left()
-	var total:float=_active_acai.duration if regular>0 else 30.0
-	var left:float=regular if regular>0 else boost
-	_freeze_canvas.draw_rect(Rect2(28,29,152,3),Color("304457"))
-	_freeze_canvas.draw_rect(Rect2(28,29,152*clampf(left/maxf(total,0.1),0,1),3),Color("bd8fea") if regular>0 else Color("88dbed"))
-	if regular>0 and boost>0:
-		_freeze_canvas.draw_rect(Rect2(28,34,152*clampf(boost/30.0,0,1),1),Color("88dbed"))
+	if is_instance_valid(elements):elements._update_hud()
