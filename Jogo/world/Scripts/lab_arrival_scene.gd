@@ -121,9 +121,14 @@ func _draw_building() -> void:
 	_front_building_rect(Rect2(413,40,227,3),Color("bbad65"))
 	var font:=ThemeDB.fallback_font
 	var node:=get_child(1)
-	node.draw_rect(Rect2(452,62,155,24),Color("142735"))
-	node.draw_string(font,Vector2(464,78),"CORPORAÇÃO",HORIZONTAL_ALIGNMENT_LEFT,140,13,Color("dae5df"))
-	node.draw_string(font,Vector2(464,101),"ENTRADA DE SERVIÇO",HORIZONTAL_ALIGNMENT_LEFT,150,8,Color("c3ccbb"))
+	node.draw_rect(Rect2(450,51,158,61),Color("0d1923"))
+	node.draw_rect(Rect2(450,51,158,2),Color("dfb65e"))
+	node.draw_rect(Rect2(450,111,158,1),Color("53606a"))
+	preload("res://world/Scripts/corporate_brand.gd").mark(node,Rect2(458,62,27,31))
+	node.draw_string(font,Vector2(492,69),"CORPORAÇÃO",HORIZONTAL_ALIGNMENT_LEFT,108,10,Color("f5d484"))
+	node.draw_string(font,Vector2(492,83),"LABORATÓRIO",HORIZONTAL_ALIGNMENT_LEFT,108,11,Color("f4efdb"))
+	node.draw_string(font,Vector2(492,95),"DOS EXECUTIVOS",HORIZONTAL_ALIGNMENT_LEFT,108,8,Color("b4c5ca"))
+	node.draw_string(font,Vector2(458,106),"05  /  ENTRADA DE SERVIÇO",HORIZONTAL_ALIGNMENT_LEFT,145,7,Color("9eb0b9"))
 func _front_building_rect(rect:Rect2,color:Color) -> void:get_child(1).draw_rect(rect,color)
 func _draw_effects() -> void:
 	var dt:=clock-IMPACT

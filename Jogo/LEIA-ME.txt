@@ -789,3 +789,9 @@ Poças e inundação usam os sprites animados de veneno e gelo.
 No final, siga FOGO, GELO e E no injetor; F arremessa as doses LG-17.
 Há um segundo entre arremessos; E no injetor repõe as doses gratuitamente.
 Largato também prepara seus disparos finais e é interrompido pelo soro.
+
+LETREIRO DA CORPORAÇÃO — v74
+A entrada do laboratório ganhou um cartão animado próprio, com escudo
+dourado da corporação, título completo em duas linhas e número da ilha.
+A placa da fachada usa a mesma identidade e identifica a entrada de serviço.
+Texto e emblema permanecem nítidos ao mudar o tamanho da janela.

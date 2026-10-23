@@ -32,6 +32,7 @@ var health_current: int = 3
 var health_maximum: int = 3
 var _pending_intro: bool = false
 var _intro_tween: Tween
+var _lab_title_card: Control
 var _counter_tween: Tween
 var _ribbon_target_x: float = 0.0
 var _pulse_time: float = 0.0
@@ -176,6 +177,13 @@ func configure_intro(title: String, act: int) -> void:
 
 
 func _apply_intro_text() -> void:
+	# The long laboratory name uses its own two-line corporate title treatment.
+	if intro_act==5 and _lab_title_card==null:
+		_lab_title_card=preload("res://world/Scripts/lab_title_card.gd").new()
+		_lab_title_card.name="LabTitleCard";_intro_card.add_child(_lab_title_card)
+		_lab_title_card.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_blue_band.visible=intro_act!=5;_ribbon.visible=intro_act!=5
+	if _lab_title_card!=null:_lab_title_card.visible=intro_act==5
 	var title_label: Label = $IntroCard/BlueBand/Title
 	title_label.text = intro_title
 	# A praia tem um nome maior; mantenha o título dentro da faixa azul.
@@ -198,6 +206,16 @@ func start_intro() -> void:
 	_layout_intro()
 	_intro_card.visible = true
 	_dim.color.a = 0.0
+	if intro_act==5:
+		_lab_title_card.reveal=0.0
+		_intro_tween=create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		_intro_tween.tween_property(_lab_title_card,"reveal",1.0,.45).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		_intro_tween.parallel().tween_property(_dim,"color:a",.36,.45)
+		_intro_tween.tween_interval(1.8)
+		_intro_tween.tween_property(_lab_title_card,"reveal",0.0,.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		_intro_tween.parallel().tween_property(_dim,"color:a",0.0,.4)
+		_intro_tween.tween_callback(_finish_intro)
+		return
 	_blue_band.position.x = -size.x - 100.0
 	_ribbon.position.x = size.x + 170.0
 	_intro_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
