@@ -102,6 +102,10 @@ func _physics_process(delta:float) -> void:
 	var player:CharacterBody3D=level.player;var gap:Vector3=player.global_position-global_position
 	var near:=absf(gap.x)<width*.5 and absf(gap.z)<depth*.5 and absf(gap.y)<.8
 	match kind:
+		"door":
+			var unlocked:bool=level.door_access(sector,destination)
+			_label.text="E · %s · %s"%[level.door_card_name(sector,destination),"LIBERADO" if unlocked else "REQUER CARTÃO"]
+			_label.modulate=Color("9de7c8") if unlocked else Color("efc37d")
 		"fragment":
 			_art.rotation.y+=delta
 			if not collected and (gap+Vector3(0,-.7,0)).length()<1.25:collected=true;level.secrets_found+=1;Sfx.checkpoint();level.notice("Registro secreto encontrado: %d/%d."%[level.secrets_found,level.total_secrets]);queue_free()
@@ -174,7 +178,8 @@ func _tick_lift(delta:float,player:CharacterBody3D) -> void:
 func interact() -> bool:
 	match kind:
 		"door":
-			if not level.access_card:level.notice("Pegue o cartão de acesso antes de entrar.");return true
+			if not level.door_access(sector,destination):
+				level.notice("Esta porta exige o cartão %s. Resolva o enigma deste setor e pegue o cartão."%level.door_card_name(sector,destination));return true
 			level.enter_sector(destination);return true
 		"lever":
 			reversed=not reversed;_art.get_node("Handle").rotation.x=.55 if reversed else -.55

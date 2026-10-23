@@ -8,6 +8,8 @@ var pause_on_focus_loss:=true
 var intro_active:=true
 var completed:=false
 var access_card:=false
+var room_puzzles:Dictionary={}
+var _card_label:Label
 var carried_cell:Node3D
 var sector:=0
 var checkpoint_sector:=0
@@ -58,6 +60,8 @@ func _ready() -> void:
 	player.health_changed.connect(_health);player.gem_collected.connect(func(_count):_wallet());player.cherry_balance_changed.connect(func(_balance):_wallet());player.died.connect(func():deaths+=1)
 	player.respawned.connect(_respawned)
 	Layout.build(self)
+	for index in [1,4,5]:
+		var puzzle:=preload("res://world/Scripts/Lab3D/room_puzzle.gd").new();puzzle.level=self;puzzle.sector=index;room_puzzles[index]=puzzle;sectors[index].add_child(puzzle)
 	if Save.is_free_mode():
 		for id in cherry_ids:
 			if Save.has_collected_cherry(level_id,id):player.gems+=1
@@ -95,6 +99,7 @@ func _hud_setup() -> void:
 	_hint.z_index=2
 	var footer:=ColorRect.new();footer.position=Vector2(0,333);footer.size=Vector2(640,27);footer.color=Color("101e2b",.88);footer.z_index=1;footer.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(footer)
 	_sector_label=_ui_label(Vector2(12,58),Vector2(430,18),10)
+	_card_label=_ui_label(Vector2(12,92),Vector2(430,16),8)
 	_status=_ui_label(Vector2(100,60),Vector2(440,56),10);_status.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_status.z_index=2
 	_boss_back=ColorRect.new();_boss_back.position=Vector2(96,57);_boss_back.size=Vector2(448,61);_boss_back.color=Color("101e2b",.92);_boss_back.z_index=1;_boss_back.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(_boss_back);_boss_back.hide()
@@ -130,6 +135,7 @@ func _process(delta:float) -> void:
 	_status.text="LARGATO / ETAPA %d / VIDA %d\n%s"%[boss.phase,int(boss.health),boss.status()]
 	_sector_label.text=Layout.NAMES[sector]+"\nK: "+("GELO" if player.elements.selected=="ice" else "FOGO")+" · Q: alternar"
 	_move_status.modulate=Color("9ae4db") if player._attack_time>0 else Color("f4e7cb")
+	_card_label.visible=not boss.active;_card_label.text=access_summary()
 	_hint.text=hint_text()
 	pause_menu.set_summary("Laboratório 3D · %d corações · %d cerejas"%[player.health,Save.get_cherry_balance()])
 	var target:=find_target(player.position+Vector3.UP,player.forward,20,true)
@@ -244,6 +250,7 @@ func hint_text() -> String:
 		for crate in get_tree().get_nodes_in_group("lab3d_crates"):
 			if crate.sector==sector and not crate.dead and player.position.distance_to(crate.global_position)<5:return crate.hint()
 		return "Espaço ×2: pulo duplo · J: giro quebra caixas · pegue o cartão e suba no elevador."
+	if room_puzzles.has(sector):return room_puzzles[sector].hint()
 	if sector==1:return "K: GELO forma ponte no veneno · Pule nos inimigos ou use J: giro · E: porta"
 	if sector==2:return "E: alavanca · GELO: prensa · a porta superior leva ao arquivo da corporação."
 	if sector==4:return "Procure a bateria e instale-a no encaixe para abrir o arquivo. E examina registros."
@@ -273,3 +280,16 @@ func restart() -> void:get_tree().paused=false;Save.request_play(true,Save.is_fr
 func to_menu() -> void:get_tree().paused=false;get_tree().change_scene_to_file("res://world/main_menu.tscn")
 func _notification(what:int) -> void:
 	if what==NOTIFICATION_APPLICATION_FOCUS_OUT and is_node_ready() and pause_on_focus_loss and not intro_active and not completed and pause_menu!=null and pause_menu.can_open and not get_tree().paused:pause_menu.open()
+
+func door_access(index:int,destination:int) -> bool:
+	# Return routes always remain available; local cards only gate forward doors.
+	if Layout.ROUTE.find(destination)<Layout.ROUTE.find(index):return true
+	if room_puzzles.has(index):return room_puzzles[index].collected
+	return access_card
+func door_card_name(index:int,destination:int) -> String:
+	if Layout.ROUTE.find(destination)<Layout.ROUTE.find(index):return "RETORNO"
+	return room_puzzles[index].CODES[index] if room_puzzles.has(index) else "ACESSO"
+func access_summary() -> String:
+	var parts:PackedStringArray=[]
+	for index in [1,4,5]:parts.append("%s %s"%[room_puzzles[index].CODES[index],"✓" if room_puzzles[index].collected else "—"])
+	return "CARTÕES · "+"  /  ".join(parts)

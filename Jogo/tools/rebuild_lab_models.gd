@@ -24,6 +24,12 @@ func _initialize() -> void:
 		var scene:=PackedScene.new()
 		if scene.pack(model)!=OK or ResourceSaver.save(scene,"res://world/Models/Lab3D/"+kind+".tscn")!=OK:printerr("MODEL_SAVE_FAILED ",kind);quit(1);return
 		print("MODEL_3D_SAVED ",kind);model.free()
-	print("MODELS_3D_COMPLETE 35");quit()
+	var puzzles:=load("res://world/Scripts/Lab3D/puzzle_models.gd")
+	for kind in ["card_dispenser","puzzle_plate","spin_fuse"]:
+		var model:Node3D=puzzles.make(kind);_own(model,model)
+		var scene:=PackedScene.new()
+		if scene.pack(model)!=OK or ResourceSaver.save(scene,"res://world/Models/Lab3D/"+kind+".tscn")!=OK:printerr("MODEL_SAVE_FAILED ",kind);quit(1);return
+		print("MODEL_3D_SAVED ",kind);model.free()
+	print("MODELS_3D_COMPLETE 38");quit()
 func _own(node:Node,root_node:Node) -> void:
 	for child in node.get_children():child.owner=root_node;_own(child,root_node)

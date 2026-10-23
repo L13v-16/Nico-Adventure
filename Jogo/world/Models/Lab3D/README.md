@@ -11,3 +11,5 @@ Revisão v76: detalhes de personagens, armadura e objetos estão separados em `c
 V77 acrescenta 10 cenas de aparelhos e cenário, geradas por expansion_models.gd, totalizando 33 modelos.
 
 V78 acrescenta supply_crate e bounce_crate, construídos por precision_props.gd e editáveis nas respectivas cenas .tscn. Total: 35 modelos.
+
+V79 acrescenta card_dispenser, puzzle_plate e spin_fuse, gerados por puzzle_models.gd para os enigmas e cartões de acesso. Total: 38 modelos.

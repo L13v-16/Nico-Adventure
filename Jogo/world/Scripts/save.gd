@@ -11,6 +11,7 @@ const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
 const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4", "fase_5"]
+const STORY_FLAGS := ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued", "lab_puzzle_1_solved", "lab_puzzle_1_card", "lab_puzzle_4_solved", "lab_puzzle_4_card", "lab_puzzle_5_solved", "lab_puzzle_5_card"]
 const MAX_CHERRY_BALANCE := 9223372036854775807
 const RANK_ORDER := ["D", "C", "B", "A", "S"]
 const FIRST_LEVEL_SCENE := "res://world/word_01.tscn"
@@ -87,7 +88,7 @@ func has_story_flag(flag: String) -> bool:
 	return _story_flags.has(flag)
 
 func set_story_flag(flag: String) -> bool:
-	if flag not in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued"]:return false
+	if flag not in STORY_FLAGS:return false
 	if _story_flags.has(flag):return true
 	_story_flags[flag]=true
 	if not _save():
@@ -344,7 +345,7 @@ func _load() -> void:
 	var saved_flags:Variant=config.get_value("progress","story_flags",[])
 	if saved_flags is Array or saved_flags is PackedStringArray:
 		for flag in saved_flags:
-			if flag in ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued"]:_story_flags[flag]=true
+			if flag in STORY_FLAGS:_story_flags[flag]=true
 	var saved_balance: Variant = config.get_value("wallet", "cherries", 0)
 	if saved_balance is int:
 		_cherry_balance = maxi(saved_balance, 0)

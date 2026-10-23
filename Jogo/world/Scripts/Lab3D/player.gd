@@ -140,7 +140,7 @@ func attack() -> void:
 	if is_instance_valid(get_parent().carried_cell):get_parent().notice("Nico está com as mãos ocupadas. E para soltar a célula.");return
 	_attack_cooldown=maxf(.48*equipment.get_attack_cooldown_multiplier(),get_attack_cooldown_floor());_attack_time=SPIN_DURATION;_spin_hits.clear();_spin_angle=0;Sfx.swing()
 func _melee(radius:float=2.15) -> void:
-	for group in ["lab3d_enemies","lab3d_crates"]:
+	for group in ["lab3d_enemies","lab3d_crates","lab3d_puzzle_targets"]:
 		for target in get_tree().get_nodes_in_group(group):
 			if not target.is_inside_tree() or not target.is_visible_in_tree() or target.dead or target.get_instance_id() in _spin_hits:continue
 			var gap:Vector3=target.global_position-global_position

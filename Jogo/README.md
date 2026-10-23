@@ -711,3 +711,16 @@ A recepção apresenta uma caixa quebrável, três degraus para experimentar o p
 Pular sobre inimigos comuns causa dano e faz Nico quicar; o ataque giratório oferece outra opção. Largato mantém suas três etapas, sinais de ataque e limite de um ponto por abertura. Baterias ocupam as mãos, reduzem a corrida e permitem apenas o pulo simples. As caixas quebradas ficam abertas durante a visita e não geram saldo; as 84 cerejas conservam seus identificadores e a regra do modo livre. Algumas cerejas existentes foram posicionadas sobre os degraus para guiar a rota opcional.
 
 A chegada em 2D, a mudança para 3D após a pancada na porta e o encerramento em 2D continuam integrados à campanha. Os controles das quatro primeiras ilhas são preservados.
+
+
+## Cartões de sala e enigmas (v79)
+
+O cartão da recepção continua abrindo a primeira porta. Três outras saídas exigem cartões próprios, visíveis em dispensadores travados. O nome do acesso aparece na porta e a HUD mostra CRIO, ARQ e BIO; texto, símbolos e cores distinguem os cartões. O enigma libera o dispensador, e Nico precisa se aproximar para recolher o cartão. As portas de retorno permanecem disponíveis.
+
+- Contenção / CRIO: congele o vazamento químico com GELO e salte sobre o botão elevado à direita. A refrigeração precisa estar ativa no momento do pouso.
+- Arquivo / ARQ: instale a bateria e use o GIRO nos contatos na ordem indicada na placa: III, I, II. Errar reinicia a sequência e mantém a bateria instalada.
+- Biotermia / BIO: estabilize o relé com FOGO seguido de GELO, atravesse a ponte e congele o ventilador. Use PULO DUPLO para aterrissar no botão elevado enquanto o rotor estiver parado.
+
+Os botões reconhecem um pouso sobre a superfície: correr pela lateral ou usar giro não os ativa. Tubos luminosos indicam quando há energia/refrigeração. Cada contato gira e acende ao confirmar a ordem. Novos modelos card_dispenser, puzzle_plate e spin_fuse são editáveis, reutilizados nas salas e reconstruídos pelo gerador, totalizando 38 modelos nativos.
+
+Enigmas resolvidos e cartões recolhidos ficam salvos na campanha. Ao carregar, os circuitos correspondentes são restaurados, evitando portões ou pontes bloqueados. Morrer e voltar às salas não remove os cartões. No modo livre, cada nova visita à fase reinicia os enigmas, mas conserva o acesso conquistado durante a visita. Os cartões não criam cerejas, não alteram o equipamento e não usam novos identificadores de frutas. Saves anteriores continuam compatíveis.
