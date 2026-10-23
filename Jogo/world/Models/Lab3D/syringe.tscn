@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rl7p"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sbkak"]
 albedo_color = Color(0.56078434, 0.8745098, 0.7137255, 1)
 roughness = 0.68
 
@@ -11,7 +11,7 @@ height = 0.55
 radial_segments = 12
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bcjj1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uyllv"]
 albedo_color = Color(0.8627451, 0.9019608, 0.8745098, 1)
 metallic = 0.4
 roughness = 0.68
@@ -30,7 +30,7 @@ height = 0.07
 radial_segments = 12
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q3ek"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tuhnc"]
 albedo_color = Color(0.68235296, 0.7372549, 0.78039217, 1)
 metallic = 0.7
 roughness = 0.68
@@ -42,36 +42,136 @@ height = 0.43
 radial_segments = 12
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_niqij"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftxqs"]
 albedo_color = Color(0.23137255, 0.4117647, 0.45882353, 1)
 roughness = 0.68
 
 [sub_resource type="BoxMesh" id="BoxMesh_p1c2t"]
 size = Vector3(0.38, 0.06, 0.1)
 
-[node name="Syringe" type="Node3D" unique_id=1218115970]
-metadata/model_kind = "syringe"
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w7cph"]
+albedo_color = Color(0.5686275, 0.6509804, 0.6666667, 1)
+metallic = 0.6
+roughness = 0.68
 
-[node name="Glass" type="MeshInstance3D" parent="." unique_id=1496248120]
-material_override = SubResource("StandardMaterial3D_1rl7p")
+[sub_resource type="CylinderMesh" id="CylinderMesh_74u1d"]
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.23
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lp5k"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+metallic = 0.4
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xpw4c"]
+top_radius = 0.13
+bottom_radius = 0.13
+height = 0.045
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0hkel"]
+albedo_color = Color(0.8117647, 0.6431373, 0.3647059, 1)
+metallic = 0.6
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0nac1"]
+top_radius = 0.075
+bottom_radius = 0.075
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7cuke"]
+albedo_color = Color(0.19215687, 0.35686275, 0.39607844, 1)
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_whrfe"]
+size = Vector3(0.065, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_an2g3"]
+size = Vector3(0.1, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lkdmo"]
+size = Vector3(0.065, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_txuis"]
+size = Vector3(0.1, 0.015, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7wujm"]
+albedo_color = Color(0.84313726, 0.9529412, 0.8156863, 1)
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_xhj3h"]
+size = Vector3(0.018, 0.35, 0.012)
+
+[node name="Syringe" type="Node3D" unique_id=127785026]
+metadata/model_kind = "syringe"
+metadata/detail_revision = 76
+
+[node name="Glass" type="MeshInstance3D" parent="." unique_id=297805978]
+material_override = SubResource("StandardMaterial3D_sbkak")
 mesh = SubResource("CylinderMesh_i652g")
 
-[node name="Rim" type="MeshInstance3D" parent="." unique_id=2125842475]
+[node name="Rim" type="MeshInstance3D" parent="." unique_id=1519060983]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28, 0)
-material_override = SubResource("StandardMaterial3D_bcjj1")
+material_override = SubResource("StandardMaterial3D_uyllv")
 mesh = SubResource("CylinderMesh_3d8bk")
 
-[node name="@MeshInstance3D@114" type="MeshInstance3D" parent="." unique_id=389961808]
+[node name="Rim2" type="MeshInstance3D" parent="." unique_id=658128291]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
-material_override = SubResource("StandardMaterial3D_bcjj1")
+material_override = SubResource("StandardMaterial3D_uyllv")
 mesh = SubResource("CylinderMesh_0p6n2")
 
-[node name="Needle" type="MeshInstance3D" parent="." unique_id=657903192]
+[node name="Needle" type="MeshInstance3D" parent="." unique_id=2141753795]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.52, 0)
-material_override = SubResource("StandardMaterial3D_1q3ek")
+material_override = SubResource("StandardMaterial3D_tuhnc")
 mesh = SubResource("CylinderMesh_rruhw")
 
-[node name="Grip" type="MeshInstance3D" parent="." unique_id=758949138]
+[node name="Grip" type="MeshInstance3D" parent="." unique_id=1666333120]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
-material_override = SubResource("StandardMaterial3D_niqij")
+material_override = SubResource("StandardMaterial3D_ftxqs")
 mesh = SubResource("BoxMesh_p1c2t")
+
+[node name="PlungerRod" type="MeshInstance3D" parent="." unique_id=2005455070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+material_override = SubResource("StandardMaterial3D_w7cph")
+mesh = SubResource("CylinderMesh_74u1d")
+
+[node name="ThumbPad" type="MeshInstance3D" parent="." unique_id=1596032200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51, 0)
+material_override = SubResource("StandardMaterial3D_0lp5k")
+mesh = SubResource("CylinderMesh_xpw4c")
+
+[node name="NeedleCollar" type="MeshInstance3D" parent="." unique_id=1529502681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
+material_override = SubResource("StandardMaterial3D_0hkel")
+mesh = SubResource("CylinderMesh_0nac1")
+
+[node name="DoseMark" type="MeshInstance3D" parent="." unique_id=526172983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, -0.16, -0.109)
+material_override = SubResource("StandardMaterial3D_7cuke")
+mesh = SubResource("BoxMesh_whrfe")
+
+[node name="DoseMark2" type="MeshInstance3D" parent="." unique_id=1433556438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, -0.055, -0.109)
+material_override = SubResource("StandardMaterial3D_7cuke")
+mesh = SubResource("BoxMesh_an2g3")
+
+[node name="DoseMark3" type="MeshInstance3D" parent="." unique_id=1240136590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 0.05, -0.109)
+material_override = SubResource("StandardMaterial3D_7cuke")
+mesh = SubResource("BoxMesh_lkdmo")
+
+[node name="DoseMark4" type="MeshInstance3D" parent="." unique_id=1271312005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015, 0.155, -0.109)
+material_override = SubResource("StandardMaterial3D_7cuke")
+mesh = SubResource("BoxMesh_txuis")
+
+[node name="GlassGlint" type="MeshInstance3D" parent="." unique_id=1759868838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.065, 0, -0.093)
+material_override = SubResource("StandardMaterial3D_7wujm")
+mesh = SubResource("BoxMesh_xhj3h")

@@ -680,3 +680,12 @@ Largato luta na cobertura do prédio: cauda, seringas e salto com posição anun
 Oliver, compras, mochila, saldo, resultados e desbloqueio do modo livre usam os sistemas existentes. Os identificadores antigos das cerejas foram mantidos: frutas já coletadas não voltam nem dão saldo repetido no modo livre. As quatro primeiras ilhas continuam com sua jogabilidade 2D.
 
 Arte 3D: 23 cenas nativas editáveis em world/Models/Lab3D, com malhas volumétricas, materiais e personagens articulados com AnimationPlayer. A construção dos modelos fica em world/Scripts/Lab3D/models.gd; tools/rebuild_lab_models.gd reconstrói as cenas. Não são sprites virados para a câmera. Todos os 414 PNGs anteriores foram preservados. A implementação anterior do laboratório está arquivada em world/lab_05_legacy_2d.tscn; a campanha continua usando world/lab_05.tscn. Testes usam APPDATA dedicado e não acessam saves reais.
+
+
+## Modelos 3D refinados (v76)
+
+Os 23 modelos do laboratório foram refinados mantendo seus pivôs, escala, colisões e animações. Nico recebeu orelhas esculpidas, tufos, íris âmbar, detalhes no focinho, cauda contínua com faixas, lenço com dobras e mochila arredondada com aba, bolso, fecho e costuras. José tem chifres curvos, orelhas laterais, barba e cascos divididos; Urso tem orelhas arredondadas e cauda curta; Oliver tem pelagem cinza, orelhas de rato, cauda rosada, colete e calças azuis. Lobo e Largato receberam lapelas, punhos, traços próprios, e Largato também tem bolsos, luvas, escamas e cauda afilada.
+
+O Carcereiro tem placas de pedra sobrepostas, visor, presas, runa em losango, fissuras, grilhões e proteções nas articulações. Seus ombros continuam apoiando Nico e José na chegada. Máquinas, drone, caravana, tanque, alavanca e demais objetos receberam instrumentos, válvulas, tubulações, ferragens e acabamentos. Os nomes dos nós são estáveis e todos os detalhes seguem os pivôs das respectivas partes.
+
+Os módulos character_details.gd, guardian_details.gd e prop_details.gd complementam models.gd. As cenas .tscn continuam editáveis e podem ser reconstruídas por tools/rebuild_lab_models.gd. Caudas e chifres usam malhas contínuas fechadas; o aumento de suavidade foi concentrado nas formas curvas. Nenhum dos 414 PNGs anteriores foi modificado. A progressão, o saldo, os poderes e a batalha mantêm o comportamento da versão anterior.

@@ -9,7 +9,7 @@ static func material(color:String,metal:float=0.0,glow:float=0.0) -> StandardMat
 	if glow>0:mat.emission_enabled=true;mat.emission=Color(color);mat.emission_energy_multiplier=glow
 	_materials[key]=mat;return mat
 static func piece(parent:Node3D,name:String,at:Vector3,mesh:Mesh,color:String,metal:float=0.0,glow:float=0.0) -> MeshInstance3D:
-	var node:=MeshInstance3D.new();node.name=name;node.mesh=mesh;node.material_override=material(color,metal,glow);node.position=at;parent.add_child(node);return node
+	var node:=MeshInstance3D.new();node.name=name;node.mesh=mesh;node.material_override=material(color,metal,glow);node.position=at;parent.add_child(node,true);return node
 static func box(parent:Node3D,name:String,at:Vector3,size:Vector3,color:String,metal:float=0,glow:float=0) -> MeshInstance3D:
 	var mesh:=BoxMesh.new();mesh.size=size;return piece(parent,name,at,mesh,color,metal,glow)
 static func bevel(parent:Node3D,name:String,at:Vector3,size:Vector3,color:String,b:float=.08) -> MeshInstance3D:
@@ -40,7 +40,7 @@ static func _triangle(surface:SurfaceTool,points:Array,normal:Vector3) -> void:
 		var swap:Vector3=points[1];points[1]=points[2];points[2]=swap
 	for p:Vector3 in points:surface.set_normal(normal);surface.add_vertex(p)
 static func ball(parent:Node3D,name:String,at:Vector3,size:Vector3,color:String,glow:float=0) -> MeshInstance3D:
-	var mesh:=SphereMesh.new();mesh.radial_segments=12;mesh.rings=6
+	var mesh:=SphereMesh.new();mesh.radial_segments=20;mesh.rings=10
 	var node:=piece(parent,name,at,mesh,color,0,glow);node.scale=size;return node
 static func cylinder(parent:Node3D,name:String,at:Vector3,radius:float,height:float,color:String,top:float=-1,metal:float=0) -> MeshInstance3D:
 	var mesh:=CylinderMesh.new();mesh.radial_segments=12;mesh.rings=1;mesh.bottom_radius=radius;mesh.top_radius=radius if top<0 else top;mesh.height=height
@@ -49,7 +49,7 @@ static func ring(parent:Node3D,name:String,at:Vector3,radius:float,color:String,
 	var mesh:=TorusMesh.new();mesh.inner_radius=radius*.85;mesh.outer_radius=radius;mesh.rings=20;mesh.ring_segments=6
 	return piece(parent,name,at,mesh,color,.35,glow)
 static func pivot(parent:Node3D,name:String,at:Vector3) -> Node3D:
-	var node:=Node3D.new();node.name=name;node.position=at;parent.add_child(node);return node
+	var node:=Node3D.new();node.name=name;node.position=at;parent.add_child(node,true);return node
 static func label(parent:Node3D,text:String,at:Vector3,size:int=36,color:String="e9e6cf") -> Label3D:
 	var node:=Label3D.new();node.text=text;node.position=at;node.font_size=size;node.pixel_size=.009;node.modulate=Color(color);node.outline_modulate=Color("0d1a27");node.outline_size=6;node.no_depth_test=false;parent.add_child(node);return node
 static func screen(node:MeshInstance3D) -> void:
@@ -135,6 +135,7 @@ static func character(kind:String) -> Node3D:
 	elif kind=="mutant":
 		for i in 3:cylinder(torso,"Spine",Vector3(0,.25-i*.22,.35),.13,.37,"89d0aa",0).rotation.x=.8
 		for side in [-1.0,1.0]:ball(head,"ChemicalEye",Vector3(side*.205,.03,-.47),Vector3(.11,.2,.07),"b7ef85",.6)
+	preload("res://world/Scripts/Lab3D/character_details.gd").decorate(root,kind,load("res://world/Scripts/Lab3D/models.gd"))
 	_animation(root)
 	return root
 static func _animation(root:Node3D) -> void:
@@ -221,6 +222,8 @@ static func prop(kind:String) -> Node3D:
 				cylinder(root,"Post",Vector3(side*1.25,1.75,.25),.07,2.0,"885f3c")
 				var wheel:=cylinder(root,"Wheel",Vector3(side*1.5,.4,.3),.45,.16,"3b3432",-1,.2);wheel.rotation.z=PI/2
 			for i in 6:box(root,"Awning",Vector3(-1.25+i*.5,2.8,-.1),Vector3(.5,.16,2.3),"d8c28a" if i%2 else "487d7d")
+	preload("res://world/Scripts/Lab3D/prop_details.gd").decorate(root,kind,load("res://world/Scripts/Lab3D/models.gd"))
+	root.set_meta("detail_revision",76)
 	return root
 static func guardian() -> Node3D:
 	var root:=Node3D.new();root.name="Guardian"
@@ -247,6 +250,8 @@ static func guardian() -> Node3D:
 			var link:=ring(arm,"Chain",Vector3(0,-1.45-i*.16,-.25),.16,"b2a6a3");link.rotation.x=PI/2;link.rotation.y=i%2*PI/2
 		for j in 2:box(arm,"LavaCrack",Vector3(side*.4,-.75-j*.34,-.61),Vector3(.08,.4,.04),"e98e4f",0,.4).rotation.z=side*.4
 	box(torso,"Core",Vector3(0,.25,-.97),Vector3(.25,1.2,.05),"e99b58",0,.65)
+	preload("res://world/Scripts/Lab3D/guardian_details.gd").decorate(root,load("res://world/Scripts/Lab3D/models.gd"))
+	root.set_meta("detail_revision",76)
 	_animation(root)
 	return root
 static func instantiate(kind:String) -> Node3D:

@@ -5,12 +5,12 @@ albedo_color = Color(0.85490197, 0.24313726, 0.4, 1)
 roughness = 0.68
 
 [sub_resource type="SphereMesh" id="SphereMesh_3fwgs"]
-radial_segments = 12
-rings = 6
+radial_segments = 20
+rings = 10
 
 [sub_resource type="SphereMesh" id="SphereMesh_3es4u"]
-radial_segments = 12
-rings = 6
+radial_segments = 20
+rings = 10
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n0h6r"]
 albedo_color = Color(0.3372549, 0.5568628, 0.30588236, 1)
@@ -28,28 +28,85 @@ albedo_color = Color(0.5137255, 0.72156864, 0.3764706, 1)
 roughness = 0.68
 
 [sub_resource type="SphereMesh" id="SphereMesh_u5qy0"]
+radial_segments = 20
+rings = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lyvda"]
+albedo_color = Color(0.94509804, 0.54509807, 0.627451, 1)
+roughness = 0.68
+
+[sub_resource type="SphereMesh" id="SphereMesh_e5g74"]
+radial_segments = 20
+rings = 10
+
+[sub_resource type="SphereMesh" id="SphereMesh_44wam"]
+radial_segments = 20
+rings = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_td0lv"]
+albedo_color = Color(0.25882354, 0.42352942, 0.28627452, 1)
+metallic = 0.35
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7bqkn"]
+top_radius = 0.018
+bottom_radius = 0.018
+height = 0.19209373
 radial_segments = 12
-rings = 6
+rings = 1
 
-[node name="Cherry" type="Node3D" unique_id=1518663419]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evayg"]
+albedo_color = Color(0.7490196, 0.8509804, 0.5058824, 1)
+metallic = 0.35
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6r8n1"]
+top_radius = 0.009
+bottom_radius = 0.009
+height = 0.22
+radial_segments = 12
+rings = 1
+
+[node name="Cherry" type="Node3D" unique_id=1791057253]
 metadata/model_kind = "cherry"
+metadata/detail_revision = 76
 
-[node name="Fruit" type="MeshInstance3D" parent="." unique_id=520080224]
+[node name="Fruit" type="MeshInstance3D" parent="." unique_id=2126902172]
 transform = Transform3D(0.33, 0, 0, 0, 0.36, 0, 0, 0, 0.34, -0.15, 0.05, 0)
 material_override = SubResource("StandardMaterial3D_ne81u")
 mesh = SubResource("SphereMesh_3fwgs")
 
-[node name="@MeshInstance3D@111" type="MeshInstance3D" parent="." unique_id=1263417831]
+[node name="Fruit2" type="MeshInstance3D" parent="." unique_id=112846919]
 transform = Transform3D(0.33, 0, 0, 0, 0.36, 0, 0, 0, 0.34, 0.15, 0.05, 0)
 material_override = SubResource("StandardMaterial3D_ne81u")
 mesh = SubResource("SphereMesh_3es4u")
 
-[node name="Stem" type="MeshInstance3D" parent="." unique_id=912215510]
+[node name="Stem" type="MeshInstance3D" parent="." unique_id=101400407]
 transform = Transform3D(0.9553365, 0.29552022, 0, -0.29552022, 0.9553365, 0, 0, 0, 1, 0, 0.34, 0)
 material_override = SubResource("StandardMaterial3D_n0h6r")
 mesh = SubResource("CylinderMesh_w5rsx")
 
-[node name="Leaf" type="MeshInstance3D" parent="." unique_id=432702217]
+[node name="Leaf" type="MeshInstance3D" parent="." unique_id=44429085]
 transform = Transform3D(0.3, 0, 0, 0, 0.06, 0, 0, 0, 0.12, 0.14, 0.52, 0)
 material_override = SubResource("StandardMaterial3D_r4gxb")
 mesh = SubResource("SphereMesh_u5qy0")
+
+[node name="FruitGlint" type="MeshInstance3D" parent="." unique_id=1233634927]
+transform = Transform3D(0.075, 0, 0, 0, 0.1, 0, 0, 0, 0.025, -0.21, 0.14, -0.14)
+material_override = SubResource("StandardMaterial3D_lyvda")
+mesh = SubResource("SphereMesh_e5g74")
+
+[node name="FruitGlint2" type="MeshInstance3D" parent="." unique_id=2056775064]
+transform = Transform3D(0.075, 0, 0, 0, 0.1, 0, 0, 0, 0.025, 0.09, 0.14, -0.14)
+material_override = SubResource("StandardMaterial3D_lyvda")
+mesh = SubResource("SphereMesh_44wam")
+
+[node name="StemFork" type="MeshInstance3D" parent="." unique_id=2005163908]
+transform = Transform3D(-0.6246948, 0.7808688, 0, -0.7808688, -0.6246948, 0, 0, 0, 1, 0.075, 0.26, 0)
+material_override = SubResource("StandardMaterial3D_td0lv")
+mesh = SubResource("CylinderMesh_7bqkn")
+
+[node name="LeafVein" type="MeshInstance3D" parent="." unique_id=718224516]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0.14, 0.555, 0)
+material_override = SubResource("StandardMaterial3D_evayg")
+mesh = SubResource("CylinderMesh_6r8n1")
