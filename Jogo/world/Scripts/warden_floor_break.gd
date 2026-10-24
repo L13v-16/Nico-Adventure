@@ -34,6 +34,8 @@ func _ready() -> void:
 		_visibility[actor]=actor.visible;actor.hide()
 	get_tree().paused=true;Sfx.begin_dialogue_music(self)
 	canvas=Control.new();canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	canvas.material=preload("res://world/Scripts/magic_art.gd").material()
+	canvas.material.set_shader_parameter("alpha_cutoff",.94)
 	canvas.draw.connect(_draw_scene);add_child(canvas)
 	cast=Node2D.new();canvas.add_child(cast)
 	guardian=AnimatedSprite2D.new();guardian.sprite_frames=boss._sprite.sprite_frames

@@ -46,6 +46,9 @@ func _ready() -> void:
 func _landing(at: Vector2, width: float, orbit := false) -> AnimatableBody2D:
 	var body := AnimatableBody2D.new()
 	body.position = at
+	body.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	body.material=preload("res://world/Scripts/magic_art.gd").material()
+	body.material.set_shader_parameter("alpha_cutoff",.94)
 	body.collision_layer = 1
 	body.collision_mask = 0
 	body.sync_to_physics = false
@@ -58,8 +61,7 @@ func _landing(at: Vector2, width: float, orbit := false) -> AnimatableBody2D:
 	collider.one_way_collision_margin = 6
 	body.add_child(collider)
 	body.draw.connect(func():
-		Tiles.platform(body, Rect2(-width / 2, 0, width, 14))
-		body.draw_rect(Rect2(-width / 2 + 3, 0, width - 6, 2), Color("b0a0bb") if orbit else Color("d4b27a")))
+		Tiles.platform(body, Rect2(-width / 2, 0, width, 14),2 if orbit else 0))
 	add_child(body)
 	return body
 

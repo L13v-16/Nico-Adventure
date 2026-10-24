@@ -15,6 +15,8 @@ var _portrait:TextureRect
 var _title:Label
 var _portraits:Dictionary={}
 var _old_hud:=true
+var _power_huds:Dictionary={}
+var _huds_restored:=false
 var _sky:Control
 var _ritual:Node2D
 var _panel:Panel
@@ -51,8 +53,9 @@ func _ready() -> void:
 	if hud!=null:_old_hud=hud.visible;hud.hide()
 	var player:=get_parent().get_node_or_null("Player") as CharacterBody2D
 	if player!=null:
-		player.elements._hud.hide()
-		player._freeze_hud.hide()
+		for power_hud:CanvasLayer in [player.elements._hud,player._freeze_hud]:
+			_power_huds[power_hud]=power_hud.visible
+			power_hud.hide()
 	_portraits={"Nico":load("res://world/Arte/Nico/hud_1.png"),"José":load("res://world/Arte/Underworld/jose_portrait_neutral.tres"),"Carcereiro":load("res://world/Arte/Underworld/boss_frame_15.tres")}
 	_canvas=Control.new()
 	_canvas.size=Vector2(640,360)
@@ -196,8 +199,7 @@ func _finish() -> void:
 	_cleanup_rescue()
 	_cleanup_ritual()
 	_cleanup_escape()
-	var hud:=get_parent().get_node_or_null("HUD") as CanvasLayer
-	if hud!=null: hud.visible=_old_hud
+	_restore_huds()
 	Sfx.end_dialogue_music(self)
 	finished.emit()
 	queue_free()
@@ -244,7 +246,19 @@ func _cleanup_escape() -> void:
 		_escape.queue_free()
 		_escape=null
 
+func _restore_huds() -> void:
+	if _huds_restored:return
+	_huds_restored=true
+	var level:=get_parent()
+	if not is_instance_valid(level) or not level.is_inside_tree():return
+	var hud:=level.get_node_or_null("HUD") as CanvasLayer
+	if hud!=null:hud.visible=_old_hud
+	for power_hud in _power_huds:
+		if is_instance_valid(power_hud):power_hud.visible=_power_huds[power_hud]
+	_power_huds.clear()
+
 func _exit_tree() -> void:
+	_restore_huds()
 	_cleanup_rescue()
 	_cleanup_ritual()
 	_cleanup_escape()

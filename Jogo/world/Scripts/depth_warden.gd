@@ -75,6 +75,8 @@ func _ready() -> void:
 	_sprite.play(&"idle")
 	_anchor_guardian()
 	_pedestal=AnimatableBody2D.new()
+	_pedestal.material=preload("res://world/Scripts/magic_art.gd").material()
+	_pedestal.material.set_shader_parameter("alpha_cutoff",.94)
 	_pedestal.collision_layer=0
 	_pedestal.collision_mask=0
 	var support:=CollisionShape2D.new()

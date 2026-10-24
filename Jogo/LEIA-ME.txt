@@ -1,3 +1,13 @@
+Plataformas e poderes do Submundo — v94
+
+Novos sprites de plataformas com extremidades, volume de pedra e cristais
+ciano, roxo e âmbar. Lajes modulares mantêm a proporção das bordas;
+rochas gravitacionais e plataformas da torre do Carcereiro usam a nova arte.
+
+A HUD de fogo e gelo reaparece ao terminar ou pular as cutscenes do
+Submundo. Os dois poderes continuam sendo concedidos apenas após o altar.
+O estado anterior das camadas é preservado também nas conversas com José.
+
 Clareira viva e cipós — v93
 
 Novo cenário de menu em pixel art, com os personagens reais como referência.

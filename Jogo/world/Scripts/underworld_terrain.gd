@@ -11,6 +11,10 @@ func register_geyser(geyser:Node2D) -> void:
 	_geysers[cell]=weakref(geyser)
 	queue_redraw()
 func _ready() -> void:
+	if platform:
+		texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+		material=preload("res://world/Scripts/magic_art.gd").material()
+		material.set_shader_parameter("alpha_cutoff",.94)
 	collision_layer=1
 	collision_mask=0
 	var shape:=RectangleShape2D.new()

@@ -15,6 +15,8 @@ func _ready() -> void:
 	z_index=2
 	texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	_rear=Node2D.new();_rear.z_index=-4;add_child(_rear)
+	_rear.material=preload("res://world/Scripts/magic_art.gd").material()
+	_rear.material.set_shader_parameter("alpha_cutoff",.94)
 	_rear.draw.connect(_draw_rear)
 func _physics_process(delta:float) -> void:
 	break_flash=maxf(0,break_flash-delta)

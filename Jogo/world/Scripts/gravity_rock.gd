@@ -20,11 +20,13 @@ func _ready() -> void:
 	add_child(collider)
 	_sprite=Sprite2D.new()
 	_sprite.centered=false
-	_sprite.texture=load("res://world/Arte/Underworld/V36/terrain_%02d.tres"%(15 if behavior=="repel" else 14))
+	_sprite.texture=load("res://world/Arte/Underworld/V94/"+behavior+".tres")
+	_sprite.material=preload("res://world/Scripts/magic_art.gd").material()
+	_sprite.material.set_shader_parameter("alpha_cutoff",.94)
 	_sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
-	_sprite.scale=Vector2(width,44)/_sprite.texture.get_size()
-	_sprite.position=Vector2(-width/2,0)
-	if behavior=="shuttle":_sprite.modulate=Color("ffe0a8")
+	var ratio:=width/_sprite.texture.get_width()
+	_sprite.scale=Vector2.ONE*ratio
+	_sprite.position=Vector2(-width/2,-float(_sprite.texture.get_meta("walk_top"))*ratio)
 	add_child(_sprite)
 func _physics_process(delta:float) -> void:
 	_clock+=delta
@@ -41,8 +43,3 @@ func _physics_process(delta:float) -> void:
 		var cherry:Node2D=get_meta("cherry").get_ref()
 		if is_instance_valid(cherry) and not cherry.collected:cherry.global_position=global_position+Vector2(0,-28)
 	queue_redraw()
-func _draw() -> void:
-	var color:=Color("9ed8f2") if behavior=="follow" else Color("d7a1f3")
-	if behavior=="shuttle":color=Color("e7bb77")
-	draw_rect(Rect2(-9,8,18,2),color)
-	draw_rect(Rect2(-1,2,2,13),color)
