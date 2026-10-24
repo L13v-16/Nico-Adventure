@@ -85,6 +85,7 @@ var _active_acai: Node
 var _vine: Node2D
 var _vine_cooldown := 0.0
 var _spring_lock := 0.0
+var _vine_air_time := 0.0
 var elements:Node
 var _last_valid_position := Vector2.ZERO
 var _last_valid_camera_base := Vector2.ZERO
@@ -138,6 +139,7 @@ func _physics_process(delta: float) -> void:
 	_tick_combat(delta)
 	_vine_cooldown = maxf(0.0, _vine_cooldown - delta)
 	_spring_lock = maxf(0.0, _spring_lock - delta)
+	_vine_air_time=maxf(0,_vine_air_time-delta)
 	if health <= 0:
 		_death_timer -= delta
 		velocity.y = minf(velocity.y + get_gravity().y * delta, MAX_FALL_SPEED)
@@ -153,7 +155,7 @@ func _physics_process(delta: float) -> void:
 		_swing_on_vine(delta)
 		return
 
-	if is_on_floor():
+	if is_on_floor() and _vine_air_time<=0:
 		_coyote_timer = coyote_time
 	else:
 		_coyote_timer = maxf(_coyote_timer - delta, 0.0)
@@ -184,10 +186,11 @@ func _physics_process(delta: float) -> void:
 		-1.0, 1.0
 	)
 	if can_control:
+		var vine_air:=_vine_air_time>0
 		if direction != 0.0:
-			velocity.x = move_toward(velocity.x, direction * SPEED * equipment.get_speed_multiplier(), move_acceleration * delta)
+			velocity.x = move_toward(velocity.x, direction * SPEED * equipment.get_speed_multiplier(), move_acceleration * delta*(.35 if vine_air else 1.0))
 		else:
-			velocity.x = move_toward(velocity.x, 0.0, braking * delta)
+			velocity.x = move_toward(velocity.x, 0.0, braking * delta*(.08 if vine_air else 1.0))
 		if _attack_elapsed < 0.0 and direction != 0.0:
 			_facing = signf(direction)
 		if InputMap.has_action("attack") and Input.is_action_just_pressed("attack"):
@@ -214,6 +217,7 @@ func _physics_process(delta: float) -> void:
 ## Poeira, "squash" de aterrissagem e rastro ao correr.
 func _apply_ground_feedback(fall_speed: float, delta: float) -> void:
 	if is_on_floor():
+		_vine_air_time=0
 		if not _was_on_floor:
 			var weight: float = clampf(fall_speed / MAX_FALL_SPEED, 0.0, 1.0)
 			_squash = maxf(_squash, weight * 0.45 + 0.14)
@@ -296,6 +300,7 @@ func respawn() -> void:
 	if _finished:
 		return
 	release_vine(false)
+	_vine_air_time=0
 	_spring_lock = 0.0
 	shop_shield_hits = 0
 	shop_shield_changed.emit(0)
@@ -370,6 +375,7 @@ func grant_shop_shield(hits: int = 3) -> bool:
 
 func finish_level() -> void:
 	release_vine(false)
+	_vine_air_time=0
 	_finished = true
 	equipment.clear_temporary()
 	shop_shield_hits = 0
@@ -605,6 +611,7 @@ func get_equipment() -> Node:
 
 func launch_from_spring(speed: float) -> void:
 	release_vine(false)
+	_vine_air_time=0
 	velocity.y = -absf(speed)
 	_spring_lock = 0.38
 	_coyote_timer = 0.0
@@ -615,7 +622,7 @@ func launch_from_spring(speed: float) -> void:
 
 
 func can_grab_vine() -> bool:
-	return not is_dead() and _hitstun_timer <= 0 and _vine_cooldown <= 0 and not is_instance_valid(_vine)
+	return is_physics_processing() and not is_dead() and _hitstun_timer <= 0 and _vine_cooldown <= 0 and not is_instance_valid(_vine)
 
 
 func grab_vine(vine: Node2D) -> bool:
@@ -633,16 +640,19 @@ func release_vine(jump_off: bool = true) -> void:
 	if not is_instance_valid(_vine):
 		_vine = null
 		return
-	velocity = _vine.release_velocity()
+	var living:=_vine.has_method("jump_velocity")
+	var direction:=Input.get_axis("move_left","move_right")
+	velocity = _vine.jump_velocity(direction) if living and jump_off else _vine.release_velocity()
 	_vine.detach()
 	_vine = null
 	_vine_cooldown = 0.4
 	anim.rotation = 0.0
+	if living:_vine_air_time=.35;_coyote_timer=0;_jump_buffer_timer=0
 	if jump_off:
-		var direction := Input.get_axis("move_left", "move_right")
-		if absf(direction)>0: velocity.x = signf(direction)*maxf(absf(velocity.x),300.0)
-		velocity.x = clampf(velocity.x,-420.0,420.0)
-		velocity.y = clampf(velocity.y-65.0,-270.0,-160.0)
+		if not living:
+			if absf(direction)>0: velocity.x = signf(direction)*maxf(absf(velocity.x),300.0)
+			velocity.x = clampf(velocity.x,-420.0,420.0)
+			velocity.y = clampf(velocity.y-65.0,-270.0,-160.0)
 		_spring_lock = 0.2
 		Sfx.jump()
 
@@ -650,9 +660,11 @@ func release_vine(jump_off: bool = true) -> void:
 func _swing_on_vine(delta: float) -> void:
 	var direction := clampf(Input.get_axis("move_left", "move_right"),-1,1)
 	var jump_held := Input.is_action_pressed("jump")
-	if (jump_held and not _jump_was_held) or (_vine_cooldown <= 0 and Input.is_action_just_pressed("interagir")):
+	var leap:=jump_held and not _jump_was_held
+	var drop:=_vine_cooldown<=0 and Input.is_action_just_pressed("interagir")
+	if leap or drop:
 		_jump_was_held = jump_held
-		release_vine(true)
+		release_vine(leap or not _vine.has_method("jump_velocity"))
 		return
 	_jump_was_held = jump_held
 	_vine.swing(delta,direction)

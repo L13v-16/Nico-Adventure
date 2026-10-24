@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_sprite.modulate = Color("ffbdd5") if _invulnerability>0 else Color.WHITE
 	_timer -= delta
-	var near: bool = is_instance_valid(_player) and not _player.is_dead() and global_position.distance_to(_player.global_position)<150
+	var near: bool = is_instance_valid(_player) and not _player.is_dead() and global_position.distance_to(_player.global_position)<(120 if species=="moth" else 150)
 	if species=="beetle":
 		if state=="patrol" and _timer<=0 and near:
 			state="warning"
@@ -59,14 +59,21 @@ func _physics_process(delta: float) -> void:
 			state="attack"
 			_timer=0.55
 		elif state=="attack" and _timer<=0:
+			state="recovery"
+			_timer=0.6
+		elif state=="recovery" and _timer<=0:
 			state="patrol"
 			_timer=1.8
 		var edge := _home.x+patrol_width*0.5*_direction
-		if (position.x-edge)*_direction>=0:
+		if state in ["patrol","attack"] and (position.x-edge)*_direction>=0:
 			_direction *= -1
 			state="patrol"
 			_timer=1.0
-		velocity.x = 0 if state=="warning" else _direction*(155 if state=="attack" else 52)
+		velocity.x = 0 if state in ["warning","recovery"] else _direction*(155 if state=="attack" else 52)
+		if is_on_floor() and absf(velocity.x)>0:
+			var probe:=PhysicsRayQueryParameters2D.create(global_position+Vector2(_direction*24,-8),global_position+Vector2(_direction*24,16),1)
+			if get_world_2d().direct_space_state.intersect_ray(probe).is_empty():
+				_direction*=-1;velocity.x=0;state="recovery";_timer=.4
 		velocity.y = minf(velocity.y+980*delta,700)
 		move_and_slide()
 		position.x=clampf(position.x,_home.x-patrol_width*0.5,_home.x+patrol_width*0.5)
@@ -88,11 +95,14 @@ func _physics_process(delta: float) -> void:
 		if state=="attack": desired=_target
 		if state!="warning":
 			var previous := position
-			position=position.move_toward(desired,(225 if state=="attack" else 100)*delta)
+			velocity=(desired-position).limit_length((225 if state=="attack" else 100)*delta)/maxf(delta,.001)
+			move_and_slide()
+			if state=="attack" and get_slide_collision_count()>0:state="return";_timer=.8
 			var side:=signf(position.x-previous.x)
 			if not is_zero_approx(side):_direction=side
 	_sprite.flip_h=_direction>0
 	_sprite.play(&"warning" if state=="warning" else (&"attack" if state=="attack" else (&"walk" if species=="beetle" else &"fly")))
+	if state=="recovery":_sprite.pause()
 	if near and absf(_player.global_position.x-global_position.x)<25 and absf(_player.global_position.y-global_position.y)<25:
 		if species=="moth" and _player.velocity.y>60 and _player.global_position.y<global_position.y-12:
 			take_damage(1,_player.global_position)

@@ -57,8 +57,8 @@ func _process(delta: float) -> void:
 	player.set("_camera_base_offset",offset.lerp(desired,1-exp(-delta*5)))
 	if x<550:hint.text="Oliver está na chegada! E: loja  •  I: mochila  •  J / X: atacar  •  Encontre Remi."
 	elif x<1080:hint.text="Cogumelo vermelho: caia sobre ele para subir muito alto. Direcione Nico no ar!"
-	elif x<1500:hint.text="E: agarrar o cipó  ·  Espaço: soltar  ·  Fruta-do-dragão: fogo temporário. Segure K para disparar!"
-	elif x<2200:hint.text="Toque na planta luminosa: ela aproxima o cipó. Espere a ponta e aperte E!"
+	elif x<1500:hint.text="Segure E: cipó  ·  Espaço: saltar  ·  E: soltar  ·  Fruta-do-dragão: fogo (K)."
+	elif x<2200:hint.text="Toque na planta luminosa: ela aproxima o cipó. Segure E e espere a ponta chegar!"
 	elif x<3050:hint.text="Este cipó se move sozinho! Use o cogumelo e observe a aproximação antes de agarrar."
 	elif x<3700:hint.text="Fruta-do-dragão: K lança fogo por 20 s. Açaí congela. Evite os espinhos do besouro!"
 	elif x<4496:hint.text="Outra planta muda o cipó. Balance e solte no impulso para alcançar a próxima ilha."
@@ -68,6 +68,10 @@ func _process(delta: float) -> void:
 		else:hint.text="Triple H: J / X rebate o barril. Nos socos, passe por cima e ataque por trás!"
 	elif not _rescue_ready:hint.text="Triple H derrotado! Vá até Remi e use J / X para abrir o cadeado."
 	else:hint.text="Remi está livre! Aproxime-se dele para conversar."
+
+	if player._vine!=null and player._vine.has_method("jump_velocity"):
+		hint.text="A / D: balançar  ·  Espaço: saltar  ·  E: soltar"
+	hint.text=Controls.hint(hint.text)
 
 func _on_boss_defeated() -> void:
 	_boss_defeated=true

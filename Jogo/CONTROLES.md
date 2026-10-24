@@ -8,4 +8,6 @@ As escolhas são salvas em `user://controls.cfg`, separadas do progresso e do á
 
 Pulo, andar, cipós, correntes, mochila, checkpoint e ações das fases passam pelo InputMap. Os avisos principais da HUD usam as teclas escolhidas. O quadro de controles é a referência completa, inclusive para as ações específicas do laboratório 3D.
 
-A vila recebe seis cenas decorativas: Minas voa em volta de Nico e recebe aplausos; Oliver divide uma cereja com a Tartaruga; José empurra uma pedrinha e Urso comemora; Remi e Mico brincam de perseguição e saltos; todos se cumprimentam; Nico e Minas fazem malabarismo com uma cereja. As cenas usam sprites existentes, permanecem nos grupos sorteados e pausam com o menu. Não executam lógica de jogo nem alteram o save.
+Na clareira do menu, cada amigo escolhe seu passeio e suas pausas. Amigos próximos podem conversar, se cumprimentar ou compartilhar cerejas. A distribuição muda a cada abertura e os painéis pausam os passeios. Os atores reutilizam os sprites do jogo e não alteram o progresso.
+
+Na fase 3, segure a tecla de interação ao se aproximar da ponta do cipó; não é necessário apertá-la no instante exato. As teclas de movimento alimentam o balanço. Pular solta Nico com impulso; interagir novamente apenas solta, preservando a velocidade do balanço. É preciso soltar a tecla antes de agarrar de novo o mesmo cipó. As correntes do Submundo preservam seus controles de subida e descida.

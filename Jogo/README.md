@@ -1,3 +1,16 @@
+## Clareira viva e cipós — v93
+
+Novo cenário de menu em pixel art, com os personagens reais como referência.
+Os oito amigos passeiam livremente, descansam e encontram quem estiver perto.
+A distribuição muda a cada abertura; os painéis pausam o cenário.
+
+Fase 3: segure a tecla de interação para agarrar o cipó, balance com as
+teclas de movimento, pule para aproveitar o impulso ou interaja de novo
+para apenas soltar. Captura mais tolerante, transições contínuas e saída
+com inércia. Aterrissagens ampliadas, checkpoints mais seguros, besouros
+com recuperação e mariposas que respeitam o terreno. Teclas remapeadas
+continuam funcionando. Cerejas e compras mantêm a mesma persistência.
+
 ## Controles e interações — v92
 
 Opções > Configurar teclas permite duas teclas por ação, com persistência,

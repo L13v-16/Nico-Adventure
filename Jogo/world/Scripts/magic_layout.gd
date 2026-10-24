@@ -6,7 +6,7 @@ const GROUND := [
 	Vector3(2144,64,432), Vector3(3040,32,544), Vector3(3696,-112,432),
 	Vector3(4496,64,1760),
 ]
-const CHECKPOINTS := [Vector2(450,100),Vector2(1050,-64),Vector2(1510,64),Vector2(2240,64),Vector2(3130,32),Vector2(3890,-112),Vector2(4550,64),Vector2(5050,64)]
+const CHECKPOINTS := [Vector2(410,100),Vector2(1050,-64),Vector2(1450,64),Vector2(1800,64),Vector2(2160,64),Vector2(2540,64),Vector2(3130,32),Vector2(3890,-112),Vector2(4550,64),Vector2(5050,64)]
 const SPRINGS := [Vector2(650,100),Vector2(2460,64),Vector2(3500,32),Vector2(5210,12),Vector2(5830,12)]
 const VINES := [
 	{"name":"CanopyVine","at":Vector2(1280,-272),"length":194.0},
@@ -21,8 +21,10 @@ static func build(level: Node2D) -> void:
 	level.add_child(terrain)
 	for info in GROUND:
 		var island:=preload("res://world/Scripts/magic_terrain.gd").new()
-		island.position=Vector2(info.x,info.y)
-		island.width=info.z
+		# Enlarge landing lips without changing the persistent cherry coordinates/IDs.
+		var lip:float={1392:16,2144:32,3040:48,4496:32}.get(int(info.x),0)
+		island.position=Vector2(info.x-lip,info.y)
+		island.width=info.z+lip
 		terrain.add_child(island)
 	var scenery:=Node2D.new()
 	scenery.name="Scenery"
@@ -71,7 +73,7 @@ static func build(level: Node2D) -> void:
 		enemy.position=Vector2(info.x,info.y)
 		enemy.patrol_width=info.z
 		level.add_child(enemy)
-	for point in [Vector2(1630,-35),Vector2(2390,-55),Vector2(3410,-58),Vector2(3960,-190),Vector2(4760,-40)]:
+	for point in [Vector2(1630,-35),Vector2(2390,-55),Vector2(3410,-58),Vector2(3960,-270),Vector2(4760,-40)]:
 		var moth:=preload("res://world/Scripts/magic_enemy.gd").new()
 		moth.species="moth"
 		moth.position=point

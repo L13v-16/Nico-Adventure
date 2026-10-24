@@ -1,25 +1,30 @@
 extends Control
-## A distant living forest. Decorative actors never run player/NPC gameplay code.
-const BACKGROUND=preload("res://world/Arte/MenuV91/village.png")
+## Decorative village. Actual game sprites, independent paths, no gameplay code.
+const BACKGROUND=preload("res://world/Arte/MenuV93/clearing.png")
 const Art=preload("res://world/Scripts/magic_art.gd")
 const Actions=preload("res://world/Scripts/menu_actions.gd")
-const Interactions=preload("res://world/Scripts/menu_interactions.gd")
 const CHERRY=preload("res://Sunny-land-files/assets/Misc/Sunnyland items/cherry.png")
+const DISTANCE_SCALE:=.65
+const BOUNDS:=Rect2(285,270,330,40)
+const SPEED:={"nico":12.0,"arara":17.0,"turtle":4.5,"oliver":8.0,"jose":10.0,"urso":7.0,"remi":15.0,"mico":16.0}
+const REST:={
+	"nico":["wave","think","clap","rest"],"arara":["groom","wave","peck","stretch"],
+	"turtle":["snack","nod","wave","rest"],"oliver":["wave","inspect","chuckle","shrug"],
+	"jose":["wave","nod","laugh","hoof"],"urso":["wave","clap","stretch","doze"],
+	"remi":["throw","catch","tail","wave"],"mico":["catch","clap","throw","wave"]
+}
 var clock:=0.0
 var active:=true
 var actors:Dictionary={}
+var lives:Dictionary={}
 var _world:Node2D
 var _foreground:Control
-const DISTANCE_SCALE:=.65
-const GROUPS:={"nico":0,"arara":0,"turtle":1,"oliver":1,"jose":2,"urso":2,"remi":3,"mico":3}
-const CENTERS:=[Vector2(325,279),Vector2(405,279),Vector2(495,279),Vector2(585,279)]
-const SLOTS:=[Vector2(320,265),Vector2(410,284),Vector2(504,256),Vector2(592,288)]
-static var _last_arrangement:Array=[]
-var arrangement:Array=[]
-var _places:Array[Vector2]=[]
 var _rng:=RandomNumberGenerator.new()
-var interaction:=""
-var interaction_progress:=0.0
+var _social_cooldown:=3.0
+var encounter:Dictionary={}
+var encounters_started:=0
+static var _last_order:Array=[]
+var arrangement:Array=[]
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -39,21 +44,21 @@ func _ready() -> void:
 	_randomize_layout()
 
 func _add_actor(id:String,frames:SpriteFrames,width:float) -> void:
-	var root:=Node2D.new();root.name=id;_world.add_child(root)
-	var sprite:=Art.actor(frames,width*DISTANCE_SCALE);root.add_child(sprite);Actions.install(sprite,id);actors[id]=root
+	var actor:=Node2D.new();actor.name=id;_world.add_child(actor)
+	var sprite:=Art.actor(frames,width*DISTANCE_SCALE);actor.add_child(sprite);Actions.install(sprite,id);actors[id]=actor
 
 func _randomize_layout() -> void:
-	arrangement=[0,1,2,3]
-	for i in range(3,0,-1):
-		var other:=_rng.randi_range(0,i);var old:int=arrangement[i];arrangement[i]=arrangement[other];arrangement[other]=old
-	if arrangement==_last_arrangement:arrangement.append(arrangement.pop_front())
-	_last_arrangement=arrangement.duplicate();_places.clear()
-	for index:int in arrangement:_places.append(SLOTS[index]+Vector2(_rng.randi_range(-3,3),_rng.randi_range(-2,2)))
-	clock=_rng.randf_range(0,96);_update_cast()
-
-func _map_point(id:String,point:Vector2) -> Vector2:
-	var group:int=GROUPS[id]
-	return _places[group]+(point-CENTERS[group])*.72
+	arrangement=actors.keys()
+	for i in range(arrangement.size()-1,0,-1):
+		var j:=_rng.randi_range(0,i);var old:String=arrangement[i];arrangement[i]=arrangement[j];arrangement[j]=old
+	if arrangement==_last_order:arrangement.append(arrangement.pop_front())
+	_last_order=arrangement.duplicate();lives.clear();encounter.clear();_social_cooldown=3
+	for i in arrangement.size():
+		var id:String=arrangement[i]
+		var at:=Vector2(294+i*43,_rng.randf_range(275,305))
+		lives[id]={"at":at,"target":at,"timer":_rng.randf_range(.3,2.5),"state":"rest","action":"ambient_"+str(REST[id][_rng.randi_range(0,3)]),"age":0.0,"left":bool(i%2),"height":0.0}
+		_render_actor(id)
+	_update_scale();queue_redraw()
 
 func set_active(value:bool) -> void:
 	var reopening:=value and not active
@@ -66,119 +71,121 @@ func set_active(value:bool) -> void:
 		else:sprite.play()
 	queue_redraw();_foreground.queue_redraw()
 
+func _update_scale() -> void:
+	_world.scale=size/Vector2(640,360)
+
 func _process(delta:float) -> void:
 	if not active:return
-	clock+=delta;_update_cast();queue_redraw();_foreground.queue_redraw()
+	var step:=minf(delta,.05);clock+=step;_social_cooldown-=step
+	_update_scale()
+	for id:String in lives:
+		var life:Dictionary=lives[id]
+		life.age+=step;life.timer-=step
+		if life.state=="social":continue
+		if life.state=="walk":
+			var before:Vector2=life.at
+			var desired:Vector2=life.target
+			var avoidance:=Vector2.ZERO
+			for other:String in lives:
+				if other==id:continue
+				var offset:Vector2=life.at-lives[other].at
+				if offset.length()<17 and offset.length()>0.01:avoidance+=offset.normalized()*(17-offset.length())*.55
+			life.at=BOUNDS.get_center()+(before.move_toward(desired+avoidance,SPEED[id]*step)-BOUNDS.get_center()).clamp(-BOUNDS.size*.5,BOUNDS.size*.5)
+			if absf(life.at.x-before.x)>.005:life.left=life.at.x<before.x
+			if id=="arara":life.height=move_toward(life.height,12+sin(life.age*2)*3,step*14)
+			if life.at.distance_to(desired)<3 or life.timer<=0:_rest(id)
+		elif life.timer<=0:_choose(id)
+		if life.state!="walk":life.height=move_toward(life.height,0,step*14)
+	_update_encounter(step)
+	if encounter.is_empty() and _social_cooldown<=0:_find_company()
+	for id:String in lives:_render_actor(id)
+	queue_redraw();_foreground.queue_redraw()
 
-func _pose(id:String,x:float,y:float,animation:StringName,face_left:bool=false,beat:float=-1.0) -> void:
-	var actor:Node2D=actors[id];actor.position=_map_point(id,Vector2(x,y)).round()
+func _choose(id:String) -> void:
+	var life:Dictionary=lives[id]
+	if _rng.randf()<.25:_rest(id);return
+	life.state="walk";life.age=0;life.timer=_rng.randf_range(7,15)
+	var destination:=Vector2(_rng.randf_range(BOUNDS.position.x,BOUNDS.end.x),_rng.randf_range(BOUNDS.position.y,BOUNDS.end.y))
+	if id=="turtle":destination=life.at+(destination-life.at).limit_length(30)
+	life.target=destination
+	life.action="fly" if id=="arara" else ("run" if id=="nico" else "walk")
+
+func _rest(id:String) -> void:
+	var life:Dictionary=lives[id]
+	life.state="rest";life.age=0;life.timer=_rng.randf_range(2,5)
+	life.action="ambient_"+str(REST[id][_rng.randi_range(0,REST[id].size()-1)])
+
+func _find_company() -> void:
+	var pairs:Array=[]
+	for i in arrangement.size():
+		for j in range(i+1,arrangement.size()):
+			var a:String=arrangement[i];var b:String=arrangement[j]
+			var distance:float=lives[a].at.distance_to(lives[b].at)
+			if distance>=18 and distance<49 and absf(lives[a].at.y-lives[b].at.y)<13 and lives[a].height<1 and lives[b].height<1:pairs.append([a,b])
+	if pairs.is_empty():_social_cooldown=1;return
+	var pair:Array=pairs[_rng.randi_range(0,pairs.size()-1)]
+	var a:String=pair[0];var b:String=pair[1]
+	var kind:="conversation"
+	if a in ["remi","mico"] or b in ["remi","mico"]:kind="cherry"
+	elif a=="arara" or b=="arara":kind="greeting"
+	elif a=="turtle" or b=="turtle":kind="picnic"
+	encounter={"a":a,"b":b,"kind":kind,"age":0.0,"duration":_rng.randf_range(4,6)}
+	encounters_started+=1
+	for id:String in pair:
+		lives[id].state="social";lives[id].age=0;lives[id].height=0
+	lives[a].left=lives[a].at.x>lives[b].at.x;lives[b].left=not lives[a].left
+
+func _update_encounter(delta:float) -> void:
+	if encounter.is_empty():return
+	encounter.age+=delta
+	var a:String=encounter.a;var b:String=encounter.b
+	lives[a].action="ambient_wave" if encounter.age<1.2 else "ambient_"+str(REST[a][1])
+	lives[b].action="ambient_wave" if encounter.age<1.2 else "ambient_"+str(REST[b][2])
+	if encounter.kind=="cherry":
+		if a in ["remi","mico"]:lives[a].action="ambient_throw"
+		if b in ["remi","mico"]:lives[b].action="ambient_catch"
+	elif encounter.kind=="picnic":
+		if a=="turtle":lives[a].action="ambient_snack"
+		if b=="turtle":lives[b].action="ambient_snack"
+	if encounter.age>=encounter.duration:
+		_rest(a);_rest(b);encounter.clear();_social_cooldown=_rng.randf_range(2,5)
+
+func _render_actor(id:String) -> void:
+	var life:Dictionary=lives[id];var actor:Node2D=actors[id]
+	actor.position=(life.at-Vector2(0,life.height)).round()
 	var sprite:=actor.get_child(0) as AnimatedSprite2D
-	sprite.flip_h=face_left;Actions.display(sprite,animation,clock if beat<0 else beat)
-
-func _update_cast() -> void:
-	_world.scale=size/Vector2(640,360)
-	var t:=fposmod(clock,32)
-	var nico_x:=lerpf(283,329,clampf(t/7,0,1)) if t<14 else lerpf(329,283,clampf((t-14)/7,0,1))
-	var nico_action:StringName=&"run" if t<7 or (t>=14 and t<21) else &"idle"
-	if t>=7 and t<8:nico_action=&"ambient_wave"
-	elif t>=8 and t<10:nico_action=&"ambient_think"
-	elif t>=10 and t<13:nico_action=&"ambient_clap"
-	elif t>=24:nico_action=&"ambient_rest"
-	_pose("nico",nico_x,279,nico_action,t>=14)
-	if t<7:_pose("arara",lerpf(330,365,t/7),250-sin(t*.9)*7,"fly",true)
-	elif t<8:_pose("arara",365,lerpf(250,279,smoothstep(7,8,t)),"fly",true)
-	elif t<14:_pose("arara",365,279,"ambient_groom" if t<11 else "ambient_wave",true)
-	elif t<23:_pose("arara",lerpf(365,327,(t-14)/9),255-sin((t-14)/9*PI)*21,"fly",true)
-	elif t<24:_pose("arara",327,lerpf(255,279,smoothstep(23,24,t)),"fly")
-	else:_pose("arara",327,279,"ambient_peck" if t<28 else "ambient_stretch")
-	var visit:=fposmod(clock+5,36)
-	var turtle_x:=lerpf(383,401,clampf(visit/10,0,1)) if visit<19 else lerpf(401,383,clampf((visit-19)/10,0,1))
-	var turtle_action:StringName=&"walk" if visit<10 or (visit>=19 and visit<29) else &"idle"
-	if visit>=10 and visit<14:turtle_action=&"ambient_snack"
-	elif visit>=14 and visit<17:turtle_action=&"ambient_nod"
-	elif visit>=17 and visit<19:turtle_action=&"ambient_wave"
-	elif visit>=29:turtle_action=&"ambient_rest"
-	_pose("turtle",turtle_x,278,turtle_action,visit>=19)
-	var oliver_action:StringName=&"idle"
-	if visit>=9 and visit<10:oliver_action=&"ambient_wave"
-	elif visit>=10 and visit<13:oliver_action=&"ambient_inspect"
-	elif visit>=13 and visit<16:oliver_action=&"ambient_chuckle"
-	elif visit>=16 and visit<19:oliver_action=&"ambient_shrug"
-	_pose("oliver",428,280,oliver_action,true)
-	var stroll:=fposmod(clock+2,28)
-	var meet:=smoothstep(0,6,stroll)*(1-smoothstep(17,23,stroll))
-	var jose_action:StringName=&"walk"
-	var urso_action:StringName=&"walk"
-	if stroll>=6 and stroll<17:
-		jose_action=&"ambient_wave" if stroll<8 else (&"ambient_nod" if stroll<11 else (&"ambient_laugh" if stroll<14 else &"ambient_hoof"))
-		urso_action=&"ambient_wave" if stroll<8 else (&"ambient_clap" if stroll<11 else &"ambient_stretch")
-	elif stroll>=23:jose_action=&"idle";urso_action=&"ambient_doze"
-	_pose("jose",lerpf(461,483,meet),280,jose_action,stroll>=17)
-	_pose("urso",lerpf(530,513,meet),279,urso_action,stroll<17)
-	var play:=fposmod(clock,22)
-	var chase:=smoothstep(0,6,play)*(1-smoothstep(12,18,play))
-	var remi_action:StringName=&"walk"
-	var mico_action:StringName=&"walk"
-	var action_beat:=0.0
-	if play>=6 and play<12:
-		action_beat=play-6
-		remi_action=&"ambient_throw" if play<8 else (&"ambient_tail" if play<10 else &"ambient_wave")
-		mico_action=&"ambient_catch" if play<8 else (&"ambient_clap" if play<10 else &"ambient_wave")
-	elif play>=18:
-		action_beat=play-18
-		remi_action=&"ambient_catch" if play<20 else &"ambient_tail"
-		mico_action=&"ambient_throw" if play<20 else &"ambient_clap"
-	var remi_beat:=clock
-	var mico_beat:=clock
-	if play>=6 and play<8:remi_beat=action_beat;mico_beat=maxf(0,action_beat-.6)
-	elif play>=18 and play<20:remi_beat=maxf(0,action_beat-.6);mico_beat=action_beat
-	_pose("remi",lerpf(554,583,chase),277,remi_action,play>=12 and play<18,remi_beat)
-	_pose("mico",lerpf(587,615,chase),281,mico_action,play>=6,mico_beat)
-	Interactions.update(self)
+	sprite.flip_h=life.left
+	Actions.display(sprite,StringName(life.action),life.age)
 
 func _draw() -> void:
 	draw_texture_rect(BACKGROUND,Rect2(Vector2.ZERO,size),false)
-	# Feathered shade preserves the panorama while keeping every menu label legible.
-	for x in range(0,310,4):
-		var opacity:=.78*(1-smoothstep(50,310,x))
-		draw_rect(Rect2(x*size.x/640,0,4*size.x/640,size.y),Color(.014,.045,.042,opacity))
+	for x in range(0,280,4):
+		var opacity:=.66*(1-smoothstep(30,280,x))
+		draw_rect(Rect2(x*size.x/640,0,4*size.x/640,size.y),Color(.014,.035,.043,opacity))
 	if not active:draw_rect(Rect2(Vector2.ZERO,size),Color(0,.02,.02,.34))
 	if _world==null:return
 	draw_set_transform(Vector2.ZERO,0,size/Vector2(640,360))
-	for id:String in actors:
-		var actor:Node2D=actors[id]
-		var ground:=_places[GROUPS[id]].y
-		if id=="arara" and actor.position.y<ground-4:continue
-		draw_line(Vector2(actor.position.x-4,ground+1),Vector2(actor.position.x+4,ground+1),Color(0,.03,.02,.18),1)
+	for id:String in lives:
+		var at:Vector2=lives[id].at
+		draw_line(at+Vector2(-4,1),at+Vector2(4,1),Color(0,.03,.02,.22),1)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_details() -> void:
 	_foreground.draw_set_transform(Vector2.ZERO,0,size/Vector2(640,360))
-	var play:=fposmod(clock,22)
-	var reverse:=play>=18
-	var toss:=play-18 if reverse else play-6
-	# Preparation .0-.6; airborne .6-1.2; reception and hold 1.2-2.0.
-	if interaction not in ["brincadeira","cumprimento"] and ((play>=6.6 and play<7.2) or (play>=18.6 and play<19.2)):
-		var u:=clampf((toss-.6)/.6,0,1)
-		var sender:Node2D=actors.mico if reverse else actors.remi
-		var receiver:Node2D=actors.remi if reverse else actors.mico
-		var start:=sender.position+Vector2(-4 if reverse else 4,-7)
-		var end:=receiver.position+Vector2(4 if reverse else -4,-7)
-		var at:=start.lerp(end,u)+Vector2(0,-sin(u*PI)*8)
-		_foreground.draw_texture_rect_region(CHERRY,Rect2(at-Vector2(1.5,1.5),Vector2(3,3)),Rect2(0,0,21,21))
-	var talk:=fposmod(clock,32)
-	if interaction not in ["voo","malabarismo","cumprimento"] and talk>=8 and talk<13:_speech(_map_point("nico",Vector2(348,245)))
-	var visit:=fposmod(clock+5,36)
-	if visit>=11 and visit<18:_speech(_map_point("oliver",Vector2(417,249)))
-	Interactions.draw(self,_foreground,CHERRY)
-	# A few fireflies drift above the path; none cross the left menu column.
+	if not encounter.is_empty():
+		var a:Vector2=actors[encounter.a].position+Vector2(0,-8)
+		var b:Vector2=actors[encounter.b].position+Vector2(0,-8)
+		if encounter.kind in ["cherry","picnic"] and encounter.age>=1.2 and encounter.age<2.4:
+			var t:float=(encounter.age-1.2)/1.2
+			var at:=a.lerp(b,t)+Vector2(0,-sin(t*PI)*9)
+			_foreground.draw_texture_rect_region(CHERRY,Rect2(at-Vector2(1.5,1.5),Vector2(3,3)),Rect2(0,0,21,21))
+		elif encounter.age>1.5 and encounter.age<4:_speech((a+b)*.5+Vector2(-4,-12))
 	for i in 4:
-		var point:=Vector2(282+fposmod(i*43+clock*(2+i%3),344),228+sin(clock*.6+i*2)*18)
-		var alpha:float=.25+.35*(.5+.5*sin(clock*1.4+i))
-		_foreground.draw_rect(Rect2(point,Vector2(1,1)),Color(1,.9,.48,alpha))
+		var point:=Vector2(282+fposmod(i*43+clock*(2+i%3),344),235+sin(clock*.6+i*2)*18)
+		_foreground.draw_rect(Rect2(point,Vector2.ONE),Color(1,.9,.48,.3+.2*sin(clock*1.4+i)))
 	_foreground.draw_set_transform(Vector2.ZERO)
 
 func _speech(at:Vector2) -> void:
-	_foreground.draw_rect(Rect2(at,Vector2(10,5)),Color("e5e7ba"))
-	_foreground.draw_rect(Rect2(at+Vector2(2,4),Vector2(1,2)),Color("e5e7ba"))
-	for i in 3:_foreground.draw_rect(Rect2(at+Vector2(2+i*3,2),Vector2(1,1)),Color("335444"))
+	_foreground.draw_rect(Rect2(at.round(),Vector2(10,5)),Color("e5e7ba"))
+	_foreground.draw_rect(Rect2(at.round()+Vector2(2,4),Vector2(1,2)),Color("e5e7ba"))
+	for i in 3:_foreground.draw_rect(Rect2(at.round()+Vector2(2+i*3,2),Vector2.ONE),Color("335444"))
