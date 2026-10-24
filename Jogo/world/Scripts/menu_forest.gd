@@ -1,6 +1,6 @@
 extends Control
 ## A distant living forest. Decorative actors never run player/NPC gameplay code.
-const BACKGROUND=preload("res://world/Arte/MenuV88/forest.png")
+const BACKGROUND=preload("res://world/Arte/MenuV91/village.png")
 const Art=preload("res://world/Scripts/magic_art.gd")
 const Actions=preload("res://world/Scripts/menu_actions.gd")
 const CHERRY=preload("res://Sunny-land-files/assets/Misc/Sunnyland items/cherry.png")
@@ -9,11 +9,20 @@ var active:=true
 var actors:Dictionary={}
 var _world:Node2D
 var _foreground:Control
+const DISTANCE_SCALE:=.65
+const GROUPS:={"nico":0,"arara":0,"turtle":1,"oliver":1,"jose":2,"urso":2,"remi":3,"mico":3}
+const CENTERS:=[Vector2(325,279),Vector2(405,279),Vector2(495,279),Vector2(585,279)]
+const SLOTS:=[Vector2(320,265),Vector2(410,284),Vector2(504,256),Vector2(592,288)]
+static var _last_arrangement:Array=[]
+var arrangement:Array=[]
+var _places:Array[Vector2]=[]
+var _rng:=RandomNumberGenerator.new()
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter=Control.MOUSE_FILTER_IGNORE
 	texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	_rng.randomize()
 	_world=Node2D.new();_world.y_sort_enabled=true;add_child(_world)
 	var nico:=SpriteFrames.new();nico.remove_animation("default")
 	for data in [["idle",4,4],["run",6,9]]:
@@ -24,14 +33,29 @@ func _ready() -> void:
 		var path:String="Underworld/jose" if data[0]=="jose" else "Friends/V47/"+data[0]
 		_add_actor(data[0],load("res://world/Arte/"+path+".tres"),data[1])
 	_foreground=Control.new();_foreground.mouse_filter=Control.MOUSE_FILTER_IGNORE;_foreground.draw.connect(_draw_details);add_child(_foreground)
-	_update_cast()
+	_randomize_layout()
 
 func _add_actor(id:String,frames:SpriteFrames,width:float) -> void:
 	var root:=Node2D.new();root.name=id;_world.add_child(root)
-	var sprite:=Art.actor(frames,width);root.add_child(sprite);Actions.install(sprite,id);actors[id]=root
+	var sprite:=Art.actor(frames,width*DISTANCE_SCALE);root.add_child(sprite);Actions.install(sprite,id);actors[id]=root
+
+func _randomize_layout() -> void:
+	arrangement=[0,1,2,3]
+	for i in range(3,0,-1):
+		var other:=_rng.randi_range(0,i);var old:int=arrangement[i];arrangement[i]=arrangement[other];arrangement[other]=old
+	if arrangement==_last_arrangement:arrangement.append(arrangement.pop_front())
+	_last_arrangement=arrangement.duplicate();_places.clear()
+	for index:int in arrangement:_places.append(SLOTS[index]+Vector2(_rng.randi_range(-3,3),_rng.randi_range(-2,2)))
+	clock=_rng.randf_range(0,32);_update_cast()
+
+func _map_point(id:String,point:Vector2) -> Vector2:
+	var group:int=GROUPS[id]
+	return _places[group]+(point-CENTERS[group])*.72
 
 func set_active(value:bool) -> void:
+	var reopening:=value and not active
 	active=value
+	if reopening:_randomize_layout()
 	_world.modulate=Color.WHITE if value else Color(.55,.6,.55)
 	for actor:Node2D in actors.values():
 		var sprite:=actor.get_child(0) as AnimatedSprite2D
@@ -44,7 +68,7 @@ func _process(delta:float) -> void:
 	clock+=delta;_update_cast();queue_redraw();_foreground.queue_redraw()
 
 func _pose(id:String,x:float,y:float,animation:StringName,face_left:bool=false,beat:float=-1.0) -> void:
-	var actor:Node2D=actors[id];actor.position=Vector2(roundf(x),roundf(y))
+	var actor:Node2D=actors[id];actor.position=_map_point(id,Vector2(x,y)).round()
 	var sprite:=actor.get_child(0) as AnimatedSprite2D
 	sprite.flip_h=face_left;Actions.display(sprite,animation,clock if beat<0 else beat)
 
@@ -119,9 +143,9 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO,0,size/Vector2(640,360))
 	for id:String in actors:
 		var actor:Node2D=actors[id]
-		var ground:=279.0
-		if id=="arara" and actor.position.y<274:continue
-		draw_line(Vector2(actor.position.x-7,ground+1),Vector2(actor.position.x+7,ground+1),Color(0,.03,.02,.25),2)
+		var ground:=_places[GROUPS[id]].y
+		if id=="arara" and actor.position.y<ground-4:continue
+		draw_line(Vector2(actor.position.x-4,ground+1),Vector2(actor.position.x+4,ground+1),Color(0,.03,.02,.18),1)
 	draw_set_transform(Vector2.ZERO)
 
 func _draw_details() -> void:
@@ -134,22 +158,22 @@ func _draw_details() -> void:
 		var u:=clampf((toss-.6)/.6,0,1)
 		var sender:Node2D=actors.mico if reverse else actors.remi
 		var receiver:Node2D=actors.remi if reverse else actors.mico
-		var start:=sender.position+Vector2(-7 if reverse else 7,-11)
-		var end:=receiver.position+Vector2(7 if reverse else -7,-11)
-		var at:=start.lerp(end,u)+Vector2(0,-sin(u*PI)*12)
-		_foreground.draw_texture_rect_region(CHERRY,Rect2(at-Vector2(2,2),Vector2(4,4)),Rect2(0,0,21,21))
+		var start:=sender.position+Vector2(-4 if reverse else 4,-7)
+		var end:=receiver.position+Vector2(4 if reverse else -4,-7)
+		var at:=start.lerp(end,u)+Vector2(0,-sin(u*PI)*8)
+		_foreground.draw_texture_rect_region(CHERRY,Rect2(at-Vector2(1.5,1.5),Vector2(3,3)),Rect2(0,0,21,21))
 	var talk:=fposmod(clock,32)
-	if talk>=8 and talk<13:_speech(Vector2(348,245))
+	if talk>=8 and talk<13:_speech(_map_point("nico",Vector2(348,245)))
 	var visit:=fposmod(clock+5,36)
-	if visit>=11 and visit<18:_speech(Vector2(417,249))
+	if visit>=11 and visit<18:_speech(_map_point("oliver",Vector2(417,249)))
 	# A few fireflies drift above the path; none cross the left menu column.
-	for i in 10:
+	for i in 4:
 		var point:=Vector2(282+fposmod(i*43+clock*(2+i%3),344),228+sin(clock*.6+i*2)*18)
 		var alpha:float=.25+.35*(.5+.5*sin(clock*1.4+i))
 		_foreground.draw_rect(Rect2(point,Vector2(1,1)),Color(1,.9,.48,alpha))
 	_foreground.draw_set_transform(Vector2.ZERO)
 
 func _speech(at:Vector2) -> void:
-	_foreground.draw_rect(Rect2(at,Vector2(14,7)),Color("e5e7ba"))
-	_foreground.draw_rect(Rect2(at+Vector2(2,6),Vector2(2,3)),Color("e5e7ba"))
-	for i in 3:_foreground.draw_rect(Rect2(at+Vector2(3+i*4,3),Vector2(1,1)),Color("335444"))
+	_foreground.draw_rect(Rect2(at,Vector2(10,5)),Color("e5e7ba"))
+	_foreground.draw_rect(Rect2(at+Vector2(2,4),Vector2(1,2)),Color("e5e7ba"))
+	for i in 3:_foreground.draw_rect(Rect2(at+Vector2(2+i*3,2),Vector2(1,1)),Color("335444"))

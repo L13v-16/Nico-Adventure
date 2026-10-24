@@ -1,3 +1,10 @@
+## Menu da vila — v91
+
+Fundo da floresta simplificado com três casas. Os oito amigos aparecem
+menores e mais distantes; os grupos mudam de posição e de momento da
+animação a cada abertura ou retorno ao menu. Botões e logo preservados.
+Arte e prompt: world/Arte/MenuV91/README.md.
+
 ## Sprites gerais — v90
 
 72 sprites novos em sete atlases transparentes: 40 objetos para floresta,
