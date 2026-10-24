@@ -18,7 +18,7 @@ const CHARACTERS := [
  {"id":"remi", "name":"Remi", "short":"Remi", "art":"Magic/remi_idle.tres", "portrait":"Magic/remi_portrait.tres", "bio":"Um esquilo de cauda fofa, pelagem castanha e lenço azul. Conhece as árvores e os segredos das ilhas.", "where":"Resgate: Floresta Violeta, após Triple H."},
  {"id":"jose", "name":"José, o Bode", "short":"José", "art":"Underworld/jose_idle.tres", "portrait":"Underworld/jose_portrait_neutral.tres", "bio":"Um bode forte de chifres curvos e lenço laranja. Suas cabeçadas quebram paredes, derrubam pilares e empurram objetos pesados.", "where":"Resgate: início do Submundo. Depois, acompanha Nico até a saída."},
  {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "portrait":"Friends/V47/urso_portrait_neutral.tres", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Mantido em testes de resistência no Laboratório dos Executivos."},
- {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Também foi capturado pela corporação.", "where":"Ainda desaparecido em outra instalação da corporação."},
+ {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Foi mantido na cela do presidente da corporação.", "where":"Resgate: sede da Corporação, após a batalha contra o Lobo."},
 ]
 var _cards:Array[Button]=[]
 var _tabs:Array[Button]=[]
@@ -296,6 +296,9 @@ func character_state(id:String) -> Dictionary:
   "jose":
    if Save.has_story_flag("jose_rescued") or Save.is_level_completed("fase_4"):return {"text":"Resgatado no Submundo · companheiro", "short":"RESGATADO", "color":MINT}
    return {"text":"Próximo resgate" if Save.is_level_completed("fase_3") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
+  "mico":
+   if Save.has_story_flag("mico_rescued") or Save.is_level_completed("fase_6"):return {"text":"Resgatado na sede da Corporação", "short":"RESGATADO", "color":MINT}
+   return {"text":"Último amigo a resgatar" if Save.is_level_completed("fase_5") else "À espera de Nico", "short":"A SALVAR", "color":GOLD}
  return {"text":"Ainda desaparecido", "short":"A SALVAR", "color":GOLD}
 
 func _select_character(index:int,play_sound:bool=true) -> void:

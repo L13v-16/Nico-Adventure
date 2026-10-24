@@ -126,7 +126,7 @@ func _draw_scene() -> void:
 	elif mode=="boss":
 		title="LOBO · PRESIDENTE EXECUTIVO"
 		speaker="LOBO";text="Eu mesmo vou encerrar este problema. Considere sua visita... demitida."
-		if clock>4.5:speaker="NICO";text="Você levou meus amigos. Agora vai responder por isso."
+		if clock>4.5:speaker="NICO";text="Eu vim buscar o Mico-leão-dourado. Você vai libertar meu amigo e responder pelos sequestros."
 	elif mode=="boarding":
 		title="PLANO B · ORÇAMENTO DE DEFESA"
 		speaker="LOBO";text="Luta justa? Isso nunca constou no contrato. Ativar unidade executiva!"

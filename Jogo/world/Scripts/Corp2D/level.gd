@@ -175,15 +175,24 @@ func play_robot_boarding() -> void:
 	var scene:=play_scene("boarding");await scene.finished
 	_encounter.enter_robot();frame_camera(true)
 func _boss_defeated() -> void:_complete_level()
-func _start_finale(stats:Dictionary,new_record:bool) -> void:
-	Save.set_story_flag("corporation_defeated")
+func _complete_level() -> void:
+	if completed or player.is_dead():return
+	completed=true;_timing=false;pause_menu.can_open=false
+	player.finish_level();clear_shots();hint.text="";Sfx.finish()
+	# Final completion follows the rescue, including when the epilogue is skipped.
+	_start_finale(_build_stats(),false)
+func _start_finale(stats:Dictionary,_new_record:bool) -> void:
 	var scene:=play_scene("ending");await scene.finished
+	Save.set_story_flag("mico_rescued");Save.set_story_flag("corporation_defeated")
+	var previous:=Save.get_level_stats(level_id)
+	var best:=Save.mark_level_complete(level_id,stats)
+	var new_record:bool=previous.is_empty() or Save.rank_index(String(best.get("rank","D")))>Save.rank_index(String(previous.get("rank","D")))
 	$HUD.hide();get_tree().paused=true;_show_results(stats,new_record)
 func play_scene(mode:String) -> CanvasLayer:
 	var script:GDScript=preload("res://world/Scripts/Corp2D/ending.gd") if mode=="ending" else preload("res://world/Scripts/Corp2D/cutscene.gd")
 	var scene:CanvasLayer=script.new();scene.level=self;scene.mode=mode;add_child(scene);return scene
 func show_record(id:String,kind:String) -> void:
-	var records:Dictionary={"forest":["PROJETO COPA","Extração mágica da floresta. Animais tratados como recursos. Nico interrompeu a operação."],"underworld":["PROJETO PROFUNDEZA","Correntes e energia do Submundo. O guardião foi enganado por contratos falsos."],"lab":["RELATÓRIO LARGATO","Testes de resistência em Urso. Diretor indisponível após falha no próprio composto."],"office":["GABINETE DO PRESIDENTE","Metas: controlar as ilhas. Riscos não previstos: amizade, cabeçadas e um guaxinim persistente."],"prototype":["ROBÔ · ENSAIO DE IMPACTO","O punho trava depois do golpe. Salte a onda e ataque o núcleo aceso. A armadura reserva usa reguladores de fogo e gelo."]}
+	var records:Dictionary={"forest":["PROJETO COPA","Extração mágica da floresta. Animais tratados como recursos. Nico interrompeu a operação."],"underworld":["PROJETO PROFUNDEZA","Correntes e energia do Submundo. O guardião foi enganado por contratos falsos."],"lab":["RELATÓRIO LARGATO","Testes de resistência em Urso. Diretor indisponível após falha no próprio composto."],"office":["GABINETE DO PRESIDENTE","Último prisioneiro: Mico-leão-dourado. Cela na cobertura, trava ligada à unidade executiva. Desativar a máquina e soltar a grade. Risco não previsto: amizade e cabeçadas."],"prototype":["ROBÔ · ENSAIO DE IMPACTO","O punho trava depois do golpe. Salte a onda e ataque o núcleo aceso. A armadura reserva usa reguladores de fogo e gelo."]}
 	var data:Array=records.get(id,["ARQUIVO RESERVADO","As provas confirmam quem ordenou os sequestros."])
 	var scene:=preload("res://world/Scripts/Corp2D/archive_panel.gd").new();scene.level=self;scene.record_id=id;scene.record_title=data[0];scene.record_text=data[1];add_child(scene)
 func unlock_secret(device:Node2D) -> void:
