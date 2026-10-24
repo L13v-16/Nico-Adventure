@@ -37,16 +37,24 @@ func _quick_buy(id:String) -> void:
 	_feedback.text="Pronto para a viagem!";_refresh();Sfx.select()
 func open() -> void:
 	if _open or get_tree().paused:return
+	_merchant_pose("talk")
 	_open=true;_pause_available=level.pause_menu.can_open;level.pause_menu.can_open=false;level.player._cancel_attack();get_tree().paused=true
 	Sfx.begin_inventory_music(self);_root.show();_refresh();_close.grab_focus()
 func close() -> void:
 	if not _open:return
+	_merchant_pose("idle")
 	_open=false;_root.hide();Sfx.end_inventory_music(self);get_tree().paused=false;level.pause_menu.can_open=_pause_available;level.player._invulnerability_timer=maxf(.4,level.player._invulnerability_timer)
 func _unhandled_input(event:InputEvent) -> void:
 	if _open and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("interagir")):get_viewport().set_input_as_handled();close()
 func _exit_tree() -> void:
 	Sfx.end_inventory_music(self)
 	if _open and get_tree()!=null:get_tree().paused=false
+func _merchant_pose(animation:String) -> void:
+	if not is_instance_valid(level) or not is_instance_valid(level.wagon):return
+	var npc:Node=level.wagon.get_node_or_null("Oliver")
+	if npc==null:return
+	var animator:=npc.get_node_or_null("Animations") as AnimationPlayer
+	if animator!=null and animator.has_animation(animation):animator.play(animation,.15)
 func _refresh() -> void:
 	_wallet.text="Saldo: %d cerejas"%Save.get_cherry_balance()
 	for child in _rows.get_children():_rows.remove_child(child);child.queue_free()

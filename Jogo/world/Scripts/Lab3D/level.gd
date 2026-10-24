@@ -272,10 +272,12 @@ func rescue_urso() -> void:
 	var finale:=play_cutscene("ending");await finale.finished
 	hud.hide()
 	get_tree().paused=true;_results=preload("res://world/Scripts/results_screen.gd").new();add_child(_results)
-	_results.setup("URSO RESGATADO!",level_name,stats,new_record,false);_results.replay_requested.connect(restart);_results.menu_requested.connect(to_menu);Sfx.finish()
+	_results.next_requested.connect(to_corporation);_results.setup("URSO RESGATADO!",level_name,stats,new_record,true);_results.replay_requested.connect(restart);_results.menu_requested.connect(to_menu);Sfx.finish()
 func _build_stats() -> Dictionary:
 	var ratio:=float(player.gems)/maxi(1,total_gems)
 	return {"rank":Save.compute_rank((ratio+float(defeated)/maxi(1,total_enemies)+float(secrets_found)/total_secrets)/3,_time,720,deaths),"time":_time,"cherries":player.gems,"enemies":defeated,"secrets":secrets_found,"deaths":deaths,"total_cherries":total_gems,"total_enemies":total_enemies,"total_secrets":total_secrets,"perfect":player.gems>=total_gems}
+func to_corporation() -> void:
+	get_tree().paused=false;Save.request_play(false,Save.is_free_mode());get_tree().change_scene_to_file("res://world/corporation_06.tscn")
 func restart() -> void:get_tree().paused=false;Save.request_play(true,Save.is_free_mode());get_tree().reload_current_scene()
 func to_menu() -> void:get_tree().paused=false;get_tree().change_scene_to_file("res://world/main_menu.tscn")
 func _notification(what:int) -> void:

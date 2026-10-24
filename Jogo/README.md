@@ -1,3 +1,17 @@
+## Oliver e Urso fornecidos em GLB — v83
+
+O laboratório 3D usa os modelos enviados para Oliver Gancho (`19-57-47-492Z`) e Urso (`20-04-37-830Z`). Os arquivos originais e as texturas foram preservados; derivados otimizados têm 46.434 e 44.050 triângulos, esqueleto de 18 ossos e movimentos suaves. Oliver respira atrás do balcão e conversa ao abrir a loja; Urso aparece apoiado no pedestal e voltado para Nico. A saída do laboratório e a fase final continuam em 2D. Documentação, hashes e reconstrução: `world/Models/ImportedV83/README.md`.
+
+## Fase final: A Corporação do Mal — v82 (2D)
+
+A sexta ilha é inteiramente 2D e continua após o laboratório 3D. Cinco setores: recepção com alerta, torre com elevadores e vento, fábrica com máquinas e choque térmico, centro de controle com fuga durante lockdown e cobertura do Lobo. Sprites novos para cenário, quatro inimigos e robô gigante; Nico e seus amigos mantêm a arte aprovada.
+
+E interage com portas, alavancas e arquivos; J quebra vidro e ataca; K lança o poder, Q troca fogo/gelo. Os reguladores mostram chama vermelha e cristal azul. Câmeras desligam pelo terminal; gelo pausa prensas e drones. Nenhuma compra é obrigatória. Seis itens opcionais de Oliver têm efeitos reais e acompanham a mochila.
+
+O robô tem três etapas, com um acerto por abertura do núcleo. Na última, após a queda de Nico e a intervenção de Arara Minas, Tartaruga, Remi, José e Urso, suba pelos braços até a cabine. Morrer reinicia apenas a etapa atual do confronto. A vitória coletiva leva ao final e libera o modo livre nas seis ilhas. Saves anteriores continuam na corporação, preservando saldo e equipamentos; cerejas coletadas não rendem novamente no modo livre.
+
+Arte e prompts da ferramenta integrada image_gen: `world/Arte/CorpV82/README.md`. Implementação: `world/Scripts/Corp2D/`.
+
 # Nico's Adventure
 
 ## Resgate na jaula suspensa — v49

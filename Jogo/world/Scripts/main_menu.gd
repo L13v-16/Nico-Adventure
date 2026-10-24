@@ -8,6 +8,7 @@ const LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_SCENE := "res://world/beach_02.tscn"
 const MAGIC_SCENE := "res://world/magic_03.tscn"
 const UNDERWORLD_SCENE := "res://world/underworld_04.tscn"
+const CORP_SCENE := "res://world/corporation_06.tscn"
 const LAB_SCENE := "res://world/lab_05.tscn"
 const LEVEL_ID := "fase_1"
 
@@ -335,6 +336,7 @@ func _build_free_mode(column: VBoxContainer) -> void:
 		{"n": 3, "name": "Floresta Violeta", "scene": MAGIC_SCENE},
 		{"n": 4, "name": "O Submundo", "scene": UNDERWORLD_SCENE},
 		{"n": 5, "name": "Laboratório dos Executivos", "scene": LAB_SCENE},
+		{"n": 6, "name": "A Corporação do Mal", "scene": CORP_SCENE},
 	]
 	for phase: Dictionary in phases:
 		var text := "%d. %s" % [int(phase["n"]), String(phase["name"])]
@@ -370,7 +372,7 @@ func _play_resume() -> void:
 
 
 func _play_free_scene(scene: String) -> void:
-	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE, UNDERWORLD_SCENE, LAB_SCENE]:
+	if not Save.is_game_completed() or scene not in [LEVEL_SCENE, BEACH_SCENE, MAGIC_SCENE, UNDERWORLD_SCENE, LAB_SCENE, CORP_SCENE]:
 		return
 	_start_level(true, scene, true)
 

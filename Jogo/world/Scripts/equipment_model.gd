@@ -144,9 +144,14 @@ func toggle_item(item_id: String) -> Dictionary:
 		var level := _player.get_parent()
 		if item_id == "travel_acai" and (not level.has_method("buy_acai_power") or level.completed or level.intro_active):
 			return _result(false, "Não é possível usar o açaí agora. Ele continua na mochila.")
+		if item_id == "emergency_battery" and (not level.has_method("can_use_emergency_battery") or not level.can_use_emergency_battery()):
+			return _result(false,"Bateria preservada: use na corporação, ferido, uma vez por tentativa.")
 		if get_quantity(item_id) > 1:stock[item_id] = get_quantity(item_id) - 1
 		else:stock.erase(item_id)
 		if not _commit(stock, slots):return _save_rejected()
+		if item_id == "emergency_battery":
+			level.use_emergency_battery()
+			return _result(true,"Bateria: 1 coração recuperado!")
 		if item_id == "honey_biscuit":
 			_player.heal_one()
 			return _result(true, "Biscoito de Mel: 1 coração recuperado!")

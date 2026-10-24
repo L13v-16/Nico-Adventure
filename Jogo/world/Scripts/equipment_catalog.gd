@@ -3,8 +3,14 @@ extends RefCounted
 ## Ícones são opcionais até a arte terminar de importar.
 
 const NEW_ITEMS := ["pitaya_juice", "first_aid_kit", "bark_shield", "mint_tea", "cherry_magnet", "courage_medallion"]
-const ORDER := ["pitaya_juice", "first_aid_kit", "bark_shield", "mint_tea", "cherry_magnet", "courage_medallion", "claws", "sneakers", "leaf", "frozen_acai", "lasting_ice", "swift_gloves", "jump_brooch", "honey_biscuit", "travel_acai", "straw_hat", "sunglasses", "cape", "pajamas", "winter", "rainbow_tail", "sailor_bandana", "aviator_goggles"]
+const ORDER := ["executive_card", "industrial_insulator", "magnetic_boots", "emergency_battery", "sabotage_chip", "corporate_emblem", "pitaya_juice", "first_aid_kit", "bark_shield", "mint_tea", "cherry_magnet", "courage_medallion", "claws", "sneakers", "leaf", "frozen_acai", "lasting_ice", "swift_gloves", "jump_brooch", "honey_biscuit", "travel_acai", "straw_hat", "sunglasses", "cape", "pajamas", "winter", "rainbow_tail", "sailor_bandana", "aviator_goggles"]
 const ITEMS := {
+	"executive_card": {"name": "Cartão de Acesso Executivo", "price": 18, "slot": "relic", "description": "Abre o arquivo reservado da corporação. Nenhum caminho principal exige compra.", "icon": "res://world/Arte/CorpV82/executive_card.tres"},
+	"industrial_insulator": {"name": "Isolante Industrial", "price": 20, "slot": "hands", "description": "Na corporação, reduz descargas repetidas e absorve a descarga que tiraria o último coração.", "icon": "res://world/Arte/CorpV82/industrial_insulator.tres"},
+	"magnetic_boots": {"name": "Botas Magnéticas", "price": 18, "slot": "feet", "description": "Na corporação, reduz o vento em 85% e o arrasto das esteiras pela metade.", "icon": "res://world/Arte/CorpV82/magnetic_boots.tres"},
+	"emergency_battery": {"name": "Bateria de Emergência", "price": 7, "slot": "use", "description": "Recupera 1 coração, uma vez por tentativa da fase final. Não é consumida com vida cheia.", "icon": "res://world/Arte/CorpV82/emergency_battery.tres"},
+	"sabotage_chip": {"name": "Chip de Sabotagem", "price": 20, "slot": "relic", "description": "Máquinas da corporação permanecem desligadas ou congeladas 60% mais tempo.", "icon": "res://world/Arte/CorpV82/sabotage_chip.tres"},
+	"corporate_emblem": {"name": "Emblema Corporativo", "price": 16, "slot": "charm", "description": "Libera o arquivo reservado com provas e cerejas na corporação.", "icon": "res://world/Arte/CorpV82/corporate_emblem.tres"},
 	"pitaya_juice": {"name":"Suco de Pitaya", "price":12, "slot":"use", "description":"K dispara fogo por 20 s. Guarde na mochila para usar quando precisar.", "icon":"res://world/Arte/Equipment/V57/pitaya_juice.tres"},
 	"first_aid_kit": {"name":"Kit de Socorro", "price":12, "slot":"use", "description":"Recupera todos os corações. Use pela mochila quando estiver ferido.", "icon":"res://world/Arte/Equipment/V57/first_aid_kit.tres"},
 	"bark_shield": {"name":"Escudo de Casca", "price":9, "slot":"use", "description":"Guarde na mochila: absorve 2 golpes. Use quando estiver sem escudo.", "icon":"res://world/Arte/Equipment/V57/bark_shield.tres"},

@@ -85,7 +85,7 @@ static func build(level:Node3D) -> void:
 		Art.cylinder(planter,"TreeTrunk",Vector3(0,1.2,0),.18,2,"79654e")
 		Art.ball(planter,"TreeCrown",Vector3(0,2.6,0),Vector3(2.5,2.8,2.5),"548b78")
 	var merchant:=Art.instantiate("wagon");merchant.name="OliverWagon";merchant.position=Vector3(-6,0,2);first.add_child(merchant);level.wagon=merchant
-	var oliver:=Art.instantiate("oliver");oliver.position=Vector3(0,.55,.25);oliver.scale=Vector3.ONE*.8;oliver.rotation.y=PI;merchant.add_child(oliver)
+	var oliver:=Art.instantiate("oliver");oliver.name="Oliver";oliver.position=Vector3(0,.55,.25);oliver.scale=Vector3.ONE*.8;oliver.rotation.y=PI;oliver.process_mode=Node.PROCESS_MODE_ALWAYS;merchant.add_child(oliver)
 	Art.label(merchant,"OLIVER GANCHO · E",Vector3(0,3.25,0),25,"f3d991")
 	for i in 3:
 		var desk:=solid(first,Vector3(7,.75,-8-i*6),Vector3(3.2,1.5,2),"47606c")

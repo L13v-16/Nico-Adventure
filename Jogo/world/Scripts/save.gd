@@ -10,14 +10,15 @@ extends Node
 const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
-const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4", "fase_5"]
-const STORY_FLAGS := ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued", "lab_puzzle_1_solved", "lab_puzzle_1_card", "lab_puzzle_4_solved", "lab_puzzle_4_card", "lab_puzzle_5_solved", "lab_puzzle_5_card"]
+const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4", "fase_5", "fase_6"]
+const STORY_FLAGS := ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued", "lab_puzzle_1_solved", "lab_puzzle_1_card", "lab_puzzle_4_solved", "lab_puzzle_4_card", "lab_puzzle_5_solved", "lab_puzzle_5_card", "corporation_defeated"]
 const MAX_CHERRY_BALANCE := 9223372036854775807
 const RANK_ORDER := ["D", "C", "B", "A", "S"]
 const FIRST_LEVEL_SCENE := "res://world/word_01.tscn"
 const BEACH_LEVEL_SCENE := "res://world/beach_02.tscn"
 const MAGIC_LEVEL_SCENE := "res://world/magic_03.tscn"
 const UNDERWORLD_LEVEL_SCENE := "res://world/underworld_04.tscn"
+const CORP_LEVEL_SCENE := "res://world/corporation_06.tscn"
 const LAB_LEVEL_SCENE := "res://world/lab_05.tscn"
 
 ## Guardado no arquivo: id da fase -> dicionário de resultados.
@@ -187,6 +188,8 @@ func completed_count() -> int:
 
 ## Retoma o resgate seguinte sem apagar as ilhas nem a carteira existentes.
 func get_continue_scene() -> String:
+	if is_level_completed("fase_5") or is_level_completed("fase_6"):
+		return CORP_LEVEL_SCENE
 	if is_level_completed("fase_4") or is_level_completed("fase_5"):
 		return LAB_LEVEL_SCENE
 	if is_level_completed("fase_3") or is_level_completed("fase_4"):

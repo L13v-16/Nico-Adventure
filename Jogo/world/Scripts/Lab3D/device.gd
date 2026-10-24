@@ -79,7 +79,7 @@ func _ready() -> void:
 			for i in 12:
 				var a:=i*TAU/12;Art.cylinder(_art,"Bar",Vector3(sin(a)*1.75,1.65,cos(a)*1.75),.045,3.0,"8f9da1",-1,.4)
 			Art.ring(_art,"Rim",Vector3(0,3.2,0),1.85,"627f91")
-			var urso:=Art.instantiate("urso");urso.name="Urso";urso.position.y=.3;_art.add_child(urso)
+			var urso:=Art.instantiate("urso");urso.name="Urso";urso.position.y=.3;urso.rotation.y=PI;_art.add_child(urso)
 			_label=Art.label(self,"URSO",Vector3(0,3.7,0),34,"f5d895")
 		"record":_label=Art.label(self,"LG-17\nEstabilizador do enxerto de Largato",Vector3(0,2,0),24,"9be3ce")
 	if kind in ["heat","cold","injector"]:_label=Art.label(self,"FOGO" if kind=="heat" else ("GELO" if kind=="cold" else "INJETOR · E"),Vector3(0,2.1,0),25,"f2deb0")

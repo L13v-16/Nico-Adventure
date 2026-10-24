@@ -1,3 +1,21 @@
+NOVIDADES v83 — OLIVER E URSO COM OS MODELOS FORNECIDOS
+Os dois GLBs estão integrados ao laboratório 3D, com suas texturas originais.
+Oliver foi ajustado ao balcão da caravana; Urso ao pedestal da câmara.
+Modelos otimizados, com espera, conversa e celebração suaves.
+A fase final da corporação permanece em 2D, com os sprites de Nico e dos amigos.
+Documentação e fontes: world/Models/ImportedV83/README.md.
+
+NOVIDADES v82 — FINAL EM 2D: A CORPORAÇÃO DO MAL
+Após resgatar Urso no laboratório, escolha Próxima ilha para invadir a sede.
+Cinco setores com câmeras, alerta, elevadores, vento, vidro, máquinas e lockdown.
+E interage; J ataca e quebra vidro; K usa poder; Q troca fogo/gelo; I abre mochila.
+Use fogo no regulador vermelho e gelo no azul. Nada exige compra na loja.
+O Lobo pilota um robô com três etapas; os cinco amigos ajudam no confronto.
+Há um acerto por abertura do núcleo. Na última etapa, suba até a cabine.
+O modo livre agora exige concluir as seis ilhas. Seus saves, cerejas e itens continuam.
+A fase final é 2D; o laboratório mantém a transformação 2D/3D/2D.
+Sprites novos e prompts em world/Arte/CorpV82/README.md.
+
 NOVIDADES v49 — RESGATE DE JOSÉ NA JAULA SUSPENSA
 Após cair no Submundo, Nico encontra José preso numa jaula pendurada.
 Nico salta e golpeia a fechadura; a jaula desce e abre no chão.

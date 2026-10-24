@@ -102,8 +102,8 @@ func _build() -> void:
  var title:=UiStyle.label("COLEÇÃO",20,CREAM,HORIZONTAL_ALIGNMENT_LEFT)
  title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
  header.add_child(title)
- var completed_islands:=int(Save.is_level_completed("fase_1"))+int(Save.is_level_completed("fase_2"))+int(Save.is_level_completed("fase_3"))+int(Save.is_level_completed("fase_4"))+int(Save.is_level_completed("fase_5"))
- var summary:=UiStyle.label("%d / 5 ILHAS" % completed_islands,10,MINT)
+ var completed_islands:=int(Save.is_level_completed("fase_1"))+int(Save.is_level_completed("fase_2"))+int(Save.is_level_completed("fase_3"))+int(Save.is_level_completed("fase_4"))+int(Save.is_level_completed("fase_5"))+int(Save.is_level_completed("fase_6"))
+ var summary:=UiStyle.label("%d / 6 ILHAS" % completed_islands,10,MINT)
  summary.name="CollectionIslandCount"
  summary.custom_minimum_size.x=82
  header.add_child(summary)
@@ -240,7 +240,7 @@ func _build_islands() -> Control:
  scroll.add_child(content)
  content.custom_minimum_size.y=202
  content.add_theme_constant_override("separation",10)
- for phase in [{"id":"fase_1","name":"Vale das Copas","art":"fundo_meio"},{"id":"fase_2","name":"Costa das Marés","art":"Beach/beach_background"},{"id":"fase_3","name":"Floresta Violeta","art":"Magic/magic_background"},{"id":"fase_4","name":"O Submundo","art":"Underworld/underworld_background"},{"id":"fase_5","name":"Laboratório","art":"Lab/V68/background_03.tres"}]:
+ for phase in [{"id":"fase_1","name":"Vale das Copas","art":"fundo_meio"},{"id":"fase_2","name":"Costa das Marés","art":"Beach/beach_background"},{"id":"fase_3","name":"Floresta Violeta","art":"Magic/magic_background"},{"id":"fase_4","name":"O Submundo","art":"Underworld/underworld_background"},{"id":"fase_5","name":"Laboratório","art":"Lab/V68/background_03.tres"},{"id":"fase_6","name":"Corporação do Mal","art":"CorpV82/background"}]:
   var panel:=PanelContainer.new()
   panel.name="Island_"+phase.id
   panel.custom_minimum_size.x=148
