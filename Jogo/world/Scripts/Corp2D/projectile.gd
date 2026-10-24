@@ -4,6 +4,7 @@ var life:=4.0
 var wave:=false
 var harmless:=false
 var electrical:=true
+var style:="energy"
 func _physics_process(delta:float) -> void:
 	life-=delta
 	if life<=0:queue_free();return
@@ -16,6 +17,10 @@ func _physics_process(delta:float) -> void:
 		queue_free();return
 	position=next;queue_redraw()
 func _draw() -> void:
+	if style=="pen":
+		draw_set_transform(Vector2.ZERO,flight.angle())
+		draw_texture_rect_region(preload("res://world/Arte/CorpV86/wolf_combat.png"),Rect2(-12,-4,24,8),Rect2(742,691,96,39))
+		return
 	var color:=Color("ff775f")
 	if wave:
 		draw_arc(Vector2(0,4),13,PI,TAU,8,color,3);draw_line(Vector2(-9,3),Vector2(9,3),Color("ffe9b3"),2)

@@ -1,3 +1,13 @@
+## Corporação refinada — v86
+
+Elevadores com plataformas espessas e laterais; esteiras e prensas refeitas.
+Computadores no chão e jargões em placas próprias. Arquivos em CRT verde,
+com três registros reais de Nico atacando em preto e branco e leitura livre.
+O Lobo luta a pé antes da entrada no robô: desvie da caneta e salte a investida.
+Cada recuperação permite um ponto de dano. As três etapas da máquina seguem.
+Epílogo com os quatro vilões presos e reencontro dos amigos na cidade.
+E/Enter avança capítulos; Esc pula. Artes e prompts: world/Arte/CorpV86/README.md.
+
 ## Mapa das ilhas — v85
 
 Mapa ilustrado entre as fases, com Nico voando sobre a Arara Minas.

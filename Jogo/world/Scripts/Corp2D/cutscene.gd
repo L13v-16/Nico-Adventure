@@ -10,6 +10,8 @@ var _canvas:Control
 var _stage:Node2D
 var _nico:Node2D
 var _robot:Sprite2D
+var _wolf:Node2D
+var _cockpit_cover:Control
 var _actors:Array[Node2D]=[]
 var _old_pause:=false
 var _old_intro:=false
@@ -28,7 +30,12 @@ func _ready() -> void:
 	_canvas=Control.new();_canvas.mouse_filter=Control.MOUSE_FILTER_IGNORE;_canvas.draw.connect(_draw_scene);add_child(_canvas)
 	_stage=Node2D.new();add_child(_stage)
 	_nico=_actor(level.player.anim.sprite_frames,55,Vector2(145,247));(_nico.get_child(0) as AnimatedSprite2D).play("idle")
-	_robot=Art.sprite("robot",3 if mode=="ending" else 0,220,2);_robot.position+=Vector2(465,247);_stage.add_child(_robot)
+	_robot=Art.sprite("robot",3 if mode=="ending" else 0,200 if mode=="boarding" else 220,2);_robot.position+=Vector2(465,247);_stage.add_child(_robot)
+	if mode in ["boss","boarding"]:
+		_wolf=_actor(preload("res://world/Scripts/Corp2D/polish_art.gd").wolf_frames(),94,Vector2(450,247))
+		_robot.visible=mode=="boarding"
+		if mode=="boarding":
+			_cockpit_cover=Control.new();_cockpit_cover.mouse_filter=Control.MOUSE_FILTER_IGNORE;_cockpit_cover.draw.connect(_draw_closed_cockpit);add_child(_cockpit_cover)
 	if mode in ["friends","ending"]:
 		for i in 5:
 			var path:String=["Friends/V47/arara","Friends/V47/turtle","Friends/V47/remi","Underworld/jose","Friends/V47/urso"][i]
@@ -39,13 +46,22 @@ func _actor(frames:SpriteFrames,width:float,at:Vector2) -> Node2D:
 	var root:=Node2D.new();root.position=at;_stage.add_child(root)
 	var sprite:=Friends.actor(frames,width);root.add_child(sprite);sprite.play("idle" if frames.has_animation("idle") else frames.get_animation_names()[0]);Friends.reanchor(sprite);return root
 func duration() -> float:
-	return {"arrival":8.0,"boss":10.0,"friends":19.0,"ending":17.0,"record":14.0}.get(mode,8.0)
+	return {"arrival":8.0,"boss":8.5,"boarding":9.0,"friends":19.0,"ending":17.0,"record":14.0}.get(mode,8.0)
 func _process(delta:float) -> void:
 	clock+=delta
 	if mode=="arrival":_nico.position.x=lerpf(30,180,smoothstep(0,2.5,clock));_robot.modulate=Color(.2,.25,.3,.7)
 	elif mode=="boss":
+		_wolf.position.x=lerpf(540,440,smoothstep(0,2.4,clock))
+		(_wolf.get_child(0) as AnimatedSprite2D).flip_h=true
+		(_wolf.get_child(0) as AnimatedSprite2D).play("run" if clock<2.4 else "idle")
+	elif mode=="boarding":
 		_robot.position.y=lerpf(-300,247-_robot.texture.get_height()*_robot.scale.y,smoothstep(0,2.3,clock))
 		if clock>2.4 and _cue<0:_cue=0;Sfx.play("intro_impact",-8)
+		_wolf.position=Vector2(360,247).lerp(Vector2(453,135),smoothstep(2.8,5.8,clock))
+		(_wolf.get_child(0) as AnimatedSprite2D).play("board" if clock>2.8 else "hurt")
+		_wolf.visible=clock<5.8
+		_cockpit_cover.visible=clock<5.8;_cockpit_cover.queue_redraw()
+		if clock>=5.8 and _cue<1:_cue=1;Sfx.play("lab_door",-10)
 	elif mode=="friends":
 		_nico.position=Vector2(155-35*smoothstep(0,1,clock),247);_nico.rotation=-PI*.45*smoothstep(.2,1,clock)
 		var active_index:=clampi(int((clock-3)/2.6),-1,4)
@@ -72,6 +88,13 @@ func _unhandled_input(event:InputEvent) -> void:
 	if clock<.6:return
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel") or event.is_action_pressed("interagir"):
 		get_viewport().set_input_as_handled();finish()
+func _draw_closed_cockpit() -> void:
+	# The existing mech illustration includes its pilot. An opaque closed hatch
+	# hides that pilot until the walking wolf has actually climbed into the cabin.
+	var polygon:=PackedVector2Array()
+	for uv in [Vector2(.37,.105),Vector2(.52,.09),Vector2(.555,.205),Vector2(.345,.225)]:polygon.append(_robot.position+uv*200)
+	_cockpit_cover.draw_colored_polygon(polygon,Color("284953"))
+	_cockpit_cover.draw_line(_robot.position+Vector2(78,28),_robot.position+Vector2(101,23),Color("73aeb9"),2)
 func finish() -> void:
 	if _done:return
 	_done=true;_restore();finished.emit();queue_free()
@@ -102,8 +125,12 @@ func _draw_scene() -> void:
 	if mode=="arrival" and clock>3.5:speaker="LOBO · TRANSMISSÃO";text="Visitantes devem retirar uma senha. A sua é: contenção imediata."
 	elif mode=="boss":
 		title="LOBO · PRESIDENTE EXECUTIVO"
-		speaker="LOBO";text="Você tem coragem. Eu tenho um orçamento de defesa."
-		if clock>5:speaker="NICO";text="Seus amigos são números nos relatórios. Os meus vieram comigo."
+		speaker="LOBO";text="Eu mesmo vou encerrar este problema. Considere sua visita... demitida."
+		if clock>4.5:speaker="NICO";text="Você levou meus amigos. Agora vai responder por isso."
+	elif mode=="boarding":
+		title="PLANO B · ORÇAMENTO DE DEFESA"
+		speaker="LOBO";text="Luta justa? Isso nunca constou no contrato. Ativar unidade executiva!"
+		if clock>5.8:speaker="NICO";text="Pode se esconder na máquina. Eu vou acabar com essa corporação."
 	elif mode=="friends":
 		title="NINGUÉM FICA PARA TRÁS"
 		if clock<3:speaker="LOBO";text="Fim da sua aventura, pequena amostra."

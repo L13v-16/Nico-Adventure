@@ -58,13 +58,15 @@ func _process(delta:float) -> void:
 	_alert_label.text=("VIGILÂNCIA DESLIGADA" if security_off>0 else "ALERTA %02d%%"%int(alert)) if sector<4 else "LOBO · PRESIDENTE EXECUTIVO"
 	_alert_label.modulate=Color("ff9e8b") if alert>=65 else Color("d4c8ab")
 	_bar.visible=_encounter.active;_boss_label.visible=_encounter.active
-	if _encounter.active:_bar.value=_encounter.health;_boss_label.text=_encounter.status()
+	if _encounter.active:_bar.max_value=4 if _encounter.phase==0 else 3;_bar.value=_encounter.health;_boss_label.text=_encounter.status()
 	hint.text=context_hint()
 	if not intro_active and not _transitioning and not player.is_dead():
 		if sector==4 and player.position.x>8420 and not _encounter.active and not _encounter.dead:_start_boss()
 		if player.position.y>160 and sector==1:player.take_damage(3,player.position+Vector2(0,-20))
 func _physics_process(delta:float) -> void:
 	if intro_active or completed or _transitioning:return
+	# Keep the entire character inside the fixed arena camera during all phases.
+	if sector==4 and _encounter.active:player.position.x=clampf(player.position.x,8490,9250)
 	if sector==1 and player.position.y<0:
 		var wind:=sin(Time.get_ticks_msec()*.0005)*18
 		player.velocity.x+=wind*delta*(.15 if player.equipment.is_equipped("magnetic_boots") else 1)
@@ -79,10 +81,11 @@ func frame_camera(snap:bool=false) -> void:
 	if snap:camera.reset_smoothing()
 func context_hint() -> String:
 	if _encounter.active:
+		if _encounter.phase==0:return "Salte a investida · desvie da caneta · contra-ataque quando o Lobo recuperar o fôlego"
 		return "Pule as ondas · espere a luz do núcleo · J: atacar · K: poder · Q: trocar" if _encounter.phase==1 else ("FOGO no regulador vermelho + GELO no azul · depois acerte o núcleo" if _encounter.phase==2 else "Suba pelos braços travados · acerte a cabine iluminada no alto")
 	var nearest:=nearby_device()
 	if nearest!=null:return nearest.hint()
-	return ["E: interagir · J: atacar · K: poder · Q: fogo / gelo · I: mochila", "Pise nos elevadores e espere · J quebra vidro · siga as cerejas para subir", "GELO pausa prensas · FOGO no vermelho e GELO no azul sabotam o circuito", "Volte ao elevador da entrada! O lockdown acelerou as máquinas." if lockdown else "Procure as provas no terminal à direita. E examina arquivos.", "Siga até a máquina do Lobo. Seus amigos estão a caminho."][sector]
+	return ["E: interagir · J: atacar · K: poder · Q: fogo / gelo · I: mochila", "Pise nos elevadores e espere · J quebra vidro · siga as cerejas para subir", "GELO pausa prensas · FOGO no vermelho e GELO no azul sabotam o circuito", "Volte ao elevador da entrada! O lockdown acelerou as máquinas." if lockdown else "Procure as provas no terminal à direita. E examina arquivos.", "Encontre o Lobo na cobertura. Seus amigos estão a caminho."][sector]
 func nearby_device() -> Node2D:
 	var closest:Node2D;var distance:=58.0
 	for device in get_tree().get_nodes_in_group("corp_devices"):
@@ -138,8 +141,8 @@ func start_lockdown() -> void:
 	for at in [Vector2(6530,100),Vector2(6910,-30)]:
 		var enemy:Node2D=Layout.enemy(self,3,1 if at.y<0 else 0,at);enemy.died.connect(_on_enemy_died);total_enemies+=1
 	Sfx.play("lab_scan",-6)
-func shoot(at:Vector2,flight:Vector2,wave:bool=false,electrical:bool=true) -> void:
-	var shot:=preload("res://world/Scripts/Corp2D/projectile.gd").new();shot.position=at;shot.flight=flight;shot.wave=wave;shot.electrical=electrical and not wave;shot.add_to_group("corp_shots");add_child(shot);Sfx.play("lab_dart",-17)
+func shoot(at:Vector2,flight:Vector2,wave:bool=false,electrical:bool=true,style:String="energy") -> void:
+	var shot:=preload("res://world/Scripts/Corp2D/projectile.gd").new();shot.position=at;shot.flight=flight;shot.wave=wave;shot.electrical=electrical and not wave;shot.style=style;shot.add_to_group("corp_shots");add_child(shot);Sfx.play("lab_dart",-17)
 func clear_shots() -> void:
 	for shot in get_tree().get_nodes_in_group("corp_shots"):shot.queue_free()
 func electric_hit(source:Vector2) -> void:
@@ -168,17 +171,21 @@ func _start_boss() -> void:
 func play_friends_turn() -> void:
 	var scene:=play_scene("friends");await scene.finished
 	_encounter.enable_final_phase();frame_camera(true)
+func play_robot_boarding() -> void:
+	var scene:=play_scene("boarding");await scene.finished
+	_encounter.enter_robot();frame_camera(true)
 func _boss_defeated() -> void:_complete_level()
 func _start_finale(stats:Dictionary,new_record:bool) -> void:
 	Save.set_story_flag("corporation_defeated")
 	var scene:=play_scene("ending");await scene.finished
 	$HUD.hide();get_tree().paused=true;_show_results(stats,new_record)
 func play_scene(mode:String) -> CanvasLayer:
-	var scene:=preload("res://world/Scripts/Corp2D/cutscene.gd").new();scene.level=self;scene.mode=mode;add_child(scene);return scene
+	var script:GDScript=preload("res://world/Scripts/Corp2D/ending.gd") if mode=="ending" else preload("res://world/Scripts/Corp2D/cutscene.gd")
+	var scene:CanvasLayer=script.new();scene.level=self;scene.mode=mode;add_child(scene);return scene
 func show_record(id:String,kind:String) -> void:
 	var records:Dictionary={"forest":["PROJETO COPA","Extração mágica da floresta. Animais tratados como recursos. Nico interrompeu a operação."],"underworld":["PROJETO PROFUNDEZA","Correntes e energia do Submundo. O guardião foi enganado por contratos falsos."],"lab":["RELATÓRIO LARGATO","Testes de resistência em Urso. Diretor indisponível após falha no próprio composto."],"office":["GABINETE DO PRESIDENTE","Metas: controlar as ilhas. Riscos não previstos: amizade, cabeçadas e um guaxinim persistente."],"prototype":["ROBÔ · ENSAIO DE IMPACTO","O punho trava depois do golpe. Salte a onda e ataque o núcleo aceso. A armadura reserva usa reguladores de fogo e gelo."]}
 	var data:Array=records.get(id,["ARQUIVO RESERVADO","As provas confirmam quem ordenou os sequestros."])
-	var scene:=preload("res://world/Scripts/Corp2D/cutscene.gd").new();scene.level=self;scene.mode="record";scene.record_title=data[0];scene.record_text=data[1];add_child(scene)
+	var scene:=preload("res://world/Scripts/Corp2D/archive_panel.gd").new();scene.level=self;scene.record_id=id;scene.record_title=data[0];scene.record_text=data[1];add_child(scene)
 func unlock_secret(device:Node2D) -> void:
 	show_record("office","secret")
 	for i in 5:

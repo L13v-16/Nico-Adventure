@@ -4,8 +4,8 @@ var level:Node2D
 var active:=false
 var dead:=false
 var dying:=false
-var phase:=1
-var health:=3
+var phase:=0
+var health:=4
 var vulnerable:=0.0
 var _timer:=2.5
 var _state:="wait"
@@ -19,20 +19,32 @@ var _friends_seen:=false
 var _sprite:Sprite2D
 var core:StaticBody2D
 var steps:Array[Node2D]=[]
+var wolf:AnimatedSprite2D
+var _wolf_root:Node2D
+var _wolf_direction:=-1.0
+var boarding:=false
 const Art=preload("res://world/Scripts/Corp2D/art.gd")
 func _ready() -> void:
 	_sprite=Art.sprite("robot",0,320,2);_sprite.z_index=1;add_child(_sprite)
+	_sprite.hide()
+	_wolf_root=Node2D.new();add_child(_wolf_root)
+	wolf=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Scripts/Corp2D/polish_art.gd").wolf_frames(),88);_wolf_root.add_child(wolf);wolf.play("idle");wolf.flip_h=true
 	core=preload("res://world/Scripts/Corp2D/core.gd").new();core.boss=self;core.position=Vector2(0,-24);add_child(core)
 func begin() -> void:
 	if active or dead:return
 	active=true
 	if level.player.position.x<8480:level.player.position=Vector2(8480,89);level.player.velocity=Vector2.ZERO
 	level.player.set_checkpoint(Vector2(8480,89));level.player.heal_full();_timer=2.8
-	level.tell("Espere o golpe: o núcleo fica exposto depois da onda de impacto.")
+	if phase==0:
+		_wolf_root.show();_sprite.hide();_wolf_root.position=Vector2.ZERO;wolf.play("idle")
+		level.tell("O Lobo vai lutar a pé! Salte a investida e ataque quando ele recuperar o fôlego.")
+	else:level.tell("Espere o golpe: o núcleo fica exposto depois da onda de impacto.")
 func _physics_process(delta:float) -> void:
 	if not active or dead or level.intro_active or level.player.is_dead():return
 	_hurt=maxf(0,_hurt-delta);vulnerable=maxf(0,vulnerable-delta);_timer-=delta
 	_sprite.modulate=Color("ffbeae") if _hurt>0 else Color.WHITE
+	if phase==0:
+		_foot_fight(delta);return
 	core.position=Vector2(-50,-240) if phase==3 else Vector2(0,-24)
 	if phase==2 and _heat and _cold and vulnerable<=0:
 		open_window(3.5);_heat=false;_cold=false
@@ -61,7 +73,7 @@ func _pose(index:int) -> void:
 	_sprite.position=Vector2(-160,-_sprite.texture.get_height()*ratio)
 func open_window(seconds:float) -> void:
 	vulnerable=seconds;_window_hit=false
-	level.tell("NÚCLEO EXPOSTO · um golpe certeiro!" if phase<3 else "Suba pelos braços e acerte a cabine iluminada!")
+	level.tell("LOBO SEM FÔLEGO · contra-ataque!" if phase==0 else ("NÚCLEO EXPOSTO · um golpe certeiro!" if phase<3 else "Suba pelos braços e acerte a cabine iluminada!"))
 func relay(element:String) -> void:
 	if phase!=2 or not active:return
 	if element=="fire":_heat=true
@@ -72,10 +84,14 @@ func hit_core(_amount:float,_source:Vector2) -> void:
 	if phase==3 and level.player.position.y>position.y-235:
 		level.tell("A cabine fica no alto. Use as plataformas dos braços.");return
 	_window_hit=true;health-=1;_hurt=.45;Sfx.hit();Fx.burst(core.global_position,Color("ffe8a3"),20,150)
+	if phase==0:wolf.play("hurt")
 	if health<=0:_advance_phase()
 func _advance_phase() -> void:
 	vulnerable=0;_window_hit=true;level.clear_shots()
-	if phase==1:
+	if phase==0:
+		active=false;boarding=true;phase=1;health=3;wolf.play("hurt")
+		level.play_robot_boarding()
+	elif phase==1:
 		phase=2;health=3;_state="wait";_timer=3.5;_pose(2);level.player.heal_full()
 		level.tell("BLINDAGEM ATIVA · FOGO no vermelho e GELO no azul para abrir o núcleo.")
 	elif phase==2:
@@ -91,12 +107,46 @@ func enable_final_phase() -> void:
 	level.tell("Os amigos travaram os braços! Suba até a cabine; espere a luz do núcleo.")
 func reset_encounter() -> void:
 	if dead:return
-	active=false;health=3;vulnerable=0;_state="wait";_timer=3;_heat=false;_cold=false;level.clear_shots()
+	active=false;health=4 if phase==0 else 3;vulnerable=0;_state="wait";_timer=3;_heat=false;_cold=false;_window_hit=false;boarding=false;level.clear_shots()
+	_wolf_root.visible=phase==0;_sprite.visible=phase>0;_wolf_root.position=Vector2.ZERO;wolf.play("idle")
 	if phase==3:_timer=5
 	_pose(2 if phase>1 else 0)
 func status() -> String:
+	if phase==0:return "LOBO · ACERTO DE CONTAS"
 	return ["PROTOCOLO DE DEMISSÃO","FALHA TÉRMICA","JUNTOS ATÉ O TOPO"][phase-1]
+func enter_robot() -> void:
+	boarding=false;phase=1;health=3;active=true;_wolf_root.hide();_sprite.show();_pose(0)
+	_state="wait";_timer=3;vulnerable=0;_window_hit=false;_attack=0
+	level.player.position=Vector2(8480,89);level.player.velocity=Vector2.ZERO;level.player.set_checkpoint(level.player.position);level.player.heal_full();level.clear_shots()
+	level.tell("O Lobo entrou no robô! Salte as ondas e acerte o núcleo após o golpe.")
+func _foot_fight(delta:float) -> void:
+	wolf.modulate=Color("ffbeae") if _hurt>0 else Color.WHITE
+	core.position=_wolf_root.position+Vector2(0,-28)
+	if _state=="dash":
+		_wolf_root.position.x=clampf(_wolf_root.position.x+_wolf_direction*235*delta,-310,310)
+		if absf(level.player.position.x-_wolf_root.global_position.x)<30 and level.player.position.y>53:level.player.take_damage(1,_wolf_root.global_position)
+	if _timer<=0:
+		match _state:
+			"wait":
+				_attack+=1;_target_x=level.player.position.x;_wolf_direction=signf(_target_x-_wolf_root.global_position.x)
+				if _wolf_direction==0:_wolf_direction=-1
+				wolf.flip_h=_wolf_direction<0;wolf.play("windup");_state="warning";_timer=1.0;Sfx.play("lab_scan",-12)
+				level.tell("Salte a investida!" if _attack%2==1 else "Cuidado com a caneta! Desvie e se aproxime.")
+			"warning":
+				if _attack%2==1:_state="dash";_timer=.85;wolf.play("dash")
+				else:
+					wolf.play("throw");var start:=_wolf_root.global_position+Vector2(_wolf_direction*22,-36)
+					level.shoot(start,(level.player.position+Vector2(0,-6)-start).normalized()*155,false,false,"pen")
+					_state="recover";_timer=2.2;open_window(2.2)
+			"dash":_state="recover";_timer=2.2;wolf.play("idle");open_window(2.2)
+			"recover":_state="wait";_timer=1.4;wolf.play("idle");vulnerable=0
+	core.queue_redraw();queue_redraw()
 func _draw() -> void:
+	if phase==0:
+		if active and _state=="warning":
+			if _attack%2==1:draw_line(_wolf_root.position+Vector2(0,-2),_wolf_root.position+Vector2(_wolf_direction*100,-2),Color("ffce7d"),3)
+			else:draw_arc(_wolf_root.position+Vector2(_wolf_direction*20,-36),9,0,TAU,12,Color("ffe49f"),2)
+		return
 	if active and _state=="warning":
 		var local_x:=_target_x-position.x
 		draw_rect(Rect2(local_x-24,-3,48,3),Color("ffb475"))

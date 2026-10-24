@@ -1,5 +1,5 @@
 extends RefCounted
-const NAMES:=["Saguão Executivo","Torre Administrativa","Complexo de Armamentos","Centro de Controle","Cobertura · O Robô Gigante"]
+const NAMES:=["Saguão Executivo","Torre Administrativa","Complexo de Armamentos","Centro de Controle","Cobertura Executiva"]
 const BOUNDS:=[Rect2(0,-200,1450,520),Rect2(2000,-670,1400,990),Rect2(4000,-230,1500,550),Rect2(6000,-240,1500,560),Rect2(8100,-420,1400,740)]
 const LANDINGS:=[Vector2(180,89),Vector2(2100,89),Vector2(4100,89),Vector2(6120,89),Vector2(8350,89)]
 static func build(level:Node2D) -> void:
@@ -9,7 +9,7 @@ static func build(level:Node2D) -> void:
 	# Broad shelves sit beside the lift at both endpoints; no pixel-perfect jumps.
 	for s in [Vector3(2220,-70,330),Vector3(2550,-250,380),Vector3(2880,-430,460)]:floor_at(level,Vector2(s.x,s.y),s.z,20,true)
 	lift(level,Vector2(2310,100),170);lift(level,Vector2(2660,-70),180);lift(level,Vector2(3000,-250),180)
-	for s in [Vector3(650,30,230),Vector3(4460,35,220),Vector3(4740,-25,230),Vector3(6520,30,240),Vector3(6860,30,230)]:floor_at(level,Vector2(s.x,s.y),s.z,16,true)
+	for s in [Vector3(650,30,230),Vector3(4460,35,70),Vector3(4608,35,72),Vector3(4740,-25,230),Vector3(6520,30,240),Vector3(6860,30,230)]:floor_at(level,Vector2(s.x,s.y),s.z,16,true)
 	# Reception: one camera, a nearby off switch, then a shield guard.
 	device(level,0,"camera",Vector2(500,-25),38)
 	device(level,0,"security",Vector2(355,100),40)
@@ -37,8 +37,8 @@ static func build(level:Node2D) -> void:
 	device(level,3,"door",Vector2(6075,100),60,"",2)
 	device(level,3,"camera",Vector2(6410,-30),38)
 	device(level,3,"security",Vector2(6270,100),40)
-	device(level,3,"prototype",Vector2(6660,20),36,"prototype")
-	device(level,3,"office",Vector2(7000,20),38,"office")
+	device(level,3,"prototype",Vector2(6455,100),36,"prototype")
+	device(level,3,"office",Vector2(7150,100),38,"office")
 	device(level,3,"lockdown",Vector2(7310,100),48)
 	device(level,3,"press",Vector2(6810,100),70)
 	enemy(level,3,3,Vector2(7010,100))
@@ -57,8 +57,8 @@ static func build(level:Node2D) -> void:
 		for x in range(int(trail.x),int(trail.y),75):
 			var item:=preload("res://prefabs/item.tscn").instantiate();item.position=Vector2(x,trail.z-17);item.cherry_id="corp:%03d"%index;index+=1;level.get_node("items").add_child(item)
 	level.get_node("Finish").position=Vector2(9470,65)
-	for data in [[0,650,"SUA SEGURANÇA É NOSSA 17ª PRIORIDADE"],[2,4400,"INOVAÇÃO EXIGE VÍTIMAS · DIGO, METAS"],[3,6650,"A FAMÍLIA CORPORATIVA VEM PRIMEIRO"]]:
-		var label:=Label.new();label.text=data[2];label.position=Vector2(int(data[0])*2000+int(data[1])%2000-100,-60);label.add_theme_font_size_override("font_size",8);label.modulate=Color("bdad8a");label.z_index=-1;level.add_child(label)
+	for data in [[650,0],[4400,1],[6650,2]]:
+		var sign:=Sprite2D.new();sign.name="CorporateSign%d"%int(data[1]);sign.texture=load("res://world/Arte/CorpV86/sign_%d.png"%int(data[1]));sign.position=Vector2(data[0],20);sign.scale=Vector2.ONE*(270.0/sign.texture.get_width());sign.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;sign.z_index=-1;level.add_child(sign)
 static func floor_at(level:Node2D,at:Vector2,width:float,depth:float,platform:bool) -> Node2D:
 	var node:=preload("res://world/Scripts/Corp2D/terrain.gd").new();node.position=at;node.width=width;node.depth=depth;node.platform=platform;node.variant=1 if platform else 0;level.get_node("Level").add_child(node);return node
 static func lift(level:Node2D,at:Vector2,rise:float) -> void:
