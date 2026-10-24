@@ -7,15 +7,20 @@ var source:Node3D
 var life:=4.0
 var freeze_duration:=3.0
 var spent:=false
+var _orb:Sprite3D
+var _visual_clock:=0.0
+const SpriteArt=preload("res://world/Scripts/general_art.gd")
 func _ready() -> void:
 	add_to_group("lab3d_projectiles")
 	var art:Node3D
 	if serum or element=="chemical":art=preload("res://world/Scripts/Lab3D/models.gd").instantiate("syringe");art.scale=Vector3.ONE*(.7 if serum else .5);art.rotation.x=PI/2
 	else:
-		art=Node3D.new();preload("res://world/Scripts/Lab3D/models.gd").ball(art,"Orb",Vector3.ZERO,Vector3(.4,.4,.4),"72dbea" if element=="ice" else "ffa55f",1)
+		art=Node3D.new();_orb=Sprite3D.new();_orb.texture=SpriteArt.cell("fx",0 if element=="fire" else 4,true);_orb.pixel_size=1.0/_orb.texture.get_width();_orb.billboard=BaseMaterial3D.BILLBOARD_ENABLED;_orb.texture_filter=BaseMaterial3D.TEXTURE_FILTER_NEAREST;_orb.shaded=false;_orb.alpha_cut=SpriteBase3D.ALPHA_CUT_DISCARD;_orb.alpha_scissor_threshold=.78;art.add_child(_orb)
 	add_child(art)
 func _physics_process(delta:float) -> void:
 	life-=delta
+	_visual_clock+=delta
+	if is_instance_valid(_orb):_orb.texture=SpriteArt.cell("fx",(0 if element=="fire" else 4)+int(_visual_clock*12)%4,true)
 	if life<=0:queue_free();return
 	var next:=global_position+flight*delta
 	var query:=PhysicsRayQueryParameters3D.create(global_position,next,1|2|4|16);query.hit_from_inside=true

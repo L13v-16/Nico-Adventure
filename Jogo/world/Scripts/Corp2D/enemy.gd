@@ -19,12 +19,13 @@ func _ready() -> void:
 	_home=position;health=4 if species==2 else (3 if species==3 else 2)
 	_sprite=AnimatedSprite2D.new();_sprite.sprite_frames=preload("res://world/Scripts/Corp2D/art.gd").enemy_frames(species)
 	_sprite.centered=false;_sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(_sprite)
-	_sprite.scale=Vector2.ONE*(.16 if species==2 else .12);_sprite.frame_changed.connect(_anchor);_sprite.animation_changed.connect(_anchor);_sprite.play("walk");_anchor()
+	_sprite.scale=Vector2.ONE*(.16 if species==2 else .12)
+	preload("res://world/Scripts/general_art.gd").extend_enemy(_sprite,species)
+	_sprite.frame_changed.connect(_anchor);_sprite.animation_changed.connect(_anchor);_sprite.play("walk");_anchor()
 	var shape:=RectangleShape2D.new();shape.size=Vector2(26,32 if species!=1 else 22)
 	var collider:=CollisionShape2D.new();collider.shape=shape;collider.position.y=-shape.size.y/2;add_child(collider)
 func _anchor() -> void:
-	var tex:=_sprite.sprite_frames.get_frame_texture(_sprite.animation,_sprite.frame)
-	_sprite.position=Vector2(-tex.get_width()*_sprite.scale.x/2,-tex.get_height()*_sprite.scale.y)
+	preload("res://world/Scripts/general_art.gd").anchor_enemy(_sprite)
 func _physics_process(delta:float) -> void:
 	if health<=0 or level.sector!=sector or level.intro_active or level.completed:return
 	var player:CharacterBody2D=level.player
@@ -76,9 +77,15 @@ func take_damage(amount:float,source:Vector2,elemental:bool=false) -> void:
 		level.tell("Escudo à frente! Acerte por trás, congele ou espere o ataque.");Sfx.play("lab_clink",-14);return
 	health-=amount;_invulnerable=.4;Sfx.hit();Fx.burst(position+Vector2(0,-18),Color("ffc07a"),7,90)
 	if health<=0:
+		state="defeated";_sprite.play("defeated");_anchor();_sprite.modulate=Color.WHITE
 		collision_layer=0;died.emit();set_physics_process(false)
-		var tween:=create_tween();tween.tween_property(self,"modulate:a",0,.4);tween.tween_callback(queue_free)
-	else:state="hurt";_timer=.7
+		var tween:=create_tween()
+		if species==1:
+			var ray:=PhysicsRayQueryParameters2D.create(position,position+Vector2(0,160),1)
+			var hit:=get_world_2d().direct_space_state.intersect_ray(ray)
+			if not hit.is_empty():tween.tween_property(self,"position:y",hit.position.y,.2)
+		tween.tween_property(self,"modulate:a",0,.4);tween.tween_callback(queue_free)
+	else:state="hurt";_timer=.7;_sprite.play("hurt");_anchor()
 func is_dead() -> bool:return health<=0
 func _draw() -> void:
 	if frozen_left>0:draw_arc(Vector2(0,-18),23,0,TAU,10,Color("c5f4ff"),2)

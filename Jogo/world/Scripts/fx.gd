@@ -58,6 +58,7 @@ func dust(origin: Vector2, amount: int = 3, drift: float = 0.0) -> void:
 
 ## Nuvem de poeira de aterrissagem; "strength" vai de 0 a 1.
 func land(origin: Vector2, strength: float) -> void:
+	sprite_impact(origin,3,lerpf(24,36,clampf(strength,0,1)))
 	var layer = _layer_node()
 	if layer == null:
 		return
@@ -73,6 +74,7 @@ func land(origin: Vector2, strength: float) -> void:
 
 ## Faíscas de um golpe que acertou um inimigo.
 func impact(origin: Vector2, direction: float) -> void:
+	sprite_impact(origin)
 	var layer = _layer_node()
 	if layer == null:
 		return
@@ -105,6 +107,13 @@ func popup(origin: Vector2, label: String, color: Color = Color.WHITE, font_size
 
 
 # --- Hit-stop ----------------------------------------------------------------
+
+func sprite_impact(origin:Vector2,row:int=2,width:float=28) -> void:
+	if not get_tree().current_scene is Node2D:return
+	var layer=_layer_node()
+	if layer==null or layer.get_child_count()>=24:return
+	var effect:=preload("res://world/Scripts/sprite_effect.gd").new()
+	effect.position=origin;effect.row=row;effect.width=width;layer.add_child(effect)
 
 ## Desacelera o impacto sem entregar um passo de física igual a zero.
 ## O prazo usa tempo real: não depende do FPS nem do relógio desacelerado.

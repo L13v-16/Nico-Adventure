@@ -6,13 +6,17 @@ var source:Node2D
 var freeze_duration:=3.0
 var _trail:Array[Vector2]=[]
 var _hit_shape:CircleShape2D
+var _visual_clock:=0.0
+const Art=preload("res://world/Scripts/general_art.gd")
 func _ready() -> void:
 	add_to_group("elemental_projectiles")
 	z_index=6
+	texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;material=Art.material()
 	_hit_shape=CircleShape2D.new()
 	_hit_shape.radius=7
 func _physics_process(delta:float) -> void:
 	life-=delta
+	_visual_clock+=delta
 	if life<=0:queue_free();return
 	var next:=global_position+flight*delta
 	var query:=PhysicsShapeQueryParameters2D.new()
@@ -41,6 +45,7 @@ func _physics_process(delta:float) -> void:
 			if element=="ice" and target.has_method("freeze_for"):target.freeze_for(freeze_duration)
 			else:target.take_damage(1.0,global_position)
 		Fx.burst(impact,Color("ffba63") if element=="fire" else Color("9eeaff"),7,95)
+		Fx.sprite_impact(impact)
 		queue_free()
 		return
 	_trail.append(global_position)
@@ -52,5 +57,7 @@ func _draw() -> void:
 	for i in _trail.size():
 		var at:=to_local(_trail[i]).round()
 		draw_rect(Rect2(at-Vector2(2,2),Vector2(4,4)),Color(color,0.15+i*0.13))
-	draw_colored_polygon(PackedVector2Array([Vector2(-7,0),Vector2(-2,-5),Vector2(5,-3),Vector2(8,0),Vector2(3,5),Vector2(-3,4)]),color)
-	draw_rect(Rect2(-2,-2,5,4),Color("fff0b3") if element=="fire" else Color("e9fdff"))
+	var tex:=Art.cell("fx",(0 if element=="fire" else 4)+int(_visual_clock*12)%4,true)
+	draw_set_transform(Vector2.ZERO,flight.angle())
+	var size:=Vector2(30,30*tex.get_height()/tex.get_width())
+	draw_texture_rect(tex,Rect2(-size/2,size),false)

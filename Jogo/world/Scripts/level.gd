@@ -73,6 +73,7 @@ func _ready() -> void:
 	_polish_terrain()
 	_spawn_fragments()
 	_setup_enemies()
+	preload("res://world/Scripts/general_details.gd").install.call_deferred(self)
 	player.gem_collected.connect(_update_gems)
 	player.cherry_balance_changed.connect(_on_cherry_balance_changed)
 	player.respawned.connect(_on_respawned)

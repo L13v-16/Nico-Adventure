@@ -1,3 +1,11 @@
+## Sprites gerais — v90
+
+72 sprites novos em sete atlases transparentes: 40 objetos para floresta,
+praia, floresta mágica, Submundo e áreas industriais; 16 quadros de fogo,
+gelo, impacto e poeira; 16 poses de aviso, recuperação, dano e derrota dos
+quatro inimigos da Corporação. Placas de parede também no laboratório 3D.
+PNG original, prompts e detalhes: world/Arte/GeneralV90/README.md.
+
 ## Novas ações dos amigos — v89
 
 64 poses novas e 32 ações para os oito personagens da tela inicial.

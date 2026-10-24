@@ -60,6 +60,7 @@ func _ready() -> void:
 	player.health_changed.connect(_health);player.gem_collected.connect(func(_count):_wallet());player.cherry_balance_changed.connect(func(_balance):_wallet());player.died.connect(func():deaths+=1)
 	player.respawned.connect(_respawned)
 	Layout.build(self)
+	preload("res://world/Scripts/general_details.gd").install_lab(self)
 	for index in [1,4,5]:
 		var puzzle:=preload("res://world/Scripts/Lab3D/room_puzzle.gd").new();puzzle.level=self;puzzle.sector=index;room_puzzles[index]=puzzle;sectors[index].add_child(puzzle)
 	if Save.is_free_mode():

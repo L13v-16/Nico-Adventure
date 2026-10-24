@@ -23,6 +23,8 @@ func _ready() -> void:
 
 
 func clear_all() -> void:
+	for child in get_children():
+		if child.is_in_group("sprite_effects90"):child.queue_free()
 	_particles.clear()
 	_texts.clear()
 	queue_redraw()
