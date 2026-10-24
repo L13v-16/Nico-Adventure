@@ -1,3 +1,10 @@
+## Novas ações dos amigos — v89
+
+64 poses novas e 32 ações para os oito personagens da tela inicial.
+Acenos, pensamentos, palmas, descanso, limpeza de penas, folha e moeda.
+Remi e Mico trocam cerejas com preparação, soltura, voo e recepção.
+Arte e prompts: world/Arte/Friends/V89/README.md. PNGs originais preservados.
+
 ## Menu da floresta — v88
 
 Nova paisagem distante da floresta ao entardecer, logo no alto e botões à esquerda.
