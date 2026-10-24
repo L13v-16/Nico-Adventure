@@ -103,21 +103,21 @@ func _process(delta: float) -> void:
 	var current_offset: Vector2 = player.get("_camera_base_offset")
 	player.set("_camera_base_offset", current_offset.lerp(desired_offset, 1.0 - exp(-delta * 5.0)))
 	if x < 600.0:
-		hint.text = "Oliver está na chegada! E: loja  •  I: mochila  •  Espaço / W: pular  •  J / X: atacar"
+		hint.text = Controls.hint("Oliver está na chegada! E: loja  •  I: mochila  •  Espaço / W: pular  •  J / X: atacar")
 	elif x < 1000.0:
-		hint.text = "Caranguejos: pule sobre o casco! Socos não os derrotam."
+		hint.text = Controls.hint("Caranguejos: pule sobre o casco! Socos não os derrotam.")
 	elif x < 1504.0:
-		hint.text = "Espere a jangada se aproximar e salte. O mar leva à última bandeira."
+		hint.text = Controls.hint("Espere a jangada se aproximar e salte. O mar leva à última bandeira.")
 	elif x < 2600.0:
-		hint.text = "Açaí: proteção e golpes que congelam por 12 segundos. I: mochila."
+		hint.text = Controls.hint("Açaí: proteção e golpes que congelam por 12 segundos. I: mochila.")
 	elif x < 4256.0:
-		hint.text = "I: mochila  •  Prepare seus equipamentos para enfrentar Urus, o Urubu."
+		hint.text = Controls.hint("I: mochila  •  Prepare seus equipamentos para enfrentar Urus, o Urubu.")
 	elif not _boss_defeated:
-		hint.text = "Urus, o Urubu: escolha o canhão e pule quando a mira estiver verde."
+		hint.text = Controls.hint("Urus, o Urubu: escolha o canhão e pule quando a mira estiver verde.")
 	elif not $RescueCage.is_dead():
-		hint.text = "O cadeado está vulnerável! J / X: quebre a jaula e liberte a tartaruga."
+		hint.text = Controls.hint("O cadeado está vulnerável! J / X: quebre a jaula e liberte a tartaruga.")
 	else:
-		hint.text = "A tartaruga está livre!"
+		hint.text = Controls.hint("A tartaruga está livre!")
 
 func _on_water_entered(body: Node2D) -> void:
 	if body == player and not completed and not player.is_dead():

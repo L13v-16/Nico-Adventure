@@ -81,8 +81,8 @@ func _draw() -> void:
 	var status:="K · lançar"
 	if state.blocked:status="K · indisponível"
 	elif float(state.cooldown)>0:status="K · %.1fs"%float(state.cooldown)
-	_text(Vector2(6,69),status,Color("d5e5ed"),8)
-	if state.fire and state.ice:_text(Vector2(85,69),"Q · trocar",Color("aec1d0"),8)
+	_text(Vector2(6,69),Controls.hint(status),Color("d5e5ed"),8)
+	if state.fire and state.ice:_text(Vector2(85,69),Controls.hint("Q · trocar"),Color("aec1d0"),8)
 	# Açaí's melee bonus remains visible even after permanent powers are learned.
 	if float(state.acai)>0 or float(state.frost_boost)>0:
 		draw_rect(Rect2(0,76,144,16),Color("101f30"))

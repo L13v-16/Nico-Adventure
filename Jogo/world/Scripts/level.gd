@@ -141,23 +141,23 @@ func _process(delta: float) -> void:
 	var x := player.position.x
 	_update_arrival_camera(delta, x)
 	if x < 700.0:
-		hint.text = "Setas / A D: mover  •  Espaço / W: pular  •  J / X / clique: atacar  •  ESC: menu"
+		hint.text = Controls.hint("Setas / A D: mover  •  Espaço / W: pular  •  J / X / clique: atacar  •  ESC: menu")
 	elif x < 1136.0:
-		hint.text = "As plataformas esperam nas pontas. Pule e deixe elas carregarem você."
+		hint.text = Controls.hint("As plataformas esperam nas pontas. Pule e deixe elas carregarem você.")
 	elif x < 1552.0:
-		hint.text = "Caverna: salte o vão. Segure Espaço / W para ir mais longe."
+		hint.text = Controls.hint("Caverna: salte o vão. Segure Espaço / W para ir mais longe.")
 	elif x < 2416.0:
-		hint.text = "Toque nas bandeiras da caverna para salvar seu ponto de retorno."
+		hint.text = Controls.hint("Toque nas bandeiras da caverna para salvar seu ponto de retorno.")
 	elif x < 2496.0:
-		hint.text = "Uma nova travessia à frente! Toque nas bandeiras para salvar o retorno.  •  ESC: menu"
+		hint.text = Controls.hint("Uma nova travessia à frente! Toque nas bandeiras para salvar o retorno.  •  ESC: menu")
 	elif x < 3024.0:
-		hint.text = "Pegue a plataforma para atravessar o vão. Espere o melhor momento.  •  ESC: menu"
+		hint.text = Controls.hint("Pegue a plataforma para atravessar o vão. Espere o melhor momento.  •  ESC: menu")
 	elif x < 3424.0:
-		hint.text = "Use o elevador para alcançar a ilha alta. Segure o pulo para ir mais longe.  •  ESC: menu"
+		hint.text = Controls.hint("Use o elevador para alcançar a ilha alta. Segure o pulo para ir mais longe.  •  ESC: menu")
 	elif x < 4224.0:
-		hint.text = "Duas travessias e uma ilha para descansar. Vá no seu ritmo.  •  ESC: menu"
+		hint.text = Controls.hint("Duas travessias e uma ilha para descansar. Vá no seu ritmo.  •  ESC: menu")
 	else:
-		hint.text = "A casa na árvore é a chegada! Pule até a varanda. R: voltar à bandeira.  •  ESC: menu"
+		hint.text = Controls.hint("A casa na árvore é a chegada! Pule até a varanda. R: voltar à bandeira.  •  ESC: menu")
 
 
 func _update_arrival_camera(delta: float, x: float) -> void:
@@ -281,7 +281,7 @@ func _complete_level() -> void:
 	pause_menu.can_open = false
 	player.finish_level()
 	Sfx.finish()
-	hint.text = ""
+	hint.text = Controls.hint("")
 	var stats := _build_stats()
 	var previous := Save.get_level_stats(level_id)
 	var best := Save.mark_level_complete(level_id, stats)

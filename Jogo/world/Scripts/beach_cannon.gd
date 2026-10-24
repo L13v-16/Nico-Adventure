@@ -174,7 +174,7 @@ func _release_player() -> void:
 	_player.anim.rotation = _saved_rotation
 	_player.set("_coyote_timer", 0.0)
 	_player.set("_jump_buffer_timer", 0.0)
-	_player.set("_jump_was_held", Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W))
+	_player.set("_jump_was_held", Input.is_action_pressed("jump"))
 	_player.set("_invulnerability_timer", maxf(float(_player.get("_invulnerability_timer")), 0.7))
 	if not bool(_player.get("_finished")):
 		_player.set_physics_process(_saved_physics)

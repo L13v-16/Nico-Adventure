@@ -160,7 +160,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = minf(velocity.y + get_gravity().y * delta, MAX_FALL_SPEED)
 
 	_jump_buffer_timer = maxf(_jump_buffer_timer - delta, 0.0)
-	var jump_held := Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W)
+	var jump_held := Input.is_action_pressed("jump")
 	var can_control: bool = _hitstun_timer <= 0.0
 	if can_control and jump_held and not _jump_was_held:
 		_jump_buffer_timer = jump_buffer_time
@@ -180,9 +180,7 @@ func _physics_process(delta: float) -> void:
 	_jump_was_held = jump_held
 
 	var direction := clampf(
-		Input.get_axis("ui_left", "ui_right")
-		+ float(Input.is_physical_key_pressed(KEY_D))
-		- float(Input.is_physical_key_pressed(KEY_A)),
+		Input.get_axis("move_left", "move_right"),
 		-1.0, 1.0
 	)
 	if can_control:
@@ -278,7 +276,7 @@ func is_dead() -> bool:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.physical_keycode == KEY_R and not _finished:
+		if event.is_action_pressed("restart_checkpoint") and not _finished:
 			respawn()
 			get_viewport().set_input_as_handled()
 
@@ -307,7 +305,7 @@ func respawn() -> void:
 	velocity = Vector2.ZERO
 	_coyote_timer = 0.0
 	_jump_buffer_timer = 0.0
-	_jump_was_held = Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W)
+	_jump_was_held = Input.is_action_pressed("jump")
 	_cancel_attack()
 	_attack_cooldown = 0.0
 	_hitstun_timer = 0.0
@@ -627,7 +625,7 @@ func grab_vine(vine: Node2D) -> bool:
 	_cancel_attack()
 	_coyote_timer = 0.0
 	_jump_buffer_timer = 0.0
-	_jump_was_held = Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W)
+	_jump_was_held = Input.is_action_pressed("jump")
 	return true
 
 
@@ -641,7 +639,7 @@ func release_vine(jump_off: bool = true) -> void:
 	_vine_cooldown = 0.4
 	anim.rotation = 0.0
 	if jump_off:
-		var direction := Input.get_axis("ui_left", "ui_right") + float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A))
+		var direction := Input.get_axis("move_left", "move_right")
 		if absf(direction)>0: velocity.x = signf(direction)*maxf(absf(velocity.x),300.0)
 		velocity.x = clampf(velocity.x,-420.0,420.0)
 		velocity.y = clampf(velocity.y-65.0,-270.0,-160.0)
@@ -650,8 +648,8 @@ func release_vine(jump_off: bool = true) -> void:
 
 
 func _swing_on_vine(delta: float) -> void:
-	var direction := clampf(Input.get_axis("ui_left", "ui_right")+float(Input.is_physical_key_pressed(KEY_D))-float(Input.is_physical_key_pressed(KEY_A)),-1,1)
-	var jump_held := Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W)
+	var direction := clampf(Input.get_axis("move_left", "move_right"),-1,1)
+	var jump_held := Input.is_action_pressed("jump")
 	if (jump_held and not _jump_was_held) or (_vine_cooldown <= 0 and Input.is_action_just_pressed("interagir")):
 		_jump_was_held = jump_held
 		release_vine(true)

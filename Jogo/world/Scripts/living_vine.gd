@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	var near: bool = is_instance_valid(player) and not player.is_dead() and player.global_position.distance_to(get_grip()+Vector2(0,10))<48
 	_hint.visible = near and rider == null
 	_hint.position = to_local(get_grip())+Vector2(-22,14)
-	var held := Input.is_physical_key_pressed(KEY_E)
+	var held := Input.is_action_pressed("interagir")
 	if near and rider == null and held and not _held and player.can_grab_vine():
 		if player.grab_vine(self):
 			rider = player

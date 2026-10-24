@@ -19,7 +19,7 @@ func _physics_process(delta:float) -> void:
 		angle=move_toward(angle,0,delta)
 	queue_redraw()
 func swing(delta:float,direction:float) -> void:
-	length=clampf(length+Input.get_axis("ui_up","ui_down")*125*delta,42,max_length)
+	length=clampf(length+Input.get_axis("climb_up","climb_down")*125*delta,42,max_length)
 	angle=clampf(angle+direction*delta*0.8,-0.32,0.32)
 func get_grip() -> Vector2:return global_position+Vector2(sin(angle),cos(angle))*length
 func release_velocity() -> Vector2:return Vector2(0,0)

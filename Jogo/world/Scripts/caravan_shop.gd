@@ -168,7 +168,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo:
 		return
 	if _is_open:
-		if event is InputEventKey and event.pressed and event.physical_keycode == KEY_I:
+		if event.is_action_pressed("inventory"):
 			get_viewport().set_input_as_handled()
 			_open_inventory()
 			return

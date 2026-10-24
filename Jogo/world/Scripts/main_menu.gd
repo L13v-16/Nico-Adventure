@@ -28,6 +28,7 @@ var _clear_button: Button
 var _main_layout: VBoxContainer
 var _navigation_hint: Label
 var _clear_armed := false
+var _controls_open:=false
 
 
 func _ready() -> void:
@@ -40,7 +41,8 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _panel_holder.get_child_count() > 0:
-		_show_main()
+		if _controls_open:_open_options()
+		else:_show_main()
 		get_viewport().set_input_as_handled()
 
 
@@ -233,10 +235,12 @@ func _open_panel(title: String, build: Callable) -> void:
 
 func _on_back_pressed() -> void:
 	Sfx.select()
-	_show_main()
+	if _controls_open:_open_options()
+	else:_show_main()
 
 
 func _open_options(_unused = null) -> void:
+	_controls_open=false
 	_clear_armed = false
 	_open_panel("OPÇÕES", _build_options)
 
@@ -254,9 +258,15 @@ func _build_options(column: VBoxContainer) -> void:
 	column.add_child(UiStyle.check_row(
 		"Tremor da câmera", Save.is_camera_shake_enabled(), _on_camera_shake_toggled
 	))
+	var controls_button:=UiStyle.button("Configurar teclas")
+	controls_button.name="ConfigureKeys";controls_button.pressed.connect(_open_controls);column.add_child(controls_button)
 	_clear_button = UiStyle.button("Apagar progresso")
 	_clear_button.pressed.connect(_on_clear_pressed)
 	column.add_child(_clear_button)
+
+func _open_controls() -> void:
+	_controls_open=true
+	_open_panel("CONTROLES",func(column:VBoxContainer):column.add_child(preload("res://world/Scripts/controls_panel.gd").new()))
 
 
 func _on_sfx_volume_changed(value: float) -> void:

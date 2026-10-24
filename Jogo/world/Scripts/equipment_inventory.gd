@@ -43,7 +43,7 @@ func _can_open() -> bool:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo:
 		return
-	var inventory_key: bool = event is InputEventKey and event.pressed and event.physical_keycode == KEY_I
+	var inventory_key: bool = event.is_action_pressed("inventory")
 	if _is_open:
 		if inventory_key or event.is_action_pressed("ui_cancel"):
 			get_viewport().set_input_as_handled()

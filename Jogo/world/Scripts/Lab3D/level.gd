@@ -106,7 +106,7 @@ func _hud_setup() -> void:
 	_boss_back=ColorRect.new();_boss_back.position=Vector2(96,57);_boss_back.size=Vector2(448,61);_boss_back.color=Color("101e2b",.92);_boss_back.z_index=1;_boss_back.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(_boss_back);_boss_back.hide()
 	_notice=_ui_label(Vector2(168,133),Vector2(392,36),10);_notice.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;_notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	_move_status=_ui_label(Vector2(13,302),Vector2(600,20),8)
-	_move_status.text="ESPAÇO ×2: PULO DUPLO · J: GIRO · SHIFT/CTRL: DESLIZE / QUEDA"
+	_move_status.text=Controls.hint("ESPAÇO ×2: PULO DUPLO · J: GIRO · SHIFT/CTRL: DESLIZE / QUEDA",true)
 	var overlay:=CanvasLayer.new();overlay.layer=75;add_child(overlay);_fade=ColorRect.new();_fade.color=Color("101e2b",0);_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);_fade.mouse_filter=Control.MOUSE_FILTER_IGNORE;overlay.add_child(_fade)
 func _ui_label(at:Vector2,size:Vector2,font_size:int) -> Label:
 	var label:=Label.new();label.add_theme_font_size_override("font_size",font_size);label.add_theme_color_override("font_color",Color("f4e7cb"));label.add_theme_color_override("font_shadow_color",Color("101b29"));label.add_theme_constant_override("shadow_offset_x",1);label.add_theme_constant_override("shadow_offset_y",1);label.add_theme_constant_override("line_spacing",2);label.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(label);label.position=at;label.size=size;return label
@@ -137,7 +137,7 @@ func _process(delta:float) -> void:
 	_sector_label.text=Layout.NAMES[sector]
 	_move_status.modulate=Color("9ae4db") if player._attack_time>0 else Color("f4e7cb")
 	_card_label.visible=not boss.active;_card_label.text=access_summary()
-	_hint.text=hint_text()
+	_hint.text=Controls.hint(hint_text(),true)
 	pause_menu.set_summary("Laboratório 3D · %d corações · %d cerejas"%[player.health,Save.get_cherry_balance()])
 	var target:=find_target(player.position+Vector3.UP,player.forward,20,true)
 	_target_ring.visible=is_instance_valid(target) and Input.is_action_pressed("element_cast")

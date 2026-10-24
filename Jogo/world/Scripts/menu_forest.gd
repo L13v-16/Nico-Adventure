@@ -3,6 +3,7 @@ extends Control
 const BACKGROUND=preload("res://world/Arte/MenuV91/village.png")
 const Art=preload("res://world/Scripts/magic_art.gd")
 const Actions=preload("res://world/Scripts/menu_actions.gd")
+const Interactions=preload("res://world/Scripts/menu_interactions.gd")
 const CHERRY=preload("res://Sunny-land-files/assets/Misc/Sunnyland items/cherry.png")
 var clock:=0.0
 var active:=true
@@ -17,6 +18,8 @@ static var _last_arrangement:Array=[]
 var arrangement:Array=[]
 var _places:Array[Vector2]=[]
 var _rng:=RandomNumberGenerator.new()
+var interaction:=""
+var interaction_progress:=0.0
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -46,7 +49,7 @@ func _randomize_layout() -> void:
 	if arrangement==_last_arrangement:arrangement.append(arrangement.pop_front())
 	_last_arrangement=arrangement.duplicate();_places.clear()
 	for index:int in arrangement:_places.append(SLOTS[index]+Vector2(_rng.randi_range(-3,3),_rng.randi_range(-2,2)))
-	clock=_rng.randf_range(0,32);_update_cast()
+	clock=_rng.randf_range(0,96);_update_cast()
 
 func _map_point(id:String,point:Vector2) -> Vector2:
 	var group:int=GROUPS[id]
@@ -131,6 +134,7 @@ func _update_cast() -> void:
 	elif play>=18 and play<20:remi_beat=maxf(0,action_beat-.6);mico_beat=action_beat
 	_pose("remi",lerpf(554,583,chase),277,remi_action,play>=12 and play<18,remi_beat)
 	_pose("mico",lerpf(587,615,chase),281,mico_action,play>=6,mico_beat)
+	Interactions.update(self)
 
 func _draw() -> void:
 	draw_texture_rect(BACKGROUND,Rect2(Vector2.ZERO,size),false)
@@ -154,7 +158,7 @@ func _draw_details() -> void:
 	var reverse:=play>=18
 	var toss:=play-18 if reverse else play-6
 	# Preparation .0-.6; airborne .6-1.2; reception and hold 1.2-2.0.
-	if (play>=6.6 and play<7.2) or (play>=18.6 and play<19.2):
+	if interaction not in ["brincadeira","cumprimento"] and ((play>=6.6 and play<7.2) or (play>=18.6 and play<19.2)):
 		var u:=clampf((toss-.6)/.6,0,1)
 		var sender:Node2D=actors.mico if reverse else actors.remi
 		var receiver:Node2D=actors.remi if reverse else actors.mico
@@ -163,9 +167,10 @@ func _draw_details() -> void:
 		var at:=start.lerp(end,u)+Vector2(0,-sin(u*PI)*8)
 		_foreground.draw_texture_rect_region(CHERRY,Rect2(at-Vector2(1.5,1.5),Vector2(3,3)),Rect2(0,0,21,21))
 	var talk:=fposmod(clock,32)
-	if talk>=8 and talk<13:_speech(_map_point("nico",Vector2(348,245)))
+	if interaction not in ["voo","malabarismo","cumprimento"] and talk>=8 and talk<13:_speech(_map_point("nico",Vector2(348,245)))
 	var visit:=fposmod(clock+5,36)
 	if visit>=11 and visit<18:_speech(_map_point("oliver",Vector2(417,249)))
+	Interactions.draw(self,_foreground,CHERRY)
 	# A few fireflies drift above the path; none cross the left menu column.
 	for i in 4:
 		var point:=Vector2(282+fposmod(i*43+clock*(2+i%3),344),228+sin(clock*.6+i*2)*18)

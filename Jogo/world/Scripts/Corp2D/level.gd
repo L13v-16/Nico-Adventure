@@ -59,7 +59,7 @@ func _process(delta:float) -> void:
 	_alert_label.modulate=Color("ff9e8b") if alert>=65 else Color("d4c8ab")
 	_bar.visible=_encounter.active;_boss_label.visible=_encounter.active
 	if _encounter.active:_bar.max_value=4 if _encounter.phase==0 else 3;_bar.value=_encounter.health;_boss_label.text=_encounter.status()
-	hint.text=context_hint()
+	hint.text=Controls.hint(context_hint())
 	if not intro_active and not _transitioning and not player.is_dead():
 		if sector==4 and player.position.x>8420 and not _encounter.active and not _encounter.dead:_start_boss()
 		if player.position.y>160 and sector==1:player.take_damage(3,player.position+Vector2(0,-20))

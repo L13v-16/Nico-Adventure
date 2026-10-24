@@ -1,3 +1,10 @@
+Controles e interações — v92
+
+Opções > Configurar teclas permite duas teclas por ação, com persistência,
+aviso de conflito, cancelamento e restauração do padrão. Perfis 2D e 3D.
+Mais seis cenas dos amigos: voo, piquenique, pedra, perseguição,
+cumprimento coletivo e malabarismo com cereja. Veja CONTROLES.md.
+
 Menu da vila — v91
 
 Fundo da floresta simplificado com três casas. Os oito amigos aparecem

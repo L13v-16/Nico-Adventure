@@ -136,7 +136,7 @@ func _stomp(player: CharacterBody2D) -> void:
 	player.velocity.y = -270.0
 	player.set("_jump_buffer_timer", 0.0)
 	player.set("_coyote_timer", 0.0)
-	player.set("_jump_was_held", Input.is_action_pressed("ui_accept") or Input.is_physical_key_pressed(KEY_W))
+	player.set("_jump_was_held", Input.is_action_pressed("jump"))
 	player.call("update_state", 0.0)
 	player.call("play_state_animation")
 	Fx.burst(global_position + Vector2(0, -10), Color(1.0, 0.80, 0.49), 8, 90.0)

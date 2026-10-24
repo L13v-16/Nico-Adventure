@@ -66,10 +66,7 @@ func toggle() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	var pressed: bool = event.is_action_pressed("ui_cancel")
-	if not pressed and event is InputEventKey:
-		var key := event as InputEventKey
-		pressed = key.pressed and not key.echo and key.physical_keycode == KEY_ESCAPE
+	var pressed: bool = not event.is_echo() and (event.is_action_pressed("pause_game") or event.is_action_pressed("ui_cancel"))
 	if not pressed:
 		return
 	if _open or can_open:

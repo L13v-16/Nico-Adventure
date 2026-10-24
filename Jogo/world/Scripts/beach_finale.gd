@@ -190,7 +190,7 @@ func _input(event: InputEvent) -> void:
 		if not key.pressed or key.echo:
 			return
 		skip = key.keycode == KEY_ESCAPE
-		advance = key.keycode in [KEY_E, KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]
+		advance = event.is_action_pressed("interagir") or key.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]
 	elif event is InputEventMouseButton:
 		var mouse: InputEventMouseButton = event as InputEventMouseButton
 		advance = mouse.pressed and mouse.button_index == MOUSE_BUTTON_LEFT
