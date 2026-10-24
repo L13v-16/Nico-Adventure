@@ -1,3 +1,10 @@
+## Músicas fornecidas — v84
+
+Laboratório: Corrosive Curiosities. Largato: Largato’s Mad Catalyst.
+Corporação: Corporate Cage Rift. Robô final: Forged in Steel Storm.
+Os quatro WAVs foram preservados integralmente e tocam em loop.
+Diálogos mantêm a trilha; a caravana usa Pixels and Trinkets e depois retoma a fase.
+
 ## Oliver e Urso fornecidos em GLB — v83
 
 O laboratório 3D usa os modelos enviados para Oliver Gancho (`19-57-47-492Z`) e Urso (`20-04-37-830Z`). Os arquivos originais e as texturas foram preservados; derivados otimizados têm 46.434 e 44.050 triângulos, esqueleto de 18 ossos e movimentos suaves. Oliver respira atrás do balcão e conversa ao abrir a loja; Urso aparece apoiado no pedestal e voltado para Nico. A saída do laboratório e a fase final continuam em 2D. Documentação, hashes e reconstrução: `world/Models/ImportedV83/README.md`.

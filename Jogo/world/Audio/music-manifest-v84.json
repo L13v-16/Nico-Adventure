@@ -1,0 +1,50 @@
+[
+  {
+    "source": "Corrosive Curiosities.wav",
+    "target": "world/Audio/Lab/corrosive_curiosities.wav",
+    "use": "Laboratório",
+    "sha256": "814a01a46dcf488e831f48ab6be1c5151155a90615ffb0a1c0cec01d54899d5a",
+    "bytes": 34560044,
+    "rate": 48000,
+    "frames": 8640000,
+    "channels": 2,
+    "sample_bytes": 2,
+    "duration": 180.0
+  },
+  {
+    "source": "Largato’s Mad Catalyst.wav",
+    "target": "world/Audio/Lab/largatos_mad_catalyst.wav",
+    "use": "Largato",
+    "sha256": "5931ab4f201bdcad136307ca5f372f2b51a41a69ff40a6fc1ff7f26ad71c68bc",
+    "bytes": 28800044,
+    "rate": 48000,
+    "frames": 7200000,
+    "channels": 2,
+    "sample_bytes": 2,
+    "duration": 150.0
+  },
+  {
+    "source": "Corporate Cage Rift.wav",
+    "target": "world/Audio/Corporation/corporate_cage_rift.wav",
+    "use": "Corporação",
+    "sha256": "5f1b10888c4e53bcccb01e54560f5b6b364dcd3f2863a799ccae9eca501bb051",
+    "bytes": 34560044,
+    "rate": 48000,
+    "frames": 8640000,
+    "channels": 2,
+    "sample_bytes": 2,
+    "duration": 180.0
+  },
+  {
+    "source": "Forged in Steel Storm.wav",
+    "target": "world/Audio/Corporation/forged_in_steel_storm.wav",
+    "use": "Lobo e robô final",
+    "sha256": "82b497e6228a009f5cd4875dfcc812bcfc49bb2b06783683a206fed751149867",
+    "bytes": 36480044,
+    "rate": 48000,
+    "frames": 9120000,
+    "channels": 2,
+    "sample_bytes": 2,
+    "duration": 190.0
+  }
+]

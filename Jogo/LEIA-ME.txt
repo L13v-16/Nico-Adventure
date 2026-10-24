@@ -1,3 +1,10 @@
+NOVIDADES v84 — MÚSICAS DO LABORATÓRIO E DA CORPORAÇÃO
+
+Laboratório: Corrosive Curiosities. Largato: Largato’s Mad Catalyst.
+Corporação: Corporate Cage Rift. Robô final: Forged in Steel Storm.
+Os quatro WAVs foram preservados integralmente e tocam em loop.
+Diálogos mantêm a trilha; a caravana usa Pixels and Trinkets e depois retoma a fase.
+
 NOVIDADES v83 — OLIVER E URSO COM OS MODELOS FORNECIDOS
 Os dois GLBs estão integrados ao laboratório 3D, com suas texturas originais.
 Oliver foi ajustado ao balcão da caravana; Urso ao pedestal da câmara.

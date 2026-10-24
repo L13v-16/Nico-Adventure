@@ -5,9 +5,17 @@ var battle:AudioStreamWAV
 var silence:AudioStreamWAV
 func _ready() -> void:
 	process_mode=Node.PROCESS_MODE_ALWAYS
-	exploration=_theme(false);battle=_theme(true);silence=Sfx._synth(1,0,0,Sfx.Wave.SINE,0,.01,.01)
+	exploration=_looping_wav(_exploration_path());battle=_looping_wav(_battle_path());silence=Sfx._synth(1,0,0,Sfx.Wave.SINE,0,.01,.01)
 	silence.loop_mode=AudioStreamWAV.LOOP_FORWARD;silence.loop_end=int(silence.get_length()*silence.mix_rate)
 	_update_track()
+func _exploration_path() -> String:return "res://world/Audio/Lab/corrosive_curiosities.wav"
+func _battle_path() -> String:return "res://world/Audio/Lab/largatos_mad_catalyst.wav"
+func _looping_wav(path:String) -> AudioStreamWAV:
+	var source:=load(path) as AudioStreamWAV
+	if source==null:push_error("Não foi possível carregar a música: "+path);return null
+	var stream:=source.duplicate() as AudioStreamWAV
+	stream.loop_mode=AudioStreamWAV.LOOP_FORWARD;stream.loop_begin=0
+	stream.loop_end=int(round(stream.get_length()*stream.mix_rate));return stream
 func _theme(fast:bool) -> AudioStreamWAV:
 	var sequence:Array=[]
 	var tones:=[146.83,220.0,293.66,261.63,174.61,261.63,349.23,293.66,164.81,246.94,329.63,293.66,130.81,196.0,261.63,220.0]
