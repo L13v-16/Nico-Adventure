@@ -1,9 +1,23 @@
 [gd_scene format=3 uid="uid://bimukbyh104tq"]
 
 [ext_resource type="Script" uid="uid://bfb1jak82h1w6" path="res://world/skank.gd" id="1_8s08c"]
-[ext_resource type="Texture2D" uid="uid://cg5mquglydrli" path="res://Sunny-land-files/assets/Characters/Opossum/spritesheet.png" id="1_tgkx5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Rato/rato_v21.png" id="1_tgkx5"]
+[ext_resource type="Shader" path="res://world/Scripts/characters_cutout.gdshader" id="rat_cutout"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland FX/Sprites/enemy-death/enemy-death-1.png" id="3_puff1"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland FX/Sprites/enemy-death/enemy-death-2.png" id="4_puff2"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland FX/Sprites/enemy-death/enemy-death-3.png" id="5_puff3"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland FX/Sprites/enemy-death/enemy-death-4.png" id="6_puff4"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland FX/Sprites/enemy-death/enemy-death-5.png" id="7_puff5"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland FX/Sprites/enemy-death/enemy-death-6.png" id="8_puff6"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0i88t"]
+[sub_resource type="ShaderMaterial" id="RatCutout"]
+shader = ExtResource("rat_cutout")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(22, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(26, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8s08c"]
 atlas = ExtResource("1_tgkx5")
@@ -50,27 +64,77 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bd7e7")
 }],
-"loop": 1,
+"loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="Skank" type="CharacterBody2D" unique_id=1434251554]
+[sub_resource type="SpriteFrames" id="SpriteFrames_death"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_puff1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_puff2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_puff3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_puff4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_puff5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_puff6")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}]
+
+[node name="Skank" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 1
+floor_snap_length = 4.0
 script = ExtResource("1_8s08c")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=615309900]
-position = Vector2(4, -7)
-shape = SubResource("CircleShape2D_0i88t")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7, -5)
+shape = SubResource("RectangleShape2D_body")
 
-[node name="anim" type="AnimatedSprite2D" parent="." unique_id=786165676]
+[node name="anim" type="AnimatedSprite2D" parent="."]
+material = SubResource("RatCutout")
+texture_filter = 1
 position = Vector2(7, -10)
 sprite_frames = SubResource("SpriteFrames_ckb4l")
 autoplay = "default"
-frame_progress = 0.7434417
-flip_h = true
 
-[node name="timer" type="Timer" parent="." unique_id=1444670762]
-wait_time = 3.0
-autostart = true
+[node name="FloorProbe" type="RayCast2D" parent="."]
+position = Vector2(-13, -10)
+target_position = Vector2(0, 30)
+collision_mask = 1
+collide_with_areas = false
+
+[node name="WallProbe" type="RayCast2D" parent="."]
+position = Vector2(7, -5)
+target_position = Vector2(-20, 0)
+collision_mask = 1
+collide_with_areas = false
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(7, -7)
+shape = SubResource("RectangleShape2D_contact")
+
+[node name="DeathPuff" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(7, -9)
+sprite_frames = SubResource("SpriteFrames_death")
+animation = &"death"

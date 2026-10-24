@@ -1,0 +1,299 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://world/Scripts/game_hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://world/Scripts/heart_vector.gd" id="2_heart"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/portrait.png" id="3_nico"]
+[ext_resource type="Texture2D" path="res://Sunny-land-files/assets/Misc/Sunnyland items/cherry.png" id="4_cherry"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_portrait"]
+atlas = ExtResource("3_nico")
+region = Rect2(0, 0, 33, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cherry"]
+atlas = ExtResource("4_cherry")
+region = Rect2(0, 0, 21, 21)
+filter_clip = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.045, 0.075, 0.14, 0.91)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.38, 0.57, 0.7, 0.85)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_left = 5
+corner_radius_bottom_right = 5
+shadow_color = Color(0.015, 0.025, 0.06, 0.32)
+shadow_size = 2
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait"]
+bg_color = Color(0.12, 0.24, 0.33, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.63, 0.8, 0.86, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[node name="GameHUD" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture_filter = 1
+script = ExtResource("1_hud")
+intro_autostart = false
+
+[node name="CherryPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 122.0
+offset_bottom = 52.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Accent" type="ColorRect" parent="CherryPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 32.0
+offset_bottom = 3.0
+mouse_filter = 2
+color = Color(1, 0.67, 0.3, 1)
+
+[node name="CherryIcon" type="TextureRect" parent="CherryPanel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 37.0
+offset_bottom = 35.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_cherry")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="CherryPanel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 2.0
+offset_right = 100.0
+offset_bottom = 38.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.98, 0.88, 1)
+theme_override_colors/font_shadow_color = Color(0.01, 0.02, 0.05, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.06, 0.11, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthPanel" type="Panel" parent="."]
+layout_mode = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -186.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 52.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="PortraitFrame" type="Panel" parent="HealthPanel"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 39.0
+offset_bottom = 37.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait")
+
+[node name="Portrait" type="TextureRect" parent="HealthPanel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 38.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_portrait")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Separator" type="ColorRect" parent="HealthPanel"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 9.0
+offset_right = 47.0
+offset_bottom = 31.0
+mouse_filter = 2
+color = Color(0.35, 0.5, 0.63, 0.6)
+
+[node name="Hearts" type="HBoxContainer" parent="HealthPanel"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 7.0
+offset_right = 162.0
+offset_bottom = 33.0
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Heart1" type="Control" parent="HealthPanel/Hearts"]
+custom_minimum_size = Vector2(30, 26)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_heart")
+
+[node name="Heart2" type="Control" parent="HealthPanel/Hearts"]
+custom_minimum_size = Vector2(30, 26)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_heart")
+
+[node name="Heart3" type="Control" parent="HealthPanel/Hearts"]
+custom_minimum_size = Vector2(30, 26)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_heart")
+
+[node name="IntroCard" type="Control" parent="."]
+visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dim" type="ColorRect" parent="IntroCard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.04, 0.09, 0)
+
+[node name="BlueBand" type="Control" parent="IntroCard"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 124.0
+mouse_filter = 2
+
+[node name="BlueShadow" type="Polygon2D" parent="IntroCard/BlueBand"]
+position = Vector2(0, 5)
+color = Color(0.015, 0.04, 0.13, 0.65)
+polygon = PackedVector2Array(-80, 0, 538, 0, 486, 124, -80, 124)
+
+[node name="BlueShape" type="Polygon2D" parent="IntroCard/BlueBand"]
+color = Color(0.035, 0.24, 0.58, 0.98)
+polygon = PackedVector2Array(-80, 0, 538, 0, 486, 124, -80, 124)
+
+[node name="YellowLine" type="ColorRect" parent="IntroCard/BlueBand"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 499.0
+offset_bottom = 6.0
+mouse_filter = 2
+color = Color(1, 0.77, 0.18, 1)
+
+[node name="CyanLine" type="ColorRect" parent="IntroCard/BlueBand"]
+layout_mode = 0
+offset_top = 117.0
+offset_right = 461.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.08, 0.68, 0.91, 1)
+
+[node name="Title" type="Label" parent="IntroCard/BlueBand"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 25.0
+offset_right = 448.0
+offset_bottom = 74.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.99, 0.92, 1)
+theme_override_colors/font_shadow_color = Color(0.01, 0.06, 0.18, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 36
+text = "VALE DAS COPAS"
+
+[node name="Zone" type="Label" parent="IntroCard/BlueBand"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 77.0
+offset_right = 176.0
+offset_bottom = 105.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.24, 1)
+theme_override_colors/font_shadow_color = Color(0.01, 0.06, 0.18, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 21
+text = "ZONA"
+
+[node name="RedRibbon" type="Control" parent="IntroCard"]
+layout_mode = 0
+offset_right = 176.0
+offset_bottom = 210.0
+mouse_filter = 2
+
+[node name="RibbonShadow" type="Polygon2D" parent="IntroCard/RedRibbon"]
+position = Vector2(4, 4)
+color = Color(0.08, 0.025, 0.1, 0.6)
+polygon = PackedVector2Array(49, 0, 161, 0, 113, 210, 1, 210)
+
+[node name="Ribbon" type="Polygon2D" parent="IntroCard/RedRibbon"]
+color = Color(0.88, 0.16, 0.25, 1)
+polygon = PackedVector2Array(49, 0, 161, 0, 113, 210, 1, 210)
+
+[node name="RibbonAccent" type="Polygon2D" parent="IntroCard/RedRibbon"]
+color = Color(1, 0.77, 0.18, 1)
+polygon = PackedVector2Array(161, 0, 170, 0, 122, 210, 113, 210)
+
+[node name="Act" type="Label" parent="IntroCard/RedRibbon"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 64.0
+offset_right = 127.0
+offset_bottom = 90.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.79, 1)
+theme_override_colors/font_shadow_color = Color(0.28, 0.035, 0.1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 21
+text = "ATO"
+
+[node name="Number" type="Label" parent="IntroCard/RedRibbon"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 86.0
+offset_right = 125.0
+offset_bottom = 164.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 0.93, 1)
+theme_override_colors/font_shadow_color = Color(0.28, 0.035, 0.1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 64
+text = "1"

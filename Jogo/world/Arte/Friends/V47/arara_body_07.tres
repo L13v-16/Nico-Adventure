@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/arara.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(1120, 560, 288, 180)
+filter_clip = true
+margin = Rect2(12.510767423649185, 116.29920125293657, 39, 147)
+metadata/ride = Vector2(211.85, 150.0)

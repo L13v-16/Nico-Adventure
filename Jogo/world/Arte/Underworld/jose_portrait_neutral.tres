@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V46/jose_portraits.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(498, 82, 335, 343)
+filter_clip = true
+margin = Rect2(11.5, 4, 23, 4)

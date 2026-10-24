@@ -1,0 +1,241 @@
+[gd_resource type="Resource" format=3]
+
+[resource]
+metadata/feet = {
+  "res://world/Arte/Magic/beetle.tres::f0": {
+    "78": 314.0,
+    "94": 314.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f1": {
+    "78": 314.0,
+    "94": 314.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f2": {
+    "78": 314.0,
+    "94": 314.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f3": {
+    "78": 314.0,
+    "94": 314.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f4": {
+    "78": 313.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f5": {
+    "78": 313.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f6": {
+    "78": 313.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/beetle.tres::f7": {
+    "78": 313.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f0": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f1": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f2": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f3": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f4": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f5": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f6": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f7": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f8": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f9": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f10": {
+    "78": 314.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f11": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f12": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f13": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f14": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/hyena.tres::f15": {
+    "78": 312.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/moth.tres::f8": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/moth.tres::f9": {
+    "78": 313.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/moth.tres::f10": {
+    "78": 313.0,
+    "94": 312.0
+  },
+  "res://world/Arte/Magic/moth.tres::f12": {
+    "78": 314.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/moth.tres::f13": {
+    "78": 314.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/moth.tres::f14": {
+    "78": 314.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/moth.tres::f15": {
+    "78": 314.0,
+    "94": 313.0
+  },
+  "res://world/Arte/Magic/props.tres::f0": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f1": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f2": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f3": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f4": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f5": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f6": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f7": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f8": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f9": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f10": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/props.tres::f11": {
+    "78": 383.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/remi.tres::f0": {
+    "78": 511.0,
+    "94": 510.0
+  },
+  "res://world/Arte/Magic/remi.tres::f1": {
+    "78": 511.0,
+    "94": 510.0
+  },
+  "res://world/Arte/Magic/remi.tres::f2": {
+    "78": 511.0,
+    "94": 510.0
+  },
+  "res://world/Arte/Magic/remi.tres::f3": {
+    "78": 511.0,
+    "94": 510.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f0": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f1": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f2": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f3": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f4": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f5": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f6": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f7": {
+    "78": 382.0,
+    "94": 381.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f8": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f9": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f10": {
+    "78": 382.0,
+    "94": 382.0
+  },
+  "res://world/Arte/Magic/V26/hyena_attacks.tres::f11": {
+    "78": 382.0,
+    "94": 382.0
+  }
+}

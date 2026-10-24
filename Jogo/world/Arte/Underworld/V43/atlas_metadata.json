@@ -1,0 +1,58 @@
+{
+  "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-a6f9cfd5-885d-4d06-9357-1bb8c585cb84.png",
+  "size": [
+    1254,
+    1254
+  ],
+  "regions": [
+    [
+      20,
+      330,
+      330,
+      115
+    ],
+    [
+      371,
+      108,
+      115,
+      439
+    ],
+    [
+      537,
+      305,
+      368,
+      251
+    ],
+    [
+      917,
+      254,
+      319,
+      260
+    ],
+    [
+      43,
+      688,
+      239,
+      461
+    ],
+    [
+      341,
+      688,
+      229,
+      448
+    ],
+    [
+      627,
+      711,
+      258,
+      392
+    ],
+    [
+      941,
+      950,
+      291,
+      201
+    ]
+  ],
+  "mode": "Built-in imagegen. Generated PNG copied unchanged; only native AtlasTexture rectangles selected."
+}

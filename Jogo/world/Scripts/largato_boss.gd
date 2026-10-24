@@ -1,0 +1,293 @@
+extends CharacterBody2D
+signal died
+signal defeated
+const LEFT:=6160.0
+const RIGHT:=7040.0
+const CENTER:=6600.0
+const FLOOR:=-1290.0
+var active:=false
+var dead:=false
+var dying:=false
+var phase:=1
+var health:=4.0
+var state:="idle"
+var timer:=1.5
+var vulnerable:=0.0
+var _invulnerable:=0.0
+var _spent_window:=false
+var _clock:=0.0
+var _attack_number:=0
+var _side:=-1.0
+var _jump_start:=Vector2.ZERO
+var _jump_end:=Vector2.ZERO
+var _jump_time:=0.0
+var _entrance_seen:=false
+var heated:=0.0
+var cooled:=0.0
+var injector_heat:=false
+var injector_cold:=false
+var injector_reversed:=false
+var serum_hits:=0
+var syringe_ammo:=0
+var _serum_cooldown:=0.0
+var _machine_timer:=0.0
+var _hazard_x:=0.0
+var _warning_left:=0.0
+var _empty_notice:=0.0
+var _shot_warning:=0.0
+var _shot_target:=Vector2.ZERO
+var _rejected_notice:=0.0
+var _flood:Node2D
+var _lift:Sprite2D
+var _sprite:AnimatedSprite2D
+var _base_scale:=Vector2.ONE
+var _player:CharacterBody2D
+var _bar:CanvasLayer
+var _caption:Label
+var _fill:ColorRect
+var _status:Label
+var _phase_caption:Label
+var _gates:Array[StaticBody2D]=[]
+func _ready() -> void:
+	add_to_group("enemies");add_to_group("bosses");collision_layer=4;collision_mask=1;z_index=4
+	_player=get_tree().get_first_node_in_group("player")
+	var collider:=CollisionShape2D.new();var shape:=RectangleShape2D.new();shape.size=Vector2(43,58)
+	collider.shape=shape;collider.position.y=-29;add_child(collider)
+	_sprite=preload("res://world/Scripts/lab_art.gd").actor("largato",136)
+	_base_scale=_sprite.scale;add_child(_sprite);_sprite.play(&"idle")
+	_lift=preload("res://world/Scripts/lab_art.gd").prop("platform",125,true);_lift.z_index=-1;_lift.position.y+=2;_lift.hide();add_child(_lift)
+	_bar=CanvasLayer.new();_bar.layer=16;add_child(_bar)
+	var back:=ColorRect.new();back.position=Vector2(100,58);back.size=Vector2(440,58);back.color=Color("15242d");back.mouse_filter=Control.MOUSE_FILTER_IGNORE;_bar.add_child(back)
+	_caption=_hud_line(61,"LARGATO · DIRETOR DE PESQUISA")
+	_phase_caption=_hud_line(78,"")
+	_status=_hud_line(95,"")
+	_fill=ColorRect.new();_fill.position=Vector2(106,112);_fill.size=Vector2(428,3);_fill.color=Color("8ce18c");_fill.mouse_filter=Control.MOUSE_FILTER_IGNORE;_bar.add_child(_fill);_bar.hide()
+	_flood=Node2D.new();_flood.position=Vector2(CENTER,FLOOR);_flood.z_index=3;get_parent().add_child.call_deferred(_flood)
+	for i in 4:
+		var tile:=Node2D.new();tile.position.x=-236.25+i*157.5;_flood.add_child(tile)
+		var effect:=preload("res://world/Scripts/lab_effect.gd").new();effect.drawn_width=158;tile.add_child(effect)
+	_flood.hide()
+	_player.respawned.connect(reset_encounter)
+func _hud_line(y:float,text:String) -> Label:
+	var label:=Label.new();label.add_theme_font_size_override("font_size",9)
+	label.text=text;label.position=Vector2(106,y);label.size=Vector2(428,14);label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;label.mouse_filter=Control.MOUSE_FILTER_IGNORE;_bar.add_child(label)
+	label.size=Vector2(428,14)
+	return label
+func start_encounter() -> void:
+	if active or dead or dying:return
+	active=true;phase=1;health=4;timer=1.6;state="idle";_spent_window=false
+	_player.position=Vector2(clampf(_player.position.x,LEFT+95,RIGHT-95),FLOOR-11)
+	_player.velocity=Vector2.ZERO;_player._invulnerability_timer=maxf(.25,_player._invulnerability_timer)
+	get_parent().frame_camera(0,true)
+	_player.respawn_position=Vector2(6080,FLOOR-11)
+	for x in [6125.0,7072.0]:
+		var gate:=StaticBody2D.new();gate.collision_layer=1;gate.collision_mask=0;gate.position=Vector2(x,FLOOR-100)
+		var collider:=CollisionShape2D.new();var shape:=RectangleShape2D.new();shape.size=Vector2(12,440);collider.shape=shape;gate.add_child(collider);get_parent().add_child(gate);_gates.append(gate)
+	_bar.show()
+	if not _entrance_seen:
+		_entrance_seen=true
+		var scene:=preload("res://world/Scripts/lab_cutscene.gd").new();scene.mode="boss";scene.name="LargatoEntrance";scene.level=get_parent();get_parent().add_child(scene)
+func _physics_process(delta:float) -> void:
+	_lift.visible=active and phase==2
+	_flood.visible=active and phase==2 and vulnerable<=0 and (cooled>0 or flood_active())
+	if _flood.visible:
+		for tile in _flood.get_children():
+			var effect:AnimatedSprite2D=tile.get_child(0)
+			var style:="ice" if cooled>0 else "poison"
+			if effect.style!=style:effect.set_style(style)
+	if dead or dying:return
+	if not active:
+		if _player.position.x>LEFT and _player.position.x<RIGHT and absf(_player.position.y-FLOOR)<220 and not _player.is_dead():start_encounter()
+		return
+	_clock+=delta;timer-=delta;vulnerable=maxf(0,vulnerable-delta);_invulnerable=maxf(0,_invulnerable-delta);_serum_cooldown=maxf(0,_serum_cooldown-delta);_empty_notice=maxf(0,_empty_notice-delta);_rejected_notice=maxf(0,_rejected_notice-delta)
+	_sprite.modulate=Color("c5f4b0") if _invulnerable>0 else Color.WHITE
+	_sprite.flip_h=(_side>0) if phase==1 and state in ["warning","tail","shoot"] else _player.position.x>position.x
+	if phase==3 and _shot_warning>0:_sprite.flip_h=_shot_target.x>position.x
+	if phase==1:_tick_containment(delta)
+	elif phase==2:_tick_overload(delta)
+	else:_tick_final(delta)
+	if phase==1 and _player.global_position.distance_to(global_position+Vector2(0,-20))<34 and vulnerable<=0:_player.take_damage(1,position)
+	_phase_caption.text=_advice()
+	_fill.size.x=428*(health/(4 if phase==1 else 3))
+	_status.text=_status_text();_status.modulate=Color("ffe49c") if vulnerable>0 and not _spent_window else Color("b3d9e2")
+	queue_redraw()
+func _tick_containment(delta:float) -> void:
+	if state=="jump":
+		_jump_time+=delta;var t:=clampf(_jump_time/.9,0,1)
+		position=_jump_start.lerp(_jump_end,t)+Vector2(0,-sin(t*PI)*90);_sprite.play(&"jump")
+		if t>=1:position.y=FLOOR;_open_window(2.3);Sfx.play("lab_clink",-9)
+		return
+	position.y=FLOOR
+	match state:
+		"idle":
+			_sprite.play(&"run");position.x+=_side*85*delta
+			if position.x<LEFT+90:_side=1
+			if position.x>RIGHT-90:_side=-1
+			if timer<=0:
+				_attack_number+=1;_side=-1.0 if _player.position.x<position.x else 1.0;state="warning";timer=.95;_sprite.play(&"windup");Sfx.play("lab_scan",-9)
+				_shot_target=_player.position;_jump_end=Vector2(clampf(_player.position.x+_side*110,LEFT+90,RIGHT-90),FLOOR)
+		"warning":
+			_sprite.play(&"windup")
+			if timer<=0:
+				if _attack_number%3==0:
+					state="jump";_jump_time=0;_jump_start=position
+				elif _attack_number%2==0:state="shoot";timer=.5;_shoot(_shot_target);_sprite.play(&"shoot")
+				else:state="tail";timer=.38;_sprite.play(&"tail")
+		"tail":
+			var distance:float=(_player.position.x-position.x)*_side
+			if distance>0 and distance<108 and _player.position.y>FLOOR-42:_player.take_damage(1,position)
+			if timer<=0:_open_window(2.3)
+		"shoot":
+			if timer<=0:_open_window(2.2)
+		"opening":
+			_sprite.play(&"hurt" if _invulnerable>0 else &"idle")
+			if timer<=0:state="idle";timer=1.6;_side=-_side
+func _open_window(seconds:float) -> void:
+	state="opening";timer=seconds;vulnerable=seconds;_spent_window=false
+	if phase==2:
+		_warning_left=0;_machine_timer=3.2;_clear_attacks();_flood.hide();Sfx.play("lab_door",-8)
+func _tick_overload(delta:float) -> void:
+	if vulnerable<=0 and state=="opening":
+		state="idle";heated=0;cooled=0;_spent_window=false;_clock=0;_machine_timer=3.2
+	if vulnerable<=0:heated=maxf(0,heated-delta);cooled=maxf(0,cooled-delta);_machine_timer-=delta
+	var open:=vulnerable>0
+	position.y=move_toward(position.y,FLOOR if open else FLOOR-112,190*delta);position.x=move_toward(position.x,CENTER,240*delta)
+	_sprite.play(&"hurt" if _invulnerable>0 else (&"idle" if open else &"operate"))
+	if heated>0 and cooled>0 and not open and not _spent_window:
+		_open_window(5.4);get_parent()._show_notice("Máquinas estabilizadas! Largato vai descer. Acerte uma vez!");return
+	if open:return
+	if _machine_timer<=0:
+		_machine_timer=5.0;_hazard_x=clampf(_player.position.x,LEFT+60,RIGHT-60);_warning_left=1.35;Sfx.play("lab_alarm",-12)
+	if _warning_left>0:
+		_warning_left-=delta
+		if _warning_left<=0:
+			var pool:Node2D=get_parent().spawn_pool(Vector2(_hazard_x,FLOOR),"toxic",3.0,70)
+			pool.set_meta("boss_owner_id",get_instance_id());Sfx.play("lab_splash",-9)
+	if flood_active() and _player.position.y+11>FLOOR-2 and _player.position.x>LEFT+125 and _player.position.x<RIGHT-125:
+		_player.take_damage(1,Vector2(_player.position.x,FLOOR+22))
+func flood_active() -> bool:return phase==2 and cooled<=0 and vulnerable<=0 and fposmod(_clock,10)>6.5 and fposmod(_clock,10)<9
+func _tick_final(delta:float) -> void:
+	position=position.move_toward(Vector2(CENTER+190,FLOOR),200*delta);_sprite.play(&"inject" if _invulnerable>0 else (&"windup" if _shot_warning>0 else &"taunt"))
+	var squash:float=1-serum_hits*.07+sin(_clock*9)*serum_hits*.012
+	_sprite.scale=_base_scale*Vector2(1+serum_hits*.035,squash);preload("res://world/Scripts/magic_art.gd").reanchor(_sprite)
+	if _shot_warning>0:
+		_shot_warning-=delta
+		if _shot_warning<=0:_shoot(_shot_target);_sprite.play(&"shoot");timer=3.0
+	elif timer<=0:
+		_shot_warning=.9;_shot_target=_player.position;Sfx.play("lab_scan",-9)
+	if _empty_notice<=0 and injector_reversed and syringe_ammo==0:
+		get_parent()._show_notice("Sem dose? Volte ao injetor e aperte E para recarregar.");_empty_notice=4
+func _shoot(target:Vector2) -> void:
+	var shot:=preload("res://world/Scripts/lab_projectile.gd").new();shot.owner_boss=self
+	var side:float=signf(target.x-position.x);shot.position=position+Vector2(side*32,-28);shot.flight=(target-shot.position).normalized()*210;get_parent().add_child(shot);Sfx.play("lab_dart",-8)
+func take_damage(amount:float,_source:Vector2) -> void:
+	if not active or dead or dying or amount<=0:return
+	if phase==3 or vulnerable<=0 or _invulnerable>0 or _spent_window:
+		if _rejected_notice<=0 and vulnerable<=0:
+			_rejected_notice=3;get_parent()._show_notice("Use o soro LG-17 do injetor: F para arremessar." if phase==3 else ("Ative FOGO à esquerda e GELO à direita para baixar a proteção." if phase==2 else "Espere a recuperação depois do ataque de Largato."))
+		return
+	_spent_window=true;_invulnerable=.8;health-=minf(1,amount);_sprite.play(&"hurt");Sfx.hit()
+	if health<=0:
+		if phase==1:_begin_overload()
+		else:_begin_final()
+func take_element(element:String,source:Vector2) -> void:take_damage(1,source)
+func freeze_for(_seconds:float) -> void:pass
+func _begin_overload() -> void:
+	phase=2;health=3;state="idle";vulnerable=0;_clock=0;_spent_window=false;_machine_timer=4
+	_clear_attacks();_invulnerable=1.0
+	get_parent().show_lab_notice("Largato: Você não entende. Isto é um procedimento perfeitamente aprovado! FOGO à esquerda, GELO à direita.",7)
+	Sfx.play("lab_alarm",-7)
+func machine_element(kind:String,element:String) -> void:
+	if not active or dying or dead:return
+	if phase==2:
+		if vulnerable>0:return
+		if kind=="heat" and element=="fire":heated=18;Sfx.checkpoint()
+		elif kind=="cold" and element=="ice":cooled=18;Sfx.checkpoint()
+	elif phase==3 and kind=="injector":
+		if element=="fire":injector_heat=true;get_parent()._show_notice("Válvula de injeção aberta. Use GELO para estabilizar o fluxo.")
+		elif element=="ice" and injector_heat:injector_cold=true;get_parent()._show_notice("Fluxo estável! E no injetor para inverter e recolher as doses LG-17.")
+func _begin_final() -> void:
+	get_parent().get_node("LabInjector")._body.set_deferred("collision_layer",16)
+	for terminal in ["LabHeat","LabCold"]:get_parent().get_node(terminal)._body.set_deferred("collision_layer",0)
+	phase=3;health=3;state="final";vulnerable=0;_clock=0;timer=4;heated=0;cooled=0;_warning_left=0;_shot_warning=0;_flood.hide()
+	_clear_attacks();_invulnerable=1.0
+	get_parent().show_lab_notice("Largato: Pare de destruir meu laboratório! O orçamento já foi reduzido duas vezes! Inverta o injetor: FOGO, GELO e E.",7)
+func reverse_injector() -> bool:
+	if not active or phase!=3:return false
+	if not injector_heat or not injector_cold:
+		get_parent()._show_notice("Aqueça a válvula com FOGO e estabilize com GELO antes de inverter.");return true
+	injector_reversed=true;syringe_ammo=3;_serum_cooldown=.7
+	get_parent()._show_notice("3 doses LG-17 recolhidas. F: arremessar contra Largato. O soro age no enxerto criado por ele.");Sfx.checkpoint();return true
+func throw_serum() -> bool:
+	if not active or phase!=3 or not injector_reversed or syringe_ammo<=0 or _serum_cooldown>0:return false
+	syringe_ammo-=1;_serum_cooldown=1.0
+	var shot:=preload("res://world/Scripts/lab_projectile.gd").new();shot.friendly=true;shot.serum=true;shot.owner_boss=self
+	shot.position=_player.position+Vector2(0,-8);shot.flight=(position+Vector2(0,-28)-shot.position).normalized()*380;get_parent().add_child(shot);Sfx.play("lab_dart",-6);return true
+func receive_serum(shot:Node2D) -> bool:
+	if not active or phase!=3 or dying or dead or not shot.friendly or not shot.serum or shot.owner_boss!=self or shot.get_meta("spent",false):return false
+	shot.set_meta("spent",true);serum_hits+=1;health=maxf(0,3-serum_hits);_invulnerable=.8;Sfx.play("lab_splash",-5)
+	_shot_warning=0;timer=maxf(timer,2.0);_clear_attacks(true)
+	get_parent()._show_notice("LG-17: %d de 3 doses. O enxerto está perdendo estabilidade!"%serum_hits)
+	if serum_hits>=3:_defeat()
+	return true
+func _defeat() -> void:
+	active=false;dying=true;_lift.hide();_flood.hide();collision_layer=0;_bar.hide();_clear_attacks()
+	var scene:=preload("res://world/Scripts/lab_cutscene.gd").new();scene.mode="melt";scene.name="LargatoMeltdown";scene.level=get_parent()
+	scene.finished.connect(func():dying=false;dead=true;_sprite.scale=_base_scale;_sprite.play(&"puddle");preload("res://world/Scripts/magic_art.gd").reanchor(_sprite);_clear_gates();died.emit();defeated.emit(),CONNECT_ONE_SHOT)
+	get_parent().add_child(scene)
+func _clear_attacks(keep_serum:bool=false) -> void:
+	for shot in get_tree().get_nodes_in_group("lab_projectiles"):
+		if shot.owner_boss==self and (not keep_serum or not shot.friendly):shot.queue_free()
+	for pool in get_tree().get_nodes_in_group("lab_devices"):
+		if pool.get_meta("boss_owner_id",0)==get_instance_id():pool.queue_free()
+func _clear_gates() -> void:
+	for gate in _gates:
+		if is_instance_valid(gate):gate.queue_free()
+	_gates.clear()
+func reset_encounter() -> void:
+	if dead or dying:return
+	_clear_gates();_clear_attacks();active=false;phase=1;health=4;state="idle";timer=1.5;vulnerable=0;_clock=0;_spent_window=false;_invulnerable=0
+	heated=0;cooled=0;injector_heat=false;injector_cold=false;injector_reversed=false;serum_hits=0;syringe_ammo=0;_warning_left=0;_shot_warning=0;_rejected_notice=0;_machine_timer=0;_flood.hide()
+	get_parent().get_node("LabInjector")._body.set_deferred("collision_layer",0)
+	for terminal in ["LabHeat","LabCold"]:get_parent().get_node(terminal)._body.set_deferred("collision_layer",4|16)
+	_lift.hide();position=Vector2(CENTER+170,FLOOR);collision_layer=4;_sprite.scale=_base_scale;_sprite.modulate=Color.WHITE;_sprite.play(&"idle");_bar.hide()
+	_attack_number=0;_side=-1;_serum_cooldown=0;_empty_notice=0;queue_redraw();get_parent().frame_camera(0,true)
+func is_dead() -> bool:return dead
+func _advice() -> String:
+	if phase==1:return "1/3 · Pule a cauda e ataque na recuperação."
+	if phase==2:return "2/3 · FOGO: terminal esquerdo · GELO: direito · Ataque na descida."
+	return "3/3 · Inverta o injetor · E: doses · F: arremessar (%d)"%syringe_ammo
+func _status_text() -> String:
+	if phase<3 and vulnerable>0:
+		return "Acerto confirmado · aguarde a próxima abertura" if _spent_window else "VULNERÁVEL · %.1f s · um acerto por abertura"%vulnerable
+	if phase==1:
+		if state=="warning" or state=="jump":return "SALTO · saia da marca no chão" if _attack_number%3==0 else ("SERINGA · desvie do disparo" if _attack_number%2==0 else "CAUDA · pule o golpe")
+		return "Observe a preparação · ataque quando o círculo dourado aparecer"
+	if phase==2:
+		return "FOGO %s   |   GELO %s"%[("OK · %ds"%ceili(heated)) if heated>0 else "aguardando",("OK · %ds"%ceili(cooled)) if cooled>0 else "aguardando"]
+	if injector_reversed:return "LG-17: %d/3 acertos · %d doses · E no injetor recarrega"%[serum_hits,syringe_ammo]
+	if injector_cold:return "3 · Fluxo estável · E junto ao injetor para pegar as doses"
+	if injector_heat:return "2 · Válvula quente · use GELO no injetor"
+	return "1 · Use FOGO no injetor à esquerda"
+func _draw() -> void:
+	if not active:return
+	if vulnerable>0 and not _spent_window:draw_arc(Vector2(0,-70),10,0,TAU,20,Color("ffe49c"),2)
+	if phase==1 and state=="warning":
+		if _attack_number%3==0:_draw_landing()
+		elif _attack_number%2==0:draw_dashed_line(Vector2(_side*32,-28),_shot_target-position,Color("ffbc70",.7),2,8)
+		else:draw_rect(Rect2(0 if _side>0 else -108,-2,108,3),Color("ffbc70",.7+sin(_clock*14)*.25))
+	if phase==1 and state=="jump":_draw_landing()
+	if phase==3 and _shot_warning>0:draw_dashed_line(Vector2(signf(_shot_target.x-position.x)*32,-28),_shot_target-position,Color("ffbc70",.8),2,8)
+	if phase==2:
+		draw_line(Vector2(0,FLOOR-position.y),Vector2(0,5),Color("172333"),12)
+		draw_line(Vector2(0,FLOOR-position.y),Vector2(0,5),Color("adb9c4"),6)
+		var level_x:float=LEFT-position.x
+		var cycle:=fposmod(_clock,10)
+		if cooled<=0 and cycle>5 and cycle<6.5 and vulnerable<=0:
+			for x in range(125,int(RIGHT-LEFT-125),20):draw_rect(Rect2(level_x+x,FLOOR-position.y-2,12,3),Color("ffbc70",absf(sin(_clock*10))))
+		if _warning_left>0:draw_rect(Rect2(_hazard_x-position.x-27,FLOOR-position.y-3,54,4),Color("ffc376",absf(sin(_clock*18))))
+func _draw_landing() -> void:
+	var at:=_jump_end-position
+	draw_rect(Rect2(at+Vector2(-30,-3),Vector2(60,4)),Color("ffbc70",.85))
+	draw_line(at+Vector2(-9,-14),at+Vector2(9,-14),Color("ffbc70"),2)
+	draw_line(at+Vector2(0,-23),at+Vector2(0,-5),Color("ffbc70"),2)

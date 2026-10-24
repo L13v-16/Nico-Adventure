@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V35/portal_sheet.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(26, 633, 261, 286)
+margin = Rect2(29.5, 34, 59, 34)
+filter_clip = true

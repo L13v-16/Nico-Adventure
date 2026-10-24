@@ -1,0 +1,15 @@
+Mode: built-in imagegen; transparent_background=true. Character identity references inspected before generation.
+
+Use case: stylized-concept.
+Asset: four-frame pixel-art PICKUP AND LIFT sequence for the corporate wolf villain in Nico Adventure, to replace a jerky snap from crouching to standing.
+Reference: the supplied wolf action sheet is a STRICT character model reference: same wolf gray fur, muzzle, yellow eye, navy suit, burgundy tie, white shirt, gold lapel badge, dark gloves, shoes, bushy tail. Copy his identity, head size, proportions and palette exactly.
+Layout: FOUR cells in ONE horizontal row, 1536x512, each cell384x512. Every frame LEFT-facing full body, same foot baseline y460 and same pelvis x192, same head size, same legs/body length and overall SCALE; height differs ONLY because the knees and hips straighten. No zoom or resizing.
+Chronological sequence:
+1 knees and hips bent in a low crouch, hands forward LEFT reaching close to the ground;
+2 halfway rising, hips and head lift, knees still bent, hands lift a little;
+3 almost standing, knees mostly straight, hands raised to belly height;
+4 fully standing, legs straight feet close together, hands cupped toward LEFT at lower chest height, exactly matching the supplied sheet's lift/carry pose.
+The wolf is lifting a little friend, but DRAW NO FRIEND, no object, no props. Hands should trace a smooth upward path while the planted shoes stay in the same place. Head remains same size/angle. Mouth closed, no facial change. Keep torso/suit shape natural; do not stretch the legs or scale the body. Four distinctly graduated poses with a smooth continuous rise.
+Crisp 16-bit PIXEL ART, dark outlines and readable pixel clusters, same bold simple shading as the model. Character intended standing height80 pixels. No glow, shadows, background, cell lines, labels, text or watermark. Real transparent alpha background.
+
+Preparation: grid crop, uniform nearest-neighbor resizing, fixed integer cell registration. Wolf size remains fixed in-game; no procedural stretch. Original alpha retained. Each extracted sprite is 112x96, feet at y92, badge anchored at x50. Pickup preserves changing crouch height with one shared scale, so the wolf rises without stretching. Raw source files and alignment metadata accompany the art pack.

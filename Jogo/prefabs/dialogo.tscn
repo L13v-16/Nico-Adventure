@@ -1,0 +1,102 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://prefabs/dialogo.gd" id="1_dlg"]
+[ext_resource type="Texture2D" path="res://world/Arte/UI/caixa.png" id="2_caixa"]
+[ext_resource type="Texture2D" path="res://world/Arte/UI/placa_nome.png" id="3_placa"]
+[ext_resource type="Texture2D" path="res://world/Arte/UI/seta.png" id="4_seta"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_caixa"]
+texture = ExtResource("2_caixa")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_placa"]
+texture = ExtResource("3_placa")
+texture_margin_left = 42.0
+texture_margin_top = 26.0
+texture_margin_right = 42.0
+texture_margin_bottom = 26.0
+
+[node name="Dialogo" type="CanvasLayer"]
+layer = 8
+script = ExtResource("1_dlg")
+
+[node name="Caixa" type="Panel" parent="."]
+offset_left = 40.0
+offset_top = 220.0
+offset_right = 600.0
+offset_bottom = 324.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_caixa")
+
+[node name="Retrato" type="TextureRect" parent="Caixa"]
+offset_left = 18.0
+offset_top = 20.0
+offset_right = 82.0
+offset_bottom = 84.0
+texture_filter = 1
+
+[node name="Texto" type="Label" parent="Caixa"]
+offset_left = 96.0
+offset_top = 14.0
+offset_right = 542.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.86, 0.92, 0.96, 1)
+theme_override_font_sizes/font_size = 13
+text = "Fala"
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="Opcoes" type="RichTextLabel" parent="Caixa"]
+offset_left = 96.0
+offset_top = 12.0
+offset_right = 542.0
+offset_bottom = 92.0
+bbcode_enabled = true
+scroll_active = false
+
+[node name="Placa" type="Panel" parent="Caixa"]
+offset_left = -10.0
+offset_top = -18.0
+offset_right = 240.0
+offset_bottom = 12.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_placa")
+
+[node name="Nome" type="Label" parent="Caixa/Placa"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.78, 0.96, 0.74, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "Morador"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Seta" type="TextureRect" parent="Caixa"]
+offset_left = 522.0
+offset_top = 80.0
+offset_right = 538.0
+offset_bottom = 92.0
+texture = ExtResource("4_seta")
+texture_filter = 1
+
+[node name="Dica" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 192.0
+offset_right = 540.0
+offset_bottom = 212.0
+theme_override_colors/font_color = Color(1, 0.88, 0.42, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "E: falar"
+horizontal_alignment = 1
+vertical_alignment = 1

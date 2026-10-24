@@ -1,0 +1,244 @@
+[
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_00.tres",
+    "alpha_foot": 700.0,
+    "boot_foot": 700.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_01.tres",
+    "alpha_foot": 704.0,
+    "boot_foot": 696.0,
+    "difference": 8.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_02.tres",
+    "alpha_foot": 703.0,
+    "boot_foot": 700.0,
+    "difference": 3.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_03.tres",
+    "alpha_foot": 711.0,
+    "boot_foot": 700.0,
+    "difference": 11.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_04.tres",
+    "alpha_foot": 700.0,
+    "boot_foot": 700.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_05.tres",
+    "alpha_foot": 700.0,
+    "boot_foot": 700.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_06.tres",
+    "alpha_foot": 700.0,
+    "boot_foot": 700.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V53/guardian_07.tres",
+    "alpha_foot": 700.0,
+    "boot_foot": 700.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_00.tres",
+    "alpha_foot": 297.0,
+    "boot_foot": 297.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_01.tres",
+    "alpha_foot": 297.0,
+    "boot_foot": 297.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_02.tres",
+    "alpha_foot": 297.0,
+    "boot_foot": 297.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_03.tres",
+    "alpha_foot": 297.0,
+    "boot_foot": 297.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_04.tres",
+    "alpha_foot": 291.0,
+    "boot_foot": 291.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_05.tres",
+    "alpha_foot": 289.0,
+    "boot_foot": 289.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_06.tres",
+    "alpha_foot": 289.0,
+    "boot_foot": 289.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_07.tres",
+    "alpha_foot": 292.0,
+    "boot_foot": 292.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_08.tres",
+    "alpha_foot": 261.0,
+    "boot_foot": 260.0,
+    "difference": 1.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_09.tres",
+    "alpha_foot": 260.0,
+    "boot_foot": 260.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_10.tres",
+    "alpha_foot": 261.0,
+    "boot_foot": 261.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_11.tres",
+    "alpha_foot": 261.0,
+    "boot_foot": 261.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_12.tres",
+    "alpha_foot": 273.0,
+    "boot_foot": 273.0,
+    "difference": 0.0,
+    "revision": 66
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_13.tres",
+    "alpha_foot": 273.0,
+    "boot_foot": 273.0,
+    "difference": 0.0,
+    "revision": 66
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_14.tres",
+    "alpha_foot": 250.0,
+    "boot_foot": 250.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/V59/action_15.tres",
+    "alpha_foot": 250.0,
+    "boot_foot": 250.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_00.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_01.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_02.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_03.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_04.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_05.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 309.0,
+    "difference": 4.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_06.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_07.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_08.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_09.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_10.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_11.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_12.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_13.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_14.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  },
+  {
+    "texture": "res://world/Arte/Underworld/boss_frame_15.tres",
+    "alpha_foot": 313.0,
+    "boot_foot": 313.0,
+    "difference": 0.0
+  }
+]

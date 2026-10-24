@@ -1,0 +1,8 @@
+Built-in imagegen. Reference: V56 equipment atlas for palette and pixel-art style.
+Original PNG copied unchanged; native AtlasTexture crops and alpha shader only.
+Source: C:/Users/LEO/.codex/generated_images/01a1457e-c2c0-7f93-8f79-efdc74c5248d/exec-0e9c3535-327d-46e5-ad57-ee5e6ed0466a.png
+
+Create ONE transparent pixel-art inventory icon atlas for Nico Adventure. The supplied image is STYLE REFERENCE ONLY: keep its dark navy outlines, large crisp pixel clusters and warm adventure palette, do not copy any existing object. Exactly SIX new icons in a precise 3-column by 2-row equally spaced grid, each icon centered and completely inside its cell with generous transparent padding. No text, letters, grids, cell borders, UI panels or shadows. Genuine transparent background; no glow or antialiasing. Clean 16-bit pixel art designed to read at 24-32 pixels.
+Reading order, row one: 1 a small bottle of bright pink dragon-fruit juice, cork stopper, simple green leaf tie and tiny stylized dragon-fruit slice on the bottle; 2 a cream canvas first-aid pouch with red heart patch, compact flap and gold clasp, no cross symbol or words; 3 a small round wooden bark shield with dark navy rim and two warm iron rivets, green sprout accent.
+Row two: 4 a small warm cream teacup containing green mint tea with two distinct mint leaves, simple pixel steam, no saucer; 5 a compact horseshoe cherry magnet: red U-shaped iron, silver ends, one tiny red cherry caught between its tips; 6 a round golden courage medallion on a short brown cord, simple turquoise shield emblem and one cream glint.
+All six icons should match the supplied game's inventory art but have simple distinct silhouettes, limited palettes and sharp stepped pixel edges. No character, hands or worn accessories.

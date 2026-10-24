@@ -1,0 +1,52 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://world/Arte/Magic/magic_enemies_sheet.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="f8"]
+atlas = ExtResource("1")
+region = Rect2(39, 645, 238, 289)
+margin = Rect2(38.0, 24, 76, 24)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="f9"]
+atlas = ExtResource("1")
+region = Rect2(337, 685, 258, 253)
+margin = Rect2(27.5, 60, 55, 60)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="f10"]
+atlas = ExtResource("1")
+region = Rect2(635, 771, 293, 163)
+margin = Rect2(10.0, 150, 20, 150)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="f12"]
+atlas = ExtResource("1")
+region = Rect2(28, 998, 286, 211)
+margin = Rect2(14.0, 103, 28, 103)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="f13"]
+atlas = ExtResource("1")
+region = Rect2(314, 967, 312, 242)
+margin = Rect2(0.5, 72, 1, 72)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="f14"]
+atlas = ExtResource("1")
+region = Rect2(654, 1012, 257, 187)
+margin = Rect2(28.0, 127, 56, 127)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="f15"]
+atlas = ExtResource("1")
+region = Rect2(949, 1097, 283, 116)
+margin = Rect2(15.5, 198, 31, 198)
+filter_clip = true
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("f8")}, {"duration": 1.0, "texture": SubResource("f9")}, {"duration": 1.0, "texture": SubResource("f10")}, {"duration": 1.0, "texture": SubResource("f9")}], "loop": true, "name": &"fly", "speed": 11.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("f12")}], "loop": false, "name": &"warning", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("f13")}], "loop": false, "name": &"attack", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("f14")}], "loop": false, "name": &"hurt", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("f15")}], "loop": false, "name": &"defeat", "speed": 6.0}]

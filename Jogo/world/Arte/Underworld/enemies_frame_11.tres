@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V48/imp.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(107, 417, 273, 269)
+filter_clip = true
+margin = Rect2(40.793207547169814, 30.430566037735844, 74, 78)
+metadata/hover_anchor = Vector2(188.2, 213.32999999999998)

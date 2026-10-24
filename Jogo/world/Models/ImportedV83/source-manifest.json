@@ -1,0 +1,60 @@
+{
+  "oliver": {
+    "file": "meshy-model-2026-10-23T19-57-47-492Z.glb",
+    "sha256": "e50c922f7891f75f784efe53ca2bd80891b2dbcb209f5417b0920d8630df17ef",
+    "bytes": 20688068,
+    "scene": "oliver.tscn",
+    "textures": [
+      {
+        "file": "oliver_source_0.webp",
+        "role": "color",
+        "sha256": "870bbd48db974dbf59144c13558160f997c99b1e4b2f240ba75032b8ea492ffe",
+        "bytes": 336198,
+        "matches_embedded_source": true
+      },
+      {
+        "file": "oliver_source_1.webp",
+        "role": "metallic_roughness",
+        "sha256": "fe5b596452b5216ea0dcd38a8474b2e76d8c3dc94de9c6f580f1b40a89254a65",
+        "bytes": 109768,
+        "matches_embedded_source": true
+      },
+      {
+        "file": "oliver_source_2.webp",
+        "role": "normal",
+        "sha256": "99c0c2b269754aa3aee5663ae5680a9c37272cb3422e99e1a7b43c1a3f83790e",
+        "bytes": 240694,
+        "matches_embedded_source": true
+      }
+    ]
+  },
+  "urso": {
+    "file": "meshy-model-2026-10-23T20-04-37-830Z.glb",
+    "sha256": "96d9042e0c5d7d224bf183a504b323cecb7bc5a596a70fce6e98931057068839",
+    "bytes": 19237112,
+    "scene": "urso.tscn",
+    "textures": [
+      {
+        "file": "urso_source_0.webp",
+        "role": "color",
+        "sha256": "a572efd96e8b93b7ad3255f1a97b0fb008ec0780973005edc03bb98df1cea8f8",
+        "bytes": 148826,
+        "matches_embedded_source": true
+      },
+      {
+        "file": "urso_source_1.webp",
+        "role": "metallic_roughness",
+        "sha256": "f931e67b506de8ec19f764d27bdbac9041b192cbafd0f3cc8531a83213ef5364",
+        "bytes": 45678,
+        "matches_embedded_source": true
+      },
+      {
+        "file": "urso_source_2.webp",
+        "role": "normal",
+        "sha256": "197992e0cb2d869261ccb917d9012a78596e2ae7838c07fef4972080a99475c2",
+        "bytes": 116786,
+        "matches_embedded_source": true
+      }
+    ]
+  }
+}

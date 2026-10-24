@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V45/launch_pad.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(129, 780, 521, 203)
+filter_clip = true
+margin = Rect2(129, 324, 247, 357)
+metadata/core_width = 480

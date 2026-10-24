@@ -1,0 +1,70 @@
+{
+  "source": "C:/Users/LEO/.codex/generated_images/01a1457e-c2c0-7f93-8f79-efdc74c5248d/exec-e633b09b-d275-4fbd-9eb8-e26f142d76a8.png",
+  "source_sha256": "23f45a29fee695fc76dd7399d5eb81a4b79e31ac959fae6f0ea316b2cedd6f5c",
+  "size": [
+    1536,
+    1024
+  ],
+  "frames": [
+    {
+      "cell": 0,
+      "region": [
+        4,
+        151,
+        760,
+        308
+      ],
+      "opaque_bbox": [
+        4,
+        151,
+        764,
+        459
+      ]
+    },
+    {
+      "cell": 1,
+      "region": [
+        772,
+        144,
+        761,
+        315
+      ],
+      "opaque_bbox": [
+        4,
+        144,
+        765,
+        459
+      ]
+    },
+    {
+      "cell": 2,
+      "region": [
+        4,
+        609,
+        760,
+        319
+      ],
+      "opaque_bbox": [
+        4,
+        97,
+        764,
+        416
+      ]
+    },
+    {
+      "cell": 3,
+      "region": [
+        772,
+        602,
+        761,
+        326
+      ],
+      "opaque_bbox": [
+        4,
+        90,
+        765,
+        416
+      ]
+    }
+  ]
+}

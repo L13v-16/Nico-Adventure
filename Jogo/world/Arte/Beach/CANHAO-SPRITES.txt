@@ -1,0 +1,21 @@
+CANHÃO DE LANÇAMENTO — sprites RGBA 48 x 64 pixels
+
+Usar filtro Nearest e origem de desenho (-24,-64).
+Boca vazia centrada em (24,24) no PNG idle, que corresponde a (0,-40)
+no mundo. Última linha das rodas em y=63; rodapé lógico y=64.
+Cano aponta para cima com leve inclinação à DIREITA na arte original.
+flip_h inverte essa inclinação para a esquerda.
+
+cannon_idle.png    — boca aberta, sem efeitos.
+cannon_fire_1.png  — flash e recuo de um pixel do cano.
+cannon_fire_2.png  — fumaça compacta e recuo do cano.
+cannon_fire_3.png  — retorno ao idle com duas partículas de fumaça.
+
+Reprodução sugerida sem loop: fire_1 por 90 ms, fire_2 por 130 ms,
+fire_3 por 150 ms, depois idle. O carrinho e rodas mantêm os mesmos pixels
+em todos os quadros; apenas a região superior do cano recua um pixel.
+Durante o recuo a boca fica em y=25, permanecendo em y=24 no idle/retorno.
+
+Criação: imagegen integrado; fontes e exportador em outputs/Praia-arte.
+Prompts exatos: PROMPTS-CANHAO.txt. Preview: cannon-animation.gif.
+Urus, o Urubu, é o nome atual do boss; seus PNGs foram preservados.

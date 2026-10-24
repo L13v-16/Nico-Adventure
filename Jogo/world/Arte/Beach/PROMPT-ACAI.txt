@@ -1,0 +1,9 @@
+Modo: imagegen integrado, geração com fundo transparente.
+Exportação: PNG RGBA 32×32, nearest-neighbor e transparência preservada.
+Arquivo do jogo: world/Arte/Beach/acai.png
+
+Use case: stylized-concept.
+Asset type: single transparent pixel-art pickup icon for a 2D 16-bit side-scrolling beach adventure, native logical canvas 32x32 pixels.
+Primary request: a compact fresh bunch of açaí berries, recognizable as round dark purple berries clustered on a short branch with two olive-green pointed leaves. This is an energy power-up pickup in the Nico Adventure game.
+Style/medium: crisp hand-placed chunky pixel art clusters and a strong dark navy outline, 3 or 4 tones per material, bright lavender tiny square highlights, no antialiasing or soft gradients; readable at 32x32. Compatible with classic colorful 16-bit jungle animal game art.
+Composition/framing: one small cluster of 8 to 10 round purple berries centered and fully in frame, narrow stem and 2 leaves on upper left, generous transparent margin equivalent to 3 native pixels. No surrounding sparkles, no background or shadow outside the icon, no text, no labels, no watermark. Actual transparent background. No bowl, no drink, no spoon, no fruit other than açaí.

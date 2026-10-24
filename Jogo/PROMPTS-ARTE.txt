@@ -1,0 +1,889 @@
+NICO'S ADVENTURE — PROMPTS DE ARTE PARA IA
+==========================================
+
+Como usar
+---------
+Copie o bloco desejado e cole no chat de geração de imagem (ChatGPT, Gemini, etc.).
+Gere uma imagem por vez, sempre em PNG e, quando pedir transparência, peça "fundo transparente".
+Depois de salvar, mande os arquivos para o projeto que eu ligo cada um no lugar certo.
+
+Regras que valem para TODAS as imagens (cole junto do prompt)
+------------------------------------------------------------
+- Pixel art 2D, estilo 16-bit, vista de lado (plataforma).
+- Paleta limitada e coerente: verdes de mata, azul-noite, dourado e menta.
+- Traço limpo, sem anti-aliasing, sem desfoque, sem 3D, sem realismo.
+- Arte original: NÃO copiar personagens, cenários ou sprites de jogos existentes.
+- Sem texto escrito dentro da imagem (exceto quando o pedido for um logotipo).
+- Sem marca d'água, sem assinatura, sem borda decorativa extra.
+
+Tamanhos do jogo
+----------------
+- A tela do jogo é 640x360 (a janela abre em 1280x720).
+- Fundos: 640x360 (ou 1280x720 para gerar com mais detalhe e reduzir depois).
+- Personagens e itens: 16x16, 32x32 ou 48x48, sempre quadrados.
+- Blocos de chão: 16x16.
+- Logotipo: até 640x160.
+
+PALETA E ESTILO DO CENÁRIO (vale do PROMPT 11 em diante)
+--------------------------------------------------------
+O personagem jogável virou um guaxinim desenhado por IA. O cenário do pacote
+antigo (grama-limão, terra-laranja, traço duro) passou a destoar dele. Do
+PROMPT 11 em diante, tudo tem que seguir o estilo do Nico:
+
+- Contorno escuro azul-noite (#181828), de 1 pixel, em volta de tudo.
+- 3 ou 4 tons por material: base, sombra e luz. Sem degradê suave.
+- Paleta fria e dessaturada. Nada de cor neon, nada de preto puro.
+- Cores tiradas do próprio Nico, para referência:
+    #181828   contorno azul-noite
+    #282838   azul-escuro (sombra)
+    #485878   azul-médio
+    #7888A8   cinza-azulado (base)
+    #8898B8   cinza-claro (luz)
+    #F8E8B8   creme (focinho, luz quente)
+    #88D898   verde-menta (destaque)
+- Verde de mata: dessaturado e escuro, perto de #4E7A52. Não é verde-limão.
+- Terra: marrom acinzentado, perto de #6B4A38. Não é laranja.
+- Pedra: azul-escura, perto de #3A4058.
+- Formas arredondadas, com volume; no máximo um ponto pequeno de brilho.
+
+====================================================================
+PROMPT 1 — TELA INICIAL (logotipo, fundo e Nico)
+====================================================================
+
+Crie 3 imagens de pixel art para a tela inicial do jogo "NICO'S ADVENTURE".
+
+Imagem A — LOGOTIPO
+Logotipo escrito "NICO'S ADVENTURE" em pixel art, letras arredondadas, grossas e bem legíveis.
+A palavra "NICO'S" em verde-menta claro (#8AD58F) e "ADVENTURE" em dourado quente (#FFD966).
+Contorno escuro grosso (azul-noite #0A1220) em volta de todas as letras e sombra dura deslocada 2 pixels.
+Fundo 100% transparente, imagem quadrada de 640x160, sem moldura.
+
+Imagem B — FUNDO DA TELA INICIAL
+Floresta tropical brasileira à noite, sem nenhum personagem e sem texto.
+Céu em degradê do azul-noite profundo no topo para um roxo suave perto do horizonte.
+Estrelas pequenas espalhadas, uma lua cheia amarelo-pálida com brilho suave ao redor.
+Dois morros sobrepostos em silhueta (o de trás mais claro, o da frente mais escuro) cobertos de árvores em silhueta.
+Névoa fina na linha do horizonte, um rio escuro refletindo a lua no canto e vaga-lumes amarelos flutuando.
+Estilo 16-bit, atmosfera calma e melancólica. Tamanho 1280x720.
+
+Imagem C — NICO (arte principal)
+Um guaxinim antropomórfico chamado Nico, de lado, em pose de espera olhando para a direita.
+Pelagem cinza-azulada, máscara preta em volta dos olhos, focinho creme, orelhas redondas,
+cauda listrada de anéis escuros, um lenço verde-menta no pescoço e uma pequena mochila de couro.
+Olhar determinado e um pouco triste. Contorno escuro, 4 tons de cor por material.
+Fundo transparente, 128x128, virado para a direita.
+
+====================================================================
+PROMPT 2 — ÍCONES DE INTERFACE
+====================================================================
+
+Crie um conjunto de ícones de pixel art para a interface de um jogo de plataforma,
+todos com fundo transparente e contorno escuro, no mesmo estilo 16-bit.
+
+1. Coração cheio e coração vazio (vida), 16x16, vermelho vivo e cinza-escuro.
+2. Cereja brilhante (coletável comum), 16x16, vermelho com cabinho verde e um brilho branco.
+3. Fragmento misterioso (coletável secreto), 16x16, um estilhaço de cristal em losango,
+   cor menta com brilho interno e faíscas.
+4. Selos de nota, 64x64 cada, em formato de medalha redonda com fita:
+   "S" dourado com brilho, "A" verde-menta, "B" azul, "C" laranja, "D" cinza.
+5. Moldura de painel 9-slice, 48x48, feita de madeira escura e pedra, com cantos reforçados,
+   pensada para ser esticada nas bordas (mantenha os cantos iguais e o meio liso).
+6. Botão de menu 9-slice, 48x48, placa de madeira clara com borda menta, estados normal e aceso.
+
+Liste cada item separadamente, em grade, com o nome embaixo de cada um.
+
+====================================================================
+PROMPT 3 — OS CINCO AMIGOS (NPCs a resgatar)
+====================================================================
+
+Crie 5 personagens de pixel art para um jogo de plataforma, todos animais brasileiros,
+no mesmo estilo 16-bit, contorno escuro, fundo transparente, 48x48, virados para a direita.
+Cada um deve ter uma expressão assustada e esperançosa, como quem está preso e vê o resgate chegar.
+
+1. Arara Minas: uma arara-azul de penas azuis e amarelas, bico forte, asas abertas.
+2. Remi: um mico pequeno e ágil, marrom-claro, olhos grandes, cauda longa enrolada.
+3. José: um tatu-bola, casco em placas, orelhas pequenas, enrolado em parte.
+4. Urso: um urso-pardo grande e gentil, pelo castanho, olhar cansado.
+5. Mico-leão-dourado: pelo dourado em tufos, juba em volta do rosto, muito expressivo.
+
+Mostre os cinco lado a lado, na mesma escala, em uma única imagem.
+
+====================================================================
+PROMPT 4 — OS EXECUTIVOS E A OPERAÇÃO
+====================================================================
+
+Crie personagens e veículos de pixel art, estilo 16-bit, contorno escuro,
+fundo transparente, virados para a direita, para serem os vilões de um jogo de plataforma.
+
+1. Executivo-chefe: homem alto de terno escuro e gravata vermelha, sorriso frio,
+   pasta na mão, sem rosto detalhado (só a silhueta da expressão). 48x64.
+2. Capataz: homem forte de colete e capacete, rádio na mão, expressão dura. 32x48.
+3. Funcionário comum: homem de macacão cinza carregando uma gaiola vazia. 32x48.
+4. Gaiola de transporte de animais: metal cinza com barra vermelha e cadeado. 32x32.
+5. Caminhão de carga da empresa: caminhão cinza-escuro com listra vermelha e logo de folha
+   genérica na lateral, sem texto. 128x64.
+
+Paleta fria e industrial (cinza, aço, vermelho) para contrastar com a floresta colorida.
+
+====================================================================
+PROMPT 5 — PODERES (frutas e efeitos)
+====================================================================
+
+Crie ícones e efeitos de pixel art, estilo 16-bit, fundo transparente, contorno escuro.
+
+1. Fruta-do-dragão: fruta rosa com escamas verdes, brilho mágico, 32x32.
+2. Açaí: cacho de açaí roxo-escuro com folhas verdes, 32x32.
+3. Aura de poder: círculo de energia menta e dourada, com partículas, 64x64.
+4. Explosão pequena: nuvem de fumaça branca e laranja, 3 quadros, 32x32 cada.
+5. Coração de vida extra: coração vermelho com asas douradas, 32x32.
+
+====================================================================
+PROMPT 6 — CENÁRIOS DAS FASES 2 A 5
+====================================================================
+
+Crie fundos de pixel art 16-bit, 1280x720, sem texto e sem personagens,
+cada um com 3 camadas de profundidade (céu, meio, primeiro plano) para dar paralaxe.
+
+1. Região Alagada: pântano ao amanhecer, água escura, raízes retorcidas,
+   névoa baixa, vitórias-régias, luz verde-amarelada.
+2. Território Hostil: floresta seca e queimada, árvores mortas, chão rachado,
+   céu laranja de fim de tarde, poeira no ar.
+3. Instalação dos Executivos: pátio industrial na floresta, galpões de metal,
+   cercas, holofotes, chaminés, céu cinza-chumbo, luzes vermelhas.
+4. Complexo Final: laboratório e escritório de alto padrão dentro da mata,
+   vidro e aço, painéis acesos, corredores, céu noturno ao fundo, luz azul-fria.
+
+Mantenha a mesma paleta e o mesmo traço nas quatro, para parecerem o mesmo jogo.
+
+====================================================================
+PROMPT 7 — SPRITES DO NICO (substituir o personagem jogável)
+====================================================================
+Este é o mais delicado: o chat precisa entregar TODOS os quadros com o mesmo
+personagem, o mesmo tamanho e o mesmo alinhamento. Peça uma folha de sprites
+(uma imagem só), não imagens soltas — assim o personagem não muda entre quadros.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma FOLHA DE SPRITES (sprite sheet) em pixel art, estilo 16-bit, de um único
+personagem de jogo de plataforma, vista de lado, sempre olhando para a DIREITA.
+
+O PERSONAGEM (mantenha idêntico em todos os quadros):
+Um guaxinim antropomórfico chamado Nico. Pelagem cinza-azulada, máscara preta em
+volta dos olhos, focinho creme, orelhas redondas, cauda listrada com anéis escuros,
+lenço verde-menta no pescoço e uma pequena mochila de couro nas costas.
+Estilo cartunesco e simpático, cabeça grande em relação ao corpo, olhos expressivos.
+Contorno escuro de 1 pixel em volta de tudo, no máximo 4 tons por material,
+sem degradê suave e sem anti-aliasing.
+
+FORMATO DA FOLHA:
+- Fundo 100% TRANSPARENTE (PNG com canal alfa). Se não conseguir transparência,
+  use magenta puro (#FF00FF) de fundo, chapado e sem variação.
+- Grade alinhada de 6 colunas por 7 linhas, cada célula com 48x48 pixels e
+  2 pixels de espaço entre as células.
+- Cada quadro do personagem deve ocupar no máximo 44x44 dentro da célula.
+- NÃO desenhe grade, número, nome, seta ou legenda na imagem.
+- Em TODOS os quadros: os PÉS do personagem devem encostar na MESMA linha de chão,
+  a 2 pixels da borda de baixo da célula, e o corpo deve ficar centralizado na
+  horizontal. O personagem não pode mudar de tamanho nem "tremer" entre quadros.
+
+CONTEÚDO DA GRADE (na ordem, da esquerda para a direita):
+Linha 1 — PARADO (4 quadros): respiração calma. Quadro 1 parado, quadro 2 um
+  pixel mais alto, quadro 3 parado, quadro 4 um pixel mais baixo.
+Linha 2 — CORRENDO (6 quadros): ciclo completo de corrida, pernas e braços
+  alternando, orelhas e cauda balançando junto.
+Linha 3 — PULO (1 quadro): subindo, corpo esticado para cima, braços levantados,
+  pernas recolhidas, olhar para cima.
+Linha 4 — QUEDA (1 quadro): caindo, braços abertos para os lados, pernas soltas,
+  expressão de susto.
+Linha 5 — DANO (1 quadro): levando um golpe, corpo jogado para trás, olhos fechados,
+  faísca de impacto na frente.
+Linha 6 — DERROTADO (2 quadros): caído no chão, tonto, com estrelinhas girando
+  em volta da cabeça; o segundo quadro com as estrelinhas em outra posição.
+Linha 7 — RETRATO (1 quadro): só o rosto do Nico, de frente, sorrindo de leve,
+  para usar como ícone de vida na interface.
+
+As células vazias das linhas 3 a 7 ficam transparentes.
+
+--- FIM DO BLOCO ---
+
+Depois de gerar, mande a imagem para o projeto. Eu recorto a folha em quadros
+individuais, ajusto para 33x32 (o tamanho que o jogo já usa), salvo em
+world/Arte/Nico/ e troco as animações do jogador e o retrato do HUD.
+Se o chat insistir em desenhar em tamanho grande, peça a folha em 480x336
+(6x7 células de 80x80) e eu reduzo.
+
+Dicas que ajudam muito:
+- Se o personagem mudar de forma entre os quadros, gere de novo pedindo
+  "mantenha exatamente o mesmo personagem em todos os quadros, só mude a pose".
+- Se vier com fundo xadrez ou branco, peça "PNG com fundo transparente" de novo.
+- Se a corrida ficar estranha, peça só a linha 2 em uma imagem separada,
+  com 6 quadros lado a lado.
+
+====================================================================
+PROMPT 8 — INIMIGO PATRULHEIRO (substitui o gambá)
+====================================================================
+O jogo usa UM único inimigo, repetido 4 vezes na Fase 1. Ele patrulha o chão,
+para, avisa e investe contra o Nico. Levou dois golpes para cair.
+
+Especificação técnica — o recorte tem que sair exatamente assim:
+- UMA tira horizontal com 6 quadros de 36x28 pixels (216x28 no total).
+- Uma única animação em laço (caminhada). Não quero outras linhas.
+- O personagem olha para a ESQUERDA (é o sentido que o jogo espera).
+- Os pés encostam na borda de baixo, na mesma linha em todos os quadros.
+- O personagem ocupa no máximo 34x26 dentro do quadro, centralizado.
+- Fundo transparente, sem grade, sem número, sem texto, sem sombra no chão.
+- Contorno escuro de 1 pixel, no máximo 4 tons por material, sem anti-aliasing.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma tira de sprites em pixel art, estilo 16-bit, com 6 quadros lado a lado
+de um mesmo personagem, vista de lado, sempre olhando para a ESQUERDA.
+
+O PERSONAGEM: capataz da empresa NaturaCorp. Homem baixo e atarracado, de
+uniforme escuro azul-chumbo com um detalhe vermelho no ombro, boné, botas pretas,
+luvas, bigode grosso e expressão dura. Carrega uma rede de captura apoiada no
+ombro e um rádio no cinto. Paleta fria (cinza, azul-escuro, vermelho) para
+contrastar com a floresta colorida.
+
+A ANIMAÇÃO: caminhada em laço de 6 quadros, pernas alternando, braços e a rede
+balançando junto, tronco levemente inclinado para a frente.
+
+FORMATO: 6 quadros de 36x28 pixels, em uma única fileira horizontal de 216x28.
+Fundo 100% transparente. Os pés do personagem na mesma linha de chão, a 1 pixel
+da borda de baixo, e o corpo centralizado em todos os quadros.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água,
+sombra no chão, grade, mais de uma fileira, mudar o personagem entre os quadros.
+
+--- FIM DO BLOCO ---
+
+Se preferir que o inimigo não seja humano, troque a descrição do personagem por:
+"drone de vigilância da NaturaCorp: corpo metálico cinza-escuro, hélice no topo,
+um olho vermelho brilhante na frente e duas garras pequenas embaixo; flutua baixo,
+quase raspando o chão, e balança de um lado para o outro ao andar."
+
+====================================================================
+PROMPT 9 — ITEM COLETÁVEL (cereja)
+====================================================================
+São 44 cerejas espalhadas pela Fase 1. O contador do HUD diz "Cerejas", então
+o item continua sendo uma cereja.
+
+Especificação técnica:
+- UMA tira horizontal com 5 quadros de 21x21 pixels (105x21 no total),
+  animação em laço, o item flutuando.
+- MAIS uma tira separada com 4 quadros de 21x21, do efeito de coleta.
+- O desenho fica centralizado no quadro, sem encostar nas bordas.
+- Fundo transparente nas duas tiras.
+
+--- BLOCO PARA COLAR ---
+
+Crie duas tiras de sprites em pixel art, estilo 16-bit, fundo 100% transparente,
+sem grade, sem número e sem texto.
+
+Tira 1 — CEREJA (item de coleta): uma cereja vermelha brilhante com dois cabinhos
+verdes e uma folha, contorno escuro grosso e um ponto de brilho branco. Cinco
+quadros de 21x21 em uma fileira, formando um laço suave: a cereja sobe e desce
+1 pixel e o brilho pisca. O desenho fica centralizado no quadro em todos os quadros.
+
+Tira 2 — COLETA: um estouro de brilho curto, 4 quadros de 21x21 em uma fileira,
+em amarelo-dourado, começando pequeno no centro e sumindo. Sem texto.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, marca d'água, fundo branco,
+mais de uma fileira por tira.
+
+--- FIM DO BLOCO ---
+
+====================================================================
+PROMPT 10 — PLATAFORMA MÓVEL
+====================================================================
+São 7 plataformas que sobem e descem na Fase 1. Hoje é uma tábua do pacote
+Sunny Land esticada ao dobro.
+
+Especificação técnica: uma única imagem de 64x16 pixels, fundo transparente.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma plataforma de pixel art, estilo 16-bit, vista de lado, fundo 100%
+transparente, 64x16 pixels. Uma tábua de madeira escura com o topo coberto de
+grama verde, ripas visíveis e cantos reforçados com pedra. A sombra fica só
+embaixo da tábua, dura, sem desfoque. As laterais esquerda e direita devem
+poder encostar uma na outra sem emenda visível, porque a peça é usada em
+plataformas de tamanhos diferentes. Contorno escuro de 1 pixel, sem
+anti-aliasing, sem texto.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, marca d'água, fundo branco,
+perspectiva.
+
+--- FIM DO BLOCO ---
+
+====================================================================
+PROMPT 11 — CHÃO (blocos de terreno)
+====================================================================
+O chão da Fase 1 é uma grade de blocos de 16x16 pixels e hoje usa a folha do
+pacote Sunny Land (grama-limão, terra-laranja, traço duro). É o cenário mais
+visível do jogo inteiro, então vale começar por ele.
+
+Especificação técnica:
+- UMA imagem quadrada de 256x256 pixels.
+- Grade de 4 colunas por 4 linhas, cada célula com 64x64 pixels, sem margem e
+  sem espaço entre as células. O jogo reduz cada célula para 16x16.
+- Fundo 100% transparente. Sem grade desenhada, sem número, sem texto.
+- Cada bloco precisa encher a célula inteira e encostar nas quatro bordas, para
+  os blocos se encaixarem sem emenda quando repetidos lado a lado.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma folha de 16 blocos de terreno em pixel art, numa grade de 4 colunas
+por 4 linhas, cada célula com 64x64 pixels, sem margem e sem espaço entre as
+células. Tamanho final 256x256 pixels, fundo 100% transparente, sem grade
+desenhada e sem texto. Cada bloco deve preencher a célula inteira e encostar
+nas quatro bordas.
+
+Estilo: contorno escuro azul-noite (#181828) de 1 pixel, 3 ou 4 tons por
+material, paleta fria e dessaturada, formas arredondadas com volume. Sem
+degradê, sem brilho forte, sem cor neon, sem preto puro.
+Verde de mata perto de #4E7A52 (dessaturado, não é verde-limão).
+Terra perto de #6B4A38 (marrom acinzentado, não é laranja).
+Pedra perto de #3A4058.
+
+Conteúdo, linha por linha, da esquerda para a direita:
+
+LINHA 1 — TOPO DE GRAMA, o bloco que fica em cima do chão. Quatro variações.
+Em todas: a parte de cima é grama verde dessaturada e a parte de baixo é terra
+marrom-acinzentada, com uma linha escura separando as duas. Mude só a grama:
+  1) borda reta e limpa;
+  2) borda com dois tufos;
+  3) borda com uma pedrinha aparecendo;
+  4) borda mais alta de um lado.
+
+LINHA 2 — MIOLO DE TERRA, o bloco que preenche o interior do chão. Quatro
+variações de terra marrom-acinzentada, com pedrinhas e rachaduras discretas,
+sem grama nenhuma.
+
+LINHA 3 — BLOCO DE PEDRA. Quatro variações de um bloco de pedra azul-escura,
+com juntas de tijolo e pequenas rachaduras.
+
+LINHA 4 — DETALHES:
+  1) tufo de capim verde, só o mato, o resto transparente;
+  2) trepadeira verde descendo a partir do topo;
+  3) moita de folhas verde-escuras;
+  4) pedra pequena com grama em volta.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água, cores
+neon, brilho forte, margem ou espaço entre as células, mais de 4 colunas ou
+mais de 4 linhas.
+
+--- FIM DO BLOCO ---
+
+Depois de gerar, mande a imagem. Eu recorto as 16 células, reduzo cada uma para
+16x16 com cor dominante e monto a folha nova no lugar da antiga, mantendo as
+posições que o nível já usa. Nenhuma fase precisa ser refeita.
+
+====================================================================
+PROMPT 12 — PROPS GRANDES (árvores, casas e pedras)
+====================================================================
+São as peças que dão a cara da fase. O jogo corta cada uma em blocos de 16x16
+para encaixar no mapa, então cada imagem nova precisa sair no MESMO tamanho da
+antiga. Gere UMA imagem por peça, com fundo transparente e a base do desenho
+encostando na borda de baixo.
+
+Especificação técnica: seis imagens separadas, nestes tamanhos exatos:
+- Árvore: 119x111
+- Palmeira: 79x176
+- Casa de madeira: 112x98
+- Casa de palha: 128x96
+- Casa pequena: 112x112
+- Pedra grande: 66x57
+- Pedra pequena: 53x53
+
+--- BLOCO PARA COLAR (uma imagem por vez) ---
+
+Crie um prop de cenário em pixel art, vista de lado, fundo 100% transparente,
+sem sombra pintada no chão, sem texto e sem marca d'água. A base do desenho
+encosta na borda de baixo da imagem.
+
+Estilo: contorno escuro azul-noite (#181828) de 1 pixel, 3 ou 4 tons por
+material, paleta fria e dessaturada, formas arredondadas com volume.
+Verde de mata perto de #4E7A52, madeira perto de #6B4A38, pedra perto de
+#3A4058, palha perto de #C9A24E. Sem cor neon, sem preto puro, sem degradê.
+
+[escolha UMA das peças abaixo e cole junto]
+
+1) ÁRVORE — 119x111 pixels. Uma árvore grande de copa redonda e cheia, folhas
+   verde-escuras em tufos com três tons, tronco marrom-acinzentado retorcido e
+   raízes grossas aparecendo na base.
+2) PALMEIRA — 79x176 pixels. Palmeira alta e fina: tronco comprido com anéis
+   marcados, marrom-acinzentado, e uma coroa de folhas verdes compridas caindo
+   para os lados no topo.
+3) CASA DE MADEIRA — 112x98 pixels. Cabana de toras marrons, telhado curvo de
+   madeira, folhas verdes saindo do topo, porta redonda no centro e duas
+   janelinhas redondas. Base de pedra azul-escura.
+4) CASA DE PALHA — 128x96 pixels. Casa com telhado de palha bem grosso e
+   dourado, parede de pedra clara, porta e janela de madeira escura e um degrau
+   na frente.
+5) CASA PEQUENA — 112x112 pixels. Casa de dois andares com telhado inclinado,
+   parede de reboco clara, porta de madeira escura com grades, uma janela
+   redonda no andar de cima e uma janela comprida na lateral.
+6) PEDRA GRANDE — 66x57 pixels. Bloco de pedra azul-escura arredondado, com
+   musgo e capim verde saindo em cima e nas laterais.
+7) PEDRA PEQUENA — 53x53 pixels. A mesma pedra azul-escura, menor e mais baixa,
+   com um tufo de capim em cima.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água, sombra
+pintada no chão, cores neon, mais de um objeto na mesma imagem.
+
+--- FIM DO BLOCO ---
+
+Depois de gerar, mande as sete imagens. Eu reduzo cada uma para o tamanho exato
+da original: o tamanho tem que bater, porque o jogo corta a peça em blocos de
+16x16 para encaixar no mapa.
+
+====================================================================
+PROMPT 13 — PROPS PEQUENOS (moita, placa, cogumelo, caixote)
+====================================================================
+São os enfeites espalhados pela fase. Gere tudo em UMA imagem só, numa grade
+limpa, que eu recorto.
+
+Especificação técnica:
+- UMA imagem quadrada de 192x192 pixels.
+- Grade de 3 colunas por 3 linhas, cada célula com 64x64 pixels, sem margem e
+  sem espaço entre as células.
+- Fundo 100% transparente. Sem grade desenhada, sem número, sem texto.
+- Cada peça centralizada na célula, com a base encostando na borda de baixo.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma folha com 9 props pequenos de cenário em pixel art, numa grade de
+3 colunas por 3 linhas, cada célula com 64x64 pixels, sem margem e sem espaço
+entre as células. Tamanho final 192x192 pixels, fundo 100% transparente, sem
+grade desenhada e sem texto. Cada peça fica centralizada na sua célula, com a
+base encostando na borda de baixo.
+
+Estilo: contorno escuro azul-noite (#181828) de 1 pixel, 3 tons por material,
+paleta fria e dessaturada, formas arredondadas com volume. Sem cor neon, sem
+preto puro, sem degradê.
+
+Conteúdo, da esquerda para a direita:
+LINHA 1: 1) moita de folhas verde-escuras, larga e baixa;
+         2) placa de madeira retangular presa num poste curto, com a face lisa;
+         3) pedra pequena e chata, com um tufo de capim em cima.
+LINHA 2: 4) cogumelo de chapéu arredondado e caule claro;
+         5) pilha de três caveiras pequenas;
+         6) bloco de tijolo azul-escuro com juntas marcadas.
+LINHA 3: 7) caixote de madeira com ripas e cantos reforçados;
+         8) placa pequena de madeira em poste, para indicar caminho;
+         9) tufo de capim alto, com folhas pontudas.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água,
+sombra pintada no chão, cores neon, mais de 3 colunas ou de 3 linhas, mais de
+um objeto por célula.
+
+--- FIM DO BLOCO ---
+
+====================================================================
+PROMPT 14 — FUNDO DA FASE (paralaxe)
+====================================================================
+O fundo tem duas camadas que andam em velocidades diferentes atrás do cenário.
+Hoje as duas são do pacote antigo.
+
+Especificação técnica:
+- Camada de trás (céu e morros): 384x240 pixels.
+- Camada da frente (mata fechada): 176x368 pixels.
+- As duas sem emenda visível nas laterais esquerda e direita, porque se
+  repetem enquanto a câmera anda. Fundo transparente só na camada da frente.
+
+--- BLOCO PARA COLAR (uma imagem por vez) ---
+
+Crie uma camada de fundo em pixel art, vista de lado, sem personagem e sem
+texto, para um jogo de plataforma. Estilo: contorno escuro azul-noite
+(#181828), poucos tons, paleta fria e dessaturada, formas simples e
+arredondadas. Sem cor neon, sem degradê, sem desfoque, sem 3D.
+
+1) CÉU E MORROS — 384x240 pixels, imagem quadrada e chapada, sem transparência.
+   Céu claro de fim de tarde com duas ou três nuvens compridas e finas.
+   Dois morros sobrepostos no rodapé, o de trás mais claro e o da frente mais
+   escuro, cobertos de árvores em silhueta. O morro da frente precisa continuar
+   exatamente na mesma altura nas duas bordas laterais, para repetir sem
+   emenda.
+
+2) MATA FECHADA — 176x368 pixels, fundo 100% transparente. Uma parede de
+   árvores e folhagens em silhueta, escura e em camadas, ocupando a imagem
+   inteira de cima a baixo, com troncos finos e samambaias na base. As bordas
+   esquerda e direita precisam se encaixar perfeitamente uma na outra, porque a
+   imagem se repete.
+
+--- FIM DO BLOCO ---
+
+====================================================================
+PROMPT 15 — CAVERNA: BLOCOS DE PEDRA
+====================================================================
+Uma parte da Fase 1 vai virar caverna. Como o chão, ela é uma grade de blocos de
+16x16, então o formato é o mesmo do PROMPT 11 — só muda o conteúdo. Estes blocos
+são ADICIONADOS à folha, sem mexer nos que já existem.
+
+Especificação técnica:
+- UMA imagem quadrada de 256x256 pixels.
+- Grade de 4 colunas por 4 linhas, cada célula com 64x64 pixels, sem margem e
+  sem espaço entre as células.
+- Fundo 100% transparente. Sem grade desenhada, sem número, sem texto.
+- Cada bloco enche a célula inteira e encosta nas quatro bordas.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma folha de 16 blocos de caverna em pixel art, numa grade de 4 colunas por
+4 linhas, cada célula com 64x64 pixels, sem margem e sem espaço entre as
+células. Tamanho final 256x256 pixels, fundo 100% transparente, sem grade
+desenhada e sem texto. Cada bloco deve preencher a célula inteira e encostar nas
+quatro bordas.
+
+Estilo: contorno escuro azul-noite (#181828) de 1 pixel, 3 ou 4 tons por
+material, paleta fria e dessaturada, formas arredondadas com volume. Sem degradê
+suave, sem cor neon, sem preto puro.
+Pedra da caverna: azul-escura, base perto de #3A4058, sombra perto de #232838,
+luz perto de #566078.
+Cristais: verde-menta claro e luminoso, perto de #6FE0C8, com um brilho suave em
+volta. É o único ponto de cor viva da caverna.
+
+Conteúdo, linha por linha, da esquerda para a direita:
+
+LINHA 1 — TETO DE PEDRA, o bloco de cima. Quatro variações. A borda de baixo é
+irregular e tem pequenas estalactites penduradas; o resto do bloco é pedra
+maciça. Varie o tamanho e a quantidade das estalactites.
+
+LINHA 2 — PAREDE DE PEDRA, o bloco que preenche o miolo. Quatro variações de
+pedra maciça azul-escura, com rachaduras e manchas discretas. É o bloco que mais
+se repete, então mantenha o desenho simples.
+
+LINHA 3 — CHÃO DE PEDRA, o bloco de piso. Quatro variações. A borda de cima é
+plana e mais clara, porque a luz bate de cima, com pedrinhas soltas e um ou
+outro cristalzinho pequeno.
+
+LINHA 4 — DETALHES:
+  1) cristal verde-menta preso na pedra, brilhando;
+  2) musgo escuro verde-azulado crescendo na pedra;
+  3) estalagmite pequena subindo do chão;
+  4) veio de cristal atravessando a pedra na diagonal.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água, cores
+quentes, verde de grama, cores neon, margem entre as células, mais de 4 colunas
+ou de 4 linhas.
+
+--- FIM DO BLOCO ---
+
+Depois de gerar, mande a imagem. Eu recorto as 16 células e adiciono como blocos
+novos na folha do chão, sem mexer nos que já existem.
+
+====================================================================
+PROMPT 16 — CAVERNA: PROPS
+====================================================================
+Os enfeites que dão vida à caverna: cristais, estalactites, pedras e a boca da
+caverna. Gere tudo em UMA imagem só.
+
+Especificação técnica:
+- UMA imagem quadrada de 192x192 pixels.
+- Grade de 3 colunas por 3 linhas, cada célula com 64x64 pixels, sem margem e
+  sem espaço entre as células.
+- Fundo 100% transparente. Sem grade desenhada, sem número, sem texto.
+- Cada peça centralizada na célula.
+
+--- BLOCO PARA COLAR ---
+
+Crie uma folha com 9 props de caverna em pixel art, numa grade de 3 colunas por
+3 linhas, cada célula com 64x64 pixels, sem margem e sem espaço entre as
+células. Tamanho final 192x192 pixels, fundo 100% transparente, sem grade
+desenhada e sem texto. Cada peça fica centralizada na sua célula.
+
+Estilo: contorno escuro azul-noite (#181828) de 1 pixel, 3 tons por material,
+paleta fria e dessaturada, formas arredondadas com volume. Pedra azul-escura
+(base #3A4058, sombra #232838, luz #566078). Cristais verde-menta luminosos
+(#6FE0C8), com brilho suave. Sem cor neon, sem preto puro, sem degradê.
+
+Conteúdo, da esquerda para a direita:
+LINHA 1: 1) cacho de três cristais verde-menta saindo da rocha;
+         2) estalactite grande, pendurada, ponta para baixo;
+         3) estalagmite alta, em pé, ponta para cima.
+LINHA 2: 4) pedra grande caída no chão;
+         5) cogumelo luminoso de chapéu arredondado, com brilho fraco embaixo;
+         6) veio de cristal brilhando na parede.
+LINHA 3: 7) poça de água escura com um brilho fino na superfície;
+         8) ossada pequena encostada numa pedra;
+         9) boca de caverna: um arco de pedra escura, com o miolo totalmente
+            preto, como uma passagem para dentro.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água, sombra
+pintada no chão, cores quentes, cores neon, mais de 3 colunas ou de 3 linhas,
+mais de um objeto por célula.
+
+--- FIM DO BLOCO ---
+
+====================================================================
+PROMPT 17 — CAVERNA: FUNDO
+====================================================================
+A caverna fica fechada, então o fundo é escuro e as camadas de paralaxe são de
+rocha, não de mata.
+
+Especificação técnica:
+- Camada de trás (parede de rocha): 384x240 pixels, imagem chapada, sem
+  transparência.
+- Camada da frente (rocha em silhueta): 176x368 pixels, fundo 100% transparente.
+- As duas sem emenda visível nas laterais, porque se repetem enquanto a câmera
+  anda.
+
+--- BLOCO PARA COLAR (uma imagem por vez) ---
+
+Crie uma camada de fundo de caverna em pixel art, vista de lado, sem personagem
+e sem texto, para um jogo de plataforma. Estilo: contorno escuro azul-noite
+(#181828), poucos tons, paleta fria e dessaturada, formas simples e arredondadas.
+Sem cor neon, sem degradê, sem desfoque, sem 3D.
+
+1) PAREDE DE ROCHA — 384x240 pixels, imagem chapada, sem transparência. Uma
+   parede de pedra azul-escura quase toda na penumbra, com manchas de umidade,
+   rachaduras largas e dois ou três cristais verde-menta pequenos brilhando
+   fraco ao fundo. O topo e a base são mais escuros que o meio. As bordas
+   esquerda e direita precisam continuar na mesma altura, para repetir sem
+   emenda.
+
+2) ROCHA EM SILHUETA — 176x368 pixels, fundo 100% transparente. Estalactites
+   compridas descendo do topo e estalagmites subindo da base, em silhueta
+   escura, com uma pedra grande no meio. As bordas esquerda e direita precisam
+   se encaixar perfeitamente uma na outra, porque a imagem se repete.
+
+--- FIM DO BLOCO ---
+
+Nota: na caverna o jogo escurece a tela e abre um círculo de luz em volta do
+Nico. Isso é feito em código, não precisa entrar na arte — mas é por isso que os
+cristais devem ser a única coisa bem clara da imagem.
+
+====================================================================
+PROMPT 18 — NPCs DA VILA (raposa e porco-espinho)
+====================================================================
+Dois moradores que caminham de um lado para o outro na vila, no começo da Fase 1
+(as três casas ficam entre x=-208 e x=144, e o Nico nasce no meio delas). Eles
+não interagem com o Nico: são figurantes, só para o lugar parecer habitado.
+Cada um é UMA tira horizontal com 6 quadros e uma única animação de caminhada em
+laço — o mesmo formato do inimigo do PROMPT 8.
+
+Especificação técnica (vale para os dois):
+- UMA tira horizontal com 6 quadros de 40x32 pixels (240x32 no total).
+- Uma única animação em laço (caminhada). Não quero outras linhas.
+- O personagem olha para a ESQUERDA (é o sentido que o jogo espera).
+- Os pés encostam na borda de baixo, na mesma linha em todos os quadros.
+- O personagem ocupa no máximo 34x26 dentro do quadro, centralizado.
+- Fundo transparente, sem grade, sem número, sem texto, sem sombra no chão.
+
+--- BLOCO PARA COLAR (uma tira por vez) ---
+
+Crie uma tira de sprites em pixel art com 6 quadros lado a lado de um mesmo
+personagem, vista de lado, sempre olhando para a ESQUERDA.
+
+Estilo: o mesmo do guaxinim Nico — contorno escuro azul-noite (#181828) de
+1 pixel em volta de tudo, 3 ou 4 tons por material, formas arredondadas com
+volume, paleta dessaturada. Sem degradê suave, sem anti-aliasing, sem cor neon,
+sem preto puro.
+O personagem é bípede e antropomórfico, como o Nico: corpo ereto, braços soltos
+ao lado do corpo e cabeça grande em relação ao corpo.
+
+A ANIMAÇÃO: caminhada calma em laço de 6 quadros, pernas alternando, braços
+balançando junto, tronco firme. Passo tranquilo de quem passeia.
+
+FORMATO: 6 quadros de 40x32 pixels, em uma única fileira horizontal de 240x32.
+Fundo 100% transparente. Os pés na mesma linha de chão, encostando na borda de
+baixo, e o corpo centralizado em todos os quadros.
+
+[escolha UM dos personagens e cole junto]
+
+1) RAPOSA — pelo laranja-ferrugem dessaturado (base #C4703C, sombra #8A4A28,
+   luz #E8A468), peito e ponta da cauda em creme (#F8E8B8), pernas e pontas das
+   orelhas escuras, focinho fino e comprido, orelhas triangulares grandes e
+   cauda farta e comprida balançando atrás. Expressão simpática e curiosa.
+
+2) PORCO-ESPINHO — corpo baixo e arredondado coberto de espinhos curtos e
+   pontudos, marrom-acinzentado (base #6B4A38, sombra #4A3128, luz #8A6448),
+   com as pontas dos espinhos em azul-noite escuro. Barriga e focinho em creme
+   (#F8E8B8), olhos pequenos e redondos, patinhas curtas. Expressão tímida e
+   simpática.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água, sombra
+no chão, grade, mais de uma fileira, mudar o personagem entre os quadros.
+
+--- FIM DO BLOCO ---
+
+Depois de gerar, mande as duas tiras. Eu recorto os 6 quadros de cada uma, reduzo
+para o tamanho do jogo, salvo em world/Arte/ e monto a cena de cada NPC com a
+caminhada em laço, andando devagar de um lado para o outro na frente das casas.
+
+====================================================================
+PROMPT 19 — BALÃO DE FALA (caixa de diálogo)
+====================================================================
+O balão serve para os NPCs falarem, no estilo do Stardew Valley: um painel
+arredondado, de moldura grossa, com relevo suave e o miolo liso para o texto.
+São quatro imagens.
+
+Especificação técnica:
+- A — CAIXA DE DIÁLOGO: 64x64 pixels, feita para esticar em 9 fatias (9-slice).
+  A moldura tem 16 pixels em todos os lados; o miolo de 32x32 no centro precisa
+  ser LISO, sem desenho, porque o jogo estica só ele.
+- B — BALÃO PEQUENO: 32x28 pixels, tamanho fixo, com um rabicho embaixo.
+- C — PLACA DE NOME: 96x20 pixels, tamanho fixo, encaixa no topo da caixa.
+- D — SETA DE CONTINUAR: 16x12 pixels, tamanho fixo, aponta para baixo.
+- Fundo transparente nas quatro. Sem texto escrito dentro de nenhuma.
+- Gere em tamanho grande (1024x1024 serve) mantendo as proporções de cada peça.
+  Eu reduzo para os tamanhos acima e recorto.
+
+--- BLOCO PARA COLAR (uma imagem por vez) ---
+
+Crie um elemento de interface em pixel art para um jogo de plataforma 2D, com
+fundo 100% transparente, sem texto e sem marca d'água.
+
+Estilo: contorno escuro azul-noite (#181828) de 1 pixel em volta de tudo,
+formas arredondadas e robustas, relevo suave de 3 tons. Interior azul-noite
+escuro (#0C1324), moldura verde-menta (base #8CD491, sombra #4E8C5C, luz
+#BFF2B8). A luz bate em cima e à esquerda; a sombra fica embaixo e à direita.
+Sem degradê suave, sem anti-aliasing, sem cor neon, sem preto puro.
+
+A — CAIXA DE DIÁLOGO, 64x64 pixels:
+Um painel retangular de cantos arredondados, como o do Stardew Valley. A moldura
+ocupa 16 pixels em todos os lados e tem uma linha interna mais escura, como se
+fosse entalhada. O miolo, de 32x32 no centro, é LISO e uniforme, sem nenhum
+desenho, porque o jogo estica essa parte para caber o texto. Nos quatro cantos,
+um detalhe pequeno: um pino redondo na diagonal. Uma sombra dura de 2 pixels
+embaixo do painel, sem desfoque.
+
+B — BALÃO PEQUENO, 32x28 pixels:
+O mesmo painel, menor e mais simples, com um rabicho curto embaixo, apontando
+para baixo e um pouco para a esquerda, como se saísse da boca do personagem. O
+miolo é liso, para caber uma palavra curta ou três pontinhos.
+
+C — PLACA DE NOME, 96x20 pixels:
+Uma tábua fina e comprida, da mesma família, com as pontas arredondadas e um
+pino redondo em cada ponta. Encaixa no topo da caixa e segura o nome de quem
+fala.
+
+D — SETA DE CONTINUAR, 16x12 pixels:
+Uma seta curta apontando para baixo, da mesma família, para indicar que o texto
+acabou e o jogador pode avançar.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, gradiente, texto escrito,
+números, marca d'água, sombra colorida, brilho forte, mais de um objeto na mesma
+imagem.
+
+--- FIM DO BLOCO ---
+
+Se preferir o balão quente do Stardew Valley, em madeira e papel, troque só as
+cores da moldura e do interior, mantendo todo o resto igual:
+- moldura de madeira: base #B07A46, sombra #7A4E2C, luz #D8A86A;
+- interior de papel: #E8D8B0, com a linha interna em #C0A87A;
+- contorno azul-noite #181828 mantido.
+
+Nota: a parte A é a única que precisa ser exata. O miolo liso e a moldura de
+espessura igual nos quatro lados são o que fazem o painel esticar sem distorcer.
+Se o miolo vier com desenho, o balão fica estranho quando ficar largo.
+
+====================================================================
+PROMPT 20 — RETRATOS DE DIÁLOGO (Nico, raposa e porco-espinho)
+====================================================================
+Na caixa de diálogo do PROMPT 19, do lado esquerdo, entra o retrato de quem está
+falando. São três retratos, um por personagem.
+
+Especificação técnica (vale para os três):
+- UMA imagem quadrada de 64x64 pixels, fundo 100% transparente.
+- Busto de frente: cabeça e ombros, o rosto virado para quem joga.
+- O rosto ocupa a maior parte do quadro, centralizado na horizontal.
+- Os ombros encostam na borda de baixo do quadro.
+- SEM moldura, SEM borda e SEM fundo pintado: o jogo desenha a moldura em volta.
+  A imagem é só o personagem.
+- Os três precisam ter o MESMO enquadramento: mesmo tamanho de cabeça e mesma
+  altura dos olhos. É o que faz o retrato não pular quando a fala troca de
+  personagem.
+- Sem texto, sem número, sem marca d'água, sem sombra no chão.
+- Gere em tamanho grande (1024x1024 serve) e eu reduzo para 64x64.
+
+--- BLOCO PARA COLAR (um retrato por vez) ---
+
+Crie um retrato de diálogo em pixel art, para um jogo de plataforma 2D, com fundo
+100% transparente. É um busto de frente: cabeça e ombros, o rosto virado para
+quem joga, ocupando a maior parte do quadro, com os ombros encostando na borda de
+baixo. Sem moldura, sem borda e sem fundo pintado — só o personagem.
+
+Estilo: o mesmo dos sprites do jogo. Contorno escuro azul-noite (#181828) de
+1 pixel em volta de tudo, 3 ou 4 tons por material, formas arredondadas com
+volume, paleta dessaturada. Sem degradê suave, sem anti-aliasing, sem cor neon,
+sem preto puro. Olhos expressivos, com um brilho pequeno e claro dentro.
+
+[escolha UM dos personagens e cole junto]
+
+1) NICO — o guaxinim protagonista. Pelagem cinza-azulada (base #7888A8, sombra
+   #485878, luz #8898B8), máscara preta em volta dos dois olhos, focinho creme
+   (#F8E8B8), orelhas redondas com a ponta escura, e o lenço verde-menta
+   (#88D898) aparecendo no ombro. Olhar determinado e um pouco cansado, com um
+   sorriso pequeno e de lado.
+
+2) RAPOSA — a moradora da vila. Pelo laranja-ferrugem dessaturado (base #C4703C,
+   sombra #8A4A28, luz #E8A468), peito e parte de baixo do focinho em creme
+   (#F8E8B8), pernas e pontas das orelhas escuras, focinho fino e comprido,
+   orelhas triangulares grandes e a ponta da cauda aparecendo de lado. Olhar
+   curioso e simpático, sobrancelhas levantadas.
+
+3) PORCO-ESPINHO — o outro morador. Cabeça e ombros cobertos de espinhos curtos
+   e pontudos, marrom-acinzentado (base #6B4A38, sombra #4A3128, luz #8A6448),
+   com as pontas dos espinhos em azul-noite escuro. Focinho e queixo em creme
+   (#F8E8B8), olhos pequenos e redondos, orelhas pequenas e caídas. Olhar
+   tímido, sobrancelhas juntas, meio encolhido.
+
+Evite: fotorrealismo, 3D, desfoque, anti-aliasing, texto, marca d'água, moldura
+desenhada, borda, fundo colorido, mais de um personagem na mesma imagem, corpo
+inteiro.
+
+--- FIM DO BLOCO ---
+
+Depois de gerar, mande os três. Eu recorto, reduzo para 64x64, salvo em
+world/Arte/Retratos/ e ligo cada um na caixa de diálogo.
+O retrato do HUD (o quadradinho de vida, no canto) continua sendo o pequeno que
+já existe; este é o grande, do diálogo.
+
+Se quiser que os personagens tenham mais de uma cara ao longo da conversa, gere o
+mesmo retrato mais duas vezes mudando só a expressão: uma alegre e uma triste. O
+resto tem que ficar idêntico — mesmo tamanho, mesma posição da cabeça.
+
+====================================================================
+O QUE EVITAR (negativos — cole junto se o chat aceitar)
+====================================================================
+Fotorrealismo, 3D, render, desfoque, anti-aliasing, gradientes suaves demais,
+texto escrito, marca d'água, assinatura, perspectiva isométrica,
+personagens de outros jogos, excesso de detalhe, cores neon saturadas,
+estilo anime, estilo mangá, traço fino.
+
+====================================================================
+DEPOIS DE GERAR
+====================================================================
+- Salve os PNGs soltos em uma pasta só sua (a pasta Downloads serve) e me avise
+  os nomes dos arquivos.
+- Não precisa se preocupar com o tamanho: os chats costumam devolver tudo bem
+  maior do que o pedido. Eu recorto, tiro o fundo e reduzo para o tamanho do jogo
+  usando cor dominante, que é o que preserva melhor o traço do pixel art.
+- Confirme só duas coisas antes de me mandar: o fundo transparente de verdade e
+  o mesmo personagem em todos os quadros. Se o fundo vier xadrez, branco ou com
+  sombra pintada, peça de novo — é mais rápido refazer do que limpar depois.
+- No chão e nos props, o TAMANHO importa: o jogo corta essas imagens em blocos
+  de 16x16 para encaixar no mapa. Se vier torto, eu corrijo reduzindo para o
+  tamanho exato da original, mas quanto mais perto do pedido, melhor.
+- A arte aprovada fica em world/Arte/, separada por peça, e eu troco as
+  referências nas cenas. O pacote Sunny Land continua sendo usado só no que
+  ainda não foi substituído.
+
+
+Correção da árvore — menu e cenário
+Ferramenta: image_gen integrada (edição de imagem, fundo transparente).
+Entrada: sprite original world/Arte/Props/arvore.png.
+Saída aplicada: world/Arte/Props/arvore.png, 119 x 111, RGBA.
+Fonte em alta resolução: arvore-source.png.
+Exportação: recorte do conteúdo visível e redimensionamento por vizinho mais próximo para a escala nativa.
+
+Prompt final exato:
+Use case: precise-object-edit. Edit target: the attached small pixel-art forest TREE SPRITE. Repair ONLY the anatomically broken/disconnected trunk in the central Y fork below the canopy: bridge the visible empty horizontal gap with continuous twisting brown wood, connecting the roots/lower trunk all the way into both upper branches. The trunk must be ONE uninterrupted solid organic form, thick enough to support the canopy, no floating upper branches, no cut line, no sky showing through the main stem. Preserve the existing rounded olive-green canopy silhouette, leaf clusters, dark navy outline, grey-brown roots, overall size, side-view2Dgame sprite style, shading direction and muted palette. Keep full isolated tree from crown to roots, centered, same proportions119wide111high, root base at the bottom. Production16-bit pixel art with hard square pixel clusters, not painted or smooth, no antialiasing, no blur. Transparent background with clean alpha, no colored glow, no ground scenery, no text, no frame. Do not redesign the tree, grow new scenery, or add objects. Change only the broken fork into connected wood. Canvas may be enlarged by integer nearest-neighbor for clarity but retain exact119:111aspect and sprite framing.
+
+
+
+Fase 2 — Costa das Marés (imagegen integrado)
+Prompts finais exatos: world/Arte/Beach/PROMPTS*.txt, world/Arte/Beach/PROMPT*.txt e world/Arte/Tartaruga/PROMPTS.txt.
+Assets aplicados: praia, areia, cais, palmeira/props, Urus (voo e dano), canhão (idle/disparo), caranguejo (walk/stomp), açaí e tartaruga idosa (idle/walk e rosto idle/talk).

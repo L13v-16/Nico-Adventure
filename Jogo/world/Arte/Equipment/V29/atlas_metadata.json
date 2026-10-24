@@ -1,0 +1,56 @@
+{
+  "honey_biscuit": {
+    "region": [
+      73,
+      98,
+      376,
+      359
+    ],
+    "opaque_body_pixels": 101327
+  },
+  "travel_acai": {
+    "region": [
+      600,
+      62,
+      358,
+      417
+    ],
+    "opaque_body_pixels": 95986
+  },
+  "swift_gloves": {
+    "region": [
+      1024,
+      99,
+      464,
+      383
+    ],
+    "opaque_body_pixels": 108916
+  },
+  "jump_brooch": {
+    "region": [
+      76,
+      536,
+      382,
+      423
+    ],
+    "opaque_body_pixels": 72553
+  },
+  "sailor_bandana": {
+    "region": [
+      526,
+      554,
+      471,
+      404
+    ],
+    "opaque_body_pixels": 97790
+  },
+  "aviator_goggles": {
+    "region": [
+      1050,
+      581,
+      445,
+      327
+    ],
+    "opaque_body_pixels": 96020
+  }
+}

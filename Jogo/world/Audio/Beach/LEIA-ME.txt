@@ -1,0 +1,9 @@
+Músicas fornecidas pelo usuário para Nico Adventure.
+
+pixel_shore_shenanigans.wav — Pixel Shore Shenanigans.wav, praia, 160 segundos.
+SHA256: 41f4c4dec43db072eb6ef74457572fd3f8431aafb9b13be1b156fbf4a5022104
+
+tidal_wrath_royale.wav — Tidal Wrath Royale.wav, luta com Urus, 120 segundos.
+SHA256: 5a4150ddeb5c7f7b0975541f53270bb27bd7297c18a654924964b687c9acdf80
+
+Cópias integrais dos arquivos de Downloads, PCM16 estéreo 48000 Hz. Nenhuma conversão ou corte foi aplicado. beach_music.gd configura loop de ponta a ponta em memória; sfx.gd mantém apenas um tocador no barramento Music, pausa e opções de volume. O código não altera os WAVs.

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/jose_sheet.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(687, 81, 179, 232)
+margin = Rect2(67.0, 81, 134, 81)
+filter_clip = true

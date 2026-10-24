@@ -1,0 +1,158 @@
+{
+  "0": {
+    "region": [
+      66,
+      48,
+      284,
+      279
+    ],
+    "body_component_pixels": 48700,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "1": {
+    "region": [
+      363,
+      48,
+      403,
+      279
+    ],
+    "body_component_pixels": 52483,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "2": {
+    "region": [
+      764,
+      45,
+      392,
+      282
+    ],
+    "body_component_pixels": 56974,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "3": {
+    "region": [
+      1222,
+      48,
+      293,
+      279
+    ],
+    "body_component_pixels": 50789,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "4": {
+    "region": [
+      60,
+      376,
+      303,
+      286
+    ],
+    "body_component_pixels": 54054,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "5": {
+    "region": [
+      446,
+      337,
+      315,
+      325
+    ],
+    "body_component_pixels": 60520,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "6": {
+    "region": [
+      763,
+      410,
+      390,
+      252
+    ],
+    "body_component_pixels": 51233,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "7": {
+    "region": [
+      1170,
+      405,
+      359,
+      257
+    ],
+    "body_component_pixels": 49771,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "8": {
+    "region": [
+      79,
+      685,
+      243,
+      308
+    ],
+    "body_component_pixels": 47951,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "9": {
+    "region": [
+      377,
+      689,
+      365,
+      304
+    ],
+    "body_component_pixels": 55994,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "10": {
+    "region": [
+      831,
+      708,
+      290,
+      285
+    ],
+    "body_component_pixels": 50855,
+    "canvas": [
+      448,
+      384
+    ]
+  },
+  "11": {
+    "region": [
+      1201,
+      685,
+      289,
+      308
+    ],
+    "body_component_pixels": 59756,
+    "canvas": [
+      448,
+      384
+    ]
+  }
+}
