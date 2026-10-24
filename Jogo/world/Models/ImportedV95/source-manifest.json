@@ -1,0 +1,11 @@
+{
+  "wolf": {
+    "original": "C:\\Users\\LEO\\Downloads\\meshy-model-2026-10-24T22-11-43-841Z.glb",
+    "source": "wolf_source.glb",
+    "sha256": "c39ed9617391335bbab3f540ae10b8c4359543394f45e3865ffe01a1dc6973b8"
+  },
+  "largato": {
+    "source": "../ImportedV81/largato_source.glb",
+    "sha256": "64dbd090ada4b69482cf152e744a756b6025d6271d877a8e609222dbc9f01748"
+  }
+}

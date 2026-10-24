@@ -1,3 +1,14 @@
+Largato e Lobo 3D — v95
+
+O Lobo do laboratório usa o GLB fornecido em 24/10, com texturas preservadas,
+malha otimizada e esqueleto próprio para movimentos e reações da cutscene.
+
+Largato recebe novos pesos de articulação e clipes com antecipação dos
+ataques, cauda e disparo no ritmo do combate. A reação de dano não reinicia
+mais a cada quadro; o corpo permanece visível, com um breve tom de impacto.
+Corrida, conversa e operação usam movimentos mais contidos. Os sprites 2D
+continuam independentes dos modelos usados na fase 3D.
+
 Plataformas e poderes do Submundo — v94
 
 Novos sprites de plataformas com extremidades, volume de pedra e cristais

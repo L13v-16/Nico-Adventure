@@ -35,10 +35,19 @@ var _lift:Node3D
 var _flood:MeshInstance3D
 var _intro_seen:=false
 var _shot_warning:=0.0
+var _shot_recoil:=0.0
+var _animation_action:=""
+var _hit_flash:=0.0
+var _hit_materials:Array[StandardMaterial3D]=[]
 func _ready() -> void:
 	add_to_group("lab3d_enemies");add_to_group("lab3d_targets");collision_layer=4;collision_mask=1
 	var shape:=CapsuleShape3D.new();shape.radius=.75;shape.height=2.8;var col:=CollisionShape3D.new();col.shape=shape;col.position.y=1.4;add_child(col)
 	model=Art.instantiate("largato");model.scale=Vector3.ONE*1.25;add_child(model)
+	for display:MeshInstance3D in model.find_children("*","MeshInstance3D",true,false):
+		var original:=display.mesh.surface_get_material(0)
+		if original is StandardMaterial3D:
+			var copy:=original.duplicate() as StandardMaterial3D
+			display.material_override=copy;_hit_materials.append(copy)
 	_warning=Art.ring(level,"BossWarning",Vector3.ZERO,1.4,"f3b05e",.5);_warning.hide()
 	_opening=Art.ring(self,"Opening",Vector3(0,3.1,0),.65,"ffe4a1",.5);_opening.hide()
 	_lift=Node3D.new();add_child(_lift);Art.cylinder(_lift,"Lift",Vector3(0,-.12,0),1.25,.22,"344d61",-1,.6);_lift.hide()
@@ -59,21 +68,42 @@ func _physics_process(delta:float) -> void:
 		return
 	_clock+=delta;_timer-=delta;vulnerable=maxf(0,vulnerable-delta);_invulnerable=maxf(0,_invulnerable-delta);_serum_cooldown=maxf(0,_serum_cooldown-delta)
 	_opening.visible=vulnerable>0 and not _spent;_lift.visible=phase==2
-	model.visible=_invulnerable<=0 or fposmod(_invulnerable,.12)>.025
+	var before:=position
+	_shot_recoil=maxf(0,_shot_recoil-delta);_hit_flash=maxf(0,_hit_flash-delta)
+	model.visible=true
 	if phase==1:_containment(delta)
 	elif phase==2:_overload(delta)
 	else:_last_dose(delta)
-	if _invulnerable>0:model.get_node("Animations").play("hurt")
+	var action:="idle"
+	if phase==1:
+		match _state:
+			"jump":action="jump"
+			"warning":action="warn_jump" if _attack%3==0 else ("warn_shoot" if _attack%2==0 else "warn_tail")
+			"tail":action="tail"
+			"shoot":action="attack"
+			"idle":action="run" if position.distance_squared_to(before)>.000001 else "idle"
+	elif phase==2:action="idle" if vulnerable>0 else "operate"
+	else:action="operate" if _shot_warning>0 else ("attack" if _shot_recoil>0 else "talk")
+	if _invulnerable>0:action="hurt"
+	_play_action(action)
+	for material:StandardMaterial3D in _hit_materials:material.albedo_color=Color.WHITE.lerp(Color("ffb6a1"),clampf(_hit_flash/.18,0,1)*.7)
+
+func _play_action(action:String) -> void:
+	var animation:AnimationPlayer=model.get_node("Animations")
+	# Select exactly once per tick. A finished one-shot holds its last pose;
+	# a cutscene-paused loop resumes without resetting the animation clock.
+	if action!=_animation_action or animation.assigned_animation!=action:
+		animation.play(action,.12);_animation_action=action
+	elif not animation.is_playing() and animation.current_animation!="":animation.play()
+
 func _containment(delta:float) -> void:
 	if _state=="jump":
 		_jump_t+=delta;var t:=clampf(_jump_t/.95,0,1);position=_jump_from.lerp(_aim,t)+Vector3.UP*sin(t*PI)*5
-		model.get_node("Animations").play("jump")
 		if t>=1:position.y=level.roof_y;_open(2.6);_warning.hide();level.shake(.15);Sfx.play("lab_clink",-7)
 		return
 	position.y=level.roof_y
 	match _state:
 		"idle":
-			model.get_node("Animations").play("run")
 			var to:Vector3=level.player.position-position;to.y=0
 			if to.length()>5:
 				position+=to.normalized()*2.2*delta;_face=to.normalized();model.rotation.y=atan2(-_face.x,-_face.z)
@@ -82,11 +112,10 @@ func _containment(delta:float) -> void:
 				_aim=level.player.position+_face*1.5;_aim.x=clampf(_aim.x,-11,11);_aim.z=clampf(_aim.z,-253,-231);_aim.y=level.roof_y
 				_warning.global_position=_aim+Vector3.UP*.07 if _attack%3==0 else position+_face*2+Vector3.UP*.06;_warning.show();Sfx.play("lab_scan",-8)
 		"warning":
-			model.get_node("Animations").play("operate")
 			if _timer<=0:
 				if _attack%3==0:_state="jump";_jump_t=0;_jump_from=position
-				elif _attack%2==0:_shoot(_aim+Vector3.UP);_state="shoot";_timer=.5;model.get_node("Animations").play("attack")
-				else:_state="tail";_timer=.45;model.get_node("Animations").play("tail")
+				elif _attack%2==0:_shoot(_aim+Vector3.UP);_state="shoot";_timer=.5
+				else:_state="tail";_timer=.45
 		"tail":
 			var gap:Vector3=level.player.position-position
 			if Vector2(gap.x,gap.z).length()<4.4 and Vector3(gap.x,0,gap.z).normalized().dot(_face)>.15 and gap.y<1.25:level.player.take_damage(1,position)
@@ -94,7 +123,6 @@ func _containment(delta:float) -> void:
 		"shoot":
 			if _timer<=0:_open(2.5)
 		"opening":
-			model.get_node("Animations").play("hurt" if _invulnerable>0 else "idle")
 			if _timer<=0:_state="idle";_timer=1.6
 func _open(seconds:float) -> void:
 	_state="opening";_timer=seconds;vulnerable=seconds;_spent=false;_warning.hide()
@@ -103,7 +131,6 @@ func _overload(delta:float) -> void:
 	if vulnerable<=0 and _state=="opening":_state="idle";heated=0;cooled=0;_spent=false;_clock=0;_machine_timer=3.3
 	var open:=vulnerable>0
 	position=position.move_toward(Vector3(0,level.roof_y+(0 if open else 5),-241),7*delta)
-	model.get_node("Animations").play("idle" if open else "operate")
 	var facing:Vector3=level.player.position-position;model.rotation.y=lerp_angle(model.rotation.y,atan2(-facing.x,-facing.z),1-exp(-delta*5))
 	var flood_cycle:=fposmod(_clock,11)
 	_flood.visible=not open and flood_cycle>5 and flood_cycle<10
@@ -122,11 +149,10 @@ func _overload(delta:float) -> void:
 func _last_dose(delta:float) -> void:
 	position=position.move_toward(Vector3(0,level.roof_y,-243),5*delta)
 	model.scale=Vector3(1.25+serum_hits*.08,1.25-serum_hits*.10,1.25+serum_hits*.08)
-	model.get_node("Animations").play("operate" if _shot_warning>0 else "talk")
 	var facing:Vector3=(_aim if _shot_warning>0 else level.player.position)-position;model.rotation.y=lerp_angle(model.rotation.y,atan2(-facing.x,-facing.z),1-exp(-delta*5))
 	if _shot_warning>0:
 		_shot_warning-=delta
-		if _shot_warning<=0:_shoot(_aim);_timer=3;_warning.hide()
+		if _shot_warning<=0:_shoot(_aim);_shot_recoil=.5;_timer=3;_warning.hide()
 	elif _timer<=0:
 		_shot_warning=.95;_aim=level.player.position+Vector3.UP;_warning.global_position=level.player.position+Vector3.UP*.06;_warning.show();Sfx.play("lab_scan",-9)
 func _shoot(target:Vector3) -> void:level.enemy_shot(position+Vector3.UP*1.6,target,13,self)
@@ -141,7 +167,7 @@ func machine_element(kind:String,element:String) -> void:
 func take_element(_element:String,source:Vector3,_seconds:float=3) -> void:take_damage(1,source)
 func take_damage(amount:float,_source:Vector3) -> void:
 	if not active or dead or dying or phase==3 or vulnerable<=0 or _spent or _invulnerable>0:return
-	_spent=true;_invulnerable=.8;health-=minf(1,amount);Sfx.hit();level.spark(position+Vector3.UP,"f2d98e")
+	_spent=true;_invulnerable=.8;_hit_flash=.18;health-=minf(1,amount);Sfx.hit();level.spark(position+Vector3.UP,"f2d98e")
 	if health<=0:
 		_clear_hazards();_warning.hide();_flood.hide();_clock=0;vulnerable=0;_state="idle";_invulnerable=1
 		if phase==1:phase=2;health=3;_machine_timer=4;level.notice("Largato: Procedimento perfeitamente aprovado! FOGO à esquerda, GELO à direita.")
@@ -171,6 +197,9 @@ func reset_encounter() -> void:
 	if dead or dying:return
 	active=false;phase=1;health=4;vulnerable=0;heated=0;cooled=0;_state="idle";_timer=1.6;_clock=0;_attack=0;_spent=false;_invulnerable=0;_hazard_left=0;_shot_warning=0
 	injector_heat=false;injector_cold=false;injector_reversed=false;syringe_ammo=0;serum_hits=0;_serum_cooldown=0
+	_shot_recoil=0;_hit_flash=0;_animation_action=""
+	for material:StandardMaterial3D in _hit_materials:material.albedo_color=Color.WHITE
+	_play_action("idle")
 	position=Vector3(0,level.roof_y,-242);model.scale=Vector3.ONE*1.25;model.visible=true;collision_layer=4;_warning.hide();_flood.hide();_lift.hide();_clear_hazards()
 func status() -> String:
 	if phase<3 and vulnerable>0:return "Acerto confirmado · aguarde a próxima abertura" if _spent else "VULNERÁVEL · %.1f s · um acerto por abertura"%vulnerable
