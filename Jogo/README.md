@@ -1,3 +1,10 @@
+## Menu da floresta — v88
+
+Nova paisagem distante da floresta ao entardecer, logo no alto e botões à esquerda.
+Nico e os amigos passeiam e interagem com os sprites já aprovados do jogo.
+Use mouse, setas e Enter. A animação pausa ao abrir Coleção, Opções ou mapa.
+Arte criada com image_gen; prompt e documentação: world/Arte/MenuV88/.
+
 ## O último resgate — v87
 
 Após derrotar o Lobo, Nico desliga a trava da cela e José abre a grade.

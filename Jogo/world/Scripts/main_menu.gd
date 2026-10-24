@@ -1,5 +1,5 @@
 extends Control
-## Menu principal: fundo discreto, ações à esquerda e Nico em pixel art.
+## Menu principal: panorama distante da floresta, amigos animados e ações à esquerda.
 
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
 const CollectionPanel := preload("res://world/Scripts/collection_panel.gd")
@@ -13,15 +13,9 @@ const LAB_SCENE := "res://world/lab_05.tscn"
 const LEVEL_ID := "fase_1"
 
 const LOGO_TEXTURE := preload("res://world/Arte/logo.png")
-const NICO_IDLE: Array[Texture2D] = [
-	preload("res://world/Arte/Nico/idle_1.png"),
-	preload("res://world/Arte/Nico/idle_2.png"),
-	preload("res://world/Arte/Nico/idle_3.png"),
-	preload("res://world/Arte/Nico/idle_4.png"),
-]
-## Altura da logo na tela. A largura vem da proporção da imagem (3:1).
-const LOGO_HEIGHT := 72.0
+const LOGO_HEIGHT := 78.0
 
+var _ambience:Control
 var _menu_column: VBoxContainer
 var _title_art: Control
 var _subtitle_label: Label
@@ -33,7 +27,6 @@ var _free_mode_hint: Label
 var _clear_button: Button
 var _main_layout: VBoxContainer
 var _navigation_hint: Label
-var _time := 0.0
 var _clear_armed := false
 
 
@@ -45,11 +38,6 @@ func _ready() -> void:
 	_show_main()
 
 
-func _process(delta: float) -> void:
-	_time += delta
-	queue_redraw()
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _panel_holder.get_child_count() > 0:
 		_show_main()
@@ -59,11 +47,12 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- Construção -----------------------------------------------------------------
 
 func _build() -> void:
+	_ambience=preload("res://world/Scripts/menu_forest.gd").new();_ambience.name="ForestPanorama";add_child(_ambience)
 	var column := VBoxContainer.new()
 	column.set_anchors_preset(Control.PRESET_FULL_RECT)
-	column.anchor_left = 0.07
-	column.anchor_right = 0.54
-	column.anchor_top = 0.055
+	column.anchor_left = 0.055
+	column.anchor_right = 0.36
+	column.anchor_top = 0.31
 	column.anchor_bottom = 0.925
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	column.add_theme_constant_override("separation", 5)
@@ -78,16 +67,18 @@ func _build() -> void:
 	_title_art.custom_minimum_size = Vector2(LOGO_HEIGHT * 3.0, LOGO_HEIGHT)
 	_title_art.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_title_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	column.add_child(_title_art)
+	_title_art.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_title_art.offset_left=-LOGO_HEIGHT*1.5;_title_art.offset_right=LOGO_HEIGHT*1.5
+	_title_art.offset_top=15;_title_art.offset_bottom=15+LOGO_HEIGHT
+	add_child(_title_art)
 
 	_subtitle_label = UiStyle.shadowed_label("Uma aventura entre ilhas.", 11, UiStyle.MUTED_COLOR)
 	_subtitle_label.modulate = Color(1, 1, 1, 0.8)
-	column.add_child(_subtitle_label)
-
-	var spacer := Control.new()
-	spacer.custom_minimum_size = Vector2(0.0, 12.0)
-	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	column.add_child(spacer)
+	_subtitle_label.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_subtitle_label.offset_left=-150;_subtitle_label.offset_right=150
+	_subtitle_label.offset_top=95;_subtitle_label.offset_bottom=110
+	_subtitle_label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	add_child(_subtitle_label)
 
 	_menu_column = VBoxContainer.new()
 	_menu_column.add_theme_constant_override("separation", 2)
@@ -97,7 +88,7 @@ func _build() -> void:
 	_first_button = _add_menu_button("Jogar", _play_from_start)
 	_resume_button = _add_menu_button("Continuar", _play_resume)
 	_free_mode_button = _add_menu_button("Modo livre", _open_free_mode)
-	_free_mode_hint = UiStyle.label("Conclua a aventura para desbloquear.", 9, Color(0.48, 0.58, 0.59))
+	_free_mode_hint = UiStyle.label("Conclua a aventura para desbloquear.", 9, Color(0.64, 0.73, 0.64))
 	_free_mode_hint.custom_minimum_size.x = 184.0
 	_free_mode_hint.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_free_mode_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -112,6 +103,7 @@ func _build() -> void:
 	footer.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	footer.offset_top = -22.0
 	footer.offset_bottom = -8.0
+	footer.offset_left=42;footer.horizontal_alignment=HORIZONTAL_ALIGNMENT_LEFT
 	add_child(footer)
 
 	_panel_holder = Control.new()
@@ -125,12 +117,12 @@ func _add_menu_button(text: String, action: Callable, disabled: bool = false) ->
 	button.text = text
 	button.focus_mode = Control.FOCUS_NONE if disabled else Control.FOCUS_ALL
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	button.add_theme_font_size_override("font_size", 13)
-	button.add_theme_color_override("font_color", Color(0.82, 0.88, 0.88))
+	button.add_theme_font_size_override("font_size", 14)
+	button.add_theme_color_override("font_color", Color(0.92, 0.94, 0.84))
 	button.add_theme_color_override("font_hover_color", Color(0.96, 0.99, 0.95))
 	button.add_theme_color_override("font_focus_color", Color(0.75, 0.95, 0.78))
 	button.add_theme_color_override("font_pressed_color", Color(0.75, 0.95, 0.78))
-	button.add_theme_color_override("font_disabled_color", Color(0.42, 0.49, 0.52))
+	button.add_theme_color_override("font_disabled_color", Color(0.54, 0.64, 0.57))
 	button.add_theme_stylebox_override("normal", _menu_button_style(Color.TRANSPARENT))
 	button.add_theme_stylebox_override("hover", _menu_button_style(Color(0.1, 0.19, 0.22, 0.55)))
 	button.add_theme_stylebox_override("pressed", _menu_button_style(Color(0.11, 0.23, 0.22, 0.75)))
@@ -139,7 +131,7 @@ func _add_menu_button(text: String, action: Callable, disabled: bool = false) ->
 	focus_style.border_width_left = 2
 	focus_style.border_color = Color(0.65, 0.88, 0.7)
 	button.add_theme_stylebox_override("focus", focus_style)
-	button.custom_minimum_size = Vector2(184.0, 24.0)
+	button.custom_minimum_size = Vector2(190.0, 25.0)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button.disabled = disabled
 	button.mouse_default_cursor_shape = Control.CURSOR_ARROW if disabled else Control.CURSOR_POINTING_HAND
@@ -175,6 +167,7 @@ func _show_main() -> void:
 	_menu_column.visible = true
 	_title_art.visible = true
 	_subtitle_label.visible = true
+	_ambience.set_active(true)
 	_first_button.grab_focus()
 
 
@@ -200,6 +193,7 @@ func _clear_panel() -> void:
 
 func _open_panel(title: String, build: Callable) -> void:
 	_main_layout.hide()
+	_title_art.hide();_subtitle_label.hide();_ambience.set_active(false)
 	_navigation_hint.hide()
 	_menu_column.visible = false
 	_title_art.visible = false
@@ -311,7 +305,7 @@ func _build_credits(column: VBoxContainer) -> void:
 	column.add_child(UiStyle.label("Cenário: pacote Sunny Land", 11, UiStyle.MUTED_COLOR))
 	column.add_child(UiStyle.label("Nico: arte gerada por IA e recortada no projeto", 11, UiStyle.MUTED_COLOR))
 	column.add_child(UiStyle.label("Logo: arte gerada por IA", 11, UiStyle.MUTED_COLOR))
-	column.add_child(UiStyle.label("Fundo e interface: desenhados no projeto", 11, UiStyle.MUTED_COLOR))
+	column.add_child(UiStyle.label("Paisagem do menu: arte gerada por IA", 11, UiStyle.MUTED_COLOR))
 	column.add_child(UiStyle.label("Código, sons e efeitos: gerados no projeto", 11, UiStyle.MUTED_COLOR))
 	column.add_child(UiStyle.label("Feito em Godot 4.7", 11, UiStyle.MUTED_COLOR))
 
@@ -322,6 +316,7 @@ func _open_free_mode(_unused = null) -> void:
 		return
 	_clear_armed = false
 	_main_layout.hide()
+	_title_art.hide();_subtitle_label.hide();_ambience.set_active(false)
 	_navigation_hint.hide()
 	_clear_panel()
 	var map := preload("res://world/Scripts/island_map.gd").new()
@@ -334,6 +329,7 @@ func _open_free_mode(_unused = null) -> void:
 func _open_collection(_unused = null) -> void:
 	_clear_armed = false
 	_main_layout.hide()
+	_title_art.hide();_subtitle_label.hide();_ambience.set_active(false)
 	_navigation_hint.hide()
 	_clear_panel()
 	var collection := CollectionPanel.new()
@@ -376,43 +372,4 @@ static func _format_time(seconds: float) -> String:
 	var total := int(maxf(seconds, 0.0))
 	return "%d:%02d" % [total / 60, total % 60]
 
-
-# --- Fundo ----------------------------------------------------------------------
-
-func _draw() -> void:
-	var viewport := get_rect().size
-	UiStyle.draw_v_gradient(self, Rect2(Vector2.ZERO, viewport), Color("091d28"), Color("183632"), 32)
-	# Um horizonte de baixo contraste deixa espaço livre em volta das ações.
-	var horizon := viewport.y * 0.82
-	draw_colored_polygon(PackedVector2Array([
-		Vector2(viewport.x * 0.40, horizon + 18), Vector2(viewport.x * 0.56, horizon - 8),
-		Vector2(viewport.x * 0.68, horizon + 4), Vector2(viewport.x * 0.85, horizon - 12),
-		Vector2(viewport.x, horizon - 2), Vector2(viewport.x, viewport.y),
-		Vector2(viewport.x * 0.40, viewport.y),
-	]), Color(0.035, 0.12, 0.14, 0.45))
-	if not is_instance_valid(_panel_holder) or _panel_holder.get_child_count() > 0:
-		return
-	_draw_nico(viewport)
-
-
-func _draw_nico(viewport: Vector2) -> void:
-	var pixel_scale := maxf(3.0, floorf(minf(viewport.x / 106.0, viewport.y / 60.0)))
-	var center_x := roundf(viewport.x * 0.75)
-	var floor_y := roundf(viewport.y * 0.79)
-	var halo_center := Vector2(center_x, floor_y - pixel_scale * 13.0)
-	draw_circle(halo_center, pixel_scale * 17.0, Color(0.27, 0.46, 0.39, 0.13))
-	draw_arc(halo_center, pixel_scale * 17.0, 0, TAU, 64, Color(0.50, 0.72, 0.57, 0.12), 1.0)
-	# Apoio simples e sombra, com os pés registrados no mesmo ponto em todos os quadros.
-	draw_set_transform(Vector2(center_x, floor_y + 9), 0.0, Vector2(1, 0.18))
-	draw_circle(Vector2.ZERO, pixel_scale * 13, Color(0.01, 0.06, 0.08, 0.40))
-	draw_set_transform(Vector2.ZERO)
-	draw_colored_polygon(PackedVector2Array([
-		Vector2(center_x - 82, floor_y + 6), Vector2(center_x - 61, floor_y - 2),
-		Vector2(center_x + 55, floor_y - 2), Vector2(center_x + 80, floor_y + 7),
-		Vector2(center_x + 48, floor_y + 19), Vector2(center_x - 49, floor_y + 19),
-	]), Color("24443b"))
-	draw_line(Vector2(center_x - 59, floor_y - 2), Vector2(center_x + 53, floor_y - 2), Color("577954"), 2.0)
-	var texture: Texture2D = NICO_IDLE[int(_time * 4.0) % NICO_IDLE.size()]
-	var drawn_size := Vector2(33, 32) * pixel_scale
-	draw_texture_rect(texture, Rect2(Vector2(center_x - drawn_size.x * 0.5, floor_y - drawn_size.y), drawn_size), false)
 
