@@ -344,8 +344,7 @@ func _next_level() -> void:
 		return
 	Fx.cancel_hitstop()
 	get_tree().paused = false
-	Save.request_play(true,Save.is_free_mode())
-	get_tree().change_scene_to_file(next_level_scene)
+	preload("res://world/Scripts/island_routes.gd").travel(get_tree(),level_id,next_level_scene,true)
 
 
 func _to_menu() -> void:

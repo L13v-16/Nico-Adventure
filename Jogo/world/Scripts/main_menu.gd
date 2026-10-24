@@ -321,30 +321,14 @@ func _open_free_mode(_unused = null) -> void:
 		_refresh_progress_actions()
 		return
 	_clear_armed = false
-	_open_panel("MODO LIVRE", _build_free_mode)
-
-
-func _build_free_mode(column: VBoxContainer) -> void:
-	column.add_theme_constant_override("separation",5)
-	column.add_child(UiStyle.label("Revisite as ilhas e explore no seu ritmo.", 11, UiStyle.MUTED_COLOR))
-	column.add_child(UiStyle.label("Saldo de cerejas: %d" % Save.get_cherry_balance(), 11, UiStyle.GOLD_COLOR))
-	column.add_child(UiStyle.label("Cerejas já coletadas não reaparecem.",10,UiStyle.MUTED_COLOR))
-	var choices:=GridContainer.new();choices.columns=2;choices.add_theme_constant_override("h_separation",8);choices.add_theme_constant_override("v_separation",6);column.add_child(choices)
-	var phases := [
-		{"n": 1, "name": "A Floresta", "scene": LEVEL_SCENE},
-		{"n": 2, "name": "Costa das Marés", "scene": BEACH_SCENE},
-		{"n": 3, "name": "Floresta Violeta", "scene": MAGIC_SCENE},
-		{"n": 4, "name": "O Submundo", "scene": UNDERWORLD_SCENE},
-		{"n": 5, "name": "Laboratório dos Executivos", "scene": LAB_SCENE},
-		{"n": 6, "name": "A Corporação do Mal", "scene": CORP_SCENE},
-	]
-	for phase: Dictionary in phases:
-		var text := "%d. %s" % [int(phase["n"]), String(phase["name"])]
-		var button := UiStyle.button(text)
-		button.custom_minimum_size = Vector2(230.0, 30.0)
-		button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-		button.pressed.connect(_on_action_pressed.bind(_play_free_scene.bind(String(phase["scene"]))))
-		choices.add_child(button)
+	_main_layout.hide()
+	_navigation_hint.hide()
+	_clear_panel()
+	var map := preload("res://world/Scripts/island_map.gd").new()
+	map.name = "FreeIslandMap"
+	map.selection_mode = true
+	map.back_requested.connect(_on_back_pressed)
+	_panel_holder.add_child(map)
 
 
 func _open_collection(_unused = null) -> void:

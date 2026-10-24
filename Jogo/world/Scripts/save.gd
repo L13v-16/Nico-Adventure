@@ -31,6 +31,9 @@ var _cherry_balance := 0
 ## Transitório (não vai para o disco): o menu pede à fase para pular a abertura.
 var _pending_skip_intro := false
 var _free_mode := false
+## Map routing is transient: opening a map never edits campaign or wallet data.
+var pending_island_trip: Dictionary = {}
+var last_map_island := 0
 var _collected_cherries: Dictionary = {}
 var _legacy_cherry_locks: Dictionary = {}
 var _story_flags: Dictionary = {}
@@ -222,6 +225,8 @@ func mark_level_complete(level_id: String, stats: Dictionary) -> Dictionary:
 
 
 func reset_progress() -> void:
+	pending_island_trip.clear()
+	last_map_island = 0
 	_levels.clear()
 	_story_flags.clear()
 	_owned_equipment.clear()

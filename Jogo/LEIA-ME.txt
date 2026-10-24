@@ -1,3 +1,14 @@
+Mapa das ilhas — v85
+
+Mapa ilustrado entre as fases, com Nico voando sobre a Arara Minas.
+Modo livre: clique diretamente nas seis ilhas ou use setas e Enter.
+Cancelar / Esc volta à seleção durante o voo; Esc no mapa volta ao menu.
+O Submundo está abaixo das outras ilhas. Após a floresta mágica, Nico e
+Arara seguem para o laboratório; o disparo da corporação os derruba,
+conforme a cutscene de abertura do Submundo. A próxima viagem retoma a
+rota para o laboratório. Cerejas e compras mantêm os dados já salvos.
+Arte e prompts: world/Arte/Map/V85/README.md e prompts.json.
+
 NOVIDADES v84 — MÚSICAS DO LABORATÓRIO E DA CORPORAÇÃO
 
 Laboratório: Corrosive Curiosities. Largato: Largato’s Mad Catalyst.
