@@ -122,18 +122,18 @@ func _draw_scene() -> void:
 		elif index==4:_canvas.draw_line(Vector2(525,200),Vector2(560,180),Color("d6c8a8"),4)
 	_canvas.draw_rect(Rect2(0,0,640,34),Color("0b111d"));_canvas.draw_rect(Rect2(0,278,640,82),Color("0b111d"))
 	var title:="A CORPORAÇÃO DO MAL";var speaker:="NICO";var text:="Chegamos à sede. Desta vez, vamos encerrar os sequestros."
-	if mode=="arrival" and clock>3.5:speaker="LOBO · TRANSMISSÃO";text="Visitantes devem retirar uma senha. A sua é: contenção imediata."
+	if mode=="arrival" and clock>3.5:speaker="LOBO LÁZARO · TRANSMISSÃO";text="Visitantes devem retirar uma senha. A sua é: contenção imediata."
 	elif mode=="boss":
-		title="LOBO · PRESIDENTE EXECUTIVO"
-		speaker="LOBO";text="Eu mesmo vou encerrar este problema. Considere sua visita... demitida."
+		title="LOBO LÁZARO · PRESIDENTE EXECUTIVO"
+		speaker="LOBO LÁZARO";text="Eu mesmo vou encerrar este problema. Considere sua visita... demitida."
 		if clock>4.5:speaker="NICO";text="Eu vim buscar o Mico-leão-dourado. Você vai libertar meu amigo e responder pelos sequestros."
 	elif mode=="boarding":
 		title="PLANO B · ORÇAMENTO DE DEFESA"
-		speaker="LOBO";text="Luta justa? Isso nunca constou no contrato. Ativar unidade executiva!"
+		speaker="LOBO LÁZARO";text="Luta justa? Isso nunca constou no contrato. Ativar unidade executiva!"
 		if clock>5.8:speaker="NICO";text="Pode se esconder na máquina. Eu vou acabar com essa corporação."
 	elif mode=="friends":
 		title="NINGUÉM FICA PARA TRÁS"
-		if clock<3:speaker="LOBO";text="Fim da sua aventura, pequena amostra."
+		if clock<3:speaker="LOBO LÁZARO";text="Fim da sua aventura, pequena amostra."
 		elif clock<16:
 			var i:=clampi(int((clock-3)/2.6),0,4);speaker=NAMES[i].to_upper();text=ACTIONS[i]
 		else:speaker="NICO";text="Eu comecei sozinho. Vamos terminar juntos!"
@@ -151,4 +151,3 @@ func _draw_scene() -> void:
 		var label:=Label.new();label.name="Dialogue";label.position=Vector2(24,305);label.size=Vector2(590,35);label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.add_theme_font_size_override("font_size",13);_canvas.add_child(label)
 	_canvas.get_node("Dialogue").text=text
 	_canvas.draw_string(font,Vector2(446,353),"E / Espaço · continuar",HORIZONTAL_ALIGNMENT_LEFT,-1,9,Color("a1afbd"))
-

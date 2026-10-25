@@ -11,7 +11,7 @@ const Catalog := preload("res://world/Scripts/equipment_catalog.gd")
 const SAVE_PATH := "user://save.cfg"
 const SAVE_TEMP_PATH := "user://save.cfg.tmp"
 const CAMPAIGN_LEVEL_IDS := ["fase_1", "fase_2", "fase_3", "fase_4", "fase_5", "fase_6"]
-const STORY_FLAGS := ["jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued", "lab_puzzle_1_solved", "lab_puzzle_1_card", "lab_puzzle_4_solved", "lab_puzzle_4_card", "lab_puzzle_5_solved", "lab_puzzle_5_card", "mico_rescued", "corporation_defeated"]
+const STORY_FLAGS := ["circus_plan_exposed","jose_rescued", "elemental_mastery", "depth_key", "lab_arrived", "lab_entrance_breached", "lab_3d_hatching_seen", "lab_dimension_breach_seen", "lab_largato_defeated", "urso_rescued", "lab_puzzle_1_solved", "lab_puzzle_1_card", "lab_puzzle_4_solved", "lab_puzzle_4_card", "lab_puzzle_5_solved", "lab_puzzle_5_card", "mico_rescued", "corporation_defeated"]
 const MAX_CHERRY_BALANCE := 9223372036854775807
 const RANK_ORDER := ["D", "C", "B", "A", "S"]
 const FIRST_LEVEL_SCENE := "res://world/word_01.tscn"
@@ -34,6 +34,9 @@ var _free_mode := false
 ## Map routing is transient: opening a map never edits campaign or wallet data.
 var pending_island_trip: Dictionary = {}
 var last_map_island := 0
+var _collected_fragments: Dictionary = {}
+var _legacy_fragments: Dictionary = {}
+const FRAGMENT_LIMITS := {"fase_1":3,"fase_2":3,"fase_3":3,"fase_4":3,"fase_5":6,"fase_6":6}
 var _collected_cherries: Dictionary = {}
 var _legacy_cherry_locks: Dictionary = {}
 var _story_flags: Dictionary = {}
@@ -64,6 +67,25 @@ func is_game_completed() -> bool:
 			return false
 	return true
 
+
+## Unique locations survive deaths, unfinished runs and free-mode replays.
+func fragment_count() -> int:
+	var count:=0
+	for id in CAMPAIGN_LEVEL_IDS:
+		count+=maxi(int(_legacy_fragments.get(id,0)),(_collected_fragments.get(id,{}) as Dictionary).size())
+	return count
+
+func collect_fragment(level_id:String,fragment_id:String) -> bool:
+	if level_id not in CAMPAIGN_LEVEL_IDS or fragment_id.is_empty() or fragment_id.length()>128:return false
+	var previous:Dictionary=_collected_fragments.get(level_id,{}).duplicate()
+	if previous.has(fragment_id):return true
+	if previous.size()>=int(FRAGMENT_LIMITS[level_id]):return true # Keep run statistics collectable after a layout migration.
+	var collected:=previous.duplicate();collected[fragment_id]=true
+	_collected_fragments[level_id]=collected
+	if not _save():
+		_collected_fragments[level_id]=previous
+		return false
+	return true
 
 func get_cherry_balance() -> int:
 	return _cherry_balance
@@ -231,6 +253,8 @@ func reset_progress() -> void:
 	_story_flags.clear()
 	_owned_equipment.clear()
 	_equipped_equipment.clear()
+	_collected_fragments.clear()
+	_legacy_fragments.clear()
 	_collected_cherries.clear()
 	_legacy_cherry_locks.clear()
 	_free_mode=false
@@ -342,6 +366,8 @@ func _load() -> void:
 	_cherry_balance = 0
 	_pending_skip_intro = false
 	_free_mode=false
+	_collected_fragments.clear()
+	_legacy_fragments.clear()
 	_collected_cherries.clear()
 	_legacy_cherry_locks.clear()
 	var config := ConfigFile.new()
@@ -379,6 +405,15 @@ func _load() -> void:
 			"total_enemies": int(config.get_value(section, "total_enemies", 0)),
 			"total_secrets": int(config.get_value(section, "total_secrets", 3)),
 		}
+	for id in CAMPAIGN_LEVEL_IDS:
+		var entries:Variant=config.get_value("fragment_history",id,[])
+		var found:Dictionary={}
+		if entries is Array or entries is PackedStringArray:
+			for entry in entries:
+				if entry is String and not entry.is_empty() and entry.length()<=128 and found.size()<int(FRAGMENT_LIMITS[id]):found[entry]=true
+		_collected_fragments[id]=found
+		var old_count:int=int(config.get_value("fragment_history","legacy_"+id,0)) if config.get_value("fragment_history","version",0)==1 else int(get_level_stats(id).get("secrets",0))
+		_legacy_fragments[id]=clampi(old_count,0,int(FRAGMENT_LIMITS[id]))
 	if config.get_value("cherry_history","version",0)==1:
 		for level_id in CAMPAIGN_LEVEL_IDS:
 			var stored:Variant=config.get_value("cherry_history",level_id,[])
@@ -415,6 +450,10 @@ func _save() -> bool:
 	config.set_value("progress", "levels", _levels.keys())
 	config.set_value("video", "fullscreen", _fullscreen)
 	config.set_value("video", "camera_shake", _camera_shake)
+	config.set_value("fragment_history","version",1)
+	for id in CAMPAIGN_LEVEL_IDS:
+		config.set_value("fragment_history",id,(_collected_fragments.get(id,{}) as Dictionary).keys())
+		config.set_value("fragment_history","legacy_"+id,int(_legacy_fragments.get(id,0)))
 	config.set_value("cherry_history","version",1)
 	config.set_value("cherry_history","legacy_completed",_legacy_cherry_locks.keys())
 	for level_id in CAMPAIGN_LEVEL_IDS:

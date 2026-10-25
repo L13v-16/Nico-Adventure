@@ -318,7 +318,7 @@ func interact() -> bool:
 			return true
 		"archive_console":
 			level.notice(record_text, 7.0)
-			if secret_record and not collected:
+			if secret_record and not collected and Save.collect_fragment("fase_5","archive:%d:%s"%[sector,str(position)]):
 				collected = true
 				level.secrets_found += 1
 				Sfx.checkpoint()

@@ -1,3 +1,31 @@
+REVISÃO V96 — PROJETO CIRCO E ÁLBUM DE LEMBRANÇAS
+
+Corporação (2D): entre pela porta da Sala dos Computadores no Centro de
+Controle. A cena revela o plano de Lobo Lázaro de transformar as ilhas em
+circos e explorar os animais. Assistir ou pular copia as mesmas provas.
+Examine o terminal central com E para rever a gravação; volte pela porta,
+copie as provas no terminal do lockdown e siga para a cobertura.
+Arquivos mostram capturas reais do Vale, praia, floresta mágica, Submundo,
+laboratório e Corporação, no monitor CRT. Setas trocam; E / Esc fecha.
+Terminais foram apoiados no piso; prateleiras da fábrica ficaram mais largas.
+Lobo Lázaro usa os sprites da primeira aparição e mantém o combate a pé
+antes de entrar no robô. A câmera da arena fica estável durante os saltos.
+Na última etapa: espere o golpe, os amigos agem e abrem o visor por 18 s.
+Suba as plataformas, salte os tambores ou quebre com J / congele com GELO.
+Acerte o piloto no alto. Cada abertura aceita um ponto de dano; a janela
+volta a abrir caso Nico não consiga chegar a tempo. Morte reinicia a etapa.
+O resgate do Mico-leão-dourado e o reencontro final continuam presentes.
+
+No menu: COLEÇÃO > LEMBRANÇAS. Seis ilustrações de diversão dos amigos,
+liberadas em 1, 3, 6, 9, 12 e 18 fragmentos únicos, sem gastar fragmentos.
+Clique em Ampliar lembrança para ver a imagem inteira. Esc volta ao álbum.
+Coletas são salvas imediatamente, mesmo antes de terminar uma fase.
+Repetir a mesma coleta não gera progresso extra; cerejas são independentes.
+Saves antigos aproveitam os melhores segredos registrados em cada ilha,
+sem contar os mesmos fragmentos duas vezes ao revisitar as fases.
+PNG e prompts: world/Arte/MemoriesV96, com SHA-256 e referências originais.
+Imagens geradas com image_gen integrado; evidências capturadas no Godot.
+
 Largato e Lobo 3D — v95
 
 O Lobo do laboratório usa o GLB fornecido em 24/10, com texturas preservadas,

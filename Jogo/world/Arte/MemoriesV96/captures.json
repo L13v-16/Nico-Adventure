@@ -1,0 +1,19 @@
+{
+  "method": "Native Godot viewport captures, no raster edits. HUD layers hidden in capture; grayscale/CRT applied only by in-game shader. Dedicated APPDATA, never real user saves.",
+  "files": {
+    "evidence_beach.png": "51abce4c6ede4008f5de612d981552d0d26c99718290f2def036b1954d3a5853",
+    "evidence_corporation.png": "76562f0cfeeceb1fadc5a38202400f08a95fa847d3cdc16cacc115d52dbb5317",
+    "evidence_forest.png": "03f2170ebcc21855a69b5e3d8ebaddebbf6462e26b3a07cb3cfeb50d9c149908",
+    "evidence_lab.png": "e2167fcb2c64060f6ea416aed4bfe14d1bfb04d486a44a408d82a99b94058f99",
+    "evidence_magic.png": "27645af2b9e51f614b468f97ecf3f50d2173dd8d43861946d7199dcdd8f2c9da",
+    "evidence_underworld.png": "74abd6ea5e2bc3c6bb66e6f8923e4158ab0a14c6142b73d98a082116fadc7fb2"
+  },
+  "scenes": [
+    "word_01.tscn",
+    "beach_02.tscn",
+    "magic_03.tscn",
+    "underworld_04.tscn",
+    "lab_05.tscn (3D)",
+    "corporation_06.tscn"
+  ]
+}

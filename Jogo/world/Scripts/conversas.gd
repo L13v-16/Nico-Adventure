@@ -10,7 +10,7 @@ const CONVERSAS := {
 	"raposa": [
 		{
 			"texto": "Quem levou os nossos amigos?",
-			"resposta": "Os capangas da Corporação. Um deles usava crachá dourado: o Seu Lobo, o chefão da trilha.",
+			"resposta": "Os capangas da Corporação. Um deles usava crachá dourado: o Lobo Lázaro, o chefão da trilha.",
 			"cara": 4,
 		},
 		{
@@ -20,7 +20,7 @@ const CONVERSAS := {
 		},
 		{
 			"texto": "Quem manda nessa Corporação?",
-			"resposta": "Três figurões: o Lobo, Triple H e o Urubu. Cada um armou um escritório no meio do caminho.",
+			"resposta": "Três figurões: o Lobo Lázaro, Triple H e o Urubu. Cada um armou um escritório no meio do caminho.",
 			"cara": 4,
 		},
 		{

@@ -29,6 +29,12 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if taken or not body.is_in_group("player"):
 		return
+	var level:=get_parent()
+	var level_id:String=str(level.get("level_id"))
+	var before:=Save.fragment_count()
+	if not Save.collect_fragment(level_id,"fragment:%d:%d"%[roundi(position.x),roundi(position.y)]):return
+	var new_memory:=preload("res://world/Scripts/memories_catalog.gd").unlocked_count(Save.fragment_count())>preload("res://world/Scripts/memories_catalog.gd").unlocked_count(before)
+	if new_memory:Fx.popup(global_position+Vector2(0,-34),"Nova lembrança na Coleção!",Color("b9dea1"),10)
 	taken = true
 	set_deferred("monitoring", false)
 	Sfx.secret()

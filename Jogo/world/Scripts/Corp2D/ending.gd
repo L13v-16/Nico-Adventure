@@ -66,7 +66,7 @@ func _update_cast() -> void:
 	elif chapter==1:_update_rescue()
 	elif chapter==2:
 		_remember_rescue()
-		_caption.text="As provas dos sequestros chegaram às ilhas. Lobo, Urus, Triple H e Largato: atrás das grades."
+		_caption.text="As provas dos sequestros chegaram às ilhas. Lobo Lázaro, Urus, Triple H e Largato: atrás das grades."
 	else:_update_town()
 
 func _update_rescue() -> void:

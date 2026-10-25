@@ -22,11 +22,20 @@ func _text(text:String,size:int,rect:Rect2) -> Label:
 	var node:=Label.new();node.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;node.text=text;node.position=rect.position;node.size=rect.size;node.add_theme_font_size_override("font_size",size);node.add_theme_color_override("font_color",GREEN);node.mouse_filter=Control.MOUSE_FILTER_IGNORE;_canvas.add_child(node);return node
 func _button(text:String,rect:Rect2,action:Callable) -> Button:
 	var button:=preload("res://world/Scripts/ui_style.gd").button(text,10);button.position=rect.position;button.size=rect.size;button.pressed.connect(action);button.add_theme_color_override("font_color",GREEN);_canvas.add_child(button);return button
+const RECORD_IMAGES := {
+	"forest":[["forest","VALE DAS COPAS"],["magic","FLORESTA VIOLETA"]],
+	"beach":[["beach","COSTA DAS MARÉS"]],
+	"underworld":[["underworld","SUBMUNDO"]],
+	"lab":[["lab","LABORATÓRIO DOS EXECUTIVOS"]],
+	"office":[["corporation","SEDE DA CORPORAÇÃO"]],
+	"prototype":[["corporation","UNIDADE EXECUTIVA"]],
+}
 func _change_page(direction:int) -> void:
-	page=posmod(page+direction,3)
-	var path:="res://world/Arte/CorpV86/evidence_%d.png"%page
+	var images:Array=RECORD_IMAGES.get(record_id,RECORD_IMAGES.office)
+	page=posmod(page+direction,images.size())
+	var path:="res://world/Arte/MemoriesV96/evidence_"+str(images[page][0])+".png"
 	if ResourceLoader.exists(path):image_view.texture=load(path)
-	_page_label.text="CAM %02d · NICO EM AÇÃO · %d / 3"%[page+1,page+1]
+	_page_label.text="%s · %d / %d"%[str(images[page][1]),page+1,images.size()]
 func _process(delta:float) -> void:
 	clock+=delta;_canvas.queue_redraw()
 func _input(event:InputEvent) -> void:

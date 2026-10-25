@@ -18,11 +18,13 @@ var _sector_label:Label
 var _alert_label:Label
 var _boss_label:Label
 var _bar:ProgressBar
+var _arena_camera:Camera2D
+var _plan_seen:=false
 var _encounter:Node2D
 func _ready() -> void:
 	Layout.build(self);_encounter=$Boss;_encounter.defeated.connect(_boss_defeated)
 	notice.position=Vector2(165,80);notice.size=Vector2(455,40);notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;notice.add_theme_font_size_override("font_size",10)
-	_build_overlay();super._ready();frame_camera(true)
+	_build_overlay();super._ready();_arena_camera=Camera2D.new();_arena_camera.name="ArenaCamera";_arena_camera.enabled=false;add_child(_arena_camera);frame_camera(true)
 	player.respawned.connect(_reset_after_death)
 func _polish_terrain() -> void:pass
 func _spawn_fragments() -> void:total_secrets=6
@@ -55,7 +57,7 @@ func _process(delta:float) -> void:
 	if _last_detection<=0:alert=maxf(0,alert-10*delta)
 	frame_camera(false)
 	_sector_label.text=Layout.NAMES[sector].to_upper()
-	_alert_label.text=("VIGILÂNCIA DESLIGADA" if security_off>0 else "ALERTA %02d%%"%int(alert)) if sector<4 else "LOBO · PRESIDENTE EXECUTIVO"
+	_alert_label.text=("VIGILÂNCIA DESLIGADA" if security_off>0 else "ALERTA %02d%%"%int(alert)) if sector!=4 else "LOBO LÁZARO · PRESIDENTE EXECUTIVO"
 	_alert_label.modulate=Color("ff9e8b") if alert>=65 else Color("d4c8ab")
 	_bar.visible=_encounter.active;_boss_label.visible=_encounter.active
 	if _encounter.active:_bar.max_value=4 if _encounter.phase==0 else 3;_bar.value=_encounter.health;_boss_label.text=_encounter.status()
@@ -72,20 +74,26 @@ func _physics_process(delta:float) -> void:
 		player.velocity.x+=wind*delta*(.15 if player.equipment.is_equipped("magnetic_boots") else 1)
 func frame_camera(snap:bool=false) -> void:
 	var camera:Camera2D=player.get_node("Camera2D")
+	var arena:bool=sector==5 or (sector==4 and (_encounter.active or _encounter.boarding or _encounter.phase>0))
+	if is_instance_valid(_arena_camera):
+		_arena_camera.enabled=arena
+		if arena:
+			_arena_camera.position=Vector2(10380,-40) if sector==5 else Vector2(8870,-80);_arena_camera.zoom=Vector2.ONE*(.85 if sector==5 else .78)
+			_arena_camera.offset=Vector2.ZERO;_arena_camera.make_current()
+			return
+	camera.make_current()
 	var bounds:Rect2=Layout.BOUNDS[sector]
 	camera.limit_left=int(bounds.position.x);camera.limit_right=int(bounds.end.x);camera.limit_top=int(bounds.position.y);camera.limit_bottom=int(bounds.end.y)
-	camera.zoom=Vector2.ONE*(1.55 if sector!=4 else (.8 if _encounter.active else 1.25))
+	camera.zoom=Vector2.ONE*(1.55 if sector!=4 else 1.25)
 	player._camera_base_offset=Vector2(65,-55 if sector!=4 else -65)
-	if _encounter.active:
-		player._camera_base_offset=Vector2(8870-player.position.x-player._camera_look,-95-player.position.y)
 	if snap:camera.reset_smoothing()
 func context_hint() -> String:
 	if _encounter.active:
-		if _encounter.phase==0:return "Salte a investida · desvie da caneta · contra-ataque quando o Lobo recuperar o fôlego"
-		return "Pule as ondas · espere a luz do núcleo · J: atacar · K: poder · Q: trocar" if _encounter.phase==1 else ("FOGO no regulador vermelho + GELO no azul · depois acerte o núcleo" if _encounter.phase==2 else "Suba pelos braços travados · acerte a cabine iluminada no alto")
+		if _encounter.phase==0:return "Salte a investida · desvie da caneta · contra-ataque quando o Lobo Lázaro recuperar o fôlego"
+		return "Pule as ondas · espere a luz do núcleo · J: atacar · K: poder · Q: trocar" if _encounter.phase==1 else ("FOGO no regulador vermelho + GELO no azul · depois acerte o núcleo" if _encounter.phase==2 else "Espere o golpe e a ajuda dos amigos · salte os tambores · suba até o visor aberto")
 	var nearest:=nearby_device()
 	if nearest!=null:return nearest.hint()
-	return ["E: interagir · J: atacar · K: poder · Q: fogo / gelo · I: mochila", "Pise nos elevadores e espere · J quebra vidro · siga as cerejas para subir", "GELO pausa prensas · FOGO no vermelho e GELO no azul sabotam o circuito", "Volte ao elevador da entrada! O lockdown acelerou as máquinas." if lockdown else "Procure as provas no terminal à direita. E examina arquivos.", "Encontre o Lobo na cobertura. Seus amigos estão a caminho."][sector]
+	return ["E: interagir · J: atacar · K: poder · Q: fogo / gelo · I: mochila", "Pise nos elevadores e espere · J quebra vidro · siga as cerejas para subir", "GELO pausa prensas · FOGO no vermelho e GELO no azul sabotam o circuito", "Volte ao elevador da entrada! O lockdown acelerou as máquinas." if lockdown else "Procure as provas no terminal à direita. E examina arquivos.", "Encontre o Lobo Lázaro na cobertura. Seus amigos estão a caminho.", "E: assistir ao projeto do circo · copie as provas antes de sair"][sector]
 func nearby_device() -> Node2D:
 	var closest:Node2D;var distance:=58.0
 	for device in get_tree().get_nodes_in_group("corp_devices"):
@@ -113,13 +121,16 @@ func travel(door:Node2D) -> void:
 	var destination:int=door.destination
 	if sector==0 and alert>=65:tell("Alerta bloqueou a porta. Use o terminal ao lado ou espere fora da visão.");return
 	if sector==2 and not machine_sabotaged:tell("A porta precisa de choque térmico: FOGO no vermelho e GELO no azul.");return
-	if sector==3 and lockdown:destination=4
+	if sector==3 and lockdown and destination!=5:destination=4
+	if sector==3 and door.kind=="door" and door.destination==2 and not _plan_seen:tell("Entre na sala de computadores à direita e examine o projeto do circo.");return
+	if sector==5 and not _plan_seen:tell("Use E no terminal central para copiar o plano do circo.");return
 	_transitioning=true;intro_active=true;pause_menu.can_open=false;player.velocity=Vector2.ZERO;player._cancel_attack();player.set_physics_process(false)
 	door._art.texture=preload("res://world/Scripts/Corp2D/art.gd").cell("props",5);Sfx.play("lab_door",-10)
 	var tween:=create_tween();tween.tween_property(_fade,"modulate:a",1,.18);await tween.finished
 	sector=destination;player.position=Layout.LANDINGS[sector];player.set_checkpoint(player.position);active_checkpoint=null;player.heal_full();player._invulnerability_timer=1.3;alert=0;clear_shots();frame_camera(true)
 	tween=create_tween();tween.tween_property(_fade,"modulate:a",0,.25);await tween.finished
 	player.set_physics_process(true);intro_active=false;_transitioning=false;pause_menu.can_open=true;tell(Layout.NAMES[sector])
+	if sector==5 and not _plan_seen:await reveal_plan()
 func reverse_circuit(link:String,on:bool) -> void:
 	for device in get_tree().get_nodes_in_group("corp_devices"):
 		if device.link==link and device.kind=="conveyor":device.activated=on;device._art.flip_h=on
@@ -138,7 +149,7 @@ func power_relay(link:String,element:String) -> void:
 	else:tell("Agora use "+("GELO no regulador azul." if _heated else "FOGO no regulador vermelho."))
 func start_lockdown() -> void:
 	lockdown=true;security_off=0;alert=75;tell("PROVAS COPIADAS · LOCKDOWN! Volte pela sala ao elevador de entrada.")
-	for at in [Vector2(6530,100),Vector2(6910,-30)]:
+	for at in [Vector2(6530,100),Vector2(6910,100)]:
 		var enemy:Node2D=Layout.enemy(self,3,1 if at.y<0 else 0,at);enemy.died.connect(_on_enemy_died);total_enemies+=1
 	Sfx.play("lab_scan",-6)
 func shoot(at:Vector2,flight:Vector2,wave:bool=false,electrical:bool=true,style:String="energy") -> void:
@@ -161,7 +172,7 @@ func buy_acai_power() -> bool:
 	return true
 func _on_finish_entered(_body:Node2D) -> void:pass
 func _reset_after_death() -> void:
-	for i in 5:
+	for i in Layout.BOUNDS.size():
 		if Layout.BOUNDS[i].has_point(player.position):sector=i;break
 	alert=0;security_off=2;_encounter.reset_encounter();frame_camera(true);clear_shots()
 func _start_boss() -> void:
@@ -192,10 +203,18 @@ func play_scene(mode:String) -> CanvasLayer:
 	var script:GDScript=preload("res://world/Scripts/Corp2D/ending.gd") if mode=="ending" else preload("res://world/Scripts/Corp2D/cutscene.gd")
 	var scene:CanvasLayer=script.new();scene.level=self;scene.mode=mode;add_child(scene);return scene
 func show_record(id:String,kind:String) -> void:
-	var records:Dictionary={"forest":["PROJETO COPA","Extração mágica da floresta. Animais tratados como recursos. Nico interrompeu a operação."],"underworld":["PROJETO PROFUNDEZA","Correntes e energia do Submundo. O guardião foi enganado por contratos falsos."],"lab":["RELATÓRIO LARGATO","Testes de resistência em Urso. Diretor indisponível após falha no próprio composto."],"office":["GABINETE DO PRESIDENTE","Último prisioneiro: Mico-leão-dourado. Cela na cobertura, trava ligada à unidade executiva. Desativar a máquina e soltar a grade. Risco não previsto: amizade e cabeçadas."],"prototype":["ROBÔ · ENSAIO DE IMPACTO","O punho trava depois do golpe. Salte a onda e ataque o núcleo aceso. A armadura reserva usa reguladores de fogo e gelo."]}
+	var records:Dictionary={"beach":["OPERAÇÃO COSTA","Urus coordenou a captura da Tartaruga. O litoral seria convertido em espetáculo turístico."],"forest":["PROJETO COPA","Extração mágica da floresta. Animais tratados como recursos. Nico interrompeu a operação."],"underworld":["PROJETO PROFUNDEZA","Correntes e energia do Submundo. O guardião foi enganado por contratos falsos."],"lab":["RELATÓRIO LARGATO","Testes de resistência em Urso. Diretor indisponível após falha no próprio composto."],"office":["GABINETE DO PRESIDENTE","Último prisioneiro: Mico-leão-dourado. Cela na cobertura, trava ligada à unidade executiva. Desativar a máquina e soltar a grade. Risco não previsto: amizade e cabeçadas."],"prototype":["ROBÔ · ENSAIO DE IMPACTO","O punho trava depois do golpe. Salte a onda e ataque o núcleo aceso. A armadura reserva usa reguladores de fogo e gelo."]}
 	var data:Array=records.get(id,["ARQUIVO RESERVADO","As provas confirmam quem ordenou os sequestros."])
 	var scene:=preload("res://world/Scripts/Corp2D/archive_panel.gd").new();scene.level=self;scene.record_id=id;scene.record_title=data[0];scene.record_text=data[1];add_child(scene)
 func unlock_secret(device:Node2D) -> void:
-	show_record("office","secret")
+	show_record("beach","secret")
 	for i in 5:
 		var item:=preload("res://prefabs/item.tscn").instantiate();item.cherry_id="corp:secret:%d"%i;item.position=device.position+Vector2(i*18-36,-17);$items.add_child(item);total_gems+=1
+
+func reveal_plan() -> void:
+	if intro_active or _transitioning:return
+	var scene:=preload("res://world/Scripts/Corp2D/circus_scene.gd").new();scene.level=self;add_child(scene)
+	await scene.finished
+	_plan_seen=true
+	Save.set_story_flag("circus_plan_exposed")
+	tell("PROJETO CIRCO COPIADO · volte pela porta e use o terminal de provas.")

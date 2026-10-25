@@ -1,21 +1,26 @@
 extends RefCounted
-const NAMES:=["Saguão Executivo","Torre Administrativa","Complexo de Armamentos","Centro de Controle","Cobertura Executiva"]
-const BOUNDS:=[Rect2(0,-200,1450,520),Rect2(2000,-670,1400,990),Rect2(4000,-230,1500,550),Rect2(6000,-240,1500,560),Rect2(8100,-420,1400,740)]
-const LANDINGS:=[Vector2(180,89),Vector2(2100,89),Vector2(4100,89),Vector2(6120,89),Vector2(8350,89)]
+const NAMES:=["Saguão Executivo","Torre Administrativa","Complexo de Armamentos","Centro de Controle","Cobertura Executiva","Sala dos Computadores"]
+const BOUNDS:=[Rect2(0,-200,1450,520),Rect2(2000,-670,1400,990),Rect2(4000,-230,1500,550),Rect2(6000,-240,1500,560),Rect2(8100,-420,1400,740),Rect2(10000,-200,760,520)]
+const LANDINGS:=[Vector2(180,89),Vector2(2100,89),Vector2(4100,89),Vector2(6120,89),Vector2(8350,89),Vector2(10080,89)]
 static func build(level:Node2D) -> void:
 	var terrain:=Node2D.new();terrain.name="Level";level.add_child(terrain)
 	for i in 5:
 		floor_at(level,Vector2(i*2000,100),1450 if i!=1 else 500,100,false)
+	floor_at(level,Vector2(10000,100),760,100,false)
+	device(level,5,"door",Vector2(10055,100),52,"",3)
+	device(level,5,"office",Vector2(10500,100),42,"office")
+	device(level,5,"plan",Vector2(10380,100),48,"circus")
+	device(level,5,"door",Vector2(10700,100),52,"",3)
 	# Broad shelves sit beside the lift at both endpoints; no pixel-perfect jumps.
 	for s in [Vector3(2220,-70,330),Vector3(2550,-250,380),Vector3(2880,-430,460)]:floor_at(level,Vector2(s.x,s.y),s.z,20,true)
 	lift(level,Vector2(2310,100),170);lift(level,Vector2(2660,-70),180);lift(level,Vector2(3000,-250),180)
-	for s in [Vector3(650,30,230),Vector3(4460,35,70),Vector3(4608,35,72),Vector3(4740,-25,230),Vector3(6520,30,240),Vector3(6860,30,230)]:floor_at(level,Vector2(s.x,s.y),s.z,16,true)
+	for s in [Vector3(650,30,230),Vector3(4440,35,106),Vector3(4580,35,106),Vector3(4740,-25,230),Vector3(6520,30,240),Vector3(6860,30,230)]:floor_at(level,Vector2(s.x,s.y),s.z,16,true)
 	# Reception: one camera, a nearby off switch, then a shield guard.
 	device(level,0,"camera",Vector2(500,-25),38)
 	device(level,0,"security",Vector2(355,100),40)
 	device(level,0,"security",Vector2(1200,100),40)
-	device(level,0,"record",Vector2(780,30),36,"forest")
-	device(level,0,"secret",Vector2(1090,100),40)
+	device(level,0,"record",Vector2(980,100),42,"forest")
+	device(level,0,"secret",Vector2(1090,100),40,"beach")
 	enemy(level,0,0,Vector2(870,100))
 	device(level,0,"door",Vector2(1360,100),60,"",1)
 	# Exterior climb: windows break with the same basic attack as early islands.
@@ -30,7 +35,7 @@ static func build(level:Node2D) -> void:
 	device(level,2,"reactor_fire",Vector2(4730,100),42,"factory")
 	device(level,2,"reactor_ice",Vector2(4850,100),42,"factory")
 	device(level,2,"turret",Vector2(5070,-15),38)
-	device(level,2,"record",Vector2(4810,-25),36,"lab")
+	device(level,2,"record",Vector2(5210,100),42,"lab")
 	device(level,2,"door",Vector2(5400,100),60,"",3)
 	enemy(level,2,2,Vector2(5100,100))
 	# Control room must be crossed in both directions after the lockdown.
@@ -38,7 +43,7 @@ static func build(level:Node2D) -> void:
 	device(level,3,"camera",Vector2(6410,-30),38)
 	device(level,3,"security",Vector2(6270,100),40)
 	device(level,3,"prototype",Vector2(6455,100),36,"prototype")
-	device(level,3,"office",Vector2(7150,100),38,"office")
+	device(level,3,"door",Vector2(7150,100),60,"computer",5)
 	device(level,3,"lockdown",Vector2(7310,100),48)
 	device(level,3,"press",Vector2(6810,100),70)
 	enemy(level,3,3,Vector2(7010,100))

@@ -133,10 +133,10 @@ func _words() -> Array[String]:
 	if mode=="arrival":
 		if clock<3.8:return ["JOSÉ","A entrada está trancada. Grandão, abra caminho!"]
 		if clock<6.2:return ["NICO","Esse tremor veio do laboratório inteiro..."]
-		if clock<8.5:return ["LOBO DA CORPORAÇÃO","O que foi isso? Eu pedi resultados, não um terremoto!"]
+		if clock<8.5:return ["LOBO LÁZARO","O que foi isso? Eu pedi resultados, não um terremoto!"]
 		if clock<10.1:return ["LARGATO","A vibração rompeu a contenção. O experimento está eclodindo!"]
 		if clock<12.4:return ["LARGATO","Iniciar protocolo de emergência! Isto... estava quase sob controle."]
-		if clock<14:return ["LOBO DA CORPORAÇÃO","Impeça o guaxinim de chegar à cobertura. Eu cuido dos executivos."]
+		if clock<14:return ["LOBO LÁZARO","Impeça o guaxinim de chegar à cobertura. Eu cuido dos executivos."]
 		return ["NICO","Urso está lá dentro. Vamos encontrá-lo!"]
 	if mode=="boss":return ["LARGATO","Excelente! A cobaia chegou à cobertura. Seu teste final começa agora." if clock<4 else "Não toque no injetor LG-17. É um procedimento perfeitamente aprovado!"]
 	if mode=="ending":return ["URSO","Você voltou por mim! Vamos tirar os outros das mãos da corporação." if clock<4 else "NICO: Ninguém vai ficar para trás. Vamos sair daqui juntos!"]

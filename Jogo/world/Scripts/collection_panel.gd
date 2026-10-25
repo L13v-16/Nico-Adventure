@@ -18,7 +18,7 @@ const CHARACTERS := [
  {"id":"remi", "name":"Remi", "short":"Remi", "art":"Magic/remi_idle.tres", "portrait":"Magic/remi_portrait.tres", "bio":"Um esquilo de cauda fofa, pelagem castanha e lenço azul. Conhece as árvores e os segredos das ilhas.", "where":"Resgate: Floresta Violeta, após Triple H."},
  {"id":"jose", "name":"José, o Bode", "short":"José", "art":"Underworld/jose_idle.tres", "portrait":"Underworld/jose_portrait_neutral.tres", "bio":"Um bode forte de chifres curvos e lenço laranja. Suas cabeçadas quebram paredes, derrubam pilares e empurram objetos pesados.", "where":"Resgate: início do Submundo. Depois, acompanha Nico até a saída."},
  {"id":"urso", "name":"Urso", "short":"Urso", "art":"Amigos/urso", "portrait":"Friends/V47/urso_portrait_neutral.tres", "bio":"Um urso-pardo grande e gentil, com um olhar cansado e um coração tranquilo.", "where":"Mantido em testes de resistência no Laboratório dos Executivos."},
- {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Foi mantido na cela do presidente da corporação.", "where":"Resgate: sede da Corporação, após a batalha contra o Lobo."},
+ {"id":"mico", "name":"Mico-leão-dourado", "short":"Mico-leão", "art":"Amigos/mico_leao_dourado", "portrait":"Friends/V47/mico_portrait_neutral.tres", "bio":"Amigo de pelagem dourada, juba viva e cauda longa. Foi mantido na cela do presidente da corporação.", "where":"Resgate: sede da Corporação, após a batalha contra o Lobo Lázaro."},
 ]
 var _cards:Array[Button]=[]
 var _tabs:Array[Button]=[]
@@ -124,9 +124,9 @@ func _build() -> void:
  tabs.add_theme_constant_override("separation",6)
  column.add_child(tabs)
  var tab_group:=ButtonGroup.new()
- for i in 2:
-  var tab:=_button("Amigos" if i==0 else "Ilhas e recordes")
-  tab.name="FriendsTab" if i==0 else "IslandsTab"
+ for i in 3:
+  var tab:=_button(["Amigos","Ilhas e recordes","Lembranças"][i])
+  tab.name=["FriendsTab","IslandsTab","MemoriesTab"][i]
   tab.size_flags_horizontal=Control.SIZE_EXPAND_FILL
   tab.toggle_mode=true
   tab.button_group=tab_group
@@ -142,6 +142,10 @@ func _build() -> void:
  column.add_child(islands)
  _pages.append(islands)
  islands.hide()
+ var memories:=preload("res://world/Scripts/memories_panel.gd").new()
+ column.add_child(memories)
+ _pages.append(memories)
+ memories.hide()
  _tabs[0].button_pressed=true
  var footer:=HBoxContainer.new()
  footer.add_theme_constant_override("separation",8)
@@ -319,7 +323,7 @@ func _select_character(index:int,play_sound:bool=true) -> void:
 func _show_page(index:int) -> void:
  if _page==index:return
  _page=index
- for i in 2:
+ for i in _pages.size():
   _pages[i].visible=i==index
   _tabs[i].button_pressed=i==index
  _tabs[index].grab_focus()
@@ -337,4 +341,9 @@ func _wire_focus() -> void:
  _tabs[1].focus_neighbor_bottom=island_scroll.get_path()
  island_scroll.focus_neighbor_top=_tabs[1].get_path()
  island_scroll.focus_neighbor_bottom=_back.get_path()
- _back.focus_neighbor_top=_tabs[1].get_path()
+ _back.focus_neighbor_top=_tabs[2].get_path()
+ _tabs[2].focus_neighbor_bottom=(_pages[2].cards[0] as Button).get_path()
+ for i in _pages[2].cards.size():
+  var card:Button=_pages[2].cards[i]
+  card.focus_neighbor_top=(_pages[2].cards[i-1] as Button).get_path() if i>0 else _tabs[2].get_path()
+  card.focus_neighbor_bottom=(_pages[2].cards[i+1] as Button).get_path() if i<5 else _back.get_path()

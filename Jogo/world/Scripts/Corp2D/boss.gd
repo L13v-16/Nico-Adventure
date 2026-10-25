@@ -23,6 +23,7 @@ var wolf:AnimatedSprite2D
 var _wolf_root:Node2D
 var _wolf_direction:=-1.0
 var boarding:=false
+var assault:Node2D
 const Art=preload("res://world/Scripts/Corp2D/art.gd")
 func _ready() -> void:
 	_sprite=Art.sprite("robot",0,320,2);_sprite.z_index=1;add_child(_sprite)
@@ -33,11 +34,11 @@ func _ready() -> void:
 func begin() -> void:
 	if active or dead:return
 	active=true
-	if level.player.position.x<8480:level.player.position=Vector2(8480,89);level.player.velocity=Vector2.ZERO
-	level.player.set_checkpoint(Vector2(8480,89));level.player.heal_full();_timer=2.8
+	if level.player.position.x<8480:level.player.position=Vector2(8510,89);level.player.velocity=Vector2.ZERO
+	level.player.set_checkpoint(Vector2(8510,89));level.player.heal_full();_timer=2.8
 	if phase==0:
 		_wolf_root.show();_sprite.hide();_wolf_root.position=Vector2.ZERO;wolf.play("idle")
-		level.tell("O Lobo vai lutar a pé! Salte a investida e ataque quando ele recuperar o fôlego.")
+		level.tell("O Lobo Lázaro vai lutar a pé! Salte a investida e ataque quando ele recuperar o fôlego.")
 	else:level.tell("Espere o golpe: o núcleo fica exposto depois da onda de impacto.")
 func _physics_process(delta:float) -> void:
 	if not active or dead or level.intro_active or level.player.is_dead():return
@@ -45,7 +46,9 @@ func _physics_process(delta:float) -> void:
 	_sprite.modulate=Color("ffbeae") if _hurt>0 else Color.WHITE
 	if phase==0:
 		_foot_fight(delta);return
-	core.position=Vector2(-50,-240) if phase==3 else Vector2(0,-24)
+	if phase==3 and is_instance_valid(assault):
+		assault.tick(delta);core.queue_redraw();return
+	core.position=Vector2(0,-24)
 	if phase==2 and _heat and _cold and vulnerable<=0:
 		open_window(3.5);_heat=false;_cold=false
 		for node in get_tree().get_nodes_in_group("corp_devices"):
@@ -73,7 +76,7 @@ func _pose(index:int) -> void:
 	_sprite.position=Vector2(-160,-_sprite.texture.get_height()*ratio)
 func open_window(seconds:float) -> void:
 	vulnerable=seconds;_window_hit=false
-	level.tell("LOBO SEM FÔLEGO · contra-ataque!" if phase==0 else ("NÚCLEO EXPOSTO · um golpe certeiro!" if phase<3 else "Suba pelos braços e acerte a cabine iluminada!"))
+	level.tell("LOBO SEM FÔLEGO · contra-ataque!" if phase==0 else ("NÚCLEO EXPOSTO · um golpe certeiro!" if phase<3 else "VISOR ABERTO · amigos em ação · suba e ataque!"))
 func relay(element:String) -> void:
 	if phase!=2 or not active:return
 	if element=="fire":_heat=true
@@ -99,26 +102,28 @@ func _advance_phase() -> void:
 	else:
 		active=false;dead=true;dying=true;_pose(3);Sfx.play("lab_clink",-7);defeated.emit()
 func enable_final_phase() -> void:
-	phase=3;health=3;active=true;_friends_seen=true;_state="wait";_timer=5.0;_pose(2)
+	phase=3;health=3;active=true;_wolf_root.hide();_sprite.show();_friends_seen=true;_state="wait";_timer=5.0;_pose(2)
 	core.position=Vector2(-50,-240)
-	for info in [Vector3(-310,-50,100),Vector3(-225,-100,100),Vector3(-140,-150,100),Vector3(-55,-200,100),Vector3(-80,-250,100)]:
-		var ledge:=preload("res://world/Scripts/Corp2D/terrain.gd").new();ledge.position=position+Vector2(info.x,info.y);ledge.width=info.z;ledge.depth=10;ledge.platform=true;ledge.variant=1;ledge.z_index=2;level.add_child(ledge);steps.append(ledge)
-	level.player.position=Vector2(8480,89);level.player.velocity=Vector2.ZERO;level.player.set_checkpoint(level.player.position);level.player.heal_full()
-	level.tell("Os amigos travaram os braços! Suba até a cabine; espere a luz do núcleo.")
+	if not is_instance_valid(assault):
+		assault=preload("res://world/Scripts/Corp2D/final_assault.gd").new();assault.boss=self;assault.z_index=3;add_child(assault)
+	level.player.position=Vector2(8510,89);level.player.velocity=Vector2.ZERO;level.player.set_checkpoint(level.player.position);level.player.heal_full()
+	level.tell("Espere o golpe! Os amigos abrirão o visor; suba desviando dos tambores.")
 func reset_encounter() -> void:
 	if dead:return
 	active=false;health=4 if phase==0 else 3;vulnerable=0;_state="wait";_timer=3;_heat=false;_cold=false;_window_hit=false;boarding=false;level.clear_shots()
 	_wolf_root.visible=phase==0;_sprite.visible=phase>0;_wolf_root.position=Vector2.ZERO;wolf.play("idle")
-	if phase==3:_timer=5
+	if phase==3:
+		_timer=5
+		if is_instance_valid(assault):assault.reset()
 	_pose(2 if phase>1 else 0)
 func status() -> String:
-	if phase==0:return "LOBO · ACERTO DE CONTAS"
+	if phase==0:return "LOBO LÁZARO · ACERTO DE CONTAS"
 	return ["PROTOCOLO DE DEMISSÃO","FALHA TÉRMICA","JUNTOS ATÉ O TOPO"][phase-1]
 func enter_robot() -> void:
 	boarding=false;phase=1;health=3;active=true;_wolf_root.hide();_sprite.show();_pose(0)
 	_state="wait";_timer=3;vulnerable=0;_window_hit=false;_attack=0
-	level.player.position=Vector2(8480,89);level.player.velocity=Vector2.ZERO;level.player.set_checkpoint(level.player.position);level.player.heal_full();level.clear_shots()
-	level.tell("O Lobo entrou no robô! Salte as ondas e acerte o núcleo após o golpe.")
+	level.player.position=Vector2(8510,89);level.player.velocity=Vector2.ZERO;level.player.set_checkpoint(level.player.position);level.player.heal_full();level.clear_shots()
+	level.tell("O Lobo Lázaro entrou no robô! Salte as ondas e acerte o núcleo após o golpe.")
 func _foot_fight(delta:float) -> void:
 	wolf.modulate=Color("ffbeae") if _hurt>0 else Color.WHITE
 	core.position=_wolf_root.position+Vector2(0,-28)
@@ -152,4 +157,3 @@ func _draw() -> void:
 		draw_rect(Rect2(local_x-24,-3,48,3),Color("ffb475"))
 		if _attack%2==0:
 			for offset in [-65,0,65]:draw_line(Vector2(local_x+offset,-290),Vector2(local_x+offset,0),Color(1,.3,.2,.25),2)
-

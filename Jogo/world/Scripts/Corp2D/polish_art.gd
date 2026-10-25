@@ -17,14 +17,13 @@ static func cell(index: int) -> AtlasTexture:
 	cache[index]=result;return result
 static func wolf_frames() -> SpriteFrames:
 	if cache.has("wolf"):return cache.wolf
+	# Same 112x96 wolf used in the opening kidnapping, with a golden badge.
+	var original:=preload("res://world/Arte/Corporacao/V22/wolf_motion_v22.tres")
 	var frames:=SpriteFrames.new();frames.remove_animation("default")
-	for animation in ["idle","run","windup","dash","throw","hurt","board"]:
-		frames.add_animation(animation);frames.set_animation_speed(animation,8 if animation=="run" else 5);frames.set_animation_loop(animation,animation in ["idle","run"])
-		var indices:Array={"idle":[0],"run":[1,2],"windup":[3],"dash":[4],"throw":[5],"hurt":[6],"board":[7]}[animation]
-		for index:int in indices:
-			var texture:=AtlasTexture.new();texture.atlas=WOLF;texture.region=WOLF_REGIONS[index];texture.filter_clip=true
-			texture.margin=Rect2(Vector2(240-(WOLF_CENTERS[index]-texture.region.position.x),480-(WOLF_FEET[index]-texture.region.position.y)),Vector2(480,512)-texture.region.size)
-			frames.add_frame(animation,texture)
+	for action in ["idle","run","windup","dash","throw","hurt","board"]:
+		var source:StringName={"idle":"idle","run":"walk","windup":"command","dash":"walk","throw":"reach","hurt":"lift","board":"pickup"}[action]
+		frames.add_animation(action);frames.set_animation_loop(action,action in ["idle","run","dash"]);frames.set_animation_speed(action,10 if action in ["run","dash"] else 5)
+		for i in original.get_frame_count(source):frames.add_frame(action,original.get_frame_texture(source,i))
 	cache.wolf=frames;return frames
 static func deck(canvas:CanvasItem,width:float,height:float=28.0,conveyor:bool=false,reverse:bool=false) -> void:
 	var center:Texture2D=cell(4 if conveyor else 0);var left:Texture2D=cell(5 if conveyor else 1);var right:Texture2D=cell(6 if conveyor else 2)

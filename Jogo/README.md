@@ -1,3 +1,9 @@
+# Revisão v96 — Projeto Circo e lembranças
+
+Nova sala de computadores na Corporação, com cena do plano do circo e provas das seis fases. Lobo Lázaro preserva os sprites de abertura. Câmera fixa e etapa final com cinco amigos, visor aberto após o ataque, subida sob tambores e limite de um dano por abertura.
+
+Coleção recebe seis lembranças ilustradas, liberadas por 1, 3, 6, 9, 12 e 18 fragmentos únicos. Persistência imediata, migração dos segredos antigos e nenhuma duplicação por repetição de fase. [Arte e prompts](world/Arte/MemoriesV96/README.md). Detalhes de controles e fluxo em LEIA-ME.txt.
+
 ## Largato e Lobo 3D — v95
 
 O Lobo do laboratório usa o GLB fornecido em 24/10, com texturas preservadas,

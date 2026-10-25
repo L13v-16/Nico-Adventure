@@ -16,9 +16,9 @@ const Polish=preload("res://world/Scripts/Corp2D/polish_art.gd")
 func _ready() -> void:
 	add_to_group("corp_devices");collision_mask=0;collision_layer=4
 	if kind in ["glass","reactor_fire","reactor_ice","press","camera","turret"]:add_to_group("enemies")
-	var index:int={"door":4,"lever":6,"conveyor":2,"camera":8,"turret":8,"security":9,"reactor_fire":10,"reactor_ice":11,"glass":12,"press":13,"record":14,"lockdown":9,"secret":14,"office":14,"prototype":14}.get(kind,9)
+	var index:int={"door":4,"lever":6,"conveyor":2,"camera":8,"turret":8,"security":9,"reactor_fire":10,"reactor_ice":11,"glass":12,"press":13,"record":14,"lockdown":9,"secret":14,"office":14,"prototype":14,"plan":14}.get(kind,9)
 	_art=Art.sprite("props",index,width);add_child(_art)
-	if kind in ["record","office","prototype","secret","security","lockdown"]:
+	if kind in ["record","office","prototype","secret","security","lockdown","plan"]:
 		_art.texture=Polish.cell(8);_art.scale=Vector2.ONE*(width/_art.texture.get_width());_art.position=Vector2(-width/2,-_art.texture.get_height()*_art.scale.y)
 	if kind=="conveyor":
 		_art.hide()
@@ -32,7 +32,8 @@ func _ready() -> void:
 func hint() -> String:
 	if link=="boss" and (level._encounter==null or level._encounter.phase!=2):return ""
 	match kind:
-		"door":return "E · "+("Cobertura" if level.lockdown and sector==3 else "Entrar no próximo setor")
+		"plan":return "E · Rever o plano do circo"
+		"door":return "E · "+("Sala dos computadores" if destination==5 else ("Voltar ao centro de controle" if sector==5 else ("Cobertura" if level.lockdown and sector==3 else "Entrar no próximo setor")))
 		"lever":return "E · Inverter esteiras e acionar o braço"
 		"security":return "E · Desligar vigilância e zerar alerta"
 		"record","office","prototype":return "E · Examinar "+("protótipo" if kind=="prototype" else "arquivo")
@@ -44,6 +45,7 @@ func hint() -> String:
 	return ""
 func interact() -> void:
 	match kind:
+		"plan":level.reveal_plan()
 		"door":level.travel(self)
 		"lever":
 			activated=not activated;_art.texture=Art.cell("props",7 if activated else 6);Sfx.play("lab_clink",-10)
@@ -51,14 +53,15 @@ func interact() -> void:
 		"security":
 			activated=true;level.alert=0;level.security_off=maxf(level.security_off,12*level.sabotage_multiplier());level.tell("Vigilância desligada. Portas liberadas.");Sfx.play("lab_clink",-14)
 		"record","office","prototype":
-			if not activated:activated=true;level.secrets_found+=1
+			if not activated and Save.collect_fragment("fase_6","record:"+link):activated=true;level.secrets_found+=1
 			level.show_record(link,kind)
 		"lockdown":
-			if not level.lockdown:activated=true;level.start_lockdown()
+			if not level._plan_seen:level.tell("As provas principais estão na sala dos computadores. Entre pela porta à esquerda deste terminal.")
+			elif not level.lockdown:activated=true;level.start_lockdown()
 		"secret":
 			if level.player.equipment.is_equipped("executive_card") or level.player.equipment.is_equipped("corporate_emblem"):
 				if not activated:
-					activated=true;level.secrets_found+=1;level.unlock_secret(self)
+					if Save.collect_fragment("fase_6","record:beach"):activated=true;level.secrets_found+=1;level.unlock_secret(self)
 				else:level.tell("Arquivo reservado já aberto.")
 			else:level.tell("Arquivo opcional. O cartão ou emblema de Oliver abre esta sala.")
 func take_element(element:String,_source:Vector2) -> void:

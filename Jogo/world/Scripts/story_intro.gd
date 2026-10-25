@@ -19,7 +19,7 @@ const FRIEND_SPRITES := [
 const PANELS := [
 	{"text":"Nico vive numa mata tranquila, onde os animais convivem em paz.", "title":"UM LAR ENTRE AS FOLHAS", "stage":0, "duration":5.0},
 	{"text":"Entre seus amigos estão Arara Minas, Remi, José, Urso e o mico-leão-dourado.", "title":"AMIGOS PARA TODA A VIDA", "stage":0, "duration":6.0},
-	{"text":"O lobo da corporação invade a mata. Seu crachá dourado revela quem comanda o sequestro.", "title":"O LOBO DO CRACHÁ DOURADO", "stage":1, "duration":6.2},
+	{"text":"O Lobo Lázaro da corporação invade a mata. Seu crachá dourado revela quem comanda o sequestro.", "title":"O LOBO DO CRACHÁ DOURADO", "stage":1, "duration":6.2},
 	{"text":"O lobo leva os amigos até a jaula. Nico tenta ajudar, enquanto Arara Minas escapa pelo alto.", "title":"A ORDEM DO LOBO", "stage":1, "duration":7.2},
 	{"text":"O lobo parte com os prisioneiros. Nico jamais esquecerá aquele crachá dourado.", "title":"SEPARADOS", "stage":2, "duration":5.8},
 	{"text":"Nico faz uma promessa: vai reunir seus amigos e enfrentar o chefe da corporação.", "title":"UMA PROMESSA", "stage":2, "duration":5.2},
