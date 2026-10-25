@@ -29,4 +29,4 @@ func _draw_scene() -> void:
 	_canvas.draw_rect(Rect2(0,0,640,42),Color("09151a"));_canvas.draw_rect(Rect2(0,283,640,77),Color("09151a"))
 	if clock>18:
 		_canvas.draw_rect(Rect2(191,251,240,5),Color("193e2f"));_canvas.draw_rect(Rect2(191,251,240*smoothstep(18,23,clock),5),Color("9fffc0"))
-	_canvas.draw_string(ThemeDB.fallback_font,Vector2(450,355),"E / Espaço · continuar",HORIZONTAL_ALIGNMENT_LEFT,-1,9,Color("a1afbd"))
+	_canvas.draw_string(ThemeDB.fallback_font,Vector2(450,355),"%s / Enter · continuar"%Controls.key_label("interagir",0),HORIZONTAL_ALIGNMENT_LEFT,-1,9,Color("a1afbd"))

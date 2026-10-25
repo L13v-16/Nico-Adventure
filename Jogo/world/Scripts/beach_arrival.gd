@@ -5,7 +5,7 @@ signal finished
 const UiStyle := preload("res://world/Scripts/ui_style.gd")
 const LINES := [
 	{"speaker":"Arara Minas", "text":"Chegamos à Costa das Marés! Nossa amiga Tartaruga está presa além do cais. Ela é idosa e conhece os caminhos entre as ilhas.", "tip":"NOSSO RESGATE", "detail":"Tartaruga\nUma amiga experiente", "icon":"turtle"},
-	{"speaker":"Nico", "text":"Foi o lobo do crachá dourado que levou nossos amigos. Ele veio para cá?", "tip":"O CRACHÁ DOURADO", "detail":"Lobo da corporação\nO líder do sequestro", "icon":"wolf"},
+	{"speaker":"Nico", "text":"Foi Lobo Lázaro, do crachá dourado, que levou nossos amigos. Ele veio para cá?", "tip":"O CRACHÁ DOURADO", "detail":"Lobo Lázaro\nO líder do sequestro", "icon":"wolf"},
 	{"speaker":"Arara Minas", "text":"Ele é o chefe da corporação. Mandou Urus, o Urubu, vigiar a Tartaruga. Primeiro vamos libertá-la; depois seguimos o rastro do lobo.", "tip":"GUARDIÃO DO CAIS", "detail":"Urus, o Urubu\nVigia a Tartaruga", "icon":"urus"},
 	{"speaker":"Arara Minas", "text":"Cuidado com os caranguejos: pule e caia sobre o casco para derrotá-los. Socos não funcionam, e encostar de lado machuca.", "tip":"CARANGUEJOS", "detail":"Pule sobre o casco!\nEvite o contato lateral", "icon":"crab"},
 	{"speaker":"Arara Minas", "text":"O açaí libera o poder de gelo! Segure K para lançar gelo e congelar inimigos à distância. O efeito dura 12 segundos; os golpes de perto também congelam.", "tip":"PODER DO AÇAÍ", "detail":"K: disparar gelo\nDuração: 12 segundos", "icon":"acai"},

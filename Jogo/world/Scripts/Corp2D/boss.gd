@@ -76,7 +76,7 @@ func _pose(index:int) -> void:
 	_sprite.position=Vector2(-160,-_sprite.texture.get_height()*ratio)
 func open_window(seconds:float) -> void:
 	vulnerable=seconds;_window_hit=false
-	level.tell("LOBO SEM FÔLEGO · contra-ataque!" if phase==0 else ("NÚCLEO EXPOSTO · um golpe certeiro!" if phase<3 else "VISOR ABERTO · amigos em ação · suba e ataque!"))
+	level.tell("LÁZARO SEM FÔLEGO · contra-ataque!" if phase==0 else ("NÚCLEO EXPOSTO · um golpe certeiro!" if phase<3 else "VISOR ABERTO · amigos em ação · suba e ataque!"))
 func relay(element:String) -> void:
 	if phase!=2 or not active:return
 	if element=="fire":_heat=true

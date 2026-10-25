@@ -317,7 +317,8 @@ func interact() -> bool:
 			level.notice("Passagem liberada." if active else "Portão fechado: conecte a célula ou estabilize o relé deste setor.")
 			return true
 		"archive_console":
-			level.notice(record_text, 7.0)
+			var images:Array={4:[["forest","VALE DAS COPAS"],["beach","COSTA DAS MARÉS"]],5:[["magic","FLORESTA VIOLETA"],["underworld","SUBMUNDO"]],6:[["lab","LABORATÓRIO DOS EXECUTIVOS"]]}.get(sector,[["lab","LABORATÓRIO DOS EXECUTIVOS"]])
+			level.show_archive({4:"LOGÍSTICA · ROTAS DE CAPTURA",5:"PESQUISA · BIOTERMIA",6:"PESQUISA · LG-17"}.get(sector,"ARQUIVO DE PESQUISA"),record_text,images)
 			if secret_record and not collected and Save.collect_fragment("fase_5","archive:%d:%s"%[sector,str(position)]):
 				collected = true
 				level.secrets_found += 1

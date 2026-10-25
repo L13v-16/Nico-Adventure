@@ -82,7 +82,7 @@ func _ready() -> void:
 			var urso:=Art.instantiate("urso");urso.name="Urso";urso.position.y=.3;urso.rotation.y=PI;_art.add_child(urso)
 			_label=Art.label(self,"URSO",Vector3(0,3.7,0),34,"f5d895")
 		"record":_label=Art.label(self,"LG-17\nEstabilizador do enxerto de Largato",Vector3(0,2,0),24,"9be3ce")
-	if kind in ["heat","cold","injector"]:_label=Art.label(self,"FOGO" if kind=="heat" else ("GELO" if kind=="cold" else "INJETOR · E"),Vector3(0,2.1,0),25,"f2deb0")
+	if kind in ["heat","cold","injector"]:_label=Art.label(self,"FOGO" if kind=="heat" else ("GELO" if kind=="cold" else "INJETOR · "+Controls.key_label("interagir",0)),Vector3(0,2.1,0),25,"f2deb0")
 func _target_shape(size:Vector3,at:Vector3) -> void:
 	_body=StaticBody3D.new();_body.collision_layer=17 if kind in ["heat","cold","injector","tank"] else 16;_body.set_meta("receiver",self);add_child(_body)
 	var shape:=BoxShape3D.new();shape.size=size;var col:=CollisionShape3D.new();col.shape=shape;col.position=at;_body.add_child(col)
@@ -104,7 +104,7 @@ func _physics_process(delta:float) -> void:
 	match kind:
 		"door":
 			var unlocked:bool=level.door_access(sector,destination)
-			_label.text="E · %s · %s"%[level.door_card_name(sector,destination),"LIBERADO" if unlocked else "REQUER CARTÃO"]
+			_label.text="%s · %s · %s"%[Controls.key_label("interagir",0),level.door_card_name(sector,destination),"LIBERADO" if unlocked else "REQUER CARTÃO"]
 			_label.modulate=Color("9de7c8") if unlocked else Color("efc37d")
 		"fragment":
 			_art.rotation.y+=delta
@@ -191,7 +191,7 @@ func interact() -> bool:
 			if level.boss.dead:level.rescue_urso()
 			else:level.notice("Largato controla a contenção. Vença-o para libertar Urso.")
 			return true
-		"record":level.notice("LG-17 estabiliza o enxerto de Largato. O injetor pode inverter o fluxo.");return true
+		"record":level.show_archive("LG-17 · ESTABILIZADOR","LG-17 estabiliza o enxerto de Largato. O injetor pode inverter o fluxo. Na última etapa, alterne fogo e gelo no mecanismo e interaja para obter as doses experimentais.",[["lab","LABORATÓRIO DOS EXECUTIVOS"]]);return true
 	return false
 func take_element(element:String,_source:Vector3,seconds:float=3) -> void:
 	if not accepts(element):return

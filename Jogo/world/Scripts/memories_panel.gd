@@ -12,7 +12,7 @@ var _selected:=0
 func _ready() -> void:
 	name="MemoriesPage";custom_minimum_size.y=202;add_theme_constant_override("separation",12)
 	var list:=VBoxContainer.new();list.custom_minimum_size.x=168;add_child(list)
-	_progress=UI.label("%d fragmentos · %d / 6 lembranças"%[Save.fragment_count(),Catalog.unlocked_count(Save.fragment_count())],9,Color("e3bf76"),HORIZONTAL_ALIGNMENT_LEFT);list.add_child(_progress)
+	_progress=UI.label("%d %s · %d / 6 lembranças"%[Save.fragment_count(),"fragmento" if Save.fragment_count()==1 else "fragmentos",Catalog.unlocked_count(Save.fragment_count())],9,Color("e3bf76"),HORIZONTAL_ALIGNMENT_LEFT);list.add_child(_progress)
 	for i in Catalog.ENTRIES.size():
 		var entry:Dictionary=Catalog.ENTRIES[i];var unlocked:=Save.fragment_count()>=int(entry.need)
 		var button:=UI.button(("✓ " if unlocked else "◇ ")+str(entry.title),10);button.custom_minimum_size=Vector2(168,25);button.alignment=HORIZONTAL_ALIGNMENT_LEFT;list.add_child(button);cards.append(button)
@@ -31,11 +31,13 @@ func _select(index:int) -> void:
 Progresso: %d / %d. Colete nas ilhas; eles não são gastos."%[int(entry.need)-count,count,int(entry.need)]
 	_open.disabled=not unlocked
 func _show_image() -> void:
-	if _open.disabled:return
+	if _open.disabled or is_instance_valid(_viewer):return
 	_viewer=Control.new();_viewer.name="MemoryViewer";_viewer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);_viewer.z_index=100;get_parent().get_parent().get_parent().get_parent().add_child(_viewer)
 	var dim:=ColorRect.new();dim.color=Color("091b23");dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);_viewer.add_child(dim)
 	var picture:=TextureRect.new();picture.position=Vector2(24,24);picture.size=Vector2(592,282);picture.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;picture.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;picture.texture=_image.texture;picture.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;_viewer.add_child(picture)
-	var back:=UI.button("Voltar ao álbum · Esc",11);back.position=Vector2(209,320);back.size=Vector2(222,27);_viewer.add_child(back);back.pressed.connect(_close_image);back.grab_focus()
+	var back:=UI.button("Voltar ao álbum · Esc",11);back.position=Vector2(209,320);back.size=Vector2(222,27);_viewer.add_child(back);back.pressed.connect(_close_image)
+	for direction in ["left","right","top","bottom"]:back.set("focus_neighbor_"+direction,back.get_path())
+	back.focus_next=back.get_path();back.focus_previous=back.get_path();back.grab_focus()
 func _close_image() -> void:
 	if is_instance_valid(_viewer):_viewer.queue_free();_viewer=null
 	cards[_selected].grab_focus()

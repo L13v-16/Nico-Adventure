@@ -1,3 +1,25 @@
+AUDITORIA V97 — ARQUIVOS, CONTROLES E RETOMADA
+
+Arquivos do laboratório 3D agora abrem o mesmo monitor CRT ilustrado da
+Corporação, com texto completo, imagens das ilhas relacionadas e navegação
+por registros. Eles não fecham automaticamente enquanto você lê.
+Feche com a tecla configurada para Interagir, Esc ou o botão do painel.
+A música continua; controles, HUD e pausa voltam ao estado anterior mesmo
+quando o painel é removido antes do fechamento normal. Reler não dá outro
+fragmento nem aumenta os segredos daquela visita.
+
+No álbum ampliado, Tab, Shift+Tab e setas mantêm o foco no visualizador.
+Enter ou o botão volta ao álbum; Esc fecha a imagem antes de sair da Coleção.
+Não é possível empilhar visualizadores. A tecla de interação configurada
+aparece também nas portas 3D, nas cenas e nas conversas opcionais.
+O nome Lobo Lázaro foi corrigido também na conversa inicial da praia.
+Após morrer na etapa final do robô, o visor fecha e os tambores são limpos.
+
+Permanecem: fase final em 2D, laboratório transformado em 3D após a invasão,
+resgate do Mico, seis lembranças por fragmentos, dinheiro e itens salvos,
+cerejas únicas no modo livre e poderes permanentes apenas após o santuário.
+Veja AUDITORIA-v97.md para o escopo e as alterações desta revisão.
+
 REVISÃO V96 — PROJETO CIRCO E ÁLBUM DE LEMBRANÇAS
 
 Corporação (2D): entre pela porta da Sala dos Computadores no Centro de

@@ -150,4 +150,4 @@ func _draw_scene() -> void:
 	if _canvas.get_node_or_null("Dialogue")==null:
 		var label:=Label.new();label.name="Dialogue";label.position=Vector2(24,305);label.size=Vector2(590,35);label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;label.add_theme_font_size_override("font_size",13);_canvas.add_child(label)
 	_canvas.get_node("Dialogue").text=text
-	_canvas.draw_string(font,Vector2(446,353),"E / Espaço · continuar",HORIZONTAL_ALIGNMENT_LEFT,-1,9,Color("a1afbd"))
+	_canvas.draw_string(font,Vector2(446,353),"%s / Enter · continuar"%Controls.key_label("interagir",0),HORIZONTAL_ALIGNMENT_LEFT,-1,9,Color("a1afbd"))

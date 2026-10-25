@@ -62,7 +62,7 @@ func _barrel() -> void:
 	for i in points.size():points[i]+=boss.position
 	barrel.path=points;level.add_child(barrel);Sfx.play("lab_clink",-19)
 func reset() -> void:
-	state="wait";timer=3.0;barrel_timer=0;boss.vulnerable=0
+	state="wait";timer=3.0;barrel_timer=0;boss.vulnerable=0;queue_redraw()
 func _draw() -> void:
 	# Sliding opaque shutter covers the pilot until the friends lift the lock.
 	var open:=state=="open"

@@ -297,3 +297,8 @@ func access_summary() -> String:
 	var parts:PackedStringArray=[]
 	for index in [1,4,5]:parts.append("%s %s"%[room_puzzles[index].CODES[index],"✓" if room_puzzles[index].collected else "—"])
 	return "CARTÕES · "+"  /  ".join(parts)
+
+func show_archive(title:String,text:String,images:Array) -> void:
+	if intro_active or completed or get_tree().paused:return
+	var reader:=preload("res://world/Scripts/Corp2D/archive_panel.gd").new()
+	reader.name="LabArchiveReader";reader.level=self;reader.record_title=title;reader.record_text=text;reader.custom_images=images;add_child(reader)

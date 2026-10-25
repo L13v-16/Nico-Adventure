@@ -1,3 +1,7 @@
+# Auditoria v97 — pedidos anteriores
+
+Leitor de arquivos compartilhado entre laboratório 3D e Corporação, com imagens relacionadas, leitura sem tempo limite e restauração de música/HUD/controles. Navegação do álbum ampliado contida no painel, prompts com teclas remapeadas e reinício do visor após morte. [Escopo da auditoria](AUDITORIA-v97.md).
+
 # Revisão v96 — Projeto Circo e lembranças
 
 Nova sala de computadores na Corporação, com cena do plano do circo e provas das seis fases. Lobo Lázaro preserva os sprites de abertura. Câmera fixa e etapa final com cinco amigos, visor aberto após o ataque, subida sob tambores e limite de um dano por abertura.

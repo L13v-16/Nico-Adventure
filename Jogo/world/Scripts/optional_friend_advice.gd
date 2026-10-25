@@ -89,4 +89,4 @@ func _exit_tree() -> void:
 func _draw() -> void:
 	if not can_talk():return
 	draw_style_box(preload("res://world/Scripts/ui_style.gd").panel_style(),Rect2(-59,-16,118,21))
-	draw_string(ThemeDB.fallback_font,Vector2(-57,-2),"E · José" if kind=="jose" else "E · Arara Minas",HORIZONTAL_ALIGNMENT_CENTER,114,9,Color("fff0c9"))
+	draw_string(ThemeDB.fallback_font,Vector2(-57,-2),"%s · %s"%[Controls.key_label("interagir",0),"José" if kind=="jose" else "Arara Minas"],HORIZONTAL_ALIGNMENT_CENTER,114,9,Color("fff0c9"))
