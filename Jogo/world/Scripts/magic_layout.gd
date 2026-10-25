@@ -45,8 +45,14 @@ static func build(level: Node2D) -> void:
 		for i in range(1,int(info.z/96)):
 			var decor_x:float=info.x+i*96+16
 			if absf(decor_x-160)<56 or (decor_x>5184 and decor_x<5900) or (decor_x>6032 and decor_x<6160):continue
+			var clear:=true
+			for device in CHECKPOINTS+SPRINGS+[Vector2(1740,64),Vector2(3990,-112)]:
+				if absf(device.y-info.y)<40 and absf(device.x-decor_x)<44:clear=false;break
+			if not clear:continue
 			var prop:=Art.prop(&"crystal" if i%3==0 else &"mushrooms",26+i%3*5)
 			prop.position+=Vector2(info.x+i*96+16,info.y)
+			prop.add_to_group("magic_ground_decor")
+			prop.set_meta("ground_surface",Vector2(decor_x,info.y))
 			scenery.add_child(prop)
 	for info in VINES:
 		var vine:=preload("res://world/Scripts/living_vine.gd").new()

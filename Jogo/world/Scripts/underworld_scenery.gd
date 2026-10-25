@@ -1,7 +1,12 @@
 extends RefCounted
 ## Marcos de cenário planejados por trecho. A faixa de passagem fica livre.
 const ROOT:="res://world/Arte/Underworld/V36/"
+const CLEAR_POINTS:=[Vector2(610,100),Vector2(1390,100),Vector2(2030,100),Vector2(2630,36),Vector2(3440,-40),Vector2(3940,100),Vector2(4850,100),Vector2(5240,100),Vector2(6200,100),Vector2(6385,100),Vector2(700,100),Vector2(1530,100),Vector2(2100,100),Vector2(2830,36),Vector2(3070,36),Vector2(5360,100)]
 static func prop(parent:Node,id:int,width:float,at:Vector2,shade:Color=Color.WHITE,ceiling:bool=false) -> Sprite2D:
+	# Small rubble must not disguise a vent or cover a checkpoint's base.
+	if width<=43 and not ceiling:
+		for point in CLEAR_POINTS:
+			if absf(point.y-at.y)<2 and absf(point.x-at.x)<width*.5+27:return null
 	var sprite:=Sprite2D.new()
 	sprite.name="Scenery_%02d"%id
 	sprite.texture=load(ROOT+"props_%02d.tres"%id)
@@ -16,6 +21,7 @@ static func prop(parent:Node,id:int,width:float,at:Vector2,shade:Color=Color.WHI
 	sprite.set_meta("scenery_id",id)
 	sprite.set_meta("ground_surface",at)
 	sprite.set_meta("ceiling",ceiling)
+	if not ceiling:sprite.add_to_group("underworld_ground_decor")
 	parent.add_child(sprite)
 	return sprite
 static func build(parent:Node) -> void:

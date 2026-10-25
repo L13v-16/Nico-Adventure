@@ -15,15 +15,48 @@ static func install(level:Node2D) -> void:
 	var root:=Node2D.new();root.name="GeneralDetails90";root.z_index=-1;level.add_child(root)
 	for i in 8:
 		var hint:Vector2=POINTS[id][i]
-		var ray:=PhysicsRayQueryParameters2D.create(hint+Vector2(0,-55),hint+Vector2(0,100),1)
-		var hit:=level.get_world_2d().direct_space_state.intersect_ray(ray)
-		if hit.is_empty() or hit.normal.y>-.7:continue
 		var prop:=Sprite2D.new();prop.name=theme+str(i);prop.texture=Art.cell(theme,i);prop.centered=false;prop.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;prop.material=Art.material()
+		prop.material.set_shader_parameter("alpha_cutoff",.94)
 		var width:float=[28,42,30,30,26,26,24,38][i]
 		if theme=="industrial":width=24
 		var ratio:=minf(width/prop.texture.get_width(),32.0/prop.texture.get_height())
+		var hit:=_placement(level,hint,prop.texture.get_width()*ratio)
+		if hit.is_empty():prop.free();continue
 		prop.scale=Vector2.ONE*ratio;prop.position=hit.position+Vector2(-prop.texture.get_width()*ratio/2,-prop.texture.get_height()*ratio+2)
 		prop.set_meta("ground_surface",hit.position);prop.set_meta("theme",theme);prop.set_meta("index",i);prop.add_to_group("general_details90");root.add_child(prop)
+static func _floor_hit(level:Node2D,at:Vector2) -> Dictionary:
+	var query:=PhysicsRayQueryParameters2D.create(at+Vector2(0,-55),at+Vector2(0,100),1)
+	var hit:=level.get_world_2d().direct_space_state.intersect_ray(query)
+	if hit.is_empty() or hit.normal.y>-.7 or hit.collider is AnimatableBody2D:return {}
+	return hit
+static func _placement(level:Node2D,hint:Vector2,width:float) -> Dictionary:
+	# Require one solid support across the whole base, away from interactive props.
+	var original:=_floor_hit(level,hint)
+	if original.is_empty():return {}
+	for shift in [0,-32,32,-64,64]:
+		var hit:=_floor_hit(level,hint+Vector2(shift,0))
+		if hit.is_empty() or hit.collider!=original.collider or absf(hit.position.y-original.position.y)>1:continue
+		var supported:=true
+		for side in [-1,1]:
+			var edge:=_floor_hit(level,hit.position+Vector2(side*(width*.5+3),0))
+			if edge.is_empty() or edge.collider!=hit.collider or absf(edge.position.y-hit.position.y)>1:supported=false;break
+		if supported and _clearance(level,hit.position,width):return hit
+	return {}
+static func _clearance(level:Node2D,at:Vector2,width:float) -> bool:
+	var reserved:Array=[]
+	if level.has_node("Checkpoints"):
+		for flag in level.get_node("Checkpoints").get_children():reserved.append([flag,24.0])
+	for group in ["caravan_shops","spring_mushrooms","vine_plants","lava_geysers","jose_targets","corp_devices"]:
+		for device in level.get_tree().get_nodes_in_group(group):
+			var radius:=30.0
+			if group=="caravan_shops":radius=100
+			elif group=="spring_mushrooms" or group=="jose_targets":radius=44
+			elif group=="corp_devices":radius=maxf(28,float(device.width)*.5+8)
+			reserved.append([device,radius])
+	for info in reserved:
+		var point:Vector2=info[0].global_position
+		if absf(point.y-at.y)<40 and absf(point.x-at.x)<float(info[1])+width*.5+6:return false
+	return true
 static func install_lab(level:Node3D) -> void:
 	# Flat signs belong on walls in the 3D level; they are not fake 3D crates.
 	for room in 3:

@@ -47,8 +47,6 @@ static func build(level:Node2D) -> void:
 	device(level,3,"lockdown",Vector2(7310,100),48)
 	device(level,3,"press",Vector2(6810,100),70)
 	enemy(level,3,3,Vector2(7010,100))
-	var silhouette:=preload("res://world/Scripts/Corp2D/art.gd").sprite("robot",0,170,2)
-	silhouette.position+=Vector2(7100,-45);silhouette.modulate=Color(.16,.23,.32,.6);silhouette.z_index=-3;level.add_child(silhouette)
 	# Final arena: the controls sit on the floor and can be reached from safety.
 	device(level,4,"reactor_fire",Vector2(8550,100),45,"boss")
 	device(level,4,"reactor_ice",Vector2(9150,100),45,"boss")
@@ -63,7 +61,7 @@ static func build(level:Node2D) -> void:
 			var item:=preload("res://prefabs/item.tscn").instantiate();item.position=Vector2(x,trail.z-17);item.cherry_id="corp:%03d"%index;index+=1;level.get_node("items").add_child(item)
 	level.get_node("Finish").position=Vector2(9470,65)
 	for data in [[650,0],[4400,1],[6650,2]]:
-		var sign:=Sprite2D.new();sign.name="CorporateSign%d"%int(data[1]);sign.texture=load("res://world/Arte/CorpV86/sign_%d.png"%int(data[1]));sign.position=Vector2(data[0],20);sign.scale=Vector2.ONE*(270.0/sign.texture.get_width());sign.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;sign.z_index=-1;level.add_child(sign)
+		var sign:=Sprite2D.new();sign.name="CorporateSign%d"%int(data[1]);sign.texture=load("res://world/Arte/CorpV86/sign_%d.png"%int(data[1]));sign.position=Vector2(data[0],-105);sign.scale=Vector2.ONE*(240.0/sign.texture.get_width());sign.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;sign.z_index=-1;level.add_child(sign)
 static func floor_at(level:Node2D,at:Vector2,width:float,depth:float,platform:bool) -> Node2D:
 	var node:=preload("res://world/Scripts/Corp2D/terrain.gd").new();node.position=at;node.width=width;node.depth=depth;node.platform=platform;node.variant=1 if platform else 0;level.get_node("Level").add_child(node);return node
 static func lift(level:Node2D,at:Vector2,rise:float) -> void:

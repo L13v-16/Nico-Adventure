@@ -1,3 +1,15 @@
+POLIMENTO V98 — CENÁRIO E APOIOS
+
+Props pequenos agora exigem terreno estático sob toda a base e deixam
+espaço livre junto aos checkpoints, gêiseres e objetos interativos.
+Na floresta mágica, cristais e cogumelos decorativos deixam as bandeiras,
+plantas de comando e trampolins mais visíveis. No Submundo, o entulho
+pequeno não encobre as fendas de lava nem as bases dos checkpoints.
+Na Corporação, letreiros ficam acima das plataformas; câmeras recebem
+fixações na parede e as passarelas e elevadores usam apoios de metal
+com os mesmos recortes da arte industrial existente.
+Veja POLIMENTO-v98.md para o escopo desta revisão.
+
 AUDITORIA V97 — ARQUIVOS, CONTROLES E RETOMADA
 
 Arquivos do laboratório 3D agora abrem o mesmo monitor CRT ilustrado da

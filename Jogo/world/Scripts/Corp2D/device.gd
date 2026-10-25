@@ -17,6 +17,9 @@ func _ready() -> void:
 	add_to_group("corp_devices");collision_mask=0;collision_layer=4
 	if kind in ["glass","reactor_fire","reactor_ice","press","camera","turret"]:add_to_group("enemies")
 	var index:int={"door":4,"lever":6,"conveyor":2,"camera":8,"turret":8,"security":9,"reactor_fire":10,"reactor_ice":11,"glass":12,"press":13,"record":14,"lockdown":9,"secret":14,"office":14,"prototype":14,"plan":14}.get(kind,9)
+	if kind in ["camera","turret"]:
+		var mount:=Node2D.new();mount.name="WallMount";mount.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(mount)
+		mount.draw.connect(func():Polish.wall_mount(mount,width))
 	_art=Art.sprite("props",index,width);add_child(_art)
 	if kind in ["record","office","prototype","secret","security","lockdown","plan"]:
 		_art.texture=Polish.cell(8);_art.scale=Vector2.ONE*(width/_art.texture.get_width());_art.position=Vector2(-width/2,-_art.texture.get_height()*_art.scale.y)

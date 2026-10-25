@@ -44,3 +44,22 @@ static func press(canvas:CanvasItem,width:float,extension:float,tint:Color=Color
 	var ram_y:=origin.y+height*(.48+extension*.24)
 	canvas.draw_texture_rect_region(texture,Rect2(-width*.075,origin.y+height*.25,width*.15,ram_y-origin.y-height*.25),Rect2(texture.get_width()*.45,texture.get_height()*.29,texture.get_width()*.12,texture.get_height()*.24),tint)
 	canvas.draw_texture_rect_region(texture,Rect2(-width*.25,ram_y,width*.50,height*.13),Rect2(texture.get_width()*.25,texture.get_height()*.55,texture.get_width()*.50,texture.get_height()*.13),tint)
+static func steel_post(canvas:CanvasItem,box:Rect2,tint:Color=Color.WHITE) -> void:
+	# Sample the vertical upright, excluding the red deck and horizontal rails.
+	var tile:Texture2D=cell(1)
+	var step:=box.size.x*44.0/30.0
+	var y:=box.position.y
+	while y<box.end.y:
+		var h:=minf(step,box.end.y-y)
+		canvas.draw_texture_rect_region(tile,Rect2(box.position.x,y,box.size.x,h),Rect2(8,38,30,44*h/step),tint)
+		y+=h
+static func wall_mount(canvas:CanvasItem,width:float) -> void:
+	steel_post(canvas,Rect2(width*.36,-27,12,34),Color("a5afba"))
+	canvas.draw_rect(Rect2(width*.17,-8,width*.33,6),Color("111923"))
+	canvas.draw_rect(Rect2(width*.17,-8,width*.33,2),Color("9ba6b2"))
+static func wall_brackets(canvas:CanvasItem,width:float) -> void:
+	for x in [18.0,width-26.0]:
+		steel_post(canvas,Rect2(x,27,8,23),Color("687483"))
+		canvas.draw_set_transform(Vector2(x-11,28),-PI/4)
+		steel_post(canvas,Rect2(0,0,5,25),Color("9aa6b4"))
+		canvas.draw_set_transform(Vector2.ZERO)

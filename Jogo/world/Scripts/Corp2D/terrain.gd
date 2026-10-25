@@ -19,3 +19,4 @@ func _draw() -> void:
 				var w:=minf(64,width-x);var h:=minf(64,depth-y)
 				draw_texture_rect_region(tile,Rect2(x,y,w,h),Rect2(0,0,tile.get_width()*w/64,tile.get_height()*h/64))
 	art.deck(self,width,28)
+	if platform:art.wall_brackets(self,width)

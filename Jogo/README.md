@@ -1,3 +1,7 @@
+# Polimento v98 — cenário e apoios
+
+Decoração apoiada no terreno estático e afastada dos mecanismos. Ajustes de legibilidade na floresta mágica e no Submundo; fixações, trilhos e letreiros da Corporação revisados com a arte industrial existente. [Escopo](POLIMENTO-v98.md).
+
 # Auditoria v97 — pedidos anteriores
 
 Leitor de arquivos compartilhado entre laboratório 3D e Corporação, com imagens relacionadas, leitura sem tempo limite e restauração de música/HUD/controles. Navegação do álbum ampliado contida no painel, prompts com teclas remapeadas e reinício do visor após morte. [Escopo da auditoria](AUDITORIA-v97.md).
