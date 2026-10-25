@@ -38,6 +38,7 @@ var _sector_label:Label
 var _fade:ColorRect
 var _move_status:Label
 var _boss_back:ColorRect
+var _lg17_badge:TextureRect
 var _target_ring:MeshInstance3D
 var _notice_left:=0.0
 var _shake:=0.0
@@ -101,9 +102,12 @@ func _hud_setup() -> void:
 	var footer:=ColorRect.new();footer.position=Vector2(0,333);footer.size=Vector2(640,27);footer.color=Color("101e2b",.88);footer.z_index=1;footer.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(footer)
 	_sector_label=_ui_label(Vector2(168,60),Vector2(290,18),10)
 	_card_label=_ui_label(Vector2(168,81),Vector2(430,16),8)
-	_status=_ui_label(Vector2(100,60),Vector2(440,56),10);_status.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	_status=_ui_label(Vector2(178,60),Vector2(440,56),10);_status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;_status.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_status.z_index=2
-	_boss_back=ColorRect.new();_boss_back.position=Vector2(96,57);_boss_back.size=Vector2(448,61);_boss_back.color=Color("101e2b",.92);_boss_back.z_index=1;_boss_back.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(_boss_back);_boss_back.hide()
+	_boss_back=ColorRect.new();_boss_back.position=Vector2(174,57);_boss_back.size=Vector2(448,61);_boss_back.color=Color("101e2b",.92);_boss_back.z_index=1;_boss_back.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(_boss_back);_boss_back.hide()
+	_lg17_badge=TextureRect.new();_lg17_badge.name="LG17SupplyHint";_lg17_badge.texture=preload("res://world/Scripts/polish99_art.gd").cell("presentation",15);_lg17_badge.material=preload("res://world/Scripts/polish99_art.gd").material();_lg17_badge.position=Vector2(575,242);_lg17_badge.size=Vector2(48,64);_lg17_badge.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;_lg17_badge.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;_lg17_badge.mouse_filter=Control.MOUSE_FILTER_IGNORE;hud.add_child(_lg17_badge);_lg17_badge.hide()
+	var dose_text:=Label.new();dose_text.text="LG-17";dose_text.position=Vector2(0,64);dose_text.size=Vector2(48,14);dose_text.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;dose_text.add_theme_font_size_override("font_size",10);dose_text.add_theme_color_override("font_color",Color("9cf6bf"));_lg17_badge.add_child(dose_text)
+
 	_notice=_ui_label(Vector2(168,133),Vector2(392,36),10);_notice.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;_notice.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	_move_status=_ui_label(Vector2(13,302),Vector2(600,20),8)
 	_move_status.text=Controls.hint("ESPAÇO ×2: PULO DUPLO · J: GIRO · SHIFT/CTRL: DESLIZE / QUEDA",true)
@@ -132,6 +136,8 @@ func _process(delta:float) -> void:
 	if intro_active or completed:return
 	_time+=delta;_notice_left=maxf(0,_notice_left-delta);_notice.visible=_notice_left>0
 	_update_camera(delta)
+	_lg17_badge.visible=boss.active and boss.dose_unlocked and boss.syringe_ammo<=0
+	_lg17_badge.modulate.a=.78+.22*sin(_time*4)
 	_status.visible=boss.active;_boss_back.visible=boss.active;_sector_label.visible=not boss.active
 	_status.text="LARGATO / ETAPA %d / VIDA %d\n%s"%[boss.phase,int(boss.health),boss.status()]
 	_sector_label.text=Layout.NAMES[sector]

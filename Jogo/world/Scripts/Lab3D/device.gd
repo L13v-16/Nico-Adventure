@@ -24,6 +24,8 @@ var _phase:="waiting"
 var _wait:=0.0
 var _activated:=false
 var travel:=Vector3.ZERO
+var _dose:Node3D
+var _dose_ring:MeshInstance3D
 func _ready() -> void:
 	add_to_group("lab3d_devices")
 	if kind=="cherry" and Save.is_free_mode() and Save.has_collected_cherry("fase_5",cherry_id):collected=true;queue_free();return
@@ -82,6 +84,12 @@ func _ready() -> void:
 			var urso:=Art.instantiate("urso");urso.name="Urso";urso.position.y=.3;urso.rotation.y=PI;_art.add_child(urso)
 			_label=Art.label(self,"URSO",Vector3(0,3.7,0),34,"f5d895")
 		"record":_label=Art.label(self,"LG-17\nEstabilizador do enxerto de Largato",Vector3(0,2,0),24,"9be3ce")
+	if kind=="injector":
+		_dose=Node3D.new();_dose.name="ReleasedLG17";add_child(_dose);_dose.hide()
+		var vial:=Art.instantiate("syringe");vial.rotation.z=-.5;vial.scale=Vector3.ONE*1.3;_dose.add_child(vial)
+		for i in 3:
+			var arrow:=Art.box(_dose,"Arrow",Vector3(0,.8+i*.3,0),Vector3(.42,.06,.12),"8cf7b1",0,1.2);arrow.rotation.z=PI/4
+		_dose_ring=Art.ring(self,"DoseBeacon",Vector3(0,.06,0),1.3,"8df6b7",1);_dose_ring.hide()
 	if kind in ["heat","cold","injector"]:_label=Art.label(self,"FOGO" if kind=="heat" else ("GELO" if kind=="cold" else "INJETOR · "+Controls.key_label("interagir",0)),Vector3(0,2.1,0),25,"f2deb0")
 func _target_shape(size:Vector3,at:Vector3) -> void:
 	_body=StaticBody3D.new();_body.collision_layer=17 if kind in ["heat","cold","injector","tank"] else 16;_body.set_meta("receiver",self);add_child(_body)
@@ -90,7 +98,7 @@ func aim_point() -> Vector3:return global_position+Vector3.UP*((-.05 if frozen_l
 func accepts(element:String) -> bool:
 	if kind=="heat":return element=="fire" and level.boss.active and level.boss.phase==2
 	if kind=="cold":return element=="ice" and level.boss.active and level.boss.phase==2
-	if kind=="injector":return level.boss.active and level.boss.phase==3
+	if kind=="injector":return level.boss.active and level.boss.phase>=2
 	if kind=="pool":return frozen_left<=0 if element=="ice" else frozen_left>0
 	return kind in ["pool","camera","press","tank","laser"]
 func _physics_process(delta:float) -> void:
@@ -154,6 +162,14 @@ func _physics_process(delta:float) -> void:
 		"heat","cold","injector":
 			var confirmed:bool=(level.boss.heated>0 if kind=="heat" else level.boss.cooled>0) if kind!="injector" else level.boss.injector_reversed
 			_label.modulate=Color("9ce4bd") if confirmed else Color("f2deb0")
+			if kind=="injector":
+				var ready:bool=level.boss.dose_unlocked and level.boss.active
+				_dose.visible=ready;_dose_ring.visible=ready
+				_dose.position.y=2.2+sin(clock*3)*.13;_dose.rotation.y+=delta
+				_dose_ring.scale=Vector3.ONE*(1+sin(clock*4)*.12)
+				_label.text=("LG-17 LIBERADO · "+Controls.key_label("interagir",0)+" PEGAR DOSES") if ready else "LG-17 · ESTOQUE BLOQUEADO"
+				if ready and level.boss.injector_reversed:_label.text="LG-17 · "+Controls.key_label("interagir",0)+" RECARREGAR"
+
 func _tick_lift(delta:float,player:CharacterBody3D) -> void:
 	if not enabled:_label.text="E NA ALAVANCA";return
 	var feet:Vector3=player.global_position-_body.global_position
@@ -191,7 +207,7 @@ func interact() -> bool:
 			if level.boss.dead:level.rescue_urso()
 			else:level.notice("Largato controla a contenção. Vença-o para libertar Urso.")
 			return true
-		"record":level.show_archive("LG-17 · ESTABILIZADOR","LG-17 estabiliza o enxerto de Largato. O injetor pode inverter o fluxo. Na última etapa, alterne fogo e gelo no mecanismo e interaja para obter as doses experimentais.",[["lab","LABORATÓRIO DOS EXECUTIVOS"]]);return true
+		"record":level.show_archive("LG-17 · ESTABILIZADOR","LG-17 estabiliza o enxerto de Largato. O injetor pode inverter o fluxo. Ao estabilizar as máquinas com fogo e gelo na segunda etapa, o estoque verde se abre. Recolha LG-17 com Interagir antes da última etapa; arremesse as doses em Largato quando o enxerto dele perder estabilidade.",[["lab","LABORATÓRIO DOS EXECUTIVOS"]]);return true
 	return false
 func take_element(element:String,_source:Vector3,seconds:float=3) -> void:
 	if not accepts(element):return

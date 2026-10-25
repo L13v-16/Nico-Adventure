@@ -966,10 +966,6 @@ script = ExtResource("acai")
 position = Vector2(2416, 32)
 script = ExtResource("acai")
 
-[node name="Acai3" type="Area2D" parent="."]
-position = Vector2(4344, 32)
-script = ExtResource("acai")
-
 [node name="CaravanShop" parent="." instance=ExtResource("caravan")]
 position = Vector2(250, 64)
 z_index = 2

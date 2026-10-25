@@ -26,6 +26,7 @@ var _invulnerable:=0.0
 var _target_x:=0.0
 var _side:=-1.0
 var _sprite:AnimatedSprite2D
+var _armor_cue:Node2D
 var _player:CharacterBody2D
 var _caption:Label
 var _fill:ColorRect
@@ -68,10 +69,15 @@ func _ready() -> void:
 	add_child(collider)
 	_sprite=Art.actor("boss",162)
 	_sprite.sprite_frames = preload("res://world/Arte/Underworld/V59/guardian.tres")
+	_sprite.sprite_frames=_sprite.sprite_frames.duplicate(true)
+	var poses:=preload("res://world/Scripts/polish99_art.gd")
+	for entry in [["walk",[0,1],7,true],["windup",[2],5,false],["sweep",[3],6,false],["guard",[4],5,false],["heated",[5],5,false],["frozen",[6],5,false],["exposed",[7],5,false],["roar",[8],5,false],["leap",[9],5,false],["slam",[10],5,false],["recover",[11,4],3,false]]:
+		poses.append(_sprite.sprite_frames,"warden",entry[0],entry[1],entry[2],entry[3])
 	_normal_scale = _sprite.scale
 	add_child(_sprite)
 	_sprite.frame_changed.connect(_anchor_guardian)
 	_sprite.animation_changed.connect(_anchor_guardian)
+	_sprite.animation_changed.connect(_guardian_sound)
 	_sprite.play(&"idle")
 	_anchor_guardian()
 	_pedestal=AnimatableBody2D.new()
@@ -94,14 +100,15 @@ func _ready() -> void:
 	_anchor.name = "PinnedChain"
 	_anchor.boss = self
 	add_child(_anchor)
+	_armor_cue=Node2D.new();_armor_cue.name="ArmorSequence";_armor_cue.z_index=5;_armor_cue.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;_armor_cue.draw.connect(_paint_armor_guide);add_child(_armor_cue);_armor_cue.hide()
 	_build_bar()
 func _build_bar() -> void:
 	_bar=CanvasLayer.new()
 	_bar.layer=16
 	add_child(_bar)
 	var panel:=Panel.new()
-	panel.position=Vector2(66,58)
-	panel.size=Vector2(508,32)
+	panel.position=Vector2(174,58)
+	panel.size=Vector2(448,50)
 	var style := preload("res://world/Scripts/ui_style.gd").panel_style()
 	style.bg_color = Color("1a1824")
 	style.border_color = Color("a88468")
@@ -112,21 +119,22 @@ func _build_bar() -> void:
 	panel.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_bar.add_child(panel)
 	_phase_caption = Label.new()
-	_phase_caption.position = Vector2(74, 59)
-	_phase_caption.size = Vector2(492, 11)
+	_phase_caption.position = Vector2(182, 59)
+	_phase_caption.size = Vector2(432, 11)
 	_phase_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_phase_caption.add_theme_font_size_override("font_size", 9)
 	_phase_caption.add_theme_color_override("font_color", Color("ffd298"))
 	_bar.add_child(_phase_caption)
 	_caption=Label.new()
-	_caption.position=Vector2(74,71)
-	_caption.size=Vector2(492,11)
+	_caption.position=Vector2(182,72)
+	_caption.size=Vector2(432,26)
+	_caption.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	_caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_caption.add_theme_font_size_override("font_size",8)
 	_bar.add_child(_caption)
 	_fill=ColorRect.new()
-	_fill.position=Vector2(74,85)
-	_fill.size=Vector2(492,3)
+	_fill.position=Vector2(182,103)
+	_fill.size=Vector2(432,3)
 	_fill.color=Color("f4a96b")
 	_fill.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_bar.add_child(_fill)
@@ -162,7 +170,7 @@ func _anchor_guardian() -> void:
 	var texture:Texture2D=_sprite.sprite_frames.get_frame_texture(_sprite.animation,_sprite.frame)
 	if texture==null:return
 	var feet:Dictionary=BOOT_FEET.get_meta("feet")
-	var foot:float=feet.get(texture.resource_path,texture.get_height())
+	var foot:float=texture.get_meta("ground_foot",feet.get(texture.resource_path,texture.get_height()))
 	_sprite.position=Vector2(-texture.get_width()*.5*_sprite.scale.x,-foot*_sprite.scale.y)
 	_sprite.set_meta("ground_art_offset",_sprite.position)
 func stage_opening() -> void:
@@ -307,10 +315,11 @@ func _physics_process(delta:float) -> void:
 					state = "idle"
 					_timer = 1.05
 			"idle":
-				_sprite.play(&"heated" if heated else (&"frozen" if brittle else &"guard"))
+				_sprite.play(&"walk" if phase==4 and _landing_grace<=0 and absf(_player.position.x-position.x)>85 else (&"heated" if heated else (&"frozen" if brittle else &"guard")))
 				if phase==4 and _landing_grace<=0:
 					var gap:float=_player.position.x-position.x
-					if absf(gap)>85:position.x=move_toward(position.x,clampf(_player.position.x,6835,7340),95*delta)
+					if absf(gap)>85:
+						position.x=move_toward(position.x,clampf(_player.position.x,6835,7340),95*delta)
 				if _timer<=0:
 					state="warning"
 					_target_x=clampf(_player.position.x,6490,7410)
@@ -336,20 +345,21 @@ func _physics_process(delta:float) -> void:
 	_update_bar()
 	queue_redraw()
 func _update_bar() -> void:
+	_armor_cue.visible=active and phase==3;_armor_cue.queue_redraw()
 	if phase==6:return
 	if phase==5:
 		if not is_instance_valid(cylinder):return
-		_fill.size.x=492*maxf(0,3-cylinder.hits)/3.0
+		_fill.size.x=432*maxf(0,3-cylinder.hits)/3.0
 		_phase_caption.text="5 / 6 · CANHÕES DA TORRE · CANHÕES %d / 3" % cylinder.hits
 		_caption.text=_advice()
 		_fill.color=Color("a2d9ee") if cylinder.hits==1 else Color("f4ac71")
 		return
-	_fill.size.x=492*health/MAX_HEALTH
+	_fill.size.x=432*health/MAX_HEALTH
 	_phase_caption.text="%d / 6 · CARCEREIRO · " % phase + ["", "CORRENTES", "ANEL DE CORRENTES · %d / 7" % _phase2_parries, "ARMADURA RACHADA", "A INVESTIDA DE JOSÉ"][phase]
 	_caption.text=_advice()
 	_fill.color = Color("a7e5f4") if brittle else (Color("ffba75") if heated else Color("e4bb8d"))
 	if phase==2:
-		_fill.size.x=492*maxf(0,7-_phase2_parries)/7.0
+		_fill.size.x=432*maxf(0,7-_phase2_parries)/7.0
 		_fill.color=Color("b4ec92")
 func arena_floor_y() -> float:
 	return _rising_floor.floor_height() if phase==2 and is_instance_valid(_rising_floor) else (100.0 if phase==1 else UPPER_FLOOR)
@@ -376,7 +386,7 @@ func _tick_center_jump(delta:float) -> void:
 		state="center_jump";collision_layer=0
 		var jump:=clampf((_center_clock-.6)/.9,0,1)
 		position=Vector2(lerpf(_center_from,ARENA_CENTER,smoothstep(0,1,jump)),floor_y-sin(jump*PI)*100)
-		_sprite.play(&"roar" if jump<.65 else &"slam")
+		_sprite.play(&"leap" if jump<.65 else &"slam")
 	else:
 		if state!="center_land":Sfx.land(.6)
 		state="center_land";position=Vector2(ARENA_CENTER,floor_y);collision_layer=4
@@ -440,7 +450,7 @@ func _advice() -> String:
 			var advice:String=_ring_pattern.advice() if is_instance_valid(_ring_pattern) else "CORRA · PULE · J / X REBATE A ESFERA VERDE"
 			var remaining:float=maxf(_player._attack_cooldown,_player.elements.cooldown)
 			return advice+(" · NICO: %.1fs"%remaining if remaining>0 else " · J/X: PRONTO")
-		3:return "GELO nas correntes!" if heated else "FOGO na armadura!"
+		3:return "2: GELO NA ARMADURA AQUECIDA → 3: ATAQUE O NÚCLEO" if heated else "1: FOGO NA ARMADURA → 2: GELO → 3: ATAQUE"
 		4:return "Atraia para o círculo dourado e use C: JOSÉ"
 		5:return "CANHÃO %d / 3 · %s · %s · K: ativar" % [mini(cylinder.hits+1,3),"DIREITA" if cylinder.hits==1 else "ESQUERDA","GELO" if cylinder.hits==1 else "FOGO"]
 	return ""
@@ -470,12 +480,15 @@ func take_element(element:String,source:Vector2) -> void:
 	if not active or is_dead() or phase==2 or phase==5:return
 	if _vulnerable>0:take_damage(1,source);return
 	if phase!=3:return
+	if element=="ice" and not heated:
+		Sfx.play("warden_fizzle",-10);Fx.burst(position+Vector2(0,-75),Color("b8e7ff"),5,45)
 	if element=="fire":
 		heated=true
 		Sfx.play("warden_fire_charge", -8)
 		Fx.popup(position+Vector2(0,-140),"ARMADURA AQUECIDA · GELO!",Color("ffc788"),9)
 	elif element=="ice" and heated:
 		brittle=true
+		Sfx.play("warden_ice_charge",-7)
 		_vulnerable=3.0
 		_timer=3.4
 		state="idle"
@@ -600,6 +613,7 @@ func _defeat() -> void:
 	queue_redraw()
 func is_dead() -> bool:return health<=0
 func _draw() -> void:
+
 	if active and _center_clock>=0:
 		var center:=to_local(Vector2(ARENA_CENTER,arena_floor_y()))
 		draw_arc(center,48,PI,TAU,20,Color("ffe5ad"),2)
@@ -619,3 +633,24 @@ func _draw() -> void:
 	if active and phase>=2 and phase<5 and lava_y<155:
 		var start:=to_local(Vector2(6456,lava_y))
 		preload("res://world/Scripts/underworld_lava.gd").draw_pool(self,Rect2(start,Vector2(1008,480)),_phase_time)
+
+func _guardian_sound() -> void:
+	match _sprite.animation:
+		"walk":Sfx.play("warden_chain",-19)
+		"sweep":Sfx.play("warden_chain",-8)
+		"leap":Sfx.play("warden_rise",-13)
+		"recover":Sfx.play("warden_chain",-18)
+
+func _paint_armor_guide() -> void:
+	if active and phase==3:
+		var icons:Texture2D=preload("res://world/Arte/HUD/element_icons_v80.png")
+		var icon_width:=icons.get_width()*.5
+		for i in 2:
+			var color:=Color("ffb65b") if i==0 else Color("86e6ff")
+			var selected:bool=(i==1) if heated else (i==0)
+			var at:=Vector2(-146+i*34,-124)
+			_armor_cue.draw_rect(Rect2(at-Vector2(3,3),Vector2(28,28)),Color("17202b"))
+			if selected:_armor_cue.draw_rect(Rect2(at-Vector2(3,3),Vector2(28,28)),color,false,2)
+			_armor_cue.draw_texture_rect_region(icons,Rect2(at,Vector2(22,22)),Rect2(i*icon_width,0,icon_width,icons.get_height()))
+		var target:=Vector2(0,-90)
+		_armor_cue.draw_arc(target,22+sin(_phase_time*5)*2,0,TAU,20,Color("86e6ff") if heated else Color("ffb65b"),2)

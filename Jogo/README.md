@@ -1,3 +1,7 @@
+# Revisão v99 — amigos, cenas e combates
+
+Retratos de diálogo, tartaruga no prólogo, itinerário ilustrado e resultados com Nico inteiro. Novos inimigos mágicos, animações e sinais do Carcereiro, laboratório detalhado e Largato com cinco padrões e liberação antecipada de LG-17. Batalha final com proteção real da tartaruga e subida mais legível. [Detalhes](REVISAO-v99.md).
+
 # Polimento v98 — cenário e apoios
 
 Decoração apoiada no terreno estático e afastada dos mecanismos. Ajustes de legibilidade na floresta mágica e no Submundo; fixações, trilhos e letreiros da Corporação revisados com a arte industrial existente. [Escopo](POLIMENTO-v98.md).

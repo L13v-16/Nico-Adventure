@@ -44,7 +44,7 @@ func _ready() -> void:
 	if mode=="record":_robot.hide();_nico.hide()
 func _actor(frames:SpriteFrames,width:float,at:Vector2) -> Node2D:
 	var root:=Node2D.new();root.position=at;_stage.add_child(root)
-	var sprite:=Friends.actor(frames,width);root.add_child(sprite);sprite.play("idle" if frames.has_animation("idle") else frames.get_animation_names()[0]);Friends.reanchor(sprite);return root
+	var sprite:=Friends.actor(frames,width);root.add_child(sprite);preload("res://world/Scripts/polish99_art.gd").attach_wolf(sprite,width);sprite.play("idle" if frames.has_animation("idle") else frames.get_animation_names()[0]);Friends.reanchor(sprite);return root
 func duration() -> float:
 	return {"arrival":8.0,"boss":8.5,"boarding":9.0,"friends":19.0,"ending":17.0,"record":14.0}.get(mode,8.0)
 func _process(delta:float) -> void:
@@ -52,7 +52,7 @@ func _process(delta:float) -> void:
 	if mode=="arrival":_nico.position.x=lerpf(30,180,smoothstep(0,2.5,clock));_robot.modulate=Color(.2,.25,.3,.7)
 	elif mode=="boss":
 		_wolf.position.x=lerpf(540,440,smoothstep(0,2.4,clock))
-		(_wolf.get_child(0) as AnimatedSprite2D).flip_h=true
+		(_wolf.get_child(0) as AnimatedSprite2D).flip_h=false
 		(_wolf.get_child(0) as AnimatedSprite2D).play("run" if clock<2.4 else "idle")
 	elif mode=="boarding":
 		_robot.position.y=lerpf(-300,247-_robot.texture.get_height()*_robot.scale.y,smoothstep(0,2.3,clock))

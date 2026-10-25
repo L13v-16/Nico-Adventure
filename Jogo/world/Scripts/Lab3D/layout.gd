@@ -52,6 +52,7 @@ static func room(level:Node3D,index:int) -> Node3D:
 		for x in [-3,3]:Art.cylinder(root,"LampHanger",Vector3(x,(height+7.7)*.5,z),.035,height-7.7,"536b79",-1,.5)
 		var lamp:=OmniLight3D.new();lamp.position=Vector3(0,5.8,z);lamp.light_color=Color("dce3ce");lamp.light_energy=2.5;lamp.omni_range=15;root.add_child(lamp)
 		var spot:=SpotLight3D.new();spot.position=Vector3(0,7.5,z);spot.rotation.x=-PI/2;spot.spot_range=14;spot.spot_angle=65;spot.light_energy=1.2;spot.shadow_enabled=true;root.add_child(spot)
+	preload("res://world/Scripts/Lab3D/polish99_details.gd").install(root,index)
 	return root
 static func build(level:Node3D) -> void:
 	for i in 4:room(level,i)
@@ -85,7 +86,9 @@ static func build(level:Node3D) -> void:
 		Art.cylinder(planter,"TreeTrunk",Vector3(0,1.2,0),.18,2,"79654e")
 		Art.ball(planter,"TreeCrown",Vector3(0,2.6,0),Vector3(2.5,2.8,2.5),"548b78")
 	var merchant:=Art.instantiate("wagon");merchant.name="OliverWagon";merchant.position=Vector3(-6,0,2);first.add_child(merchant);level.wagon=merchant
-	var oliver:=Art.instantiate("oliver");oliver.name="Oliver";oliver.position=Vector3(0,.55,.25);oliver.scale=Vector3.ONE*.8;oliver.rotation.y=PI;oliver.process_mode=Node.PROCESS_MODE_ALWAYS;merchant.add_child(oliver)
+	Art.box(merchant,"MerchantStep",Vector3(2.15,.08,-.15),Vector3(1.3,.16,1.2),"88613e")
+	Art.label(merchant,"OLIVER GANCHO",Vector3(2.15,2.6,-.15),26,"f3cf8c")
+	var oliver:=Art.instantiate("oliver");oliver.name="Oliver";oliver.position=Vector3(2.15,.16,-.15);oliver.scale=Vector3.ONE*.8;oliver.rotation.y=PI;oliver.process_mode=Node.PROCESS_MODE_ALWAYS;merchant.add_child(oliver)
 	Art.label(merchant,"OLIVER GANCHO · E",Vector3(0,3.25,0),25,"f3d991")
 	for i in 3:
 		var desk:=solid(first,Vector3(7,.75,-8-i*6),Vector3(3.2,1.5,2),"47606c")

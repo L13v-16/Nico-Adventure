@@ -11,7 +11,7 @@ const MUTED := Color("a2b9af")
 const MINT := Color("b9dea1")
 const GOLD := Color("e3bf76")
 const CHARACTERS := [
- {"id":"nico", "name":"Nico", "short":"Nico", "art":"Nico/idle_1", "bio":"Um guaxinim de lenço verde e mochila. Viaja entre as ilhas para reunir os amigos.", "where":"A jornada começa no Vale das Copas."},
+ {"id":"nico", "name":"Nico", "short":"Nico", "art":"Nico/idle_1", "portrait":"Nico/rosto_1", "bio":"Um guaxinim de lenço verde e mochila. Viaja entre as ilhas para reunir os amigos.", "where":"A jornada começa no Vale das Copas."},
  {"id":"arara", "name":"Arara Minas", "short":"Arara", "art":"Amigos/arara_idle_1", "portrait":"Friends/V47/arara_portrait_neutral.tres", "bio":"Arara azul e amarela que escapou do sequestro. Guia Nico na viagem entre as ilhas.", "where":"Encontro: casa na árvore da floresta."},
  {"id":"turtle", "name":"Tartaruga", "short":"Tartaruga", "art":"Tartaruga/turtle_idle_1", "portrait":"Friends/V47/turtle_portrait_neutral.tres", "bio":"Uma companheira idosa, serena e de casco marcado por muitas travessias.", "where":"Resgate: Costa das Marés, após Urus."},
  {"id":"oliver", "name":"Oliver Gancho", "short":"Oliver", "art":"Caravan/V23/oliver_idle_1_v23", "portrait":"Caravan/V23/oliver_portrait_v23", "bio":"O rato de tapa-olho da caravana. Troca provisões, equipamentos e roupas por cerejas.", "where":"Encontro: caravana móvel da praia."},
@@ -193,7 +193,7 @@ func _build_friends() -> Control:
   art_column.add_theme_constant_override("separation",1)
   art_column.mouse_filter=Control.MOUSE_FILTER_IGNORE
   card.add_child(art_column)
-  art_column.add_child(_art(character.art,Vector2(52,38)))
+  art_column.add_child(_art(character.get("portrait",character.art),Vector2(52,38)))
   art_column.add_child(UiStyle.label(character.short,9,CREAM))
   var state:=character_state(character.id)
   art_column.add_child(UiStyle.label(state.short,8,state.color))
@@ -218,7 +218,7 @@ func _build_friends() -> Control:
  var body:=HBoxContainer.new()
  body.add_theme_constant_override("separation",8)
  info.add_child(body)
- _portrait=_art(CHARACTERS[0].art,Vector2(72,82))
+ _portrait=_art(CHARACTERS[0].portrait,Vector2(72,82))
  _portrait.name="SelectedCharacterArt"
  body.add_child(_portrait)
  _description=UiStyle.label("",11,CREAM,HORIZONTAL_ALIGNMENT_LEFT)

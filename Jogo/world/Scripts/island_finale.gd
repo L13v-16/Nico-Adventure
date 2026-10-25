@@ -48,6 +48,8 @@ var _arara_idle: Array[Texture2D] = []
 var _arara_fly: Array[Texture2D] = []
 var _friend_textures: Array[Texture2D] = []
 var _friend_second_textures: Array[Texture2D] = []
+const MAP=preload("res://world/Scripts/island_map.gd")
+var _islands:Array[Texture2D]=[]
 var _card_style: StyleBoxFlat
 var _next_card_style: StyleBoxFlat
 
@@ -79,12 +81,15 @@ func _load_art() -> void:
 		_nico_run_frames.append(_texture("res://world/Arte/Nico/run_%d.png" % frame))
 	for frame: int in range(1, 3):
 		_arara_idle.append(_texture("res://world/Arte/Amigos/arara_idle_%d.png" % frame))
+	for i in [1,2,3,4,5]:
+		var island:=AtlasTexture.new();island.atlas=MAP.ATLAS;island.region=MAP.REGIONS[i];island.filter_clip=true;_islands.append(island)
 	# A primeira parada usa a mesma tartaruga idosa que será resgatada na praia.
-	_friend_textures.append(_texture("res://world/Arte/Friends/V47/turtle_body_00.tres"))
-	_friend_second_textures.append(_texture("res://world/Arte/Friends/V47/turtle_body_01.tres"))
-	for file: String in FRIEND_FILES:
-		_friend_textures.append(_texture("res://world/Arte/Amigos/%s.png" % file))
-		_friend_second_textures.append(_texture("res://world/Arte/Amigos/%s_2.png" % file))
+	for id in ["turtle","remi","jose","urso","mico"]:
+		var portrait_path:String="res://world/Arte/"+("Underworld/jose_portrait_neutral.tres" if id=="jose" else "Friends/V47/"+id+"_portrait_neutral.tres")
+		var talk_path:String=portrait_path.replace("neutral","talk")
+		_friend_textures.append(_texture(portrait_path))
+		_friend_second_textures.append(_texture(talk_path) if ResourceLoader.exists(talk_path) else _texture(portrait_path))
+
 
 
 func _texture(path: String) -> Texture2D:
@@ -305,10 +310,10 @@ func _draw_map() -> void:
 	var route_progress: float = clampf(_elapsed / 2.5, 0.0, 1.0)
 	var previous := Vector2(38, 130)
 	for index: int in MAP_POINTS.size():
-		var point: Vector2 = MAP_POINTS[index]
+		var point: Vector2 = MAP_POINTS[index]+Vector2(0,18 if index==2 else 0)
 		_draw_dotted_route(previous, point, route_progress, index)
 		var island_color := Color(0.7, 0.63, 0.37) if index == 0 else Color(0.23, 0.42, 0.26)
-		_draw_island(point + Vector2(0, 8), 0.56, island_color, true)
+		_canvas.draw_texture_rect(_islands[index],Rect2(point+Vector2(-42,-48),Vector2(84,84)),false)
 		_canvas.draw_circle(point + Vector2(0, -8), 4.0 if index == 0 else 3.0, UiStyle.GOLD_COLOR if index == 0 else Color(0.57, 0.76, 0.66))
 		_canvas.draw_line(point + Vector2(0, 28), Vector2(point.x, 151), Color(0.57, 0.76, 0.66, 0.4), 1.0)
 		var rect := Rect2(37 + index * 116, 154, 104, 89)
@@ -367,9 +372,9 @@ func _draw_actors() -> void:
 				texture = _friend_second_textures[index]
 			if index == 0:
 				# A arte da tartaruga tem proporção 4:3; os demais amigos são quadrados.
-				_draw_actor_texture(texture, Rect2(47, 160, 84, 63))
+				_draw_actor_texture(texture, Rect2(59, 161, 60, 60))
 			else:
-				_draw_actor_texture(texture, Rect2(60 + index * 116, 160, 58, 58))
+				_draw_actor_texture(texture, Rect2(59 + index * 116, 161, 60, 60))
 	else:
 		var at: Vector2 = _flight_position()
 		var flight_scale: float = 0.75 if beat_index == 4 else 1.0

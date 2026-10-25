@@ -22,7 +22,9 @@ func _ready() -> void:
 		mount.draw.connect(func():Polish.wall_mount(mount,width))
 	_art=Art.sprite("props",index,width);add_child(_art)
 	if kind in ["record","office","prototype","secret","security","lockdown","plan"]:
-		_art.texture=Polish.cell(8);_art.scale=Vector2.ONE*(width/_art.texture.get_width());_art.position=Vector2(-width/2,-_art.texture.get_height()*_art.scale.y)
+		_art.material=preload("res://world/Scripts/polish99_art.gd").material()
+		_art.texture=preload("res://world/Scripts/polish99_art.gd").cell("presentation",{"record":11,"office":10,"prototype":9,"secret":12,"security":14,"lockdown":13,"plan":12}[kind]);_art.scale=Vector2.ONE*(width/_art.texture.get_width());_art.position=Vector2(-width/2,-_art.texture.get_height()*_art.scale.y)
+	if kind=="record" and link=="forest":_art.texture=preload("res://world/Scripts/polish99_art.gd").cell("presentation",8);_art.scale=Vector2.ONE*(width/_art.texture.get_width());_art.position=Vector2(-width/2,-_art.texture.get_height()*_art.scale.y)
 	if kind=="conveyor":
 		_art.hide()
 		var deck:=Node2D.new();deck.name="BeltDeck";deck.position.x=-width/2;deck.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(deck)

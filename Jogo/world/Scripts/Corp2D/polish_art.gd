@@ -24,6 +24,10 @@ static func wolf_frames() -> SpriteFrames:
 		var source:StringName={"idle":"idle","run":"walk","windup":"command","dash":"walk","throw":"reach","hurt":"lift","board":"pickup"}[action]
 		frames.add_animation(action);frames.set_animation_loop(action,action in ["idle","run","dash"]);frames.set_animation_speed(action,10 if action in ["run","dash"] else 5)
 		for i in original.get_frame_count(source):frames.add_frame(action,original.get_frame_texture(source,i))
+	var extra:=preload("res://world/Scripts/polish99_art.gd")
+	for entry in [["windup",[0],5,false],["dash",[1,2],11,true],["brake",[3],6,false],["throw",[4,5],9,false],["recover",[6],4,false],["hurt",[7],5,false]]:
+		extra.append(frames,"wolf",entry[0],entry[1],entry[2],entry[3])
+	frames.set_meta("mixed_wolf99",true)
 	cache.wolf=frames;return frames
 static func deck(canvas:CanvasItem,width:float,height:float=28.0,conveyor:bool=false,reverse:bool=false) -> void:
 	var center:Texture2D=cell(4 if conveyor else 0);var left:Texture2D=cell(5 if conveyor else 1);var right:Texture2D=cell(6 if conveyor else 2)

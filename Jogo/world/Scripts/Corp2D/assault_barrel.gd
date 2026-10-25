@@ -2,7 +2,7 @@ extends StaticBody2D
 ## Hand-authored rolling route; both damage and freezing use the normal attack API.
 var path:PackedVector2Array
 var target:=1
-var speed:=108.0
+var speed:=96.0
 var frozen:=0.0
 var level:Node2D
 var _spin:=0.0

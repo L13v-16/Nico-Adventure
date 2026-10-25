@@ -7,6 +7,8 @@ static func build(level:Node2D) -> void:
 	terrain.name="Level"
 	level.add_child(terrain)
 	for info in GROUND:_ground(terrain,Vector2(info.x,info.y),info.z,440,false)
+	_ground(terrain,Vector2(8000,-620),384,1160,false)
+	terrain.get_child(terrain.get_child_count()-1).name="ArenaEndWall"
 	var scenery:=Node2D.new()
 	scenery.name="Scenery"
 	scenery.z_index=-1

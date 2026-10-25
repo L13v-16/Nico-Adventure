@@ -15,10 +15,11 @@ const FRIEND_SPRITES := [
 	{"name":"José", "file":"jose", "second":"jose_2"},
 	{"name":"Urso", "file":"urso", "second":"urso_2"},
 	{"name":"Mico-leão-dourado", "file":"mico_leao_dourado", "second":"mico_leao_dourado_2"},
+	{"name":"Tartaruga", "file":"turtle99", "second":"turtle99_2"},
 ]
 const PANELS := [
 	{"text":"Nico vive numa mata tranquila, onde os animais convivem em paz.", "title":"UM LAR ENTRE AS FOLHAS", "stage":0, "duration":5.0},
-	{"text":"Entre seus amigos estão Arara Minas, Remi, José, Urso e o mico-leão-dourado.", "title":"AMIGOS PARA TODA A VIDA", "stage":0, "duration":6.0},
+	{"text":"Entre seus amigos estão Arara Minas, a tartaruga, Remi, José, Urso e o mico-leão-dourado.", "title":"AMIGOS PARA TODA A VIDA", "stage":0, "duration":6.0},
 	{"text":"O Lobo Lázaro da corporação invade a mata. Seu crachá dourado revela quem comanda o sequestro.", "title":"O LOBO DO CRACHÁ DOURADO", "stage":1, "duration":6.2},
 	{"text":"O lobo leva os amigos até a jaula. Nico tenta ajudar, enquanto Arara Minas escapa pelo alto.", "title":"A ORDEM DO LOBO", "stage":1, "duration":7.2},
 	{"text":"O lobo parte com os prisioneiros. Nico jamais esquecerá aquele crachá dourado.", "title":"SEPARADOS", "stage":2, "duration":5.8},
@@ -41,6 +42,7 @@ var _hint: Label
 var _timer: Timer
 var _finished := false
 var _revealed := false
+var _cue:=-1
 var _textures: Dictionary = {}
 var _bounds: Dictionary = {}
 var _wolf_frames: SpriteFrames
@@ -60,6 +62,8 @@ func _load_art() -> void:
 	for friend in FRIEND_SPRITES:
 		_load_texture("Amigos/" + String(friend.file))
 		_load_texture("Amigos/" + String(friend.second))
+	for pair in [["scene_idle",0],["scene_wave",6],["scene_think",4]]:
+		var image:Texture2D=preload("res://world/Scripts/polish99_art.gd").cell("presentation",pair[1]);var key:String="Nico/"+pair[0];_textures[key]=image;_bounds[key]=FriendArt.bounds(image)
 	for i in range(1, 5):
 		_load_texture("Nico/idle_%d" % i)
 	for i in range(1, 7):
@@ -77,6 +81,8 @@ func _load_texture(file: String) -> void:
 	if file == "Amigos/remi_2": path = "res://world/Arte/Magic/remi_blink.tres"
 	if file == "Amigos/jose": path = "res://world/Arte/Underworld/jose_idle.tres"
 	if file == "Amigos/jose_2": path = "res://world/Arte/Underworld/jose_blink.tres"
+	if file=="Amigos/turtle99":path="res://world/Arte/Friends/V47/turtle_body_00.tres"
+	if file=="Amigos/turtle99_2":path="res://world/Arte/Friends/V47/turtle_body_01.tres"
 	var texture := FriendArt.texture(path)
 	_textures[file] = texture
 	_bounds[file] = FriendArt.bounds(texture)
@@ -117,6 +123,10 @@ func _process(delta: float) -> void:
 		return
 	_elapsed += delta
 	_clock += delta
+	if _index==2 and _elapsed>2.8 and _cue<0:_cue=0;Sfx.play("lab_clink",-17)
+	if _index==3:
+		if _elapsed>.8 and _cue<0:_cue=0;Sfx.play("lab_clink",-17)
+		if _elapsed>4.25 and _cue<1:_cue=1;Sfx.play("lab_door",-14)
 	_text.visible_characters = -1 if _revealed else mini(_text.text.length(), int(maxf(0.0, _elapsed - 0.25) * 48.0))
 	var scale_ui := get_viewport().get_visible_rect().size / Vector2(640, 360)
 	_text.position = Vector2(36, 278) * scale_ui
@@ -137,7 +147,7 @@ func _show(index: int) -> void:
 	_index = index
 	_stage = int(PANELS[index].stage)
 	_elapsed = 0.0
-	_revealed = false
+	_revealed = false;_cue=-1
 	_text.text = String(PANELS[index].text)
 	_text.visible_characters = 0
 	_timer.start(float(PANELS[index].duration))
@@ -299,14 +309,14 @@ func _friend_file(i: int) -> String:
 
 func _draw_actors() -> void:
 	_begin_draw(_actor_canvas)
-	var idle := "Nico/idle_%d" % (1 + int(_clock * 6) % 4)
+	var idle := "Nico/scene_wave" if _index==1 and int(_clock*.7)%2==1 else ("Nico/scene_think" if _index==5 else "Nico/scene_idle")
 	var run := "Nico/run_%d" % (1 + int(_clock * 10) % 6)
 	if _stage == 0:
 		var nico_x := 84.0 if _index == 1 else lerpf(75, 130, minf(_elapsed / 2.0, 1))
 		_draw_actor(run if _index == 0 and _elapsed < 2.0 else idle, Vector2(nico_x, GROUND), 60)
 		for i in FRIEND_SPRITES.size():
-			var x := 190.0 + i * 93.0 if _index == 1 else 255.0 + i * 70.0
-			var hop: float = maxf(0, sin(_clock * 3.0 + i * 1.2)) * (4 if i == 0 else 1.5)
+			var x := 170.0 + i * 78.0 if _index == 1 else 255.0 + i * 70.0
+			var hop: float = maxf(0, sin(_clock * 3.0 + i * 1.2)) * (4 if i == 0 else 0.0)
 			if i == 0 and _index == 0 and _elapsed < 2.2:
 				var flight := clampf(_elapsed / 2.2, 0, 1)
 				_draw_actor("Amigos/arara_fly_%d" % (1 + int(_clock * 8) % 4), Vector2(lerpf(190, x, flight), GROUND - sin(flight * PI) * 48), 55)
@@ -357,7 +367,7 @@ func _draw_captured_friends(include_jose: bool = true) -> void:
 	for i in range(1, FRIEND_SPRITES.size()):
 		if i == 2 and not include_jose:
 			continue
-		_draw_actor(_friend_file(i), Vector2(roundf(_truck_x()) + 29 + (i - 1) * 18, GROUND - 57 + _truck_bob()), 22)
+		_draw_actor(_friend_file(i), Vector2(roundf(_truck_x()) + 22 + (i - 1) * 14, GROUND - 57 + _truck_bob()), 22)
 
 func _wolf_walk_frame(distance: float) -> int:
 	return int(maxf(0, distance) / 64.0 * 8.0) % 8
@@ -423,7 +433,7 @@ func _draw_frame() -> void:
 			var name_text := String(FRIEND_SPRITES[i].name)
 			if i == 4:
 				name_text = "Mico-leão"
-			c.draw_string(ThemeDB.fallback_font, Vector2(148 + i * 93, 253), name_text, HORIZONTAL_ALIGNMENT_CENTER, 85, 9, Color("e0d5b3"))
+			c.draw_string(ThemeDB.fallback_font, Vector2(131 + i * 78, 253), name_text, HORIZONTAL_ALIGNMENT_CENTER, 78, 9, Color("e0d5b3"))
 	if _index == 2 or _index == 4:
 		c.draw_string(ThemeDB.fallback_font, Vector2(36, 69), "CHEFE DA CORPORAÇÃO  /  O LÍDER DO SEQUESTRO", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color("d7bc76"))
 	if _index == 6:

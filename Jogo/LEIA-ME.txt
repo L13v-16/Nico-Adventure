@@ -1,3 +1,29 @@
+REVISÃO V99 — AMIGOS, CENAS E COMBATES
+
+Coleção com retratos de diálogo nos cartões. Tartaruga incluída no prólogo;
+o roteiro de resgates agora usa as ilhas ilustradas e retratos dos amigos.
+Resultados mostram Nico inteiro reagindo à nota, com revelação e partículas.
+Foram gerados quatro atlas com 52 poses/objetos, preservando os PNGs originais:
+Lázaro, Carcereiro, quatro inimigos mágicos, Nico e computadores variados.
+
+Floresta Violeta tem dois novos tipos de inimigo: cogumelo que anuncia e lança
+esporos, e criatura de espinhos que se prepara antes de rolar. As frutas junto
+às arenas da praia e da floresta foram removidas; as apresentações no percurso
+continuam. No Submundo há parede permanente no limite direito da arena e
+indicação visual FOGO → GELO → ATAQUE na armadura do Carcereiro.
+
+Oliver aparece ao lado da caravana no laboratório. Novos equipamentos,
+monitores e cabos ocupam as paredes de três salas. Largato alterna cauda,
+rajada, salto, investida e onda; a sobrecarga alterna armadilhas e ataques.
+O estoque LG-17 abre ao estabilizar os terminais na segunda etapa: siga a
+luz verde e recolha com Interagir antes da última etapa; a tecla de dose lança.
+A dose, o aviso e o sinal do estoque ficam visíveis; as cargas são mantidas.
+
+Na luta final, novas poses e direção do olhar de Lázaro; a tartaruga intercepta
+ondas com o casco. Amigos, degraus e visor indicam o momento da subida.
+A abertura dura 21 segundos, com mais tempo para reagir aos tambores.
+Veja REVISAO-v99.md para o escopo e a origem das artes.
+
 POLIMENTO V98 — CENÁRIO E APOIOS
 
 Props pequenos agora exigem terreno estático sob toda a base e deixam

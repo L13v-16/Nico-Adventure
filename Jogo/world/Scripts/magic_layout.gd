@@ -73,12 +73,14 @@ static func build(level: Node2D) -> void:
 		if point.x>5000:spring.launch_speed=610
 		level.add_child(spring)
 	for point in CHECKPOINTS:_checkpoint(level.get_node("Checkpoints"),point)
-	var enemy_spots:=[Vector3(515,100,100),Vector3(1580,64,150),Vector3(2300,64,170),Vector3(3280,32,150),Vector3(4650,64,140)]
+	var enemy_spots:=[Vector3(515,100,100),Vector3(1490,64,80),Vector3(2300,64,170),Vector3(3210,32,100),Vector3(4650,64,140)]
 	for info in enemy_spots:
 		var enemy:=preload("res://world/Scripts/magic_enemy.gd").new()
 		enemy.position=Vector2(info.x,info.y)
 		enemy.patrol_width=info.z
 		level.add_child(enemy)
+	for info in [[Vector2(1690,64),"spore"],[Vector2(3390,32),"thorn"],[Vector2(4770,64),"spore"]]:
+		var extra:=preload("res://world/Scripts/magic_enemy.gd").new();extra.position=info[0];extra.species=info[1];extra.patrol_width=80;level.add_child(extra)
 	for point in [Vector2(1630,-35),Vector2(2390,-55),Vector2(3410,-58),Vector2(3960,-270),Vector2(4760,-40)]:
 		var moth:=preload("res://world/Scripts/magic_enemy.gd").new()
 		moth.species="moth"
@@ -121,12 +123,12 @@ static func build(level: Node2D) -> void:
 	caravan.position=Vector2(280,100)
 	caravan.travel_offset=Vector2(12,0)
 	level.add_child(caravan)
-	for point in [Vector2(2340,30),Vector2(5030,30)]:
+	for point in [Vector2(2340,30)]:
 		var acai:=preload("res://world/Scripts/acai_power.gd").new()
 		acai.position=point
 		level.add_child(acai)
 	# Ao alcance no piso, antes de inimigos e junto da bandeira pré-chefe.
-	for point in [Vector2(1440,64),Vector2(3090,32),Vector2(5070,64)]:
+	for point in [Vector2(1440,64),Vector2(3090,32)]:
 		var fruit:=preload("res://world/Scripts/dragon_fruit.gd").new()
 		fruit.position=point
 		level.add_child(fruit)

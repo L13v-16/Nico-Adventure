@@ -29,7 +29,7 @@ func _ready() -> void:
 	_sprite=Art.sprite("robot",0,320,2);_sprite.z_index=1;add_child(_sprite)
 	_sprite.hide()
 	_wolf_root=Node2D.new();add_child(_wolf_root)
-	wolf=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Scripts/Corp2D/polish_art.gd").wolf_frames(),88);_wolf_root.add_child(wolf);wolf.play("idle");wolf.flip_h=true
+	wolf=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Scripts/Corp2D/polish_art.gd").wolf_frames(),88);_wolf_root.add_child(wolf);wolf.play("idle");wolf.flip_h=false;preload("res://world/Scripts/polish99_art.gd").attach_wolf(wolf,88)
 	core=preload("res://world/Scripts/Corp2D/core.gd").new();core.boss=self;core.position=Vector2(0,-24);add_child(core)
 func begin() -> void:
 	if active or dead:return
@@ -127,6 +127,7 @@ func enter_robot() -> void:
 func _foot_fight(delta:float) -> void:
 	wolf.modulate=Color("ffbeae") if _hurt>0 else Color.WHITE
 	core.position=_wolf_root.position+Vector2(0,-28)
+	if _state=="recover" and _timer<1.9 and _hurt<=0:wolf.play("recover")
 	if _state=="dash":
 		_wolf_root.position.x=clampf(_wolf_root.position.x+_wolf_direction*235*delta,-310,310)
 		if absf(level.player.position.x-_wolf_root.global_position.x)<30 and level.player.position.y>53:level.player.take_damage(1,_wolf_root.global_position)
@@ -135,7 +136,7 @@ func _foot_fight(delta:float) -> void:
 			"wait":
 				_attack+=1;_target_x=level.player.position.x;_wolf_direction=signf(_target_x-_wolf_root.global_position.x)
 				if _wolf_direction==0:_wolf_direction=-1
-				wolf.flip_h=_wolf_direction<0;wolf.play("windup");_state="warning";_timer=1.0;Sfx.play("lab_scan",-12)
+				wolf.flip_h=_wolf_direction>0;wolf.play("windup");_state="warning";_timer=1.0;Sfx.play("lab_scan",-12)
 				level.tell("Salte a investida!" if _attack%2==1 else "Cuidado com a caneta! Desvie e se aproxime.")
 			"warning":
 				if _attack%2==1:_state="dash";_timer=.85;wolf.play("dash")
@@ -143,7 +144,7 @@ func _foot_fight(delta:float) -> void:
 					wolf.play("throw");var start:=_wolf_root.global_position+Vector2(_wolf_direction*22,-36)
 					level.shoot(start,(level.player.position+Vector2(0,-6)-start).normalized()*155,false,false,"pen")
 					_state="recover";_timer=2.2;open_window(2.2)
-			"dash":_state="recover";_timer=2.2;wolf.play("idle");open_window(2.2)
+			"dash":_state="recover";_timer=2.8;wolf.play("brake");open_window(2.8)
 			"recover":_state="wait";_timer=1.4;wolf.play("idle");vulnerable=0
 	core.queue_redraw();queue_redraw()
 func _draw() -> void:
