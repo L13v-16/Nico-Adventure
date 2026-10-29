@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V45/pillar.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(253, 36, 234, 468)
+filter_clip = true
+margin = Rect2(253, 32, 534, 44)
+metadata/opaque_height = 468

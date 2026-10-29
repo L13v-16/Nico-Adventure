@@ -1,0 +1,55 @@
+[gd_resource type="SpriteFrames" load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://world/Arte/Checkpoint/checkpoint_v16.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="Frame_0_0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_0_1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_0_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_0_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_0_4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_0_5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_1_0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_1_1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(32, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_1_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(64, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_1_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(96, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_1_4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(128, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="Frame_1_5"]
+atlas = ExtResource("1_sheet")
+region = Rect2(160, 48, 32, 48)
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("Frame_0_0")}, {"duration": 1.0, "texture": SubResource("Frame_0_1")}, {"duration": 1.0, "texture": SubResource("Frame_0_2")}, {"duration": 1.0, "texture": SubResource("Frame_0_3")}, {"duration": 1.0, "texture": SubResource("Frame_0_4")}, {"duration": 1.0, "texture": SubResource("Frame_0_5")}], "loop": true, "name": &"inactive", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Frame_1_0")}, {"duration": 1.0, "texture": SubResource("Frame_1_1")}, {"duration": 1.0, "texture": SubResource("Frame_1_2")}, {"duration": 1.0, "texture": SubResource("Frame_1_3")}, {"duration": 1.0, "texture": SubResource("Frame_1_4")}, {"duration": 1.0, "texture": SubResource("Frame_1_5")}], "loop": true, "name": &"active", "speed": 8.0}]

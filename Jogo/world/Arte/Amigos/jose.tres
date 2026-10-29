@@ -1,0 +1,5 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/jose_idle.tres" id="1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/jose_blink.tres" id="2"]
+[resource]
+animations = [{"frames": [{"duration": 6.0, "texture": ExtResource("1")}, {"duration": 0.5, "texture": ExtResource("2")}], "loop": true, "name": &"idle", "speed": 5.0}]

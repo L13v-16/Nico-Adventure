@@ -1,0 +1,1074 @@
+REVISÃO V99 — AMIGOS, CENAS E COMBATES
+
+Coleção com retratos de diálogo nos cartões. Tartaruga incluída no prólogo;
+o roteiro de resgates agora usa as ilhas ilustradas e retratos dos amigos.
+Resultados mostram Nico inteiro reagindo à nota, com revelação e partículas.
+Foram gerados quatro atlas com 52 poses/objetos, preservando os PNGs originais:
+Lázaro, Carcereiro, quatro inimigos mágicos, Nico e computadores variados.
+
+Floresta Violeta tem dois novos tipos de inimigo: cogumelo que anuncia e lança
+esporos, e criatura de espinhos que se prepara antes de rolar. As frutas junto
+às arenas da praia e da floresta foram removidas; as apresentações no percurso
+continuam. No Submundo há parede permanente no limite direito da arena e
+indicação visual FOGO → GELO → ATAQUE na armadura do Carcereiro.
+
+Oliver aparece ao lado da caravana no laboratório. Novos equipamentos,
+monitores e cabos ocupam as paredes de três salas. Largato alterna cauda,
+rajada, salto, investida e onda; a sobrecarga alterna armadilhas e ataques.
+O estoque LG-17 abre ao estabilizar os terminais na segunda etapa: siga a
+luz verde e recolha com Interagir antes da última etapa; a tecla de dose lança.
+A dose, o aviso e o sinal do estoque ficam visíveis; as cargas são mantidas.
+
+Na luta final, novas poses e direção do olhar de Lázaro; a tartaruga intercepta
+ondas com o casco. Amigos, degraus e visor indicam o momento da subida.
+A abertura dura 21 segundos, com mais tempo para reagir aos tambores.
+Veja REVISAO-v99.md para o escopo e a origem das artes.
+
+POLIMENTO V98 — CENÁRIO E APOIOS
+
+Props pequenos agora exigem terreno estático sob toda a base e deixam
+espaço livre junto aos checkpoints, gêiseres e objetos interativos.
+Na floresta mágica, cristais e cogumelos decorativos deixam as bandeiras,
+plantas de comando e trampolins mais visíveis. No Submundo, o entulho
+pequeno não encobre as fendas de lava nem as bases dos checkpoints.
+Na Corporação, letreiros ficam acima das plataformas; câmeras recebem
+fixações na parede e as passarelas e elevadores usam apoios de metal
+com os mesmos recortes da arte industrial existente.
+Veja POLIMENTO-v98.md para o escopo desta revisão.
+
+AUDITORIA V97 — ARQUIVOS, CONTROLES E RETOMADA
+
+Arquivos do laboratório 3D agora abrem o mesmo monitor CRT ilustrado da
+Corporação, com texto completo, imagens das ilhas relacionadas e navegação
+por registros. Eles não fecham automaticamente enquanto você lê.
+Feche com a tecla configurada para Interagir, Esc ou o botão do painel.
+A música continua; controles, HUD e pausa voltam ao estado anterior mesmo
+quando o painel é removido antes do fechamento normal. Reler não dá outro
+fragmento nem aumenta os segredos daquela visita.
+
+No álbum ampliado, Tab, Shift+Tab e setas mantêm o foco no visualizador.
+Enter ou o botão volta ao álbum; Esc fecha a imagem antes de sair da Coleção.
+Não é possível empilhar visualizadores. A tecla de interação configurada
+aparece também nas portas 3D, nas cenas e nas conversas opcionais.
+O nome Lobo Lázaro foi corrigido também na conversa inicial da praia.
+Após morrer na etapa final do robô, o visor fecha e os tambores são limpos.
+
+Permanecem: fase final em 2D, laboratório transformado em 3D após a invasão,
+resgate do Mico, seis lembranças por fragmentos, dinheiro e itens salvos,
+cerejas únicas no modo livre e poderes permanentes apenas após o santuário.
+Veja AUDITORIA-v97.md para o escopo e as alterações desta revisão.
+
+REVISÃO V96 — PROJETO CIRCO E ÁLBUM DE LEMBRANÇAS
+
+Corporação (2D): entre pela porta da Sala dos Computadores no Centro de
+Controle. A cena revela o plano de Lobo Lázaro de transformar as ilhas em
+circos e explorar os animais. Assistir ou pular copia as mesmas provas.
+Examine o terminal central com E para rever a gravação; volte pela porta,
+copie as provas no terminal do lockdown e siga para a cobertura.
+Arquivos mostram capturas reais do Vale, praia, floresta mágica, Submundo,
+laboratório e Corporação, no monitor CRT. Setas trocam; E / Esc fecha.
+Terminais foram apoiados no piso; prateleiras da fábrica ficaram mais largas.
+Lobo Lázaro usa os sprites da primeira aparição e mantém o combate a pé
+antes de entrar no robô. A câmera da arena fica estável durante os saltos.
+Na última etapa: espere o golpe, os amigos agem e abrem o visor por 18 s.
+Suba as plataformas, salte os tambores ou quebre com J / congele com GELO.
+Acerte o piloto no alto. Cada abertura aceita um ponto de dano; a janela
+volta a abrir caso Nico não consiga chegar a tempo. Morte reinicia a etapa.
+O resgate do Mico-leão-dourado e o reencontro final continuam presentes.
+
+No menu: COLEÇÃO > LEMBRANÇAS. Seis ilustrações de diversão dos amigos,
+liberadas em 1, 3, 6, 9, 12 e 18 fragmentos únicos, sem gastar fragmentos.
+Clique em Ampliar lembrança para ver a imagem inteira. Esc volta ao álbum.
+Coletas são salvas imediatamente, mesmo antes de terminar uma fase.
+Repetir a mesma coleta não gera progresso extra; cerejas são independentes.
+Saves antigos aproveitam os melhores segredos registrados em cada ilha,
+sem contar os mesmos fragmentos duas vezes ao revisitar as fases.
+PNG e prompts: world/Arte/MemoriesV96, com SHA-256 e referências originais.
+Imagens geradas com image_gen integrado; evidências capturadas no Godot.
+
+Largato e Lobo 3D — v95
+
+O Lobo do laboratório usa o GLB fornecido em 24/10, com texturas preservadas,
+malha otimizada e esqueleto próprio para movimentos e reações da cutscene.
+
+Largato recebe novos pesos de articulação e clipes com antecipação dos
+ataques, cauda e disparo no ritmo do combate. A reação de dano não reinicia
+mais a cada quadro; o corpo permanece visível, com um breve tom de impacto.
+Corrida, conversa e operação usam movimentos mais contidos. Os sprites 2D
+continuam independentes dos modelos usados na fase 3D.
+
+Plataformas e poderes do Submundo — v94
+
+Novos sprites de plataformas com extremidades, volume de pedra e cristais
+ciano, roxo e âmbar. Lajes modulares mantêm a proporção das bordas;
+rochas gravitacionais e plataformas da torre do Carcereiro usam a nova arte.
+
+A HUD de fogo e gelo reaparece ao terminar ou pular as cutscenes do
+Submundo. Os dois poderes continuam sendo concedidos apenas após o altar.
+O estado anterior das camadas é preservado também nas conversas com José.
+
+Clareira viva e cipós — v93
+
+Novo cenário de menu em pixel art, com os personagens reais como referência.
+Os oito amigos passeiam livremente, descansam e encontram quem estiver perto.
+A distribuição muda a cada abertura; os painéis pausam o cenário.
+
+Fase 3: segure a tecla de interação para agarrar o cipó, balance com as
+teclas de movimento, pule para aproveitar o impulso ou interaja de novo
+para apenas soltar. Captura mais tolerante, transições contínuas e saída
+com inércia. Aterrissagens ampliadas, checkpoints mais seguros, besouros
+com recuperação e mariposas que respeitam o terreno. Teclas remapeadas
+continuam funcionando. Cerejas e compras mantêm a mesma persistência.
+
+Controles e interações — v92
+
+Opções > Configurar teclas permite duas teclas por ação, com persistência,
+aviso de conflito, cancelamento e restauração do padrão. Perfis 2D e 3D.
+Mais seis cenas dos amigos: voo, piquenique, pedra, perseguição,
+cumprimento coletivo e malabarismo com cereja. Veja CONTROLES.md.
+
+Menu da vila — v91
+
+Fundo da floresta simplificado com três casas. Os oito amigos aparecem
+menores e mais distantes; os grupos mudam de posição e de momento da
+animação a cada abertura ou retorno ao menu. Botões e logo preservados.
+Arte e prompt: world/Arte/MenuV91/README.md.
+
+Sprites gerais — v90
+
+72 sprites novos em sete atlases transparentes: 40 objetos para floresta,
+praia, floresta mágica, Submundo e áreas industriais; 16 quadros de fogo,
+gelo, impacto e poeira; 16 poses de aviso, recuperação, dano e derrota dos
+quatro inimigos da Corporação. Placas de parede também no laboratório 3D.
+PNG original, prompts e detalhes: world/Arte/GeneralV90/README.md.
+
+Novas ações dos amigos — v89
+
+64 poses novas e 32 ações para os oito personagens da tela inicial.
+Acenos, pensamentos, palmas, descanso, limpeza de penas, folha e moeda.
+Remi e Mico trocam cerejas com preparação, soltura, voo e recepção.
+Arte e prompts: world/Arte/Friends/V89/README.md. PNGs originais preservados.
+
+Menu da floresta — v88
+
+Nova paisagem distante da floresta ao entardecer, logo no alto e botões à esquerda.
+Nico e os amigos passeiam e interagem com os sprites já aprovados do jogo.
+Use mouse, setas e Enter. A animação pausa ao abrir Coleção, Opções ou mapa.
+Arte criada com image_gen; prompt e documentação: world/Arte/MenuV88/.
+
+O último resgate — v87
+
+Após derrotar o Lobo, Nico desliga a trava da cela e José abre a grade.
+Mico-leão-dourado salta para fora, agradece e reencontra todos na cidade.
+A Coleção registra o resgate. E/Enter avança os momentos da cena; Esc pula.
+Ambos os caminhos preservam o resgate. O final libera o modo livre.
+Animações e retratos reaproveitam a estética aprovada dos amigos em V47.
+
+Corporação refinada — v86
+
+Elevadores com plataformas espessas e laterais; esteiras e prensas refeitas.
+Computadores no chão e jargões em placas próprias. Arquivos em CRT verde,
+com três registros reais de Nico atacando em preto e branco e leitura livre.
+O Lobo luta a pé antes da entrada no robô: desvie da caneta e salte a investida.
+Cada recuperação permite um ponto de dano. As três etapas da máquina seguem.
+Epílogo com os quatro vilões presos e reencontro dos amigos na cidade.
+E/Enter avança capítulos; Esc pula. Artes e prompts: world/Arte/CorpV86/README.md.
+
+Mapa das ilhas — v85
+
+Mapa ilustrado entre as fases, com Nico voando sobre a Arara Minas.
+Modo livre: clique diretamente nas seis ilhas ou use setas e Enter.
+Cancelar / Esc volta à seleção durante o voo; Esc no mapa volta ao menu.
+O Submundo está abaixo das outras ilhas. Após a floresta mágica, Nico e
+Arara seguem para o laboratório; o disparo da corporação os derruba,
+conforme a cutscene de abertura do Submundo. A próxima viagem retoma a
+rota para o laboratório. Cerejas e compras mantêm os dados já salvos.
+Arte e prompts: world/Arte/Map/V85/README.md e prompts.json.
+
+NOVIDADES v84 — MÚSICAS DO LABORATÓRIO E DA CORPORAÇÃO
+
+Laboratório: Corrosive Curiosities. Largato: Largato’s Mad Catalyst.
+Corporação: Corporate Cage Rift. Robô final: Forged in Steel Storm.
+Os quatro WAVs foram preservados integralmente e tocam em loop.
+Diálogos mantêm a trilha; a caravana usa Pixels and Trinkets e depois retoma a fase.
+
+NOVIDADES v83 — OLIVER E URSO COM OS MODELOS FORNECIDOS
+Os dois GLBs estão integrados ao laboratório 3D, com suas texturas originais.
+Oliver foi ajustado ao balcão da caravana; Urso ao pedestal da câmara.
+Modelos otimizados, com espera, conversa e celebração suaves.
+A fase final da corporação permanece em 2D, com os sprites de Nico e dos amigos.
+Documentação e fontes: world/Models/ImportedV83/README.md.
+
+NOVIDADES v82 — FINAL EM 2D: A CORPORAÇÃO DO MAL
+Após resgatar Urso no laboratório, escolha Próxima ilha para invadir a sede.
+Cinco setores com câmeras, alerta, elevadores, vento, vidro, máquinas e lockdown.
+E interage; J ataca e quebra vidro; K usa poder; Q troca fogo/gelo; I abre mochila.
+Use fogo no regulador vermelho e gelo no azul. Nada exige compra na loja.
+O Lobo pilota um robô com três etapas; os cinco amigos ajudam no confronto.
+Há um acerto por abertura do núcleo. Na última etapa, suba até a cabine.
+O modo livre agora exige concluir as seis ilhas. Seus saves, cerejas e itens continuam.
+A fase final é 2D; o laboratório mantém a transformação 2D/3D/2D.
+Sprites novos e prompts em world/Arte/CorpV82/README.md.
+
+NOVIDADES v49 — RESGATE DE JOSÉ NA JAULA SUSPENSA
+Após cair no Submundo, Nico encontra José preso numa jaula pendurada.
+Nico salta e golpeia a fechadura; a jaula desce e abre no chão.
+José caminha para fora e só então começa a conversa de resgate.
+E/Enter/Espaço avança a cena; ESC pula com o resgate concluído.
+Sprites e prompt final em world/Arte/Underworld/V49/.
+
+NOVIDADES v48 — INIMIGOS DO SUBMUNDO
+Esqueletos e diabinhos refeitos com base no rato e no caranguejo das fases 1 e 2.
+Novos passos, golpes, voo, arremesso, dano e derrota; tridente do mesmo atlas.
+Pés alinhados e corpo do diabinho estável durante o bater das asas.
+Vida, colisões, ataques e congelamento preservados.
+Artes e prompts completos em world/Arte/Underworld/V48/.
+
+NOVIDADES v47 — AMIGOS NA ESTÉTICA DE NICO E JOSÉ
+Novos sprites e retratos: Arara Minas, Tartaruga, Remi, Urso, Mico e Oliver.
+Oito poses e quatro expressões por personagem; contorno e pixels compactos.
+Aplicados às fases, ao prólogo, aos resgates, à loja e à Coleção.
+Voo da Arara com Nico apoiado nas costas e mercador enquadrado no balcão.
+Artes e prompts finais em world/Arte/Friends/V47/. Nico e José preservados.
+
+NOVIDADES v40 — NICO LEVITANDO NO ALTAR
+Nico flutua entre dois jatos de água e duas chamas, que se concentram nele.
+Os poderes da jogabilidade continuam fogo e gelo; água é o efeito da cutscene.
+Animação de cerca de oito segundos, seguida das instruções do altar.
+Roupas equipadas, música, aterrissagem e controles preservados.
+Enter/E/Espaço avança a animação; ESC pula a cena e libera os poderes.
+Sprites originais e prompt final em world/Arte/Underworld/V40/.
+
+NOVIDADES v39 — CHÃO E GÊISERES
+20 tiles novos e integrados: chão, paredes, plataformas, bordas e fendas.
+O gêiser é um tile do próprio chão, com quatro estados de calor.
+Jato de lava separado, com crescimento e recuo; o dano acompanha sua altura.
+Pequena seta azul gravada na pedra indica os gêiseres de impulso.
+Artes originais e prompts em world/Arte/Underworld/V39/.
+
+NOVIDADES v38 — PEDRAS, ALTAR E FRUTA-DO-DRAGÃO
+Pedras rachadas próprias para José, animação de quebra e entulho baixo no chão.
+Altar com pedestal e sprites de fogo/gelo. Nico começa o Submundo sem poderes.
+O altar libera K e Q para esta passagem; morrer mantém a habilidade aprendida.
+Ao entrar de novo na fase, ative o altar outra vez, inclusive com save antigo.
+Fruta-do-dragão agora na floresta mágica: três coletas, fogo por 20 segundos.
+Artes e prompts finais em world/Arte/Underworld/V38/. Detalhes no README.md.
+
+NOVIDADES v37 — ATAQUE NO CÉU
+Nico caminha sobre Arara Minas durante o voo. Um tiro da empresa o derruba.
+A cena acompanha a queda e a aterrissagem antes do título e da conversa com José.
+ESC pula a cena com chegada segura. Roupas animadas e música preservadas.
+O antigo canhão na entrada do Submundo e seu patamar foram retirados.
+
+NOVIDADES v36 — CENÁRIO E JOGABILIDADE DO SUBMUNDO
+16 novos tipos de cenário, 56 peças distribuídas pela mina e pelas ruínas.
+Novo fundo de caverna e chão de basalto com menos ruído visual.
+Rochas com topo plano alinhado à colisão. Corrigidos 55 recortes de sprites.
+José aparece no piso correto ao começar a etapa final da luta.
+Operários reagem aos golpes; segurar K mantém os disparos.
+Obstáculos mostram C · JOSÉ, e gêiseres de impulso têm uma marca azul no chão.
+O altar ensina os poderes uma vez por passagem pelo Submundo.
+Artes originais e prompts em world/Arte/Underworld/V36/. Detalhes no README.md.
+
+NOVIDADES v35 — PORTAL, LAVA E FORJA
+Portal próprio com correntes, cadeado, abertura animada e vórtice em oito quadros.
+Lava com texturas de correnteza, superfície animada, bolhas e gêiseres em sprites.
+Forja de pedra e bronze: oito estados, válvulas de fogo/gelo e vapor com sprites.
+A válvula do próximo elemento fica acesa. A sequência continua fogo/gelo/fogo/gelo.
+Artes originais e prompts em world/Arte/Underworld/V35/. Consulte README.md.
+
+NOVIDADES v34 — SUBMUNDO
+Fase 4 integrada após a floresta mágica. José agora é um bode, resgatado no início;
+acompanha Nico até a saída e usa cabeçadas em paredes, pilares e blocos.
+Gêiseres com aviso, rochas gravitacionais, operários esqueletos e diabinhos voadores.
+Fruta-do-dragão na floresta: fogo por 20 s. Altar: K dispara, Q alterna fogo/gelo.
+Forja: bloco no encaixe + fogo/gelo/fogo/gelo nas válvulas da cor correspondente.
+C chama José; botão direito marca alvo. E segura correntes, setas sobem/descem,
+Espaço solta. Guardião em quatro etapas; use José no círculo dourado na etapa final.
+Novo tileset de basalto e plataformas, oito estados do templo, canhão animado,
+sprites de José, inimigos e chefe no estilo do jogo. Cutscenes e retratos integrados.
+54 cerejas, dez checkpoints, três segredos. Coletas persistem também no Modo livre.
+Hollow Chain Murmurs na fase e Obsidian Chainbreaker no chefe, WAVs integrais.
+Consulte README.md para mecânicas, arte, prompts e validação desta versão.
+
+NICO ADVENTURE — FASE REMONTADA COM CAVERNA, CONVERSAS COM ESCOLHAS, MENU E PROGRESSO
+
+Abra project.godot no Godot 4.7 e pressione F5 para jogar o projeto (abre no menu principal).
+
+Polimento desta versão
+- Sensação de movimento: "squash e stretch" ao pular e aterrissar, poeira ao correr e ao cair de altura.
+- Golpes com faíscas, tremor de câmera e uma breve pausa no impacto (hit-stop) para dar peso ao combate.
+- Câmera com antecipação na direção do movimento e leve acompanhamento da queda.
+- Efeitos de coleta de cereja, de dano, de cura e de retorno ao ponto de bandeira.
+- HUD de cerejas mostra apenas o saldo disponível; o total da fase aparece nos resultados.
+- O último coração pulsa quando resta apenas um ponto de vida.
+- Menu de pausa com ESC: continuar, reiniciar a fase ou sair do jogo, mostrando o progresso atual.
+- Ajuste de volume de efeitos e de música no menu de pausa (a preferência fica guardada).
+- Tela de chegada com destaque especial quando todas as cerejas foram coletadas.
+- Bandeiras de ponto de retorno com mastro, base e brilho: tremulam o tempo todo e, ao serem tocadas, sobem, mudam de cor e soltam faíscas.
+- Avisos na tela aparecem e desaparecem suavemente, em vez de piscar.
+- Terreno com variedade: a grama e a terra do chão usam as variantes que já existem no conjunto de tiles, com uma sombra suave sob o capim. Some a repetição "carimbada" sem mudar a colisão nem a jogabilidade.
+- Correções: inimigos reconhecem o jogador derrotado, o tempo volta ao normal depois de uma pausa ou de um golpe.
+
+Novidades
+- Nico deixou de ser a raposa do pacote Sunny Land e ganhou sprite próprio: parado, correndo, pulando, caindo, levando dano e derrotado.
+- O retrato do HUD também é o rosto do Nico, agora com quatro expressões: ele comemora as cerejas, se espanta com o dano e fecha os olhos quando cai.
+- Na conversa, a lista de perguntas passa a mostrar o rosto e o nome do Nico, e a tela de resultados mostra a cara dele conforme a nota.
+- A Vera, a raposa, e o Espeto, o porco-espinho, ganharam quatro expressões cada: eles sorriem, se espantam com as notícias ruins e dão uma piscada ou fecham os olhos na despedida.
+- Menu principal com Jogar, Continuar, Modo livre, Coleção, Opções, Créditos e Sair. Modo livre fica bloqueado até concluir as quatro fases. O fundo limpo e Nico animado seguem o acabamento descrito nas versões recentes abaixo.
+- Abertura da história em sete telas, mostrada na primeira partida e pulável com ESC.
+- Tela de resultados ao concluir a fase, com tempo, inimigos, cerejas, segredos, mortes e nota de S a D.
+- Progresso e preferências guardados entre partidas, em user://save.cfg.
+- Três Fragmentos escondidos acima das plataformas móveis, contados na linha "Segredos".
+- "Menu principal" também aparece no menu de pausa (ESC), para voltar sem fechar o jogo.
+- Percurso de aproximadamente 5.000 pixels entre a partida e a chegada, remontado do zero em sete trechos.
+- Montanha com caverna: rocha por toda a extensão, corredor escuro em três níveis e um poço fundo atravessado por plataforma móvel.
+- Sete plataformas móveis, com travessias horizontais, elevadores e trajetos diagonais, agora com a mesma arte do chão.
+- Cinco bandeiras que salvam o ponto de retorno durante a partida.
+- 44 cerejas e chegada na casa na árvore, no final da fase, com varanda para pular.
+- HUD com imagem da cereja e quantidade coletada no canto esquerdo.
+- Retrato do protagonista e corações no canto superior direito.
+- Abertura animada VALE DAS COPAS / ZONA / ATO 1, com o mundo parado até terminar.
+- Colisões no interior, nas laterais e na parte inferior das ilhas de terra.
+- Trecho de madeira com apoio físico e folhagem decorativa sem colisão indevida.
+- Coleta de cerejas ajustada ao tamanho visível dos itens.
+- Ataque com golpe frontal, três corações e proteção temporária após levar dano.
+- Quatro ratos patrulham o chão, evitam precipícios e sinalizam antes de investir.
+- Dois golpes derrotam um inimigo. As bandeiras recuperam os três corações.
+- Pulo mais tolerante, com uma pequena margem ao sair da borda e ao apertar antes de pousar.
+- Câmera com visão antecipada do percurso e instruções para cada trecho.
+
+Controles
+Setas ou A/D: mover.
+Espaço, Enter ou W: pular. Solte cedo para um pulo curto.
+J, X ou botão esquerdo do mouse: atacar na direção em que o personagem está olhando.
+ESC: abrir ou fechar o menu de pausa (inclui os controles de volume).
+E: conversar com os moradores da vila (a dica "E: falar" aparece quando o Nico chega perto).
+Durante a conversa: E (ou Enter/Espaço) passa a fala; nas perguntas, W/S (ou as setas) escolhem e E confirma.
+R: voltar à última bandeira ativada.
+Para concluir a fase, pule até a varanda da casa na árvore. A varanda é o apoio de madeira em frente à porta.
+Ao chegar à varanda, começa o encontro com Arara Minas. Depois da cutscene, a tela de resultados abre com "Jogar novamente" e "Menu principal".
+No menu e nas telas de abertura e de resultados, use as setas (ou o mouse) e Enter/Espaço para escolher. ESC volta ao menu anterior.
+
+Som
+Todos os sons são gerados em código (não há arquivos de áudio), no estilo da arte em pixels.
+- Pulo, aterrissagem (mais forte conforme a queda), golpe, acerto, derrota de inimigo e coleta de cereja.
+- Dano, morte, retorno à bandeira, aviso quando um inimigo percebe o jogador e fanfarra na chegada.
+- Trilha de fundo suave, em laço, que continua tocando ao reiniciar a fase.
+- Volume de efeitos e de música ajustável no menu de pausa; o valor é guardado entre as partidas.
+
+Editar as plataformas
+A cena world/word_01.tscn contém o nó MovingPlatforms. Cada instância usa prefabs/moving_platform.tscn.
+travel_offset: deslocamento até a outra ponta (x, y), em pixels.
+travel_time: tempo, em segundos, para cada sentido.
+phase: posição inicial no ciclo (0=origem; 0,5=destino).
+
+Validação em Godot 4.7.1
+Percurso completo concluído por comandos de movimento e salto, sem teleporte e sem quedas.
+Testados transporte nas plataformas, salto, passagem por baixo, coleta, cinco checkpoints, retorno após queda, chegada e reinício.
+O percurso de combate foi concluído usando golpes contra os quatro inimigos, sem teleporte e sem mortes.
+Verificados alcance/direção dos golpes, intervalo entre ataques, vida/invulnerabilidade, derrota e efeito visual dos inimigos, patrulha e sensores de precipício.
+A chegada só é ativada depois de pousar na varanda da casa na árvore.
+
+Menu, abertura e resultados
+O jogo abre no menu principal (world/main_menu.tscn). A logo e o fundo são arte gerada por IA; o resto da interface é montado em código.
+O fundo do menu é uma floresta à noite (world/Arte/fundo_menu.png), com lua, morros, rio e vaga-lumes. Por cima dele sobem vaga-lumes animados, desenhados na hora, e ficam a moldura fina, o filete com losango acima da logo e a seta de foco.
+Os botões ficam centralizados, com seta no item em foco e o título com contorno para ficar legível sobre o cenário.
+- Jogar: começa a Fase 1. Na primeira vez, mostra a abertura da história.
+- Continuar: retoma a fase pulando a abertura. Fica desativado enquanto não houver progresso.
+- Modo livre: permite revisitar a Floresta e Costa das Marés depois de concluir as duas fases da campanha.
+- Coleção: mostra a melhor nota, o melhor tempo, as cerejas e os segredos da Fase 1.
+- Opções: volume de efeitos, volume de música, tela cheia e "Apagar progresso" (pede confirmação).
+- A abertura da história tem sete telas, avança sozinha e também com Enter/Espaço; ESC pula tudo.
+- A tela de resultados traz a nota, o tempo, os inimigos, as cerejas, os segredos e as mortes, com "NOVO RECORDE!" quando a nota melhora.
+
+Notas de S a D
+A nota junta três coisas: o quanto foi coletado (cerejas, inimigos e segredos), o tempo em relação ao tempo de referência da fase (120 s) e o número de mortes.
+S: 92 ou mais. A: 80. B: 66. C: 48. Abaixo disso, D.
+
+Progresso salvo
+O progresso e as preferências ficam em user://save.cfg (o volume continua em user://settings.cfg).
+- Guarda se a abertura já foi vista, a tela cheia e o melhor resultado de cada fase.
+- O melhor resultado mantém sempre a melhor nota, o menor tempo e a maior coleta.
+- Para começar do zero, use "Apagar progresso" nas Opções.
+
+Arte do Nico
+Os quadros ficam em world/Arte/Nico/, um PNG por quadro, 33x32 pixels cada.
+- idle_1 a idle_4 (parado), run_1 a run_6 (correndo), jump, fall, hurt, die_1, die_2 e portrait.
+- O desenho olha para a direita; o jogo espelha sozinho quando ele anda para a esquerda.
+- Os pés ficam na última linha do quadro, que é a linha do chão do personagem.
+- Velocidades: parado a 8 quadros por segundo, corrida a 12. As outras animações continuam a 5.
+- A arte veio de uma folha gerada por IA (16 quadros em uma imagem só, fundo transparente). O recorte, a redução para 33x32 e o contorno escuro foram feitos dentro do projeto, com redução por cor dominante e peso no centro de cada bloco.
+- O pacote Sunny Land continua sendo usado em tudo o que ainda não foi substituído: cenário, tiles, inimigos, cerejas e efeitos.
+- O prompt para gerar as próximas artes está em PROMPTS-ARTE.txt.
+
+Expressões do rosto
+O retrato do Nico tem quatro caras, recortadas de uma folha gerada por IA com 4 painéis de 543x724.
+- rosto_1 (sorriso), rosto_2 (feliz), rosto_3 (olhos fechados) e rosto_4 (surpreso), em 64x64, usadas na caixa de diálogo e na tela de resultados.
+- hud_1 a hud_4, as mesmas caras em 32x32, usadas no retrato do HUD.
+- O recorte e a redução foram feitos dentro do projeto, pela mesma redução por cor dominante dos tiles (peso maior no miolo do bloco).
+- Na HUD a cara muda com o que acontece: sorriso no normal, feliz ao pegar cereja, derrotar inimigo ou curar, susto ao levar dano e olhos fechados ao cair.
+- Na conversa, a lista de perguntas mostra o rosto e o nome do Nico; as falas e as respostas mostram o morador.
+- Nos resultados a cara combina com a partida: feliz em S, A ou recorde novo, espantada em D e olhos fechados quando a travessia passou de cinco quedas.
+
+Expressões dos moradores
+Os dois moradores da vila têm quatro caras, cada um recortado da sua folha de 4 painéis de 543x724.
+- Vera, a raposa ("Sprite de Raposa em Quatro Expressões"): sorriso, feliz, piscando e surpresa, em world/Arte/NPCs/retrato_raposa_1 a 4.png.
+- Espeto, o porco-espinho (folha sem nome, "Imagem do ChatGPT ... 18_33_16"): sorriso, feliz, olhos fechados e surpreso, em world/Arte/NPCs/retrato_porco_1 a 4.png.
+- Tudo em 64x64, pela mesma redução por cor dominante dos tiles (peso maior no miolo do bloco).
+- O porco-espinho olha para a direita com os espinhos à esquerda, então o recorte dele é centrado no rosto (medido na folha), e não no painel, para o rosto não ficar pequeno na borda.
+- Cada morador pode guardar uma lista "retratos" (as caras) e "caras" (qual cara usar em cada fala de abertura). Sem essas listas ele usa só o "retrato" único, e a caixa cai na primeira cara.
+- Cada pergunta da conversa, em world/Scripts/conversas.gd, aceita "cara": 1 a 4, a expressão do morador enquanto ele responde.
+- Na Vera, as falas de abertura vão de sorriso a surpresa; as respostas sobre quem levou os amigos e sobre os chefões usam surpresa, a do cais usa sorriso e a despedida usa a piscada.
+- No Espeto, a abertura começa desconfiada, fica espantada na notícia da van e volta ao normal; a resposta sobre a van usa espanto, as duas do meio usam o normal e a despedida usa os olhos fechados.
+
+Logo e fundo do menu
+Os dois ficam em world/Arte/, em PNG.
+- logo.png: a logo "NICO'S ADVENTURE", com fundo transparente. Entra no menu como imagem, na altura definida por LOGO_HEIGHT em main_menu.gd (62 pixels, a largura vem da proporção 3:1).
+- fundo_menu.png: floresta à noite, 16:9, igual à tela, então preenche sem distorcer. É desenhada esticada na tela toda e os vaga-lumes animados passam por cima.
+- Os dois vieram de geração por IA, a partir do PROMPT 1 em PROMPTS-ARTE.txt.
+
+Chão, cenário e fundo da fase
+Toda a arte do mapa veio de geração por IA (PROMPTS 11 a 20 em PROMPTS-ARTE.txt) e foi recortada e reduzida dentro do projeto.
+- world/Arte/chao.png: o conjunto de tiles do chão (400x368, a mesma grade 25x23 do conjunto antigo), usado pelo TileMapLayer "Level". A grama, a terra e a caverna seguem as mesmas coordenadas de antes, então nada mudou na colisão nem no desenho do percurso.
+- world/Arte/Props/plataforma.png: a arte das plataformas móveis, montada a partir do bloco de grama do chão. O Sprite compensa a margem transparente da imagem para alinhar o topo visível à superfície do colisor. Entra em prefabs/moving_platform.tscn.
+- world/Arte/Props/: as casas, árvores, pedras, palmeiras e miudezas (casa_madeira, casa_palha, a casa de telhado vermelho, arvore, palmeira, pedra_grande, pedra_pequena, placa e miudezas). Cada uma entra no mesmo tamanho e nas mesmas coordenadas de atlas dos desenhos antigos, então o cenário não precisou ser remontado.
+- world/Arte/fundo.png e fundo_meio.png: o fundo e a camada de mata, espelhados na horizontal para repetir sem emenda.
+- A redução usa a cor dominante de cada bloco (com peso maior no miolo), em vez de suavização, para manter o aspecto de arte em pixels.
+- O que ainda é do pacote Sunny Land: inimigos, cerejas e efeitos.
+
+Percurso da fase
+A fase foi remontada do zero, da esquerda para a direita, em sete trechos:
+- Vila (x -320 a 304): casas, moradores, árvores, painel de partida e uma parede de terra que fecha a saída esquerda.
+- Trilha (x 304 a 1136): sobe em degraus até a entrada da montanha, com dois vãos e duas plataformas móveis.
+- Montanha com caverna (x 1136 a 2416): a rocha preenche a montanha inteira e dentro dela corre um corredor escuro em três níveis, com um poço fundo no meio (x 1392 a 1552) atravessado por plataforma móvel.
+- Penhasco (x 2416 a 3472): degraus de terra, três vãos, um elevador vertical e um trajeto diagonal.
+- Subida (x 3472 a 4144): dois lances de plataformas altas com vãos largos.
+- Reta final (x 4144 a 5456): chão contínuo até a casa na árvore, com uma travessia larga no fim.
+A caverna escurece com dois retângulos de cor: um opaco atrás da rocha (esconde o fundo e a mata) e outro translúcido na frente (escurece a pedra). Itens, inimigos e plataformas móveis ficam acima dos dois para continuarem visíveis no escuro.
+A chegada é a casa na árvore: pule até a varanda, o apoio de madeira em frente à porta.
+
+Moradores da vila
+Dois NPCs passeiam em frente às casas, sem barrar nem machucar o Nico.
+- world/npc.tscn e world/npc.gd: morador que anda de um lado para o outro entre dois pontos (speed, walk_left, walk_right), desenhado atrás do Nico.
+- world/Arte/NPCs/raposa.png e porco.png: folhas de 6 quadros de 40x32 (o desenho olha para a esquerda, os pés na última linha).
+- Vera, a raposa (em frente à casa de madeira) e Espeto, o porco-espinho (em frente à casa de palha).
+- Cada instância na fase guarda o nome, o retrato e as falas do morador.
+
+Caixa de diálogo
+- Chegue perto de um morador: aparece a dica "E: falar" e a tecla E abre a conversa.
+- A conversa congela o jogo; E (ou Enter/Espaço) passa para a próxima fala e fecha na última.
+- Depois das falas de abertura o morador abre a lista de perguntas: o Nico escolhe com W/S (ou as setas) e confirma com E.
+- As perguntas ficam em world/Scripts/conversas.gd, separadas por morador (campo conversa_id). Cada pergunta traz o texto, a resposta e, na última, "fim" para encerrar.
+- Vera e Espeto respondem quem levou os amigos, para onde levaram, quem manda na Corporação e quantos capangas existem no caminho.
+- Depois de responder, a conversa volta para a lista, então dá para perguntar tudo antes de dizer tchau.
+- prefabs/dialogo.tscn e prefabs/dialogo.gd montam a caixa: retrato, placa com o nome, texto e a seta que pula.
+- world/Arte/UI/caixa.png é a caixa de 9 fatias (margem de 16 pixels), placa_nome.png é a placa do nome e seta.png é a seta.
+- world/Arte/NPCs/retrato_*.png são os retratos de 64x64 (Nico, raposa e porco-espinho). Os quatro retrato_raposa_1 a 4.png e os quatro retrato_porco_1 a 4.png são as caras dos moradores.
+- A tecla fica em project.godot, na ação "interagir".
+
+Validação do menu, da abertura e dos resultados
+Menu, abertura, tela de resultados e salvamento verificados em execução real, com captura de tela de cada tela.
+A logo e o fundo do menu foram conferidos em jogo, junto com os painéis de Créditos e Coleção, para garantir que o texto continua legível por cima da arte.
+Concluída a fase por teleporte controlado, a tela de resultados abriu, o arquivo save.cfg foi gravado e "Continuar" passou a ficar ativo.
+Os três Fragmentos foram conferidos em jogo: ficam em espaço livre, acima das plataformas móveis, e são alcançáveis ao usá-las.
+O Nico foi conferido em jogo, com captura de tela parado, correndo e pulando, ao lado do inimigo e do cenário atual.
+O código roda sem erros no Godot 4.7.1, tanto em janela quanto sem interface (headless).
+
+Validação do percurso novo
+O percurso remontado foi conferido em jogo, ponto por ponto: vila, trilha, montanha, caverna, penhasco, subida e chegada.
+Dentro da caverna foram testados os três níveis do corredor, o poço fundo e o pouso nas plataformas móveis, com captura de tela.
+As conversas foram testadas com a tecla E de verdade: abertura, passagem das falas, lista de perguntas, escolha com W/S, resposta e volta para a lista.
+
+As bandeiras valem durante a partida atual. Fechar o jogo ou jogar novamente reinicia o progresso.
+
+Revisão da HUD e terreno
+Verificados pousos, costuras do chão, laterais e tetos de terra, madeira e plataformas de mão única.
+A abertura mantém jogador, inimigos e plataformas parados por aproximadamente 2,2 segundos.
+Testados contador com ícone, retrato e corações, coleta, dano, cura e reinício com a nova abertura.
+
+Polimento do cenário e das passagens
+- Barrancos com terra contínua: a grama aparece nos topos, sem faixas verdes nas paredes ou emendas pretas repetidas no miolo. Rochas, quinas e colisões dos tiles foram preservadas.
+- Árvores, pedras, placas e arbustos alinhados às superfícies. A palmeira usa somente a área correta da imagem e a casa da vila mostra o recorte completo.
+- Fundo com proporção uniforme, varanda de madeira na chegada, pilares de apoio e árvore atrás da casa final.
+- Plataformas móveis com o desenho do piso alinhado à colisão, eliminando o espaço entre os pés e a grama.
+- Quinas do teto da caverna recuadas para o Nico conseguir descer e subir entre os níveis sem ficar preso.
+- Dois apoios de madeira dão acesso à rota superior da montanha e à segunda bandeira com saltos normais.
+
+Novo tileset da floresta e da caverna
+- world/Arte/Tiles/forest_terrain_v2.png: atlas de 64x64, com 16 tiles de 16x16. Linha 0: quatro topos de grama; linha 1: quatro terras; linha 2: quatro rochas; linha 3: faces de rocha (topo, base, esquerda, direita).
+- O source 1 do TileSet contém o atlas novo, já aplicado em 4.937 células da cena. Os topos expostos recebem grama; interiores e bordas usam o material correspondente. As formas especiais continuam no source 0.
+- terrain_shade.gd combina as faces expostas e desenha contorno só nas bordas externas. O atlas e as variações de material aparecem também no editor.
+- As plataformas móveis usam o mesmo atlas e mantêm o topo visível alinhado à colisão.
+- world/Arte/Props/Forest/: seis novos props (samambaia, capim com pedras, raízes pendentes, cascalho, folhas secas e cerca com musgo), distribuídos em 34 pontos da fase.
+- EnvironmentDetails na cena reúne os props, com posições e cores editáveis. scenery_cutout.gdshader aplica recorte de alpha e uma paleta mais discreta, preservando a leitura do protagonista e das cerejas.
+- As imagens foram criadas com a ferramenta imagegen, recortadas e exportadas por vizinho mais próximo para a escala nativa do jogo.
+- As 4.960 células de colisão foram comparadas por coordenada com a versão anterior; polígonos, pisos de mão única e camadas permaneceram idênticos. As duas rotas foram concluídas em teste por comandos de movimento, sem teleporte ou mortes.
+
+Encontro com Arara Minas e viagem entre ilhas
+- A chegada na varanda inicia uma cutscene de aproximadamente 32 segundos: encontro, conversa, mapa dos amigos, voo com Nico e partida para as ilhas.
+- Arara Minas explica que escapou e viu os barcos levarem Remi, José, Urso e o mico-leão-dourado. Os dois combinam a busca e partem juntos.
+- E, Enter, Espaço ou clique esquerdo avançam; ESC pula para os resultados. A cena também avança automaticamente.
+- O mundo e o cronômetro ficam parados durante a cutscene. O resultado é salvo ao chegar, antes da cena, e continua salvo ao pulá-la.
+- world/Scripts/island_finale.gd controla a apresentação; BEAT_DURATIONS, SPEAKERS e LINES permitem ajustar tempo e diálogos.
+- world/Arte/Amigos/ contém os seis quadros de Arara Minas e duas poses de cada um dos quatro amigos, além de recursos SpriteFrames prontos para reutilização.
+- A abertura mostra os cinco amigos com seus nomes e o sprite real de Nico. Os moradores também citam o mesmo grupo nos diálogos.
+- Folhas ao vento, poeira na caverna, balanço das plantas e luz âmbar nas janelas da casa final completam o acabamento visual. Esses efeitos acompanham a pausa e ficam separados das colisões.
+
+Menu minimalista, árvore e plataformas da floresta
+- Menu inicial com botões de texto, fundos discretos ao passar o mouse e uma marca verde no item selecionado. As sete ações continuam disponíveis, e Continuar desativado é ignorado pelo foco do teclado.
+- A árvore teve a bifurcação do tronco reparada com image_gen integrada. O PNG transparente continua em world/Arte/Props/arvore.png, no tamanho nativo 119x111, preservando os encaixes das instâncias na fase e na cutscene.
+- Os quatro apoios pequenos usam o atlas atual e pontas espelhadas. platform_cap.gdshader recorta a silhueta inferior e desenha a borda externa; o topo e o encontro entre as duas metades são contínuos.
+- Alturas dos apoios (topo em coordenadas do mundo): -16, -48, -64 e -96. A colisão continua de mão única e alinhada ao topo, permitindo atravessar por baixo e pousar por cima.
+- Treze cerejas dos dois primeiros arcos foram redistribuídas acima do trajeto, evitando sobreposição com a nova plataforma. O total continua em 44.
+- Validação: sete ações e quatro painéis do menu; navegação por setas/Enter/ESC; Jogar e Continuar; travessia dos quatro apoios; rota inferior completa e rota superior completa, ambas sem teleporte ou mortes; combate, cutscene e resultados. Imagens capturadas em execução com OpenGL Compatibility no Godot 4.7.1.
+
+Fase 2 — Costa das Marés
+- A praia é uma cena própria, world/beach_02.tscn, editável no Godot. O resultado da floresta oferece Próxima ilha; Continuar segue para a praia após a fase 1. Após terminar a campanha, Modo livre permite revisitar as duas ilhas.
+- São 60 cerejas, 3 segredos, 7 jangadas/elevadores, 5 bandeiras, 5 guardas, 3 caranguejos e Urus, o Urubu. Salvar a fase 2 mantém os recordes da floresta separados.
+- O mar tem ondas e reflexos, devolve Nico à última bandeira e conta a queda. Bandeiras recuperam a vida. Cais e rotas elevadas oferecem cerejas e fragmentos extras.
+- Açaí: 3 frutos, 12 segundos de proteção e golpes com dano 2; sem cura. Aura e contador mostram o efeito. Outro fruto renova a duração sem acumular; morte, respawn e fim da fase encerram o efeito. A proteção não impede a queda no mar.
+- Caranguejos: animações walk/stomp, casco imune aos socos, dano lateral e derrota somente ao cair sobre o casco. O acerto rebate Nico para cima.
+- Urus, o Urubu: terno azul, gravata coral, 3 quadros de voo e 2 de dano. A arena abre a câmera para mostrar os dois canhões.
+- Urus voa para perto/longe em uma trajetória periódica. Os dois canhões miram pontos fixos diferentes. A guia pontilhada e PULE AGORA antecipam o tempo do salto e do voo (aprox. 1,42 segundo). Um tiro fora da janela erra e devolve Nico ao chão.
+- Pule dentro da boca do canhão na descida para disparar; andar pelo canhão não ativa. Recuo, clarão e fumaça animam o disparo. Três impactos válidos derrotam Urus; socos comuns não causam dano ao chefe.
+- Após a luta, ataque o cadeado com J/X para libertar a tartaruga. Ela tem aparência idosa, animações idle/walk e retratos idle/talk; a caixa de diálogo anima sua boca enquanto o texto aparece.
+- Os corpos, terrenos, jangadas, bandeiras, cerejas, açaís e inimigos estão na cena; scripts separados controlam comportamento. world/Arte/Beach/ contém PNGs e SpriteFrames de Urus/canhão/caranguejo; world/Arte/Tartaruga/ contém corpo e rosto da tartaruga.
+- Arte gerada com imagegen integrado. Os prompts exatos ficam ao lado dos assets e em outputs/Praia-arte, outputs/Caranguejo e outputs/Tartaruga-resgate na pasta de trabalho do Codex.
+
+Caravana das Marés, músicas e revisão da Arara
+- A caravana móvel de Oliver Gancho, o rato de tapa-olho, está na praia, antes da travessia final. E abre quando Nico está perto; setas/Enter ou mouse compram; ESC fecha. O mundo, a música, o cronômetro e os poderes ficam pausados enquanto a loja está aberta.
+- Coração custa 4 cerejas e recupera uma vida; açaí custa 7 e renova os 12 segundos de proteção e dano dobrado; escudo custa 10 e absorve 3 golpes. O escudo respeita a invulnerabilidade de contato, não acumula com outro escudo e não protege de cair no mar. Durante o açaí, o escudo não perde cargas.
+- Vida cheia, escudo equipado e saldo insuficiente não causam cobrança. O menu mostra o motivo. Uma compra é processada por entrada, sem descontar duas vezes no mesmo quadro.
+- O saldo da carteira soma as coletas e desconta as compras entre as fases. A coleta da tentativa continua separada para calcular a nota. Respawn e novas tentativas mantêm o saldo, sem devolver compras. Morte, respawn e conclusão removem o escudo e o açaí.
+- world/Scripts/caravan_shop.gd e prefabs/caravan_shop.tscn controlam a loja e o movimento. world/Arte/Caravan/ contém os dois quadros da caravana e do rato, retrato, importações e prompts.
+- Pixel Shore Shenanigans.wav acompanha a praia e Tidal Wrath Royale.wav toca na luta com Urus. As cópias em world/Audio/Beach/ preservam exatamente os bytes dos WAVs fornecidos. O loop é configurado em execução; não houve corte, normalização ou compressão. O único tocador de música usa o barramento Music e respeita as opções de volume e pausa.
+- beach_music.gd acompanha o estado real do chefe. Ao derrotá-lo ou sair da arena, retorna a trilha da praia. Ao trocar de cena, volta a trilha original do menu/floresta, sem camadas de música sobrepostas.
+- Arara Minas recebeu seis PNGs 64x64 com alpha, dois idle e quatro de voo. As posições do corpo e do passageiro foram conferidas nos quatro quadros. As cutscenes usam espelhamento com âncora para evitar sprites deslocados ou desaparecidos. No resgate, Arara olha para a direita e a tartaruga para a esquerda, voltadas uma para a outra.
+- Validação no Godot 4.7.1: importação, compras com jogador real, saldo e pontuação, recusa sem cobrança, escudo e invulnerabilidade, açaí, pausa/retomada do áudio e saída da loja. Percurso completo da praia com comandos de movimento: zero mortes, 9 inimigos, 1 disparo errado intencional e 3 acertos no Urus, jaula, cutscene e resultados. Transição floresta > praia, Continuar e seleção de fases aprovadas. Saves isolados foram usados nos testes.
+
+Equipamentos, roupas e caravana de passagem (v8)
+- A loja tem três abas: Suprimentos, Equipamentos, Estilo. Setas esquerda/direita trocam abas; cima/baixo/Enter ou mouse escolhem. A rolagem acompanha o foco e revela também a descrição do item.
+- Garras Afiadas 12 cerejas (+20% dano, 1,2 normal e 2,4 com açaí comum); Tênis de Explorador 10 (+10% velocidade, 330); Folha Protetora 5 (uma proteção, consumida ao bloquear); Açaí Congelante 8 (usar na mochila para 30 segundos de golpes de gelo fortalecidos); Gelo Duradouro 12 (+2 segundos de congelamento enquanto equipado).
+- Chapéu de Palha 5; Óculos Escuros 5; Capa de Super-herói 8; Pijama 7; Roupa de Inverno 9; Cauda Colorida 9. Itens e roupa aparecem no Nico, com âncoras para idle/run/jump/fall/hurt e espelhamento. A capa fica atrás e a cauda tem rastro de seis cores. Peças são bitmap pixel art geradas por imagegen integrado; só os efeitos luminosos são desenhados por código.
+- I abre a mochila em qualquer ponto da partida normal. Equipar/Retirar não cobra. Pijama e inverno usam um único slot, mantendo a peça anterior comprada. O Açaí Congelante é consumido com Usar e a mochila guarda até três unidades. A mochila pausa mundo, música, cronômetro e efeitos, bloqueia o menu de pausa e restaura o estado ao fechar ou sair da cena.
+- O poder de gelo pertence ao açaí: ataques com açaí comum ativo ou Açaí Congelante congelam guardas e caranguejos. Duração base2 segundos, +2 com gelado ativo, +2 com Gelo Duradouro (máximo6). Congelados deixam de andar/atacar/causar contato. O caranguejo continua imune a socos e derrotável por salto. Boss e jaula não congelam. Não há tecla separada para gelo.
+- A Folha respeita a invulnerabilidade, desaparece após um golpe protegido e é usada antes do escudo. Peças e estoque não usado sobrevivem ao respawn, dentro da tentativa atual. Morte/respawn/conclusão encerram o açaí gelado ativo; não devolvem a unidade usada ou cerejas. Nova tentativa reinicia a mochila e as coletas locais, preservando a carteira.
+- A caravana não some antes de ser encontrada. Ao entrar no raio150px, avisa sobre a partida. Depois do encontro, distância horizontal maior que300px inicia deslocamento/fade1,2segundo. O estado fica no nível: voltar ou respawn não cancela nem recria a loja. Existe lembrete aos230px. O caminho e o terreno permanecem iguais.
+- Modelo, catálogo, mochila e visual ficam em world/Scripts/equipment_*.gd; a loja em caravan_shop.gd. world/Arte/Equipment/ contém22PNGs, prompt e notas. Guardas têm HP fracionário para preservar20% real sem arredondar; os demais ataques e a luta com canhões mantêm suas regras.
+- QA no Godot4.7.1:38 verificações de combate/gelo e proteções;11itens e quantidades, trocas/slots, uso, pausa, saldo e pontos, respawn; loja com modelo/jogador reais; partida próxima/longe e metadata. Renderização OpenGL das peças em12combinações e quatro animações; mochila e abas. Percurso completo da praia aprovado sem mortes,9inimigos,1tiro errado intencional e3acertos no Urus, resgate e resultados. Saves de teste isolados.
+
+HUD sem máximo e próximo resgate (v9)
+- A HUD mostra só o saldo de cerejas disponível para compras em ambas as fases. Removidos denominador, contador secundário e rótulo COLETADAS; o painel foi compactado. O total e as coletas da fase continuam internos para estatísticas/resultados, separados da carteira persistente.
+- A cutscene da primeira fase apresenta Tartaruga como o próximo resgate, com a primeira parada em Costa das Marés. Remi, José, Urso e mico-leão-dourado continuam no roteiro das outras ilhas. Os sprites existentes da tartaruga idosa são reutilizados.
+
+Música da loja e mochila
+- Pixels and Trinkets.wav foi incluída integralmente em world/Audio/Caravan/pixels_and_trinkets.wav:135segundos,PCM16estéreo48000Hz, sem compressão ou normalização na importação.
+- O painel toca a faixa em loop durante a pausa e suspende a trilha da fase no ponto atual. Fechar retoma a trilha anterior; loja > mochila transfere o dono sem reiniciar a faixa. Liberação do painel, mudança de cena e encerramento também limpam o áudio temporário. Volume/mudo do barramento Music valem para a faixa.
+
+Tela inicial mais limpa (v10)
+- Fundo em degradê azul-petróleo com horizonte de baixo contraste, desenhado em main_menu.gd. Logo e sete ações ficam à esquerda; Nico aparece à direita, com quatro quadros idle existentes em escala inteira, filtro nearest e pés ancorados. Uma base simples e um círculo discreto destacam o personagem.
+- Nos subpainéis, Nico e os elementos da tela principal ficam ocultos para deixar o conteúdo legível. O fundo suave permanece. As opções, progresso, destinos de Jogar/Continuar e seleção de fases mantêm seus fluxos.
+- Arte existente de Nico e logo reutilizada; nenhuma nova imagem foi gerada. O fundo anterior permanece nos arquivos do projeto para referência.
+- Verificação Godot4.7.1: captura OpenGL da tela principal e Opções, sete ações e quatro painéis, setas/Enter/Esc, foco, Continuar com/sem progresso e destinos de Jogar/Continuar. Saves isolados.
+
+Painel da caravana e balcão de Oliver Gancho (v11)
+- Novo cabeçalho com Oliver Gancho, o rato de tapa-olho, atrás do balcão, toldo verde e creme e cerejas. O painel combina madeira escura, verde-oliva e dourado. A lista de compras começa abaixo da apresentação do vendedor e das abas, com saldo no cabeçalho e ações no rodapé.
+- Arte pixel art RGBA 256x128 em world/Arte/Caravan/rato_balcao_v11.png, criada com imagegen integrado a partir das referências existentes do rato e da caravana. O prompt exato acompanha o PNG em PROMPT-BALCAO-v11.txt.
+- As três abas, catorze itens, preços, equipamentos, mochila, partida da caravana e música mantêm suas regras. O tema da loja fica em caravan_shop.gd e não altera os outros painéis.
+- Validação no Godot4.7.1: importação, capturas OpenGL das abas, foco e rolagem por teclado, compra e equipamento de garras com jogador real, saldo sem débito duplicado, pontuação de coleta, pausa, música, transferência para mochila e retorno com Esc. Saves de teste isolados.
+
+Casa na árvore da chegada (v13)
+- A casa final foi refeita como uma cabana de madeira sustentada pelos galhos de uma árvore. Copa, tronco, raízes e cabana formam uma composição única, com varanda elevada diante da porta.
+- Dois apoios curtos de madeira ligam o chão à varanda. As superfícies visíveis acompanham as colisões; a chegada continua sendo ativada ao pousar na varanda.
+- A câmera abre suavemente ao se aproximar da chegada para enquadrar a casa e a árvore. O restante do percurso mantém o enquadramento habitual.
+- O encontro com Arara Minas usa a mesma casa na árvore, com Nico e Arara apoiados na varanda. Os diálogos, o próximo resgate da Tartaruga e a viagem para Costa das Marés mantêm a sequência da história.
+- A nova arte em pixels foi criada com imagegen integrado. O PNG transparente 224x224 fica em world/Arte/Props/casa_arvore_v13.png. PROMPT-CASA-ARVORE-v13.txt e PROMPT-CASA-ARVORE-v13-revisao.txt preservam os dois prompts exatos usados na criação.
+- Validação Godot4.7.1: importação sem erros, saltos reais desde o chão pelos dois apoios até a varanda, conclusão só após o pouso, enquadramento completo da árvore, encontro, mapa da Tartaruga, voo, resultados e transição à praia. Dados do TileMap e o percurso anterior preservados. Capturas OpenGL e saves de teste isolados.
+
+Carteira entre fases e Modo livre (v14)
+- Save guarda o saldo em [wallet] cherries no user://save.cfg. Cada coleta e compra é persistida por arquivo temporário e substituição do save válido; falha de gravação recusa a transação sem alterar o saldo. Reiniciar, morrer, voltar ao menu, passar à próxima ilha e reabrir o jogo preservam a carteira.
+- Gems e cherries_spent do jogador são contadores locais da tentativa. A HUD das duas fases mostra o saldo global, sem denominador; a nota continua usando somente as coletas da fase atual. Resultados e Coleção mostram o saldo guardado. Uma nova tentativa permite coletar novamente, mantendo a carteira anterior.
+- A seleção de fases saiu do menu. Modo livre fica cinza e sem foco até concluir todas as fases em CAMPAIGN_LEVEL_IDS: fase_1 e fase_2 nesta versão. O painel liberado permite revisitar apenas as duas ilhas existentes, pulando a abertura da história. Abertura do painel e partida das ilhas verificam o desbloqueio.
+- Jogar preserva carteira e recordes; Continuar fica disponível após iniciar a aventura. Apagar progresso limpa carteira, resultados e desbloqueio do Modo livre e atualiza o menu imediatamente, preservando as preferências.
+- Saves antigos preservam recordes, abertura e preferências, com saldo inicial zero porque não guardavam compras ou dinheiro disponível. Recordes não são convertidos em cerejas. Nenhum save real foi usado nos testes.
+- QA Godot4.7.1: carteira entre floresta e praia, compra real, pontuação separada, morte/respawn/reinício/menu e outro processo; bloqueio do Modo livre com nenhuma ou só uma fase concluída, liberação com ambas, acesso às duas ilhas e reset. Backend validado também com save legado, valores inválidos e falha de gravação simulada. Capturas OpenGL sem cortes.
+
+Equipamentos acompanhando a animação (v15)
+- O visual dos equipamentos é ligado ao AnimatedSprite2D de Nico e compartilha sua transformação. Saltos, pousos, ataques, direção e piscar de dano não copiam escala ou modulação em outro nó, evitando atraso e efeitos duplicados.
+- Os quadros nativos 33x32 têm encaixes próprios para cabeça, olhos, tronco, mãos, dois pés e cauda. Tênis são desenhados como dois calçados independentes. Pijama e roupa de inverno usam recortes separados para tronco, mangas e pernas, acompanhando a passada.
+- Chapéu e óculos seguem a respiração dos quatro quadros idle, os seis quadros de corrida e as poses de salto, queda, dano e cabeça visível na morte. Peças de corpo e pés que ficam fora do recorte da animação de morte são ocultadas nessa pose.
+- Capa e cauda acompanham os quadros do personagem; rastro e aura congelam quando a animação ou a partida está pausada. Trocar ou retirar uma peça na mochila redesenha o visual mesmo com o jogo pausado. O ator de Nico na cutscene da tartaruga usa o mesmo código.
+- Nenhuma imagem nova foi gerada: os PNGs existentes em world/Arte/Equipment/ são usados por regiões no desenho do Godot. Colisões, física, catálogo, preços, carteira e Modo livre permanecem como na versão anterior.
+- QA Godot4.7.1: 58 verificações aprovadas, incluindo pixels renderizados de direção, origem/offset, escala e alfa, seis passadas independentes dos tênis, troca na pausa, compras reais, movimento, ataque, dano, canhão, morte e ator da cutscene. Folhas de treze poses nas duas direções por peça e GIF de 46 capturas nativas. Imagens originais de Nico e equipamentos comparadas por hash, sem alterações.
+
+Música nas conversas e bandeira pixel art (v16)
+- Sfx mantém a trilha da fase durante os diálogos dos moradores, abertura da história, encontro com Arara Minas e resgate da tartaruga. A pausa do mundo e do cronômetro continua ativa. Conversas usam donos temporários, liberados ao fechar, pular ou sair da árvore; não reiniciam a faixa nem alteram o volume escolhido.
+- A pausa comum continua suspendendo a música. Loja e mochila continuam tocando Pixels and Trinkets em prioridade e devolvem a trilha anterior no ponto correto. Conversas não abrem sobre outro menu pausado e impedem sobreposição com o menu de pausa.
+- Spritesheet nova em world/Arte/Checkpoint/checkpoint_v16.png:192x96, seis colunas e duas linhas, células32x48. Linha0 âmbar inativa (6fps); linha1 verde ativada (8fps). checkpoint_v16.tres contém doze AtlasTextures e duas animações em loop. Os dez checkpoints já usam AnimatedSprite2D com filtro nearest no editor e no jogo.
+- Arte criada com imagegen integrado, exportada por recorte da grade, redução nearest e registro inteiro do mastro/base em(10,46). Prompt exato em PROMPT-CHECKPOINT-v16.txt. Fonte, relatório e exportador ficam no pacote de arte da edição. As cores e a altura do pano indicam a ativação sem deslocar o mastro.
+- Áreas de colisão, Marker2D Spawn, terreno e posições dos checkpoints foram preservados. Ativação, recuperação de vida e retorno do Nico mantêm as regras.
+- QA Godot4.7.1:49 verificações aprovadas com reprodução real do AudioStreamPlayer e saída Dummy, incluindo avanço do áudio durante conversa com E, abertura e duas cutscenes; pausa comum, donos múltiplos/liberação, prioridade da loja, doze quadros, toque, respawn e animação nas duas fases. Capturas OpenGL e saves isolados; nenhuma música WAV foi modificada.
+
+
+Abertura e apoio dos cenários (v17)
+
+A abertura agora usa a floresta da fase em camadas, luz e folhas em movimento, personagens com seus frames de animação, voo e pouso de Arara Minas, chegada e partida do veículo, tentativa de resgate e a corrida de Nico. Sete tomadas têm títulos curtos, cortes suaves, texto progressivo e uma faixa de leitura separada. Enter, Espaço ou clique revelam o texto e depois avançam; ESC pula. A sequência avança sozinha e mantém a música durante a pausa do mundo.
+
+Os 41 enfeites estáticos da praia tiveram seus pontos de apoio conferidos no TileMap. Palmeiras, conchas, vegetação, corais e postes entram três pixels na superfície para integrar a base à areia, inclusive nos patamares elevados. As colisões, plataformas móveis, itens e pontos de reaparecimento permanecem nos mesmos lugares.
+
+
+Lobo da corporação e chegada à praia (v18)
+
+O lobo da corporação, de terno escuro e crachá dourado, é o líder do sequestro e o futuro chefão final da história. A abertura mostra suas poses de chegada, ordem, captura e satisfação: ele leva José até a jaula enquanto Arara Minas escapa voando. O veículo parte com quatro amigos presos. A luta final com o lobo fica para uma ilha futura; Urus continua sendo o chefe da praia. As quatro poses recortadas, a folha de sprites e o recurso SpriteFrames estão em world/Arte/Corporacao/, com o prompt exato da arte gerada.
+
+Depois do título da fase 2, Arara Minas conversa com Nico sobre a Tartaruga idosa, a corporação e Urus. As dicas explicam que caranguejos são derrotados por um salto descendente sobre o casco (socá-los não funciona), que encostar de lado machuca, que o açaí permite congelar os inimigos e que é preciso esperar as jangadas, tocar as bandeiras e escolher o canhão e o momento do lançamento contra Urus. Retratos animados e cartões ilustrados acompanham as falas. E, Enter, Espaço ou clique revelam e avançam o texto; ESC pula. A conversa também avança sozinha, mantém a trilha da praia e pausa o cronômetro e os inimigos. Ao fechar, restaura câmera, HUD e controles. Ela aparece também ao seguir pelo botão Próxima ilha.
+
+
+Fluidez da primeira fase (v19)
+
+A plataforma móvel do centro da caverna foi removida. As duas bordas de pedra avançam um tile, deixando um vão livre de 128 pixels. O teto do corredor foi elevado por baixo, preservando a rota de cima e dando espaço para o salto inteiro. Oito tiles suspensos que bloqueavam o salto sobre as plataformas móveis também foram retirados. Tudo fica salvo no TileMap, editável no Godot.
+
+A floresta tem seis plataformas móveis, com aceleração e desaceleração suaves e uma pausa de 0,25 segundo em cada ponta. A balsa antes da ilha alta e as duas do rio ficam alinhadas às margens, para não prender Nico na parede ao desembarcar. As travessias do rio têm chegada próxima à altura da margem e ciclos mais curtos. Nico conserva a velocidade e a altura do salto; só na floresta há aceleração e frenagem mais rápidas, tolerância de 0,13 segundo depois da borda e buffer de salto de 0,16 segundo antes do pouso. Os padrões da praia são preservados.
+
+São nove checkpoints: o segundo passa para a entrada da caverna, e há bandeiras extras na rota superior, no fundo da caverna, após o elevador e na ilha de descanso do rio. A área de toque é mais tolerante e os retornos ficam fora das patrulhas. Os quatro inimigos da floresta foram reposicionados ou tiveram suas patrulhas ajustadas para deixar espaço de pouso; avisam por 0,6 segundo antes de investir e dão mais tempo de recuperação. Inimigos derrubados no abismo passam a contar como derrotados e são removidos. A floresta continua com 44 cerejas e três segredos.
+
+Lobo andando e caminhão da corporação (v20)
+
+O lobo caminha com seis quadros próprios: alterna os passos e os braços, mantendo o terno, a gravata e o crachá dourado. Os pés usam a mesma linha de apoio das poses anteriores. A cadência acompanha a distância percorrida na chegada; ao parar, ele assume a pose de comando.
+
+O caminhão foi redesenhado em pixel art, com cabine, escapamento, faróis, carroceria rebitada e emblema dourado. Quatro quadros animam as rodas e a luz âmbar durante o deslocamento. Estacionado, ele fica imóvel. Os quatro amigos aparecem dentro do compartimento, com as grades desenhadas à frente; o veículo, os passageiros e as grades acompanham juntos a suspensão na partida. A poeira sai pela traseira.
+
+Arte gerada com imagegen integrado e preparada por recorte e redução nearest. Em world/Arte/Corporacao/: wolf_walk_1.png a wolf_walk_6.png (112x96, pés em y92), truck_drive_1.png a truck_drive_4.png (224x128, pneus em y116), as duas spritesheets e os recursos wolf_walk_v20.tres e truck_drive_v20.tres. Prompts exatos: PROMPT-LOBO-ANDAR-v20.txt e PROMPT-CAMINHAO-v20.txt. O roteiro, as sete tomadas, os controles para avançar/pular e a continuidade da música são preservados.
+
+Rato inimigo de quatro patas (v21)
+
+O pequeno inimigo terrestre ganhou uma nova arte de rato em pixel art: focinho comprido, orelhas arredondadas, pelagem cinza-azulada e cauda rosada. Ele mantém a postura quadrúpede, com o corpo baixo e seis quadros de caminhada alternando as patas. O mesmo recurso aparece nos quatro inimigos da floresta e nos cinco guardas da praia. Oliver Gancho continua com sua própria arte.
+
+O sprite usa células de 36x28, a linha de apoio e o posicionamento originais. O formato das colisões, velocidade, patrulha, investida, dano, congelamento do açaí e efeito de derrota são preservados. A cena world/skank.tscn aponta para world/Arte/Rato/rato_v21.png e usa o shader de recorte já existente para manter a transparência limpa. O atlas, seis PNGs individuais e o SpriteFrames reutilizável estão em world/Arte/Rato/. Arte criada com imagegen integrado; o prompt exato está em PROMPT-RATO-v21.txt.
+
+Animação do lobo revisada (v22)
+
+A abertura passa a usar três novas spritesheets do lobo: oito quadros de caminhada, quatro quadros de levantamento e oito poses de ação, incluindo quatro passos para carregar José. O crachá, a cabeça e o apoio dos pés são registrados na mesma célula de 112x96. A renderização usa o tamanho nativo, sem respirar por escala nem reamostrar o corpo a 1,075x. A cadência dos passos acompanha a distância percorrida.
+
+O lobo se agacha, levanta José com quatro poses, caminha segurando-o e usa o apoio traseiro do caminhão para alcançar a jaula. José acompanha suas mãos e chega à mesma posição e tamanho do sprite dentro da jaula antes da troca. Depois, o lobo desce do apoio, anda até a cabine e aparece pela janela como motorista na partida. A antiga pose que deslizava pelo chão e a mudança abrupta para um lobo pequeno no teto foram substituídas. O espelhamento horizontal também foi corrigido para preservar o apoio e a posição dos personagens ao virarem à direita.
+
+Os sete planos continuam com texto progressivo, avanço por Enter/Espaço/clique, salto por ESC e música durante a pausa do mundo. O plano do sequestro dura 7,2 segundos para acomodar as ações. Os mapas, a física de Nico, inimigos, equipamentos, saldos e salvamentos são preservados. As novas artes, SpriteFrames e prompts exatos da geração integrada estão em world/Arte/Corporacao/V22/.
+
+Oliver Gancho e Coleção (v23)
+
+Oliver ganhou uma nova arte de pixel art para combinar com Nico: cabeça expressiva, contorno azul-escuro, poucos tons por material, bandana vermelha, tapa-olho, colete ocre e calça verde. O sprite da caravana usa pixels nativos e uma piscada breve, com a parte inferior do corpo escondida pelo balcão. O retrato da Coleção e a imagem de Oliver atrás do balcão da loja seguem o mesmo modelo. Os arquivos e os três prompts exatos da geração integrada ficam em world/Arte/Caravan/V23/. Os PNGs foram preparados por recorte, redução nearest e posicionamento inteiro, preservando o alpha; o shader de recorte de personagens mantém as bordas limpas.
+
+A Coleção do menu agora tem duas abas. Amigos reúne oito cartões: Nico, Arara Minas, Tartaruga, Oliver Gancho, Remi, José, Urso e Mico-leão-dourado. Setas ou clique selecionam um cartão e mostram nome, arte, descrição, estado e local do encontro/resgate. Ilhas e recordes apresenta as duas fases com imagem, nota, melhor tempo, cerejas, segredos, inimigos e mortes. O cabeçalho exibe saldo de cerejas e ilhas concluídas; Voltar ou Esc retorna ao menu. O painel cabe no viewport de 640x360 e mantém o foco visível na navegação.
+
+Os estados seguem o salvamento: Arara vira companheira após a floresta, a tartaruga só é marcada como resgatada depois da praia e os quatro amigos das ilhas futuras continuam desaparecidos. A Coleção consulta os dados sem alterar saldo ou progresso. Ela é um álbum de consulta; as regras do modo livre continuam ligadas à conclusão das duas fases. Compras, preços, equipamentos, trilhas, partida da caravana, mapas e física permanecem com as regras anteriores.
+
+Enquadramento nas janelas (v24)
+
+Oliver fica centralizado na janela da caravana, com uma pequena margem acima das orelhas e o corpo escondido pelo balcão. Um recorte na abertura impede que qualquer parte do sprite passe sobre a madeira durante a piscada ou o movimento da caravana.
+
+O rosto do lobo usa um recorte proporcional dentro do vidro da cabine do caminhão. Sua máscara acompanha a mesma origem arredondada e o mesmo balanço da carroceria na cutscene. Os quadros do caminhão e as duas expressões de Oliver foram conferidos com renderizações com e sem os personagens: somente os pixels internos das janelas mudam. As animações da abertura, compras, música, saldo, Coleção e demais regras permanecem funcionando.
+
+
+V25 — FLORESTA VIOLETA / RESGATE DE REMI
+A terceira fase começa em Próxima ilha depois da praia. Continuar também a encontra quando a fase 2 já está concluída. Remi agora é um esquilo, com corpo animado e retratos próprios.
+Vermelhos: pule sobre o chapéu do cogumelo para subir muito alto.
+Cipós: E agarra perto da ponta; A/D ou setas dão balanço; Espaço/W ou E solta com impulso. Toque nas plantas luminosas para deslocar alguns cipós. Outro se move sozinho.
+Triple H: J/X rebate o barril; ela fica tonta quando o barril devolvido a acerta. Nos socos, ataque por trás durante o combo ou sua curta recuperação. Depois, ataque novamente ou pule na cabeça para causar dano. Os cogumelos ficam apoiados nos postes laterais. Após vencer, quebre o cadeado de Remi com J/X.
+Oito checkpoints, novos besouros e mariposas, três segredos, caravana de Oliver, açaí congelante, novas trilhas e Coleção com três ilhas. Modo livre exige as três fases disponíveis. Saldo e progresso anteriores são mantidos.
+Imagens: ferramenta integrada de geração de imagens; spritesheets, fundo, recursos de animação e prompts completos em world/Arte/Magic. Detalhes e controles no README.md.
+
+
+V26 — POLIMENTO, CIPÓS E RINGUE DA HIENA
+Pés e raízes alinhados ao chão; cenário limpo junto da Arara e dentro do ringue.
+Cipós com novos sprites e impulso menor. Cinco cerejas por cipó seguem o arco e o apoio móvel. E agarra, A/D ou setas dão balanço, Espaço/W ou E solta.
+Vaga-lumes animados cruzam a tela. A fase usa Glimmergrove Pathways e o chefe Wrestlecackle Beatdown, copiadas sem conversão.
+Triple H: combo de socos, chute, barris/cristais, investida e salto marcado. Conquiste a abertura rebatendo um barril ou acertando por trás dos socos. J/X rebate barris e quebra cristais no ar. O açaí congela os inimigos da floresta. Morrer limpa os projéteis e permite outra tentativa.
+Artes geradas pela ferramenta integrada, spritesheets e prompts exatos em world/Arte/Magic/V26. Saldo e progresso permanecem preservados.
+
+
+V27 — HIENA HaHa / TRIPLE H E APOIO NO CHÃO
+J/X rebate barris: quando acertam a chefe, deixam-na tonta. Durante o combo de socos e a curta recuperação, somente um golpe por trás abre essa chance. Depois de abrir a guarda, dê outro golpe ou pule na cabeça. Errar outros ataques não causa tontura automática.
+Trampolins nos suportes dos postes laterais do ringue. Copas completas, cristais/cogumelos sem recortes vizinhos, derrota da Hiena no tablado e Remi apoiado no chão ao acenar, piscar e conversar.
+
+
+V29 — SEIS NOVOS ITENS NA LOJA DE OLIVER GANCHO
+Biscoito de Mel (6): recupera um coração ao usar na mochila; não é gasto com vida cheia.
+Açaí de Viagem (12): guarde para ativar proteção e ataque dobrado por 12 segundos.
+Luvas Ágeis (14): recarga dos ataques -15%; substituem as garras.
+Broche do Saltador (12): impulso do salto comum +10%; substitui Gelo Duradouro.
+Bandana do Marujo (7) e Óculos de Aviador (7): novos acessórios visíveis no Nico.
+Suprimentos guardáveis têm limite de três unidades por tipo. I abre a mochila; a aba Suprimentos permite usar as provisões. Novos ícones e prompt em world/Arte/Equipment/V29.
+
+
+V30 — REVISÃO GERAL
+Ataques aceitam um novo comando nos últimos 120 ms da recarga, sem repetição automática. Abrir pausa, mochila ou caravana limpa esse comando.
+Açaí comum e congelante usam um único painel de duração e gelo. Durante chefes, o painel se posiciona abaixo das instruções; os tempos também atualizam no voo dos canhões.
+Aviso da loja com tamanho fixo na tela. Mudar de aplicativo pausa a jogabilidade; use Continuar ao voltar. Opções: Tremor da câmera pode ser desligado e a preferência fica salva.
+Direção dos inimigos corrigida quando Nico fica exatamente sobre eles; derrota limpa gelo residual. Pontos de apoio de 59 quadros mágicos são pré-calculados, preservando os pés alinhados.
+175 verificações de jogabilidade/interface e 170 casos visuais passaram. Percursos da floresta inicial e floresta mágica: zero mortes.
+
+
+V31 — CEREJAS NO MODO LIVRE
+Cerejas já coletadas não reaparecem no modo livre. O histórico inclui a campanha e as cerejas dos cipós; cada cereja restante concede saldo uma única vez nesse modo.
+Reiniciar, trocar de ilha, gastar na loja, voltar ao menu ou fechar o jogo não repõe as cerejas. Saldo e histórico são salvos juntos. Novo jogo reinicia também esse histórico.
+Em saves antigos, as ilhas já concluídas ficam sem cerejas no modo livre porque não havia registro individual das coletas. A carteira e os recordes existentes são preservados.
+238 verificações de coleta/persistência e nove verificações na janela do jogo passaram, cobrindo as 177 cerejas das três fases. Percurso físico da primeira fase sem mortes; saves de teste isolados.
+
+
+V32 — RAÍZES DAS ÁRVORES
+As 13 árvores da floresta mágica agora entram no solo, com o terreno cobrindo as pontas das raízes. Árvores junto das bordas ficam dentro da ilha de apoio.
+99 verificações passaram, incluindo 24 combinações de sprites renderizados. Os 13 locais também foram capturados na fase real com Vulkan.
+
+V33: árvores aprofundadas para 16–19 pixels dentro do chão. Novas capturas dos 13 locais na janela Vulkan.
+
+V41 — FUMAÇA NO SUBMUNDO
+Duas camadas de fumaça com movimento lento e paralaxe, em tons de cinza e roxo. A camada próxima se concentra nas bordas inferiores; HUD e diálogos ficam acima do efeito. A fumaça respeita a pausa e aparece apenas nesta fase.
+Verificado na entrada, na forja e na arena do Carcereiro, em janela Vulkan e sem janela. Saves de teste isolados.
+
+V42 — CARCEREIRO E ÚLTIMA CORRENTE
+Entrada animada e pulável, sons próprios de combate e correntes visíveis. A entrada não se repete nas novas tentativas.
+Depois da ajuda de José, suba a estrutura cilíndrica em torno do chefe. Ative os canhões em ordem: FOGO, GELO, FOGO. K dispara, Q alterna. Observe a marca da corrente e saia dela antes do impacto.
+Apoios laterais servem de descanso. Quedas causam dano e devolvem Nico ao apoio; uma morte na última etapa mantém os canhões já ativados. O terceiro disparo liberta o Carcereiro e revela a Chave das Profundezas.
+Sprites e prompt: world/Arte/Underworld/V42/. Tiros muito próximos também atingem a runa do canhão.
+
+V43 — RÉDEAS DO SUBMUNDO
+José lança correntes para tentar domar o Carcereiro. Nico e José sobem nele e partem em direção à próxima ilha. Cena animada com retratos, sons, roupas de Nico e salto entre as margens.
+E/Enter/Espaço ou clique: próxima ação. Esc: pular para resultados. Música e progresso da fase são preservados.
+Oito novos sprites de correntes em world/Arte/Underworld/V43/, também aplicados à escalada e ao golpe preso do guardião. PNG, recortes e prompt incluídos.
+
+V44 — CARCEREIRO MAIS ANIMADO
+16 novos quadros de preparação, pancada, recuperação, dano e rugido. Sprites e prompt: world/Arte/Underworld/V44/.
+Depois de pular a onda, acerte o FECHO DOURADO da corrente presa com J/X; não é preciso correr até o corpo do chefe. A recuperação dá tempo para recuar.
+As correntes lançadas mostram a mira antes do disparo e podem ser bloqueadas por pedras. Alcançar o patamar superior ativa uma retomada da luta na armadura.
+Canhões dão um breve intervalo seguro após cada acerto. HUD indica a etapa e a instrução em linhas separadas; a câmera acompanha os dois combatentes. A fuga montada com José continua sendo a cena final.
+
+Santuário e forja (v44): o centro da fase agora abriga um santuário divino de mármore claro e ouro, arco solar, braseiros dos dois elementos, raios suaves e partículas. A câmera mostra a estrutura inteira durante a levitação com água e chamas. O poder continua sendo adquirido somente ali. A caixa de contrapeso e as duas plataformas suspensas sem apoio foram retiradas do corredor da forja; o santuário libera o mecanismo. Fogo → gelo → fogo → gelo e os jatos de vapor continuam como desafio, com instruções e runas acima do chão. Sprite e prompt em world/Arte/Underworld/V44/sanctuary*.
+
+
+Submundo: cenário, som e subida acessível (v45)
+
+O voo de abertura ganhou um som descendente de queda, ligado ao volume de efeitos, disparado uma única vez depois do impacto e interrompido ao aterrissar ou sair da cena. A música continua.
+
+Sprites próprios substituem a pilastra esticada: coluna de basalto com proporções naturais, rachadura, queda e ponte de pedra formada pela cabeçada de José. As laterais dos abismos usam paredes verticais contínuas, com a borda superior somente na primeira fileira. Os gêiseres de impulso têm uma plataforma sólida com setas turquesa e quatro estados visuais; continuam lançando Nico para cima. Originais, prompts e recortes em world/Arte/Underworld/V45/.
+
+Na forja, quatro esferas embutidas no chão mostram vermelho → azul → vermelho → azul. Os indicadores se acendem conforme os disparos corretos; válvulas, sequência e jatos de vapor continuam funcionando.
+
+Na segunda etapa do Carcereiro, todo o chão da arena sobe. Há dois segundos de preparação e uma subida suave de 16 segundos, sem exigir saltos nem escalada. O AnimatableBody2D carrega Nico e José pela física; a lava permanece 70 pixels abaixo do piso, e os ataques de corrente têm aviso de 0,8 segundo e intervalo de 3,6 segundos. O piso continua no alto durante o restante da luta, incluindo a retomada após morrer. A câmera acompanha a nova velocidade. A última etapa dos canhões mantém seu funcionamento.
+
+Validação: transporte sem entrada de salto em três posições da arena, distância da lava e preservação dos corações, retomada superior, reprodução/encerramento do som, sprites e colisões da coluna/ponte/gêiser, renderização das laterais e quatro esferas, além da regressão completa com disparos reais, José, forja, chefe, canhões e fuga. Saves isolados em todos os testes.
+
+
+José no modelo dos sprites do Nico (v46)
+
+Sprites e retratos refeitos a partir dos PNGs originais de Nico, incluindo o personagem 33×32 e o retrato da HUD, ampliados com nearest-neighbor como referência. A versão final usa blocos de cor simples e construção compacta do rosto, conservando o bode de chifres curvos, barba e lenço laranja.
+
+Dezesseis quadros cobrem repouso/piscar, quatro passos, preparação, dois quadros de investida, impacto, recuperação, salto, queda, alegria, dano e fala. Os retratos têm quatro expressões. A escala em pé fica perto de 32 pixels; recortes e preenchimentos comuns preservam os pés entre animações. A recuperação da cabeçada é exibida no controlador, e José se vira para Nico quando ficam próximos.
+
+Os mesmos recursos atualizam o Submundo, os diálogos, a Coleção e as cutscenes de sequestro/apresentação/fuga. Arte final, prompts, referência e metadados em world/Arte/Underworld/V46/. Criados com imagegen integrado; os PNGs gerados foram preservados sem edição.
+
+Validação: comparação renderizada com os sprites originais de Nico, apoio de todos os quadros, diálogos e Coleção, oito momentos da fuga montada e regressão completa com cabeçadas reais, forja, batalha, canhões e conclusão. Todos os testes usam saves isolados.
+
+V50 — CARCEREIRO: ARENA MAIS CLARA
+Nas extremidades, o chefe anuncia um salto ao centro. Afaste-se do círculo; ele deixa um intervalo de recuperação ao aterrissar e não foge durante a abertura de ataque.
+Na segunda etapa há um piso único que sobe sozinho. As escadas e correntes de escalada foram retiradas. Pule as ondas e rebata os ganchos azuis com J/X: duas devoluções completam o objetivo da etapa. Observe o aviso de um segundo e o contador da HUD.
+Na Última Corrente, oito plataformas substituem as 24 anteriores: seis apoios laterais e duas pontes largas. Todas permanecem sólidas. A HUD mostra o lado, número e elemento do próximo canhão; K dispara e Q alterna entre fogo e gelo. A sequência é fogo, gelo, fogo.
+Validação: 83 verificações na janela Vulkan, 73 de transporte pelo piso sem saltar, 65 da fase completa e cinco capturas revisadas. Saves isolados; o progresso do jogador não é usado nos testes.
+
+V51 — ANEL DE CORRENTES, INSPIRADO EM MECHA-BANDICOOT
+A segunda etapa do Carcereiro alterna três ações: correr para sair das miras laranjas das ferragens, pular a corrente que varre o chão e rebater a esfera verde com J/X. O chefe fica ao fundo, no centro, com a passagem livre à frente e uma mureta curva de basalto atrás. O piso sobe sozinho.
+Devolva sete esferas. A segunda quebra o selo da varredura; a quarta quebra o selo da chuva. Esses ataques deixam de aparecer e cada selo quebrado recupera um coração. As três últimas devoluções abrem a etapa da armadura. A barra verde e o contador mostram o progresso.
+Câmera ajustada à altura real do piso. A retomada dos canhões mantém o tamanho do guardião. Fogo/gelo, a ajuda de José, os canhões e a fuga montada continuam no combate.
+Referência: Crash Twinsanity Hands-On, GameSpot, 7/9/2004 — https://www.gamespot.com/articles/crash-twinsanity-hands-on/1100-6106483/
+Validação: 51 verificações na janela, 73 do piso ascendente, 66 da fase completa e seis capturas. Percurso natural da segunda etapa com sete rebates reais e zero dano, sem forçar invulnerabilidade. Saves de teste isolados.
+
+V52 — AÇAÍ: GELO / FRUTA-DO-DRAGÃO: FOGO
+K dispara o poder da fruta coletada. Açaí normal e Açaí de Viagem: gelo por 12 segundos; fruta-do-dragão: fogo por 20 segundos. Se ambos estiverem ativos, Q alterna. Ao terminar um deles, Nico seleciona automaticamente o que ainda estiver disponível.
+Açaí Congelante libera gelo por 30 segundos e prolonga o congelamento dos golpes e dos disparos. Gelo Duradouro também melhora os disparos. A proteção e o ataque dobrado do açaí normal continuam.
+O gelo alcança inimigos baixos e respeita paredes. Caranguejos congelados continuam sendo derrotados com um salto sobre o casco. A HUD, Arara Minas e Oliver explicam os novos controles.
+O altar continua necessário para liberar os dois poderes sem limite de tempo. Frutas não antecipam esse domínio. Pausa preserva os tempos; respawn remove os efeitos temporários.
+Validação: 55 verificações na janela com seis capturas e 66 da fase completa do Submundo. Saves de teste isolados.
+
+V53 — SPRITES DA SEGUNDA ETAPA E RECARGA DO NICO
+O Carcereiro ganhou oito novas poses para a chuva, varredura, carga da esfera, disparo e recuperação. Outros 16 sprites animam ferragens, impactos, bola de espinhos, esfera verde e selos. Os selos acompanham os pulsos do chefe. Arte e prompts: world/Arte/Underworld/V53/; criada com imagegen integrado, mantendo os PNGs e o alpha originais.
+Na segunda etapa, Nico espera 1 segundo entre ataques. J/X e K compartilham essa recarga; alternar os botões ou usar luvas não contorna o limite. A HUD indica o tempo e quando o ataque está pronto. Fora desta etapa, as recargas continuam como antes.
+Cada atordoamento aceita uma devolução válida. Devoluções extras na mesma janela não somam acertos, e dano aumentado não pula os sete acertos do anel. Os outros trechos do combate continuam.
+Validação: 95 verificações na janela, nove capturas, 66 da fase completa e percurso natural com sete devoluções e zero dano. Saves de teste isolados.
+
+## Caravana, mochila persistente e final direto (v54)
+
+A vitória sobre o Carcereiro inicia diretamente a cutscene em que José doma o guardião e os dois partem montados nele. O portal final e a coleta obrigatória da chave foram removidos; a recompensa e a conclusão ficam registradas automaticamente, mesmo se o último disparo acontecer durante um salto.
+
+Oliver Gancho recebe Nico no começo da praia, da floresta mágica e do Submundo. A primeira fase, do resgate da Arara Minas, continua sem caravana. As lojas ficam sobre terreno seguro e os primeiros inimigos foram afastados do espaço de compra. A caravana ainda parte quando Nico segue viagem.
+
+Equipamentos, roupas, peças equipadas e quantidades de suprimentos acompanham Nico entre fases e ao continuar uma partida. Usar um consumível ou gastar a Folha Protetora também fica salvo, sem regenerar itens na próxima ilha. A mochila abre com I. Os efeitos temporários das frutas mantêm sua duração e não recomeçam na fase seguinte. Nova campanha limpa a mochila junto com o progresso.
+
+Compras gravam saldo e inventário na mesma transação. Uma falha de gravação preserva cerejas e itens. Saves anteriores continuam compatíveis e o histórico de cerejas do modo livre permanece preservado.
+
+Validação: 86 verificações na janela Vulkan, sete capturas, trocas reais de mapa, compras, equipamentos, consumo, respawn, recarga do save, limites de estoque, saves antigos/inválidos, nova campanha, duas falhas de gravação simuladas, partida da caravana e encerramento automático. Mais 63 verificações da fase completa do Submundo, incluindo altar, forja, José, combate e canhões. Todos os testes usam APPDATA isolado, sem ler nem alterar saves reais.
+
+## Triple H, apresentações e novas etapas dos chefes (v55)
+
+O nome usado nas barras, diálogos, jaula, Coleção e referências à floresta agora é apenas Triple H.
+
+Urus e Triple H ganharam apresentações animadas de 6,2 segundos com cenário próprio, nome, falas de desafio, resposta de Nico e instrução de combate. Os atores usam os mesmos sprites do jogo, incluindo as roupas equipadas de Nico. Enter, E ou Esc pulam a apresentação; a música continua e controles, pausa e cronômetro voltam ao estado anterior. A entrada do Carcereiro mantém a chegada, o golpe de corrente e a câmera dramática, agora com novas falas do guardião e de Nico. Novas tentativas dispensam a repetição das entradas.
+
+- Urus: depois dos três impactos originais, começa a Rajada Final. São necessários mais dois impactos, alternando os canhões. Urus protege o lado já atingido, e a mira desse canhão deixa de ficar verde. O voo muda de ritmo e ganha uma rajada rasteira de penas que Nico pode saltar, intercalada com os ataques marcados na areia.
+- Triple H: depois do combate original, começa o Último Round com três acertos. Ele usa as cordas para atravessar o ringue e rebater duas vezes, anuncia um salto ao centro, solta ondas baixas ao aterrissar e arremessa um barril. Rebatê-lo conquista um atordoamento que aceita um único ponto de dano, inclusive com bônus de equipamentos ou açaí. Os avisos distinguem corrida, salto, ondas e barril. A derrota continua apoiada no tablado e só então libera Remi.
+- Carcereiro: os três canhões da torre conduzem à sexta etapa, Os Últimos Selos. A torre desaparece e Nico retorna ao piso largo, com a vida recuperada e um ponto de retorno próprio. K com fogo pelo lado esquerdo abre o selo laranja; gelo pelo lado direito abre o azul. Os dois abertos liberam 4,5 segundos para um acerto de J/X. Três ciclos rompem as últimas correntes. Golpes fortes ou repetidos não pulam ciclos. Ondas têm alvo e aviso de 1,1 segundo. Depois da vitória, a fuga com José começa diretamente, sem portal.
+
+Validação: 58 verificações na janela Vulkan e sete capturas revisadas; 64 verificações da fase completa do Submundo; 13 verificações adicionais com saltos reais nos dois canhões usando a previsão da mira, retorno de controle, barril rebatido com J, acerto de J e bloqueio de dano repetido. As 79 verificações de mochila, caravana, saves e encerramento anteriores continuam passando. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+## Equipamentos de Nico revisados (v56)
+
+As 14 peças vestíveis ganharam uma nova folha de pixel art usando os quadros originais de Nico como referência: garras, tênis, folha, amuleto de gelo, luvas, broche, chapéu, óculos escuros, capa, pijama, roupa de inverno, cauda colorida, bandana e óculos de aviador. Os ícones da loja e da mochila usam a mesma arte das peças do personagem.
+
+Os calçados agora ocupam somente os pés; as duas garras/luvas têm recortes próprios. As roupas usam tronco, mangas e pernas independentes, com linhas de pixels inteiros em vez de esticar e girar o bitmap inteiro. Chapéu e óculos acompanham a cabeça sem rotações fracionárias. A capa mantém o encaixe no pescoço e o movimento acompanha a passada. As mãos acompanham o pulso do ataque; espelhamento, squash, dano e rotação de canhão continuam herdados uma única vez do AnimatedSprite2D. A cauda não deixa um rastro antigo atravessando o mapa após um teleporte.
+
+Arte criada com imagegen integrado em world/Arte/Equipment/V56/equipment_atlas.png. O PNG e seu alpha foram copiados sem alterações; recortes são AtlasTexture nativos. Fonte, hash SHA-256, regiões, recortes das peças e prompt exato estão em regions.json e PROMPT.txt na mesma pasta. As imagens anteriores foram preservadas. Preços, efeitos, inventário salvo e colisões de Nico permanecem iguais.
+
+Validação: 16 folhas revisadas com 26 poses cada (13 quadros, duas direções), totalizando 416 renderizações; 22 verificações de encaixe/espelhamento/transparência/pausa na janela Vulkan; quatro verificações dos quadros de morte; sete de rastro e ocultação; 44 verificações e quatro capturas de compras reais, troca pela mochila, ataque, troca de fase e roupas na cutscene de Triple H. Mais 79 verificações de persistência da mochila, caravana e encerramento. Todos os testes usam APPDATA isolado, sem ler ou modificar os saves do jogador.
+
+## Loja ampliada e Nico original (v57)
+
+Esta revisão substitui a apresentação dos acessórios da v56: Nico mantém os sprites originais no jogo e nas cutscenes. Os bônus dos equipamentos funcionais continuam ativos. As roupas e peças puramente visuais já compradas permanecem salvas como coleção, sem venda ou alteração dos saves existentes.
+
+Seis itens novos na caravana de Oliver Gancho, com ícones próprios de pixel art:
+- Suco de Pitaya (12 cerejas): fogo no K por 20 s, guardado na mochila; não antecipa o poder permanente do altar.
+- Kit de Socorro (12): recupera todos os corações; vida cheia impede desperdício.
+- Escudo de Casca (9): bloqueia dois golpes; pode ser guardado e só é usado quando Nico está sem escudo.
+- Chá de Hortelã (9): recargas dos golpes e disparos 25% menores por 20 s; renova a duração sem acumular e respeita o mínimo de um segundo do Carcereiro.
+- Ímã de Cerejas (16): atrai cerejas a até 72 pixels, sem atravessar paredes. Ocupa o espaço de relíquia.
+- Medalhão da Coragem (18): adiciona 0,35 s à proteção depois de perder vida. Ocupa o espaço da Folha Protetora.
+
+Suprimentos permitem até três unidades de cada; consumidos, estoque, equipamentos e cerejas usam a mesma gravação atômica. As compras acompanham Nico entre fases e partidas. Efeitos temporários expiram e são encerrados ao morrer ou trocar de fase. As cerejas atraídas seguem o histórico original: o modo livre não recria cerejas já coletadas nem credita o saldo novamente.
+
+Triple H agora perde no máximo um ponto de vida por atordoamento em ambas as etapas. Bônus de ataque não pulam esse limite; múltiplos golpes somam no máximo um. Outro barril durante o mesmo atordoamento não restaura o limite. É preciso conquistar outra abertura com um barril rebatido ou um ataque pelas costas durante o soco.
+
+Arte em world/Arte/Equipment/V57/shop_items.png; prompt exato e procedência em PROMPT.txt e regions.json. O PNG gerado foi preservado byte a byte; seis recortes AtlasTexture nativos integram os ícones à loja e à mochila. Os sprites originais do protagonista permanecem intactos.
+
+Validação: 76 verificações de loja, efeitos, mochila, recarga, persistência, rollback e limite por atordoamento; repetidas na janela Vulkan com três capturas (79 verificações). Outras 51 verificações dos três chefes, 64 de mecânicas do Submundo, sete do chá junto à recarga do Carcereiro e duas capturas adicionais da loja. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+## Triple H: terceiro round com trampolins (v58)
+
+A luta agora tem três etapas. No segundo round, a preparação do barril depois do salto central passou de 1,1 s para 3,2 s, com contagem na barra do chefe. As ondas continuam vindo antes do barril. O limite de um ponto de dano por atordoamento continua valendo nos dois primeiros rounds.
+
+O terceiro round começa depois dos três acertos da segunda etapa, antes da derrota ou da liberação de Remi. Triple H assume a guarda, se posiciona perto de um dos cantos, anuncia um salto e solta ondas baixas ao aterrissar. Em seguida há sete segundos para usar o trampolim indicado pela seta dourada e cair sobre a cabeça dele. Se a oportunidade passar, ele repete o aviso e o salto; a luta nunca fica sem abertura.
+
+São necessários três mergulhos, alternando trampolim esquerdo, direito e esquerdo. A indicação troca a cada acerto, e o chefe corre para a posição correspondente, sempre apoiado no tablado. Golpes comuns, poderes, barris e saltos sem impulso do trampolim não causam dano nesta etapa. O impulso precisa vir do lado indicado, ganhar altura e terminar em uma queda sobre a cabeça. O sinal é consumido no acerto e cancelado ao tocar o chão, receber dano ou demorar demais. Os três acertos não podem ser pulados por bônus de ataque.
+
+Foram reutilizadas as animações de corrida, guarda, antecipação, salto, dano, atordoamento e derrota do próprio Triple H. Os trampolins existentes continuam nas hastes laterais do ringue, com suas animações e som; setas e marcações são efeitos nativos do Godot. A apresentação do chefe e a dica da fase agora mencionam os trampolins. A derrota só acontece após a terceira etapa, mantém o corpo no tablado, apaga as marcações, abre as barreiras e libera a jaula de Remi. Morrer reinicia a luta como antes, sem guardar impulsos antigos.
+
+Validação: 51 verificações de transições, limite de dano, espera do barril, bloqueio de atalhos, impulso, troca de lados, derrota, resgate e reinício; execução na janela Vulkan com seis capturas (57 verificações). Os três acertos foram feitos com física e controles reais: salto do piso até os trampolins e direção no ar, sem teletransporte durante o voo. Todos os testes usam APPDATA separado; saves reais não foram lidos nem alterados.
+
+## Forja habitável e entrada do Carcereiro (v59)
+
+A Forja Invertida agora é um edifício de pedra, madeira e ferro, com fachada, chaminés, portas e um interior de oficina. A nova spritesheet tem quatro quadros: dois da fachada e dois do interior, incluindo a iluminação e os efeitos do funcionamento. Na porta esquerda, E leva Nico e José para dentro; a fachada dá lugar ao interior e a câmera enquadra a oficina. A porta tem colisão, e os disparos do lado de fora não ativam o mecanismo.
+
+Dentro ficam as duas válvulas, o mecanismo, o operário, as cerejas e os jatos de vapor. Eles são apresentados/ativados junto com o interior; voltar para fora interrompe os perigos internos. O altar continua sendo necessário. Fogo, gelo, fogo e gelo ativam a forja e abrem a porta direita. E permite sair, e atravessar a saída aberta também leva José junto. É possível retornar pela entrada sem perder a sequência concluída. Os identificadores das cerejas e seu histórico persistente foram preservados. A decoração antiga sobreposta à oficina foi retirada apenas dessa área.
+
+O último gêiser, na entrada da arena (x=6530), foi removido. Os seis gêiseres anteriores e suas mecânicas permanecem. Ao começar a batalha, Nico é colocado em (6800,89), com José atrás dele em (6758,100), sobre o piso seguro e afastado do Carcereiro. Velocidade, ataque pendente e impulso antigo são zerados; há proteção breve e enquadramento imediato dos dois combatentes. Pular a apresentação mantém essa posição. Os poderes e equipamentos comprados permanecem ativos.
+
+A revisão visual encontrou recortes antigos de guarda/recuperação que incluíam fragmentos da linha seguinte da spritesheet. Novos recortes AtlasTexture removem esses fragmentos sem alterar nenhum PNG original. Os 40 recursos referenciados têm pontos de apoio nas solas; as 35 imagens distintas efetivamente usadas foram renderizadas e revisadas. Guarda, golpes, dano e recuperação agora mantêm o apoio no piso em todas as escalas da batalha. Os saltos intencionais do chefe permanecem.
+
+Arte nova: world/Arte/Underworld/V59/forge_hall.png, criada com imagegen integrado usando a forja e os props existentes como referência. PNG e alpha preservados byte a byte. PROMPT.txt registra o prompt exato; regions.json registra origem e SHA-256. guardian_crops.json e guardian_feet.json registram os recortes e apoios, sem repintar os sprites do chefe.
+
+Validação: 158 verificações de entrada/saída, colisões, poderes do altar, disparos reais nas válvulas, conclusão, retorno, gêiseres, início da batalha e apoio dos pés nos três tamanhos usados pelo jogo. Execução Vulkan com cinco capturas (163 verificações). Outras 64 verificações da fase completa do Submundo continuam passando, incluindo José, rochas, forja, correntes, etapas do chefe e fuga. Uma folha de contato mostra as 35 imagens do Carcereiro, com três capturas adicionais de poses na arena. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+## Carcereiro: mais ataques no segundo estágio (v60)
+
+O Anel de Correntes ganhou três padrões de ataque, usando as animações e os sprites já existentes do Carcereiro:
+- Pinça de correntes: duas varreduras baixas avançam das extremidades para dentro, com aviso de 1,2 s e velocidade que permite saltar por cima.
+- Ondas duplas: dois pares de correntes partem do centro em sequência. Os avisos duram 1,1 s; o intervalo de 1,45 s permite aterrissar e preparar o segundo salto.
+- Fendas marcadas: três posições são fixadas no chão, com espaços seguros entre elas e 1,4 s de aviso. As correntes sobem dessas marcas; elas não perseguem Nico depois de marcadas. A área de dano acompanha a altura visível.
+
+Cada padrão é seguido por uma oportunidade de devolver a esfera verde. Os novos ataques esperam os perigos terminarem e deixam uma pausa antes do próximo movimento. Um contra-ataque bem-sucedido limpa os perigos restantes. Ao quebrar o primeiro selo, as varreduras e ondas desaparecem e entram as fendas; o segundo selo desativa todos os perigos e deixa as últimas esferas. Continuam sendo necessários sete contra-ataques, com um por atordoamento e a recarga mínima compartilhada de um segundo. O piso inteiro continua subindo, e as marcas e correntes acompanham sua altura.
+
+Validação: 54 verificações de padrões, avisos, colisões, espaços seguros, progressão, limites, reinício e limpeza; repetidas na janela Vulkan com quatro capturas (58 verificações). Os testes incluem saltos reais sobre a pinça e as duas ondas, corrida para escapar das fendas e reflexão da esfera com o ataque de Nico. Outras 64 verificações da fase completa do Submundo também passaram. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+## Carcereiro: desabamento e derrota antes da fuga (v60)
+
+Ao vencer a etapa da cabeçada de José, uma cena de oito segundos apresenta a passagem para a torre dos canhões. O Carcereiro ergue as correntes e golpeia o chão; rachaduras se espalham e os blocos cedem. Nico, José e o guardião caem juntos, com som de impacto, pedra quebrando e queda. Uma transição revela a torre real, com os três canhões, e José explica a sequência fogo, gelo e fogo. O enquadramento inclui os dois amigos no piso da torre. A cena permite pular com Enter, E ou Esc; seu término coloca Nico no ponto seguro, zera o movimento/ataque pendente e dá uma proteção breve. A física, o tempo da fase, os perigos e o menu ficam suspensos durante a cena e são restaurados inclusive ao pular, reiniciar ou remover o controlador.
+
+Após os últimos selos, a fuga ganhou 6,4 segundos de derrota antes da aproximação de José. O monstro cambaleia com o último golpe, cai numa pose apoiada no chão e se acalma enquanto os elos da corporação caem. Nico e José falam antes de José se aproximar e lançar suas próprias correntes como rédeas. A montagem e a viagem para a próxima ilha continuam na sequência, agora com 25,6 segundos no total. Avançar percorre os momentos da derrota antes da doma; pular preserva a vitória, a Chave das Profundezas e os resultados.
+
+As cenas reutilizam as spritesheets do jogo, incluindo os recortes corrigidos e os apoios dos pés do Carcereiro. Não há novos PNGs ou alterações nas imagens existentes. Validação adicional: 36 verificações de pausa, música, enquadramento, ordem dos eventos, checkpoint, física real após a queda, salto das cenas, reinício, remoção, doma, montagem e recompensa. Na janela Vulkan foram 44 verificações, incluindo oito capturas das duas cenas. A regressão completa do Submundo mantém suas 64 verificações. Saves reais permanecem intocados; cada execução usa APPDATA próprio.
+
+## Triple H: mais oportunidades de contra-ataque (v61)
+
+Nico agora pode causar dano direto durante a recuperação do chute (1,7 s), da corrida (1,8 s), do arremesso (1,8 s) e do salto do primeiro round (2 s). Uma marca dourada e o aviso ATAQUE indicam as brechas. Nessas aberturas, encostar no corpo do chefe não retira vida; golpes comuns e quedas na cabeça podem aproveitar a oportunidade.
+
+No segundo round, os primeiros 1,8 segundos da preparação do barril depois da aterrissagem também permitem contra-atacar. O intervalo total de 3,2 segundos até começar o arremesso foi preservado, assim como as ondas do impacto. Depois de lançar o barril, Triple H oferece outra abertura de recuperação. O barril pode ser rebatido normalmente.
+
+A recuperação dos socos passou de 0,85 s para 1,5 s. A frente continua protegida, mas acertar por trás agora atordoa e causa dano no mesmo golpe, sem exigir uma segunda tentativa. O atordoamento pelas costas dura 3,2 s; o barril devolvido permite 3,5 s. Continua valendo o teto de um ponto de dano por abertura/atordoamento, mesmo com bônus ou golpes fracionados. Devolver um barril durante uma abertura já aproveitada não restaura esse limite. A próxima recuperação abre um novo orçamento de dano.
+
+O terceiro round continua exigindo os três mergulhos com os trampolins alternados. As novas brechas não permitem pular essa mecânica nem libertar Remi antes da vitória. Foram reutilizados os sprites e as animações do jogo.
+
+Validação: 46 verificações das novas recuperações, ataques J reais pelos dois lados, ausência de dano de contato durante a brecha, socos, tempo do barril, limite por abertura, transições e reinício. Execução Vulkan com quatro capturas (50 verificações). As 51 verificações anteriores da luta também passaram, incluindo os três acertos com física e controles reais nos trampolins, derrota e liberação de Remi. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+## Dicas dos amigos apenas por interação (v62)
+
+A chegada à praia e à Floresta Violeta agora termina na abertura com o nome da fase e libera o controle. A Arara Minas permanece no começo de cada uma, com um pequeno aviso de E quando Nico se aproxima. As explicações sobre caranguejos, açaí, canhões, cogumelos, cipós e fogo continuam disponíveis ao conversar com ela; não abrem sozinhas.
+
+No Submundo, a queda e a libertação da jaula de José foram preservadas. O diálogo automático depois do resgate tem apenas as duas falas de história. As três explicações iniciais sobre cabeçadas, gêiseres e rochas passaram para uma conversa opcional: aproxime-se de José, com os dois no chão, e aperte E. José continua seguindo Nico e recebendo comandos com C.
+
+As conversas podem ser revisitadas, começam na primeira fala e aguardam o jogador para avançar. E/Enter avança, Esc fecha. Apenas se aproximar, permanecer perto ou afastar-se não inicia nenhuma dica. O controle, o cronômetro, a câmera, a música e a HUD são restaurados ao fechar. Loja e portas da forja têm prioridade no E; a conversa fica indisponível durante a introdução, comando de cabeçada, combate com chefe ou conclusão da fase. Não há alteração de saldo ou ganho antecipado dos poderes do altar.
+
+Validação: 68 verificações de chegada sem diálogo, proximidade, E real, repetição, leitura, pausa, câmera, música, HUD, loja, forja, comando de José, resgate e limpeza. Execução Vulkan com seis capturas (74 verificações). As 64 verificações da fase completa do Submundo também passaram, incluindo a forja, etapas do Carcereiro e fuga. Todos os testes usam APPDATA isolado; saves reais não foram lidos nem alterados. Arte existente reutilizada.
+
+
+## Gêiser com laje de pedra embutida (v64)
+
+Os dois gêiseres de subida agora possuem uma fenda integrada à parede do terreno e uma laje natural de basalto no nível do piso. Nico pode caminhar sobre ela sem degrau ou bloqueio. Durante a erupção, a laje sobe 72 pixels com colisão móvel, carrega Nico e concede o impulso no topo, voltando suavemente ao chão ao terminar. O jato fica sob a pedra. Foram removidos o pedestal e as setas azuis antigos; os quatro gêiseres perigosos mantêm seu comportamento.
+
+A nova spritesheet possui quatro estados da fenda e quatro da pedra (repouso, aviso, erupção e resfriamento), na paleta do Submundo. PNG gerado pelo imagegen integrado e preservado integralmente, com transparência. PROMPT.txt e regions.json acompanham a arte em world/Arte/Underworld/V64. Os quatro quadros de lava existentes foram recortados novamente com margem para preservar topo e base; as 402 imagens anteriores não foram alteradas.
+
+Validação: 40 verificações de lógica e física, 46 na janela Vulkan com seis capturas, e as 64 verificações da regressão completa do Submundo. Auditoria dos 511 AtlasTexture: nenhum recorte fora da imagem de origem. Os 12 quadros do gêiser têm pelo menos três pixels de margem ao redor dos pixels opacos. Testes usam APPDATA isolado; saves reais não foram lidos ou alterados.
+
+
+## Interior separado da Forja Invertida (v65)
+
+E na porta agora leva Nico e José para uma sala independente, distante fisicamente do mapa exterior. Uma transição curta e uma câmera exclusiva enquadram a oficina. O novo cenário contém paredes de alvenaria, fornalhas, vigas, correntes, lanternas, bigorna, ferramentas e lingotes. O piso usa quatro novos tiles com superfície plana e colisão própria; paredes e teto fecham a sala. Foram removidos os dois emissores de vapor do chão, e a fumaça da caverna fica oculta dentro da forja.
+
+A sequência fogo, gelo, fogo e gelo continua dependendo do aprendizado no santuário. As quatro marcas coloridas permanecem embutidas no piso. A porta da direita fica fisicamente trancada até concluir o mecanismo, quando libera a saída para além do portão exterior. Pela porta esquerda, é possível sair e voltar sem perder o andamento do enigma. José acompanha as transições; o ponto de reinício e os limites da câmera acompanham o local. A música continua tocando. As cerejas do interior mantêm seus identificadores e não são recriadas ao entrar novamente.
+
+Duas imagens novas foram geradas com imagegen integrado e preservadas integralmente: forge_room.png e forge_tiles.png, em world/Arte/Underworld/V65, com prompt e metadados dos recortes. Validação: 41 verificações de entrada por E, física, salto, câmera, reinício, saída, progresso e disparos reais na sequência; 45 na janela Vulkan com quatro capturas. A regressão completa do Submundo mantém suas 64 verificações. Todos os 519 AtlasTexture ficam dentro de suas imagens; os oito recortes novos incluem três pixels de margem. As 403 imagens anteriores foram preservadas. Testes usam APPDATA isolado; nenhum save real foi acessado.
+
+
+## Recortes da animação de dano do Carcereiro (v66)
+
+Os dois quadros de dano começavam abaixo do topo real do desenho na spritesheet. Os recortes nativos agora incluem a cabeça, os chifres, os efeitos de impacto, os punhos e as correntes, com três pixels de margem. Foram recuperados 14 pixels de altura no primeiro quadro e 22 no segundo, além dos detalhes laterais que ficavam fora do recorte anterior. O ponto de apoio das botas foi recalculado para os dois quadros, mantendo o chefe no chão ao mudar de animação, virar de lado ou usar as escalas maiores do anel e dos canhões.
+
+A correção reutiliza a imagem original integralmente; nenhuma das 405 imagens do jogo foi alterada ou gerada novamente. Validação: 26 verificações de dano real, recortes, dimensões, ambos os lados, três escalas e retorno à pose normal; execução Vulkan com quatro capturas, totalizando 30 verificações. As 64 verificações da regressão completa do Submundo também passaram. Testes usam APPDATA isolado; saves reais não foram lidos nem alterados.
+
+
+## Entradas refinadas de Urus e Triple H (v67)
+
+As duas apresentações agora possuem encenação própria, com cenário opaco, movimento suave de aproximação, nomes estilizados, falas em duas etapas com revelação gradual e transições de abertura/encerramento. A duração passou para 8,2 segundos para dar tempo de ler o desafio e a resposta de Nico. Enter, E ou Esc continuam pulando a cena depois dos primeiros 0,35 s.
+
+Urus entra em voo rasante, passa diante de Nico e volta a pairar acima da praia. Uma sombra acompanha o voo, o mar tem movimento discreto e um canhão aparece no primeiro plano. Os sons das asas e da apresentação seguem os momentos da ação. Todas as poses de asas abertas cabem dentro do enquadramento principal. Triple H corre, prepara o salto, aterrissa no ringue com poeira, tremor e oscilação das cordas, provoca Nico e assume a guarda. O quadro invertido do início do salto foi corrigido para manter a direção do olhar. Passos, impacto e sino acompanham a entrada. Nico responde olhando para o chefe, sem receber dano fictício.
+
+As imagens existentes foram reutilizadas, mantendo a proporção e o alinhamento dos pés. As 405 imagens do projeto permanecem intactas. A encenação usa atores próprios; posições, vida e câmera da jogabilidade não são modificadas. Durante a apresentação, as HUDs ficam ocultas, o combate e o cronômetro param e a música continua. Ao terminar, pular ou remover a cena, os estados anteriores são restaurados.
+
+Validação: 41 verificações de encenação, falas, sons únicos, orientação, música, HUD, término e remoção; execução Vulkan com sete capturas, totalizando 48 verificações. Regressões: 17 verificações de Urus e 51 da luta completa de Triple H, incluindo os três trampolins finais e o resgate de Remi. Testes usam APPDATA isolado; saves reais não foram lidos ou alterados.
+
+
+## Laboratório dos Executivos — resgate de Urso (v68)
+
+A quinta ilha continua diretamente após a fuga do Submundo. Urso continua sendo o urso-pardo da Coleção; a tartaruga idosa permanece resgatada na praia. A fase tem quatro setores: recepção e segurança, experimentação, fábrica de modificações e pesquisa avançada. Cartão de acesso, portas, câmeras bloqueadas por caixas, lasers previsíveis, alavancas, esteiras reversíveis, braços com plataformas e prensas compõem o percurso. Dez checkpoints dividem a travessia; Oliver recebe Nico na entrada.
+
+Os líquidos verdes são perigosos, os roxos funcionam como trampolins e os azuis alteram a aderência. GELO solidifica vazamentos e pausa máquinas; FOGO no líquido congelado cria um impulso de pressão. Tanques quebrados liberam cobaias. Os quatro novos inimigos possuem animações: cobaia saltadora, drone de contenção, técnico com rede e lagarto com ataque de língua. Nico mantém os poderes já aprendidos no santuário da ilha anterior.
+
+Largato é o cientista híbrido de gato e lagarto, com jaleco, óculos e seringa exagerada. Na primeira etapa, alterne esquivas de cauda, saltos e disparos com ataques nas recuperações. Na segunda, FOGO no terminal esquerdo e GELO no direito estabilizam a máquina e fazem a plataforma do chefe descer; cada abertura aceita um ponto de dano. A inundação deixa as bordas seguras, os impactos têm aviso e plataformas oferecem alternativas. Na última dose, aqueça e resfrie o injetor e use E para inverter o equipamento. F arremessa as três doses LG-17; é possível voltar ao injetor para recarregar após errar. O soro afeta especificamente o enxerto experimental do próprio Largato.
+
+A derrota tem uma cutscene de derretimento cartunesco, com pernas e cauda virando gosma, jaleco suspenso e óculos caindo. Só depois disso a câmara de Urso abre. E junto dele confirma o resgate e mostra o encerramento. Há música sintetizada própria para exploração e combate, efeitos de máquinas e silêncio no último momento da derrota.
+
+A campanha, o botão Continuar, a Coleção e o modo livre agora incluem cinco ilhas. Saves anteriores preservam saldo, equipamentos, resultados e histórico de cerejas, e continuam no laboratório após concluir o Submundo. O modo livre exige concluir também o laboratório; cerejas da quinta ilha usam identificadores persistentes para impedir coletas duplicadas.
+
+Arte: cinco spritesheets/cenários criados com imagegen integrado, em world/Arte/Lab/V68. Os PNGs originais e sua transparência foram preservados integralmente; a integração usa recortes AtlasTexture e máscaras nativas de renderização para separar os poucos limites sobrepostos da folha. PROMPTS.txt registra os prompts e regions.json os recortes e hashes. Todas as 405 imagens anteriores permanecem intactas. Testes usam APPDATA dedicado, sem ler ou alterar saves reais.
+
+
+## Leitura do laboratório e correções de Largato (v69)
+
+As cerejas do percurso agora ficam 17 pixels mais baixas, permitindo coleta ao caminhar. As cerejas das plataformas foram alinhadas à altura de Nico ao pousar. A cereja que ficava dentro da caixa de cobertura foi colocada sobre ela, e sua colisão passou a acompanhar a altura visível. Os identificadores das cerejas permanecem iguais, preservando o histórico do modo livre e o saldo.
+
+Somente os painéis do fundo recebem desfoque leve, menor saturação e contraste. Piso, plataformas, personagens, máquinas e HUD continuam nítidos. As alavancas possuem estados à direita, vertical e à esquerda, com uma transição curta por interação. Terminais e injetor agora exibem sprites diferentes para espera, aquecimento, resfriamento e doses disponíveis.
+
+Os quatro tipos de inimigos ganharam 24 poses novas. Os ataques têm um segundo de antecipação, mantêm a direção anunciada e só disparam depois de iniciar a animação. Há poses próprias de recuperação e dano; o lagarto avisa o ataque com a garganta inflada e não acerta pelas costas. O congelamento e as derrotas continuam funcionando.
+
+A câmera da arena acompanha Nico dentro de limites seguros, em vez de deixar a entrada fora da tela. O início do combate reposiciona Nico com segurança, e o reinício restaura seu enquadramento. Nico é desenhado à frente das máquinas. Largato se desloca suavemente entre etapas, marca a direção da cauda e concede uma janela maior na descida. A inundação alterna aviso, perigo e intervalo seguro; GELO a desativa. Seringas lançadas dentro da colisão do chefe agora registram o acerto. Reiniciar elimina os projéteis e as poças temporárias do chefe.
+
+Arte: duas novas spritesheets geradas pelo imagegen integrado, enemy_actions.png e device_states.png, em world/Arte/Lab/V69. Os PNGs e sua transparência foram preservados integralmente; recortes e exclusão de poses vizinhas usam AtlasTexture e shader nativos. PROMPTS.txt e regions.json registram os prompts, recortes e hashes. As 410 imagens anteriores permanecem intactas. Todos os testes usam APPDATA isolado e não acessam saves reais.
+
+SALAS DO LABORATÓRIO — v70
+
+E nas portas entra em outro ambiente: recepção, experimentação, fábrica e pesquisa. Cada sala tem paredes, cenário e câmera próprios. Encontre o cartão na recepção para entrar. Use a porta de chegada para voltar ao setor anterior. Os itens coletados e os estados das máquinas continuam salvos durante a visita; as chegadas atualizam o ponto de retorno e a música continua tocando. Durante a luta de Largato, as saídas ficam bloqueadas.
+
+CHEGADA AO LABORATÓRIO — v71
+
+Nico e José chegam montados no Carcereiro. Eles descem e o monstro arrebenta a porta de serviço, com destroços, poeira, rugido e som de impacto. Nico entra, enquanto José e o guardião protegem a saída. A nova cena dura 13,3 segundos e pode ser pulada com E, Enter ou Esc. O tremor respeita a opção da câmera. Saves antigos também mostram a nova chegada uma vez, preservando o progresso e o saldo.
+
+LABORATÓRIO VERTICAL — v72
+
+A fase agora sobe por sete elevadores e patamares até a pesquisa. Pise na plataforma azul para embarcar; ela espera no alto até Nico sair e retorna se você perder a viagem. Siga as cerejas. Primeiro você aprende os elevadores e pega o cartão; no setor seguinte, GELO transforma o veneno verde em ponte por 12 segundos. Depois vêm os inimigos e, em outro setor, a alavanca e a prensa. As instruções aparecem uma de cada vez. Os novos sprites mostram o veneno borbulhando, a crosta de gelo, os impactos e os estados dos elevadores. Checkpoints, saldo e histórico das cerejas continuam preservados.
+
+REVISÃO DE LARGATO — v73
+Os ataques de cauda, seringa e salto têm avisos distintos e mira fixa.
+O HUD identifica o ataque, a recuperação e o estado dos mecanismos.
+Cada abertura aceita um acerto. Os terminais duram 18 segundos.
+Estabilizar FOGO e GELO limpa os perigos do chefe e concede 5,4 segundos
+para a descida e o contra-ataque, sem inundação ou ataques simultâneos.
+Poças e inundação usam os sprites animados de veneno e gelo.
+No final, siga FOGO, GELO e E no injetor; F arremessa as doses LG-17.
+Há um segundo entre arremessos; E no injetor repõe as doses gratuitamente.
+Largato também prepara seus disparos finais e é interrompido pelo soro.
+
+LETREIRO DA CORPORAÇÃO — v74
+A entrada do laboratório ganhou um cartão animado próprio, com escudo
+dourado da corporação, título completo em duas linhas e número da ilha.
+A placa da fachada usa a mesma identidade e identifica a entrada de serviço.
+Texto e emblema permanecem nítidos ao mudar o tamanho da janela.
+
+
+## Laboratório em 3D (v75)
+
+A quinta ilha agora usa cenário, personagens e colisões tridimensionais, com câmera em terceira pessoa. Nico e José chegam montados no Carcereiro; a pancada na porta provoca um tremor na contenção. O lobo da corporação e Largato assistem à eclosão de um experimento e acionam a emergência. A cena pode ser pulada com E, Enter ou Esc e aparece uma vez também nos saves anteriores.
+
+WASD ou setas movem Nico em profundidade. Espaço pula; pressione de novo no ar para um pulo duplo. Soltar o botão encurta o salto. J/X/clique faz um ataque giratório no chão ou no ar. Shift ou Ctrl desliza no chão em movimento e faz uma queda forte no ar. A câmera acompanha o corredor e antecipa o percurso; botão direito e mouse permitem inspecionar o cenário. K lança o elemento, Q alterna fogo e gelo, E interage e I abre a mochila.
+
+A recepção ensina corrida, cartão e elevador. A contenção apresenta uma ponte de veneno que pode ser congelada antes dos primeiros inimigos. A fábrica combina alavanca, esteira, prensa congelável, plataforma móvel e elevador até a cobertura. Portas levam a salas reais e permitem voltar. Trilhos e faixas luminosas indicam apoios; checkpoints recuperam um coração. Há três registros opcionais em rotas laterais.
+
+Largato luta na cobertura do prédio: cauda, seringas e salto com posição anunciada; depois mecanismos de fogo e gelo fazem seu suporte descer; por último, Nico inverte o injetor e arremessa LG-17 com F. Cada abertura aceita um ponto de dano, os terminais duram 18 segundos e há um segundo entre doses. A arena tem cobertura baixa para a inundação e a câmera enquadra os dois combatentes. O derretimento cartunesco precede o resgate de Urso, o urso-pardo.
+
+Oliver, compras, mochila, saldo, resultados e desbloqueio do modo livre usam os sistemas existentes. Os identificadores antigos das cerejas foram mantidos: frutas já coletadas não voltam nem dão saldo repetido no modo livre. As quatro primeiras ilhas continuam com sua jogabilidade 2D.
+
+Arte 3D: 23 cenas nativas editáveis em world/Models/Lab3D, com malhas volumétricas, materiais e personagens articulados com AnimationPlayer. A construção dos modelos fica em world/Scripts/Lab3D/models.gd; tools/rebuild_lab_models.gd reconstrói as cenas. Não são sprites virados para a câmera. Todos os 414 PNGs anteriores foram preservados. A implementação anterior do laboratório está arquivada em world/lab_05_legacy_2d.tscn; a campanha continua usando world/lab_05.tscn. Testes usam APPDATA dedicado e não acessam saves reais.
+
+
+## Modelos 3D refinados (v76)
+
+Os 23 modelos do laboratório foram refinados mantendo seus pivôs, escala, colisões e animações. Nico recebeu orelhas esculpidas, tufos, íris âmbar, detalhes no focinho, cauda contínua com faixas, lenço com dobras e mochila arredondada com aba, bolso, fecho e costuras. José tem chifres curvos, orelhas laterais, barba e cascos divididos; Urso tem orelhas arredondadas e cauda curta; Oliver tem pelagem cinza, orelhas de rato, cauda rosada, colete e calças azuis. Lobo e Largato receberam lapelas, punhos, traços próprios, e Largato também tem bolsos, luvas, escamas e cauda afilada.
+
+O Carcereiro tem placas de pedra sobrepostas, visor, presas, runa em losango, fissuras, grilhões e proteções nas articulações. Seus ombros continuam apoiando Nico e José na chegada. Máquinas, drone, caravana, tanque, alavanca e demais objetos receberam instrumentos, válvulas, tubulações, ferragens e acabamentos. Os nomes dos nós são estáveis e todos os detalhes seguem os pivôs das respectivas partes.
+
+Os módulos character_details.gd, guardian_details.gd e prop_details.gd complementam models.gd. As cenas .tscn continuam editáveis e podem ser reconstruídas por tools/rebuild_lab_models.gd. Caudas e chifres usam malhas contínuas fechadas; o aumento de suavidade foi concentrado nas formas curvas. Nenhum dos 414 PNGs anteriores foi modificado. A progressão, o saldo, os poderes e a batalha mantêm o comportamento da versão anterior.
+
+
+## Laboratório ampliado e transição dimensional (v77)
+
+Três novos setores de 70 metros levam da fábrica à cobertura: arquivo e logística, jardim biotérmico e observatório de segurança. O percurso agora tem sete ambientes, mais que o dobro da extensão anterior, com 10 modelos novos, 24 cerejas adicionais de IDs persistentes e três novos registros opcionais. Os checkpoints e as portas permitem voltar sem perder o estado dos mecanismos.
+
+E pega, solta ou encaixa células de energia. Nico segura a célula com uma pose própria de braços e caminhada; solte-a para atacar ou usar poderes. Morrer ou sair da sala devolve a célula não instalada ao seu lugar seguro. Células encaixadas mantêm portões abertos. FOGO seguido de GELO no relé térmico ergue uma ponte hidráulica sólida de 16 metros. GELO interrompe ventiladores e escâneres; linhas de aviso anunciam os disparos, e cobertura física bloqueia a detecção.
+
+A chegada usa os sprites 2D originais. A pancada do Carcereiro na porta causa interferências e revela a versão 3D; o lobo e Largato presenciam a eclosão. A batalha continua na cobertura. Após o resgate, a realidade se estabiliza e Nico e Urso reaparecem em pixel art 2D antes dos resultados. As cenas podem ser puladas e restauram controles e música corretamente. Nenhum PNG anterior foi alterado.
+
+
+## Controle de plataformas inspirado em Crash (v78)
+
+O laboratório usa corrida a 7,2 m/s, aceleração e frenagem curtas, controle no ar, altura variável de salto, tolerância após sair da borda e comando de pulo antecipado antes do pouso. O pulo duplo pode ser usado uma vez no ar e é restaurado no chão ou ao quicar. O giro atinge ao redor de Nico, com braços abertos, duas voltas visuais, rastro e um acerto por alvo a cada ativação. O movimento aéreo acompanha os comandos do jogador.
+
+Shift/Ctrl desliza por um intervalo curto, com uma cápsula de colisão realmente menor. Nico só volta a ficar em pé quando há espaço. No ar, o mesmo botão prepara uma queda forte com impacto no chão. Dano, portas e checkpoints limpam essas ações para evitar estados presos. Um marcador dourado indica a superfície de pouso sob Nico e desaparece sobre abismos. A câmera fica mais afastada e inclinada, antecipa o corredor e retorna suavemente após uma inspeção com o mouse.
+
+A recepção apresenta uma caixa quebrável, três degraus para experimentar o pulo duplo e uma passagem baixa opcional. Outros setores combinam caixas com os mecanismos existentes. Duas caixas elásticas ajudam a explorar as varandas laterais; elas só lançam Nico quando ele cai sobre a tampa. Novos modelos supply_crate e bounce_crate têm painéis, ferragens, rebites e tampas distintas. O gerador tools/rebuild_lab_models.gd reconstrói os 35 modelos.
+
+Pular sobre inimigos comuns causa dano e faz Nico quicar; o ataque giratório oferece outra opção. Largato mantém suas três etapas, sinais de ataque e limite de um ponto por abertura. Baterias ocupam as mãos, reduzem a corrida e permitem apenas o pulo simples. As caixas quebradas ficam abertas durante a visita e não geram saldo; as 84 cerejas conservam seus identificadores e a regra do modo livre. Algumas cerejas existentes foram posicionadas sobre os degraus para guiar a rota opcional.
+
+A chegada em 2D, a mudança para 3D após a pancada na porta e o encerramento em 2D continuam integrados à campanha. Os controles das quatro primeiras ilhas são preservados.
+
+
+## Cartões de sala e enigmas (v79)
+
+O cartão da recepção continua abrindo a primeira porta. Três outras saídas exigem cartões próprios, visíveis em dispensadores travados. O nome do acesso aparece na porta e a HUD mostra CRIO, ARQ e BIO; texto, símbolos e cores distinguem os cartões. O enigma libera o dispensador, e Nico precisa se aproximar para recolher o cartão. As portas de retorno permanecem disponíveis.
+
+- Contenção / CRIO: congele o vazamento químico com GELO e salte sobre o botão elevado à direita. A refrigeração precisa estar ativa no momento do pouso.
+- Arquivo / ARQ: instale a bateria e use o GIRO nos contatos na ordem indicada na placa: III, I, II. Errar reinicia a sequência e mantém a bateria instalada.
+- Biotermia / BIO: estabilize o relé com FOGO seguido de GELO, atravesse a ponte e congele o ventilador. Use PULO DUPLO para aterrissar no botão elevado enquanto o rotor estiver parado.
+
+Os botões reconhecem um pouso sobre a superfície: correr pela lateral ou usar giro não os ativa. Tubos luminosos indicam quando há energia/refrigeração. Cada contato gira e acende ao confirmar a ordem. Novos modelos card_dispenser, puzzle_plate e spin_fuse são editáveis, reutilizados nas salas e reconstruídos pelo gerador, totalizando 38 modelos nativos.
+
+Enigmas resolvidos e cartões recolhidos ficam salvos na campanha. Ao carregar, os circuitos correspondentes são restaurados, evitando portões ou pontes bloqueados. Morrer e voltar às salas não remove os cartões. No modo livre, cada nova visita à fase reinicia os enigmas, mas conserva o acesso conquistado durante a visita. Os cartões não criam cerejas, não alteram o equipamento e não usam novos identificadores de frutas. Saves anteriores continuam compatíveis.
+
+HUD elemental v80: ícones de fogo e gelo, seleção com Q, disparo com K,
+recarga real e duração das frutas. Os poderes permanentes não usam contador.
+
+Modelos v81: Nico e Largato usam os GLB fornecidos no laboratório 3D, com
+texturas preservadas, rigs de 18 ossos e animações procedurais de jogo/cutscene.

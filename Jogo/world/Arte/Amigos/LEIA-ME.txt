@@ -1,0 +1,19 @@
+ARARA MINAS E OS AMIGOS
+
+Artes criadas com a ferramenta integrada imagegen e exportadas por recorte e redução por vizinho mais próximo, preservando o RGBA gerado.
+
+Arara Minas: seis PNGs 64x64, olhando à direita.
+- arara_idle_1 e arara_idle_2: espera/piscada, pés em torno do pixel56.
+- arara_fly_1 a arara_fly_4: ciclo de voo.
+- arara_minas.tres: SpriteFrames com animações idle e fly.
+
+Outros amigos: quadros 48x48, pés na última linha.
+- remi.png e remi_2.png.
+- jose.png e jose_2.png.
+- urso.png e urso_2.png.
+- mico_leao_dourado.png e mico_leao_dourado_2.png.
+- Cada personagem possui um .tres com as duas poses em idle.
+
+As animações .tres podem ser atribuídas à propriedade sprite_frames de um AnimatedSprite2D. Para o recorte de pixel art usado pelo jogo, atribua um ShaderMaterial com world/Scripts/characters_cutout.gdshader ao CanvasItem do personagem. Esse material mantém as cores e corta os pixels de baixa opacidade do fundo gerado. A abertura e a cutscene já fazem essa configuração.
+
+Os amigos aparecem na abertura e no plano de resgate da cutscene final. Arara também pousa na varanda e voa com Nico entre as ilhas. As posições e escalas da apresentação ficam em island_finale.gd.

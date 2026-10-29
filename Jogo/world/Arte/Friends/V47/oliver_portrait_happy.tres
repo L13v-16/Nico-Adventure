@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/oliver.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(1149, 820, 244, 216)
+filter_clip = true
+margin = Rect2(2.5, 4, 5, 4)

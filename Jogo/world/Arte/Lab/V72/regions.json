@@ -1,0 +1,413 @@
+{
+  "method": "Built-in image_gen with transparent_background=true. Original RGBA bytes preserved. Pillow/NumPy used only for read-only alpha analysis; native AtlasTexture regions/margins align animation frames and contact surfaces.",
+  "files": {
+    "effects.png": {
+      "sha256": "4713afd4c1546b80ec6f3f9cb6d05f1ed393287ab428df73af8d98548f53070d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        253
+      ]
+    },
+    "elevators.png": {
+      "sha256": "a0cad449f8f62132f3a1622c31ab2dfc5693e5d183bfd0a81fc8c54c87f28ced",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        254
+      ]
+    }
+  },
+  "regions": {
+    "effect_00": {
+      "region": [
+        32,
+        154,
+        349,
+        90
+      ],
+      "margin": [
+        4.0,
+        66,
+        8,
+        76
+      ],
+      "surface_y": 96,
+      "visible_width": 349
+    },
+    "effect_01": {
+      "region": [
+        410,
+        137,
+        344,
+        112
+      ],
+      "margin": [
+        6.5,
+        50,
+        13,
+        54
+      ],
+      "surface_y": 96,
+      "visible_width": 349
+    },
+    "effect_02": {
+      "region": [
+        783,
+        91,
+        347,
+        157
+      ],
+      "margin": [
+        5.0,
+        4,
+        10,
+        9
+      ],
+      "surface_y": 96,
+      "visible_width": 349
+    },
+    "effect_03": {
+      "region": [
+        1160,
+        137,
+        346,
+        110
+      ],
+      "margin": [
+        5.5,
+        49,
+        11,
+        56
+      ],
+      "surface_y": 96,
+      "visible_width": 349
+    },
+    "effect_04": {
+      "region": [
+        32,
+        354,
+        349,
+        108
+      ],
+      "margin": [
+        4.0,
+        19,
+        8,
+        23
+      ],
+      "surface_y": 27,
+      "visible_width": 349
+    },
+    "effect_05": {
+      "region": [
+        408,
+        340,
+        347,
+        122
+      ],
+      "margin": [
+        5.0,
+        4,
+        10,
+        9
+      ],
+      "surface_y": 27,
+      "visible_width": 349
+    },
+    "effect_06": {
+      "region": [
+        783,
+        341,
+        345,
+        123
+      ],
+      "margin": [
+        6.0,
+        4,
+        12,
+        8
+      ],
+      "surface_y": 27,
+      "visible_width": 349
+    },
+    "effect_07": {
+      "region": [
+        1159,
+        343,
+        346,
+        115
+      ],
+      "margin": [
+        5.5,
+        7,
+        11,
+        16
+      ],
+      "surface_y": 27,
+      "visible_width": 349
+    },
+    "effect_08": {
+      "region": [
+        115,
+        573,
+        174,
+        151
+      ],
+      "margin": [
+        78.0,
+        53,
+        156,
+        105
+      ],
+      "surface_y": 128,
+      "visible_width": 322
+    },
+    "effect_09": {
+      "region": [
+        425,
+        523,
+        299,
+        199
+      ],
+      "margin": [
+        15.5,
+        29,
+        31,
+        57
+      ],
+      "surface_y": 128,
+      "visible_width": 322
+    },
+    "effect_10": {
+      "region": [
+        797,
+        506,
+        322,
+        248
+      ],
+      "margin": [
+        4.0,
+        4,
+        8,
+        8
+      ],
+      "surface_y": 128,
+      "visible_width": 322
+    },
+    "effect_11": {
+      "region": [
+        1197,
+        557,
+        273,
+        184
+      ],
+      "margin": [
+        28.5,
+        36,
+        57,
+        72
+      ],
+      "surface_y": 128,
+      "visible_width": 322
+    },
+    "effect_12": {
+      "region": [
+        119,
+        837,
+        175,
+        130
+      ],
+      "margin": [
+        61.5,
+        42,
+        123,
+        85
+      ],
+      "surface_y": 107,
+      "visible_width": 290
+    },
+    "effect_13": {
+      "region": [
+        422,
+        774,
+        290,
+        207
+      ],
+      "margin": [
+        4.0,
+        4,
+        8,
+        8
+      ],
+      "surface_y": 107,
+      "visible_width": 290
+    },
+    "effect_14": {
+      "region": [
+        806,
+        798,
+        279,
+        183
+      ],
+      "margin": [
+        9.5,
+        16,
+        19,
+        32
+      ],
+      "surface_y": 107,
+      "visible_width": 290
+    },
+    "effect_15": {
+      "region": [
+        1213,
+        813,
+        217,
+        168
+      ],
+      "margin": [
+        40.5,
+        23,
+        81,
+        47
+      ],
+      "surface_y": 107,
+      "visible_width": 290
+    },
+    "lift_00": {
+      "region": [
+        15,
+        264,
+        366,
+        209
+      ],
+      "margin": [
+        4.0,
+        4,
+        8,
+        8
+      ],
+      "surface_y": 6,
+      "visible_width": 366
+    },
+    "lift_01": {
+      "region": [
+        399,
+        264,
+        361,
+        209
+      ],
+      "margin": [
+        6.5,
+        4,
+        13,
+        8
+      ],
+      "surface_y": 6,
+      "visible_width": 366
+    },
+    "lift_02": {
+      "region": [
+        778,
+        264,
+        360,
+        209
+      ],
+      "margin": [
+        7.0,
+        4,
+        14,
+        8
+      ],
+      "surface_y": 6,
+      "visible_width": 366
+    },
+    "lift_03": {
+      "region": [
+        1156,
+        264,
+        364,
+        209
+      ],
+      "margin": [
+        5.0,
+        4,
+        10,
+        8
+      ],
+      "surface_y": 6,
+      "visible_width": 366
+    },
+    "sign_00": {
+      "region": [
+        31,
+        615,
+        324,
+        304
+      ],
+      "margin": [
+        4.5,
+        5,
+        9,
+        9
+      ],
+      "surface_y": 309,
+      "visible_width": 325
+    },
+    "sign_01": {
+      "region": [
+        413,
+        615,
+        325,
+        304
+      ],
+      "margin": [
+        4.0,
+        5,
+        8,
+        9
+      ],
+      "surface_y": 309,
+      "visible_width": 325
+    },
+    "sign_02": {
+      "region": [
+        798,
+        615,
+        325,
+        305
+      ],
+      "margin": [
+        4.0,
+        4,
+        8,
+        8
+      ],
+      "surface_y": 309,
+      "visible_width": 325
+    },
+    "sign_03": {
+      "region": [
+        1180,
+        615,
+        325,
+        304
+      ],
+      "margin": [
+        4.0,
+        5,
+        8,
+        9
+      ],
+      "surface_y": 309,
+      "visible_width": 325
+    }
+  }
+}

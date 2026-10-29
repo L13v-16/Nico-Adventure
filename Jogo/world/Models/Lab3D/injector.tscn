@@ -1,0 +1,783 @@
+[gd_scene format=4]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rh3ih"]
+albedo_color = Color(0.14901961, 0.22352941, 0.29803923, 1)
+metallic = 0.4
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_ns6d1"]
+size = Vector3(1.5, 0.3, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pc26v"]
+albedo_color = Color(0.75686276, 0.78431374, 0.7490196, 1)
+metallic = 0.3
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_dcoyo"]
+size = Vector3(1.05, 1, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb4o7"]
+albedo_color = Color(0.7254902, 0.8627451, 0.5176471, 1)
+roughness = 0.68
+emission_enabled = true
+emission = Color(0.7254902, 0.8627451, 0.5176471, 1)
+emission_energy_multiplier = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_kll7s"]
+size = Vector3(0.74, 0.43, 0.04)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j4jv0"]
+albedo_color = Color(0.7254902, 0.8627451, 0.5176471, 1)
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xyk7b"]
+top_radius = 0.08
+bottom_radius = 0.08
+height = 0.23
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6fvpd"]
+top_radius = 0.22
+bottom_radius = 0.22
+height = 1.6
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4ytwk"]
+top_radius = 0.22
+bottom_radius = 0.22
+height = 1.6
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wyp7p"]
+albedo_color = Color(0.34509805, 0.4392157, 0.47058824, 1)
+metallic = 0.25
+roughness = 0.68
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xiwlf"]
+_surfaces = [{
+"aabb": AABB(-0.77, -0.05, -0.615, 1.54, 0.1, 1.23),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 132,
+"vertex_data": PackedByteArray("uB5Fv5DCdbzhehS/uB5Fv5DCdTzhehS/uB5Fv5DCdTzhehQ/uB5Fv5DCdbzhehS/uB5Fv5DCdTzhehQ/uB5Fv5DCdbzhehQ/uB5FP5DCdbzhehS/uB5FP5DCdTzhehQ/uB5FP5DCdTzhehS/uB5FP5DCdbzhehS/uB5FP5DCdbzhehQ/uB5FP5DCdTzhehQ/9Sg8v83MTL3hehS/9Sg8v83MTL3hehQ/9Sg8P83MTL3hehQ/9Sg8v83MTL3hehS/9Sg8P83MTL3hehQ/9Sg8P83MTL3hehS/9Sg8v83MTD3hehS/9Sg8P83MTD3hehQ/9Sg8v83MTD3hehQ/9Sg8v83MTD3hehS/9Sg8P83MTD3hehS/9Sg8P83MTD3hehQ/9Sg8v5DCdbykcB2/9Sg8P5DCdbykcB2/9Sg8P5DCdTykcB2/9Sg8v5DCdbykcB2/9Sg8P5DCdTykcB2/9Sg8v5DCdTykcB2/9Sg8v5DCdbykcB0/9Sg8P5DCdTykcB0/9Sg8P5DCdbykcB0/9Sg8v5DCdbykcB0/9Sg8v5DCdTykcB0/9Sg8P5DCdTykcB0/uB5Fv5DCdbzhehS/uB5Fv5DCdbzhehQ/9Sg8v83MTL3hehQ/uB5Fv5DCdbzhehS/9Sg8v83MTL3hehQ/9Sg8v83MTL3hehS/uB5Fv5DCdTzhehS/9Sg8v83MTD3hehQ/uB5Fv5DCdTzhehQ/uB5Fv5DCdTzhehS/9Sg8v83MTD3hehS/9Sg8v83MTD3hehQ/uB5FP5DCdbzhehS/9Sg8P83MTL3hehQ/uB5FP5DCdbzhehQ/uB5FP5DCdbzhehS/9Sg8P83MTL3hehS/9Sg8P83MTL3hehQ/uB5FP5DCdTzhehS/uB5FP5DCdTzhehQ/9Sg8P83MTD3hehQ/uB5FP5DCdTzhehS/9Sg8P83MTD3hehQ/9Sg8P83MTD3hehS/uB5Fv5DCdbzhehS/9Sg8v5DCdTykcB2/uB5Fv5DCdTzhehS/uB5Fv5DCdbzhehS/9Sg8v5DCdbykcB2/9Sg8v5DCdTykcB2/uB5Fv5DCdbzhehQ/uB5Fv5DCdTzhehQ/9Sg8v5DCdTykcB0/uB5Fv5DCdbzhehQ/9Sg8v5DCdTykcB0/9Sg8v5DCdbykcB0/uB5FP5DCdbzhehS/uB5FP5DCdTzhehS/9Sg8P5DCdTykcB2/uB5FP5DCdbzhehS/9Sg8P5DCdTykcB2/9Sg8P5DCdbykcB2/uB5FP5DCdbzhehQ/9Sg8P5DCdTykcB0/uB5FP5DCdTzhehQ/uB5FP5DCdbzhehQ/9Sg8P5DCdbykcB0/9Sg8P5DCdTykcB0/9Sg8v83MTL3hehS/9Sg8P83MTL3hehS/9Sg8P5DCdbykcB2/9Sg8v83MTL3hehS/9Sg8P5DCdbykcB2/9Sg8v5DCdbykcB2/9Sg8v83MTL3hehQ/9Sg8P5DCdbykcB0/9Sg8P83MTL3hehQ/9Sg8v83MTL3hehQ/9Sg8v5DCdbykcB0/9Sg8P5DCdbykcB0/9Sg8v83MTD3hehS/9Sg8P5DCdTykcB2/9Sg8P83MTD3hehS/9Sg8v83MTD3hehS/9Sg8v5DCdTykcB2/9Sg8P5DCdTykcB2/9Sg8v83MTD3hehQ/9Sg8P83MTD3hehQ/9Sg8P5DCdTykcB0/9Sg8v83MTD3hehQ/9Sg8P5DCdTykcB0/9Sg8v5DCdTykcB0/uB5Fv5DCdbzhehS/9Sg8v83MTL3hehS/9Sg8v5DCdbykcB2/uB5Fv5DCdbzhehQ/9Sg8v5DCdbykcB0/9Sg8v83MTL3hehQ/uB5Fv5DCdTzhehS/9Sg8v5DCdTykcB2/9Sg8v83MTD3hehS/uB5Fv5DCdTzhehQ/9Sg8v83MTD3hehQ/9Sg8v5DCdTykcB0/uB5FP5DCdbzhehS/9Sg8P5DCdbykcB2/9Sg8P83MTL3hehS/uB5FP5DCdbzhehQ/9Sg8P83MTL3hehQ/9Sg8P5DCdbykcB0/uB5FP5DCdTzhehS/9Sg8P83MTD3hehS/9Sg8P5DCdTykcB2/uB5FP5DCdTzhehQ/9Sg8P5DCdTykcB0/9Sg8P83MTD3hehQ/AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+///////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//v1RVqar/P/+/VFWpqv8//79UVamq/z//v1RVqar/P/+/VFWpqv8//79UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/7//v1RVVNX/v/+/VFVU1f+//79UVVTVAAD/v1RVqaoAAP+/VFWpqgAA/79UVamqAAD/v1RVqaoAAP+/VFWpqgAA/79UVamq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq/7//f1RVqar/v/9/VFWpqv+//39UVamq/7//f1RVqar/v/9/VFWpqv+//39UVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/3//v1RVqar/f/+/VFWpqv9//79UVamq/3//v1RVqar/f/+/VFWpqv9//79UVamqqiqqKv8//7+qKqoq/z//v6oqqir/P/+/VFVUVQAAAIBUVVRVAAAAgFRVVFUAAACAqipU1f8//5+qKlTV/z//n6oqVNX/P/+fVFWqqv9//59UVaqq/3//n1RVqqr/f/+fVNWqKv9//59U1aoq/3//n1TVqir/f/+fqqpUVf8//5+qqlRV/z//n6qqVFX/P/+fVNVU1QAAAIBU1VTVAAAAgFTVVNUAAACAqqqqqv8//7+qqqqq/z//v6qqqqr/P/+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lp5k"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+metallic = 0.4
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_h5sc8"]
+size = Vector3(0.055, 0.51, 0.055)
+
+[sub_resource type="BoxMesh" id="BoxMesh_373jt"]
+size = Vector3(0.055, 0.51, 0.055)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q4ve7"]
+size = Vector3(0.89, 0.055, 0.055)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p8drd"]
+size = Vector3(0.89, 0.055, 0.055)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqq13"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+metallic = 0.5
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1bnwq"]
+top_radius = 0.14
+bottom_radius = 0.14
+height = 0.065
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbi48"]
+albedo_color = Color(0.8666667, 0.84705883, 0.73333335, 1)
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ep40s"]
+top_radius = 0.112
+bottom_radius = 0.112
+height = 0.015
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygjcv"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_b023j"]
+size = Vector3(0.016, 0.028, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_whbxi"]
+size = Vector3(0.016, 0.028, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s30eh"]
+size = Vector3(0.016, 0.028, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ublml"]
+size = Vector3(0.016, 0.028, 0.008)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4oqk6"]
+size = Vector3(0.016, 0.028, 0.008)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xic4e"]
+albedo_color = Color(0.6901961, 0.84313726, 0.5411765, 1)
+metallic = 0.35
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lxfva"]
+top_radius = 0.011
+bottom_radius = 0.011
+height = 0.07441102
+radial_segments = 12
+rings = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_4y48l"]
+radial_segments = 20
+rings = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_piy17"]
+albedo_color = Color(0.6901961, 0.84313726, 0.5411765, 1)
+metallic = 0.2
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2xfqv"]
+top_radius = 0.065
+bottom_radius = 0.065
+height = 0.055
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_npifu"]
+top_radius = 0.065
+bottom_radius = 0.065
+height = 0.055
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5uw6"]
+albedo_color = Color(0.8117647, 0.6431373, 0.3647059, 1)
+metallic = 0.55
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7dv4t"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk246"]
+size = Vector3(0.048, 0.008, 0.0088)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1bskv"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_flps3"]
+size = Vector3(0.048, 0.008, 0.0088)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ao3vy"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_xl5dc"]
+size = Vector3(0.048, 0.008, 0.0088)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0jpok"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_0p41j"]
+size = Vector3(0.048, 0.008, 0.0088)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vwgmk"]
+albedo_color = Color(0.8117647, 0.6431373, 0.3647059, 1)
+roughness = 0.68
+
+[sub_resource type="BoxMesh" id="BoxMesh_8gv16"]
+size = Vector3(0.12, 0.13, 0.022)
+
+[sub_resource type="BoxMesh" id="BoxMesh_63lr2"]
+size = Vector3(0.12, 0.13, 0.022)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qt5q0"]
+size = Vector3(0.12, 0.13, 0.022)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oyjb7"]
+size = Vector3(0.12, 0.13, 0.022)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_omdt0"]
+albedo_color = Color(0.36078432, 0.46666667, 0.49019608, 1)
+metallic = 0.25
+roughness = 0.68
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g1lsh"]
+_surfaces = [{
+"aabb": AABB(-0.0275, -0.3, -0.275, 0.055, 0.6, 0.55),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 132,
+"vertex_data": PackedByteArray("rkfhvHe+j76q8YK+rkfhvHe+jz6q8YK+rkfhvHe+jz6q8YI+rkfhvHe+j76q8YK+rkfhvHe+jz6q8YI+rkfhvHe+j76q8YI+rkfhPHe+j76q8YK+rkfhPHe+jz6q8YI+rkfhPHe+jz6q8YK+rkfhPHe+j76q8YK+rkfhPHe+j76q8YI+rkfhPHe+jz6q8YI+AisHvJqZmb6q8YK+AisHvJqZmb6q8YI+AisHPJqZmb6q8YI+AisHvJqZmb6q8YK+AisHPJqZmb6q8YI+AisHPJqZmb6q8YK+AisHvJqZmT6q8YK+AisHPJqZmT6q8YI+AisHvJqZmT6q8YI+AisHvJqZmT6q8YK+AisHPJqZmT6q8YK+AisHPJqZmT6q8YI+AisHvHe+j77NzIy+AisHPHe+j77NzIy+AisHPHe+jz7NzIy+AisHvHe+j77NzIy+AisHPHe+jz7NzIy+AisHvHe+jz7NzIy+AisHvHe+j77NzIw+AisHPHe+jz7NzIw+AisHPHe+j77NzIw+AisHvHe+j77NzIw+AisHvHe+jz7NzIw+AisHPHe+jz7NzIw+rkfhvHe+j76q8YK+rkfhvHe+j76q8YI+AisHvJqZmb6q8YI+rkfhvHe+j76q8YK+AisHvJqZmb6q8YI+AisHvJqZmb6q8YK+rkfhvHe+jz6q8YK+AisHvJqZmT6q8YI+rkfhvHe+jz6q8YI+rkfhvHe+jz6q8YK+AisHvJqZmT6q8YK+AisHvJqZmT6q8YI+rkfhPHe+j76q8YK+AisHPJqZmb6q8YI+rkfhPHe+j76q8YI+rkfhPHe+j76q8YK+AisHPJqZmb6q8YK+AisHPJqZmb6q8YI+rkfhPHe+jz6q8YK+rkfhPHe+jz6q8YI+AisHPJqZmT6q8YI+rkfhPHe+jz6q8YK+AisHPJqZmT6q8YI+AisHPJqZmT6q8YK+rkfhvHe+j76q8YK+AisHvHe+jz7NzIy+rkfhvHe+jz6q8YK+rkfhvHe+j76q8YK+AisHvHe+j77NzIy+AisHvHe+jz7NzIy+rkfhvHe+j76q8YI+rkfhvHe+jz6q8YI+AisHvHe+jz7NzIw+rkfhvHe+j76q8YI+AisHvHe+jz7NzIw+AisHvHe+j77NzIw+rkfhPHe+j76q8YK+rkfhPHe+jz6q8YK+AisHPHe+jz7NzIy+rkfhPHe+j76q8YK+AisHPHe+jz7NzIy+AisHPHe+j77NzIy+rkfhPHe+j76q8YI+AisHPHe+jz7NzIw+rkfhPHe+jz6q8YI+rkfhPHe+j76q8YI+AisHPHe+j77NzIw+AisHPHe+jz7NzIw+AisHvJqZmb6q8YK+AisHPJqZmb6q8YK+AisHPHe+j77NzIy+AisHvJqZmb6q8YK+AisHPHe+j77NzIy+AisHvHe+j77NzIy+AisHvJqZmb6q8YI+AisHPHe+j77NzIw+AisHPJqZmb6q8YI+AisHvJqZmb6q8YI+AisHvHe+j77NzIw+AisHPHe+j77NzIw+AisHvJqZmT6q8YK+AisHPHe+jz7NzIy+AisHPJqZmT6q8YK+AisHvJqZmT6q8YK+AisHvHe+jz7NzIy+AisHPHe+jz7NzIy+AisHvJqZmT6q8YI+AisHPJqZmT6q8YI+AisHPHe+jz7NzIw+AisHvJqZmT6q8YI+AisHPHe+jz7NzIw+AisHvHe+jz7NzIw+rkfhvHe+j76q8YK+AisHvJqZmb6q8YK+AisHvHe+j77NzIy+rkfhvHe+j76q8YI+AisHvHe+j77NzIw+AisHvJqZmb6q8YI+rkfhvHe+jz6q8YK+AisHvHe+jz7NzIy+AisHvJqZmT6q8YK+rkfhvHe+jz6q8YI+AisHvJqZmT6q8YI+AisHvHe+jz7NzIw+rkfhPHe+j76q8YK+AisHPHe+j77NzIy+AisHPJqZmb6q8YK+rkfhPHe+j76q8YI+AisHPJqZmb6q8YI+AisHPHe+j77NzIw+rkfhPHe+jz6q8YK+AisHPJqZmT6q8YK+AisHPHe+jz7NzIy+rkfhPHe+jz6q8YI+AisHPHe+jz7NzIw+AisHPJqZmT6q8YI+AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+///////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//v1RVqar/P/+/VFWpqv8//79UVamq/z//v1RVqar/P/+/VFWpqv8//79UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/7//v1RVVNX/v/+/VFVU1f+//79UVVTVAAD/v1RVqaoAAP+/VFWpqgAA/79UVamqAAD/v1RVqaoAAP+/VFWpqgAA/79UVamq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq/7//f1RVqar/v/9/VFWpqv+//39UVamq/7//f1RVqar/v/9/VFWpqv+//39UVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/3//v1RVqar/f/+/VFWpqv9//79UVamq/3//v1RVqar/f/+/VFWpqv9//79UVamqqiqqKv8//7+qKqoq/z//v6oqqir/P/+/VFVUVQAAAIBUVVRVAAAAgFRVVFUAAACAqipU1f8//5+qKlTV/z//n6oqVNX/P/+fVFWqqv9//59UVaqq/3//n1RVqqr/f/+fVNWqKv9//59U1aoq/3//n1TVqir/f/+fqqpUVf8//5+qqlRV/z//n6qqVFX/P/+fVNVU1QAAAIBU1VTVAAAAgFTVVNUAAACAqqqqqv8//7+qqqqq/z//v6qqqqr/P/+/")
+}]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yvojj"]
+size = Vector3(0.025, 0.035, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wyos"]
+size = Vector3(0.025, 0.035, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_03sgh"]
+size = Vector3(0.025, 0.035, 0.34)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hymcm"]
+_surfaces = [{
+"aabb": AABB(-0.0275, -0.3, -0.275, 0.055, 0.6, 0.55),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 132,
+"vertex_data": PackedByteArray("rkfhvHe+j76q8YK+rkfhvHe+jz6q8YK+rkfhvHe+jz6q8YI+rkfhvHe+j76q8YK+rkfhvHe+jz6q8YI+rkfhvHe+j76q8YI+rkfhPHe+j76q8YK+rkfhPHe+jz6q8YI+rkfhPHe+jz6q8YK+rkfhPHe+j76q8YK+rkfhPHe+j76q8YI+rkfhPHe+jz6q8YI+AisHvJqZmb6q8YK+AisHvJqZmb6q8YI+AisHPJqZmb6q8YI+AisHvJqZmb6q8YK+AisHPJqZmb6q8YI+AisHPJqZmb6q8YK+AisHvJqZmT6q8YK+AisHPJqZmT6q8YI+AisHvJqZmT6q8YI+AisHvJqZmT6q8YK+AisHPJqZmT6q8YK+AisHPJqZmT6q8YI+AisHvHe+j77NzIy+AisHPHe+j77NzIy+AisHPHe+jz7NzIy+AisHvHe+j77NzIy+AisHPHe+jz7NzIy+AisHvHe+jz7NzIy+AisHvHe+j77NzIw+AisHPHe+jz7NzIw+AisHPHe+j77NzIw+AisHvHe+j77NzIw+AisHvHe+jz7NzIw+AisHPHe+jz7NzIw+rkfhvHe+j76q8YK+rkfhvHe+j76q8YI+AisHvJqZmb6q8YI+rkfhvHe+j76q8YK+AisHvJqZmb6q8YI+AisHvJqZmb6q8YK+rkfhvHe+jz6q8YK+AisHvJqZmT6q8YI+rkfhvHe+jz6q8YI+rkfhvHe+jz6q8YK+AisHvJqZmT6q8YK+AisHvJqZmT6q8YI+rkfhPHe+j76q8YK+AisHPJqZmb6q8YI+rkfhPHe+j76q8YI+rkfhPHe+j76q8YK+AisHPJqZmb6q8YK+AisHPJqZmb6q8YI+rkfhPHe+jz6q8YK+rkfhPHe+jz6q8YI+AisHPJqZmT6q8YI+rkfhPHe+jz6q8YK+AisHPJqZmT6q8YI+AisHPJqZmT6q8YK+rkfhvHe+j76q8YK+AisHvHe+jz7NzIy+rkfhvHe+jz6q8YK+rkfhvHe+j76q8YK+AisHvHe+j77NzIy+AisHvHe+jz7NzIy+rkfhvHe+j76q8YI+rkfhvHe+jz6q8YI+AisHvHe+jz7NzIw+rkfhvHe+j76q8YI+AisHvHe+jz7NzIw+AisHvHe+j77NzIw+rkfhPHe+j76q8YK+rkfhPHe+jz6q8YK+AisHPHe+jz7NzIy+rkfhPHe+j76q8YK+AisHPHe+jz7NzIy+AisHPHe+j77NzIy+rkfhPHe+j76q8YI+AisHPHe+jz7NzIw+rkfhPHe+jz6q8YI+rkfhPHe+j76q8YI+AisHPHe+j77NzIw+AisHPHe+jz7NzIw+AisHvJqZmb6q8YK+AisHPJqZmb6q8YK+AisHPHe+j77NzIy+AisHvJqZmb6q8YK+AisHPHe+j77NzIy+AisHvHe+j77NzIy+AisHvJqZmb6q8YI+AisHPHe+j77NzIw+AisHPJqZmb6q8YI+AisHvJqZmb6q8YI+AisHvHe+j77NzIw+AisHPHe+j77NzIw+AisHvJqZmT6q8YK+AisHPHe+jz7NzIy+AisHPJqZmT6q8YK+AisHvJqZmT6q8YK+AisHvHe+jz7NzIy+AisHPHe+jz7NzIy+AisHvJqZmT6q8YI+AisHPJqZmT6q8YI+AisHPHe+jz7NzIw+AisHvJqZmT6q8YI+AisHPHe+jz7NzIw+AisHvHe+jz7NzIw+rkfhvHe+j76q8YK+AisHvJqZmb6q8YK+AisHvHe+j77NzIy+rkfhvHe+j76q8YI+AisHvHe+j77NzIw+AisHvJqZmb6q8YI+rkfhvHe+jz6q8YK+AisHvHe+jz7NzIy+AisHvJqZmT6q8YK+rkfhvHe+jz6q8YI+AisHvJqZmT6q8YI+AisHvHe+jz7NzIw+rkfhPHe+j76q8YK+AisHPHe+j77NzIy+AisHPJqZmb6q8YK+rkfhPHe+j76q8YI+AisHPJqZmb6q8YI+AisHPHe+j77NzIw+rkfhPHe+jz6q8YK+AisHPJqZmT6q8YK+AisHPHe+jz7NzIy+rkfhPHe+jz6q8YI+AisHPHe+jz7NzIw+AisHPJqZmT6q8YI+AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+///////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//v1RVqar/P/+/VFWpqv8//79UVamq/z//v1RVqar/P/+/VFWpqv8//79UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/7//v1RVVNX/v/+/VFVU1f+//79UVVTVAAD/v1RVqaoAAP+/VFWpqgAA/79UVamqAAD/v1RVqaoAAP+/VFWpqgAA/79UVamq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq/7//f1RVqar/v/9/VFWpqv+//39UVamq/7//f1RVqar/v/9/VFWpqv+//39UVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/3//v1RVqar/f/+/VFWpqv9//79UVamq/3//v1RVqar/f/+/VFWpqv9//79UVamqqiqqKv8//7+qKqoq/z//v6oqqir/P/+/VFVUVQAAAIBUVVRVAAAAgFRVVFUAAACAqipU1f8//5+qKlTV/z//n6oqVNX/P/+fVFWqqv9//59UVaqq/3//n1RVqqr/f/+fVNWqKv9//59U1aoq/3//n1TVqir/f/+fqqpUVf8//5+qqlRV/z//n6qqVFX/P/+fVNVU1QAAAIBU1VTVAAAAgFTVVNUAAACAqqqqqv8//7+qqqqq/z//v6qqqqr/P/+/")
+}]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ptveq"]
+size = Vector3(0.025, 0.035, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gstek"]
+size = Vector3(0.025, 0.035, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eao5j"]
+size = Vector3(0.025, 0.035, 0.34)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwsy3"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+metallic = 0.25
+roughness = 0.68
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gbimp"]
+_surfaces = [{
+"aabb": AABB(-0.11, -0.06, -0.12, 0.22, 0.12, 0.24),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 132,
+"vertex_data": PackedByteArray("rkfhvSlcD71cj8K9rkfhvSlcDz1cj8K9rkfhvSlcDz1cj8I9rkfhvSlcD71cj8K9rkfhvSlcDz1cj8I9rkfhvSlcD71cj8I9rkfhPSlcD71cj8K9rkfhPSlcDz1cj8I9rkfhPSlcDz1cj8K9rkfhPSlcD71cj8K9rkfhPSlcD71cj8I9rkfhPSlcDz1cj8I9exSuvY/Cdb1cj8K9exSuvY/Cdb1cj8I9exSuPY/Cdb1cj8I9exSuvY/Cdb1cj8K9exSuPY/Cdb1cj8I9exSuPY/Cdb1cj8K9exSuvY/CdT1cj8K9exSuPY/CdT1cj8I9exSuvY/CdT1cj8I9exSuvY/CdT1cj8K9exSuPY/CdT1cj8K9exSuPY/CdT1cj8I9exSuvSlcD72PwvW9exSuPSlcD72PwvW9exSuPSlcDz2PwvW9exSuvSlcD72PwvW9exSuPSlcDz2PwvW9exSuvSlcDz2PwvW9exSuvSlcD72PwvU9exSuPSlcDz2PwvU9exSuPSlcD72PwvU9exSuvSlcD72PwvU9exSuvSlcDz2PwvU9exSuPSlcDz2PwvU9rkfhvSlcD71cj8K9rkfhvSlcD71cj8I9exSuvY/Cdb1cj8I9rkfhvSlcD71cj8K9exSuvY/Cdb1cj8I9exSuvY/Cdb1cj8K9rkfhvSlcDz1cj8K9exSuvY/CdT1cj8I9rkfhvSlcDz1cj8I9rkfhvSlcDz1cj8K9exSuvY/CdT1cj8K9exSuvY/CdT1cj8I9rkfhPSlcD71cj8K9exSuPY/Cdb1cj8I9rkfhPSlcD71cj8I9rkfhPSlcD71cj8K9exSuPY/Cdb1cj8K9exSuPY/Cdb1cj8I9rkfhPSlcDz1cj8K9rkfhPSlcDz1cj8I9exSuPY/CdT1cj8I9rkfhPSlcDz1cj8K9exSuPY/CdT1cj8I9exSuPY/CdT1cj8K9rkfhvSlcD71cj8K9exSuvSlcDz2PwvW9rkfhvSlcDz1cj8K9rkfhvSlcD71cj8K9exSuvSlcD72PwvW9exSuvSlcDz2PwvW9rkfhvSlcD71cj8I9rkfhvSlcDz1cj8I9exSuvSlcDz2PwvU9rkfhvSlcD71cj8I9exSuvSlcDz2PwvU9exSuvSlcD72PwvU9rkfhPSlcD71cj8K9rkfhPSlcDz1cj8K9exSuPSlcDz2PwvW9rkfhPSlcD71cj8K9exSuPSlcDz2PwvW9exSuPSlcD72PwvW9rkfhPSlcD71cj8I9exSuPSlcDz2PwvU9rkfhPSlcDz1cj8I9rkfhPSlcD71cj8I9exSuPSlcD72PwvU9exSuPSlcDz2PwvU9exSuvY/Cdb1cj8K9exSuPY/Cdb1cj8K9exSuPSlcD72PwvW9exSuvY/Cdb1cj8K9exSuPSlcD72PwvW9exSuvSlcD72PwvW9exSuvY/Cdb1cj8I9exSuPSlcD72PwvU9exSuPY/Cdb1cj8I9exSuvY/Cdb1cj8I9exSuvSlcD72PwvU9exSuPSlcD72PwvU9exSuvY/CdT1cj8K9exSuPSlcDz2PwvW9exSuPY/CdT1cj8K9exSuvY/CdT1cj8K9exSuvSlcDz2PwvW9exSuPSlcDz2PwvW9exSuvY/CdT1cj8I9exSuPY/CdT1cj8I9exSuPSlcDz2PwvU9exSuvY/CdT1cj8I9exSuPSlcDz2PwvU9exSuvSlcDz2PwvU9rkfhvSlcD71cj8K9exSuvY/Cdb1cj8K9exSuvSlcD72PwvW9rkfhvSlcD71cj8I9exSuvSlcD72PwvU9exSuvY/Cdb1cj8I9rkfhvSlcDz1cj8K9exSuvSlcDz2PwvW9exSuvY/CdT1cj8K9rkfhvSlcDz1cj8I9exSuvY/CdT1cj8I9exSuvSlcDz2PwvU9rkfhPSlcD71cj8K9exSuPSlcD72PwvW9exSuPY/Cdb1cj8K9rkfhPSlcD71cj8I9exSuPY/Cdb1cj8I9exSuPSlcD72PwvU9rkfhPSlcDz1cj8K9exSuPY/CdT1cj8K9exSuPSlcDz2PwvW9rkfhPSlcDz1cj8I9exSuPSlcDz2PwvU9exSuPY/CdT1cj8I9AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+///////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//v1RVqar/P/+/VFWpqv8//79UVamq/z//v1RVqar/P/+/VFWpqv8//79UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/7//v1RVVNX/v/+/VFVU1f+//79UVVTVAAD/v1RVqaoAAP+/VFWpqgAA/79UVamqAAD/v1RVqaoAAP+/VFWpqgAA/79UVamq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq/7//f1RVqar/v/9/VFWpqv+//39UVamq/7//f1RVqar/v/9/VFWpqv+//39UVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/3//v1RVqar/f/+/VFWpqv9//79UVamq/3//v1RVqar/f/+/VFWpqv9//79UVamqqiqqKv8//7+qKqoq/z//v6oqqir/P/+/VFVUVQAAAIBUVVRVAAAAgFRVVFUAAACAqipU1f8//5+qKlTV/z//n6oqVNX/P/+fVFWqqv9//59UVaqq/3//n1RVqqr/f/+fVNWqKv9//59U1aoq/3//n1TVqir/f/+fqqpUVf8//5+qqlRV/z//n6qqVFX/P/+fVNVU1QAAAIBU1VTVAAAAgFTVVNUAAACAqqqqqv8//7+qqqqq/z//v6qqqqr/P/+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e37v0"]
+albedo_color = Color(0.8117647, 0.6431373, 0.3647059, 1)
+metallic = 0.5
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i2aju"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.045
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jsois"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+metallic = 0.55
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rbga6"]
+top_radius = 0.245
+bottom_radius = 0.245
+height = 0.12
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dswp4"]
+top_radius = 0.245
+bottom_radius = 0.245
+height = 0.12
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0hkel"]
+albedo_color = Color(0.8117647, 0.6431373, 0.3647059, 1)
+metallic = 0.6
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ksidp"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_nrgq3"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_24jgk"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tr0g6"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i0pkn"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07p4o"]
+albedo_color = Color(0.14901961, 0.23529412, 0.28627452, 1)
+metallic = 0.35
+roughness = 0.68
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tj3wm"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.49406478
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ju0i5"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.48
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pgd3i"]
+top_radius = 0.245
+bottom_radius = 0.245
+height = 0.12
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i3254"]
+top_radius = 0.245
+bottom_radius = 0.245
+height = 0.12
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dpco8"]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.1
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_6c1g7"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hgs7w"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_anipn"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pnx3s"]
+size = Vector3(0.15, 0.025, 0.015)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8mer5"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.49406478
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g875l"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.48
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4srdf"]
+albedo_color = Color(0.5686275, 0.6509804, 0.6666667, 1)
+metallic = 0.25
+roughness = 0.68
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ii2rg"]
+_surfaces = [{
+"aabb": AABB(-0.325, -0.05, -0.125, 0.65, 0.1, 0.25),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 132,
+"vertex_data": PackedByteArray("ZmamvgvXo7xcj8K9ZmamvgvXozxcj8K9ZmamvgvXozxcj8I9ZmamvgvXo7xcj8K9ZmamvgvXozxcj8I9ZmamvgvXo7xcj8I9ZmamPgvXo7xcj8K9ZmamPgvXozxcj8I9ZmamPgvXozxcj8K9ZmamPgvXo7xcj8K9ZmamPgvXo7xcj8I9ZmamPgvXozxcj8I9PQqXvs3MTL1cj8K9PQqXvs3MTL1cj8I9PQqXPs3MTL1cj8I9PQqXvs3MTL1cj8K9PQqXPs3MTL1cj8I9PQqXPs3MTL1cj8K9PQqXvs3MTD1cj8K9PQqXPs3MTD1cj8I9PQqXvs3MTD1cj8I9PQqXvs3MTD1cj8K9PQqXPs3MTD1cj8K9PQqXPs3MTD1cj8I9PQqXvgvXo7wAAAC+PQqXPgvXo7wAAAC+PQqXPgvXozwAAAC+PQqXvgvXo7wAAAC+PQqXPgvXozwAAAC+PQqXvgvXozwAAAC+PQqXvgvXo7wAAAA+PQqXPgvXozwAAAA+PQqXPgvXo7wAAAA+PQqXvgvXo7wAAAA+PQqXvgvXozwAAAA+PQqXPgvXozwAAAA+ZmamvgvXo7xcj8K9ZmamvgvXo7xcj8I9PQqXvs3MTL1cj8I9ZmamvgvXo7xcj8K9PQqXvs3MTL1cj8I9PQqXvs3MTL1cj8K9ZmamvgvXozxcj8K9PQqXvs3MTD1cj8I9ZmamvgvXozxcj8I9ZmamvgvXozxcj8K9PQqXvs3MTD1cj8K9PQqXvs3MTD1cj8I9ZmamPgvXo7xcj8K9PQqXPs3MTL1cj8I9ZmamPgvXo7xcj8I9ZmamPgvXo7xcj8K9PQqXPs3MTL1cj8K9PQqXPs3MTL1cj8I9ZmamPgvXozxcj8K9ZmamPgvXozxcj8I9PQqXPs3MTD1cj8I9ZmamPgvXozxcj8K9PQqXPs3MTD1cj8I9PQqXPs3MTD1cj8K9ZmamvgvXo7xcj8K9PQqXvgvXozwAAAC+ZmamvgvXozxcj8K9ZmamvgvXo7xcj8K9PQqXvgvXo7wAAAC+PQqXvgvXozwAAAC+ZmamvgvXo7xcj8I9ZmamvgvXozxcj8I9PQqXvgvXozwAAAA+ZmamvgvXo7xcj8I9PQqXvgvXozwAAAA+PQqXvgvXo7wAAAA+ZmamPgvXo7xcj8K9ZmamPgvXozxcj8K9PQqXPgvXozwAAAC+ZmamPgvXo7xcj8K9PQqXPgvXozwAAAC+PQqXPgvXo7wAAAC+ZmamPgvXo7xcj8I9PQqXPgvXozwAAAA+ZmamPgvXozxcj8I9ZmamPgvXo7xcj8I9PQqXPgvXo7wAAAA+PQqXPgvXozwAAAA+PQqXvs3MTL1cj8K9PQqXPs3MTL1cj8K9PQqXPgvXo7wAAAC+PQqXvs3MTL1cj8K9PQqXPgvXo7wAAAC+PQqXvgvXo7wAAAC+PQqXvs3MTL1cj8I9PQqXPgvXo7wAAAA+PQqXPs3MTL1cj8I9PQqXvs3MTL1cj8I9PQqXvgvXo7wAAAA+PQqXPgvXo7wAAAA+PQqXvs3MTD1cj8K9PQqXPgvXozwAAAC+PQqXPs3MTD1cj8K9PQqXvs3MTD1cj8K9PQqXvgvXozwAAAC+PQqXPgvXozwAAAC+PQqXvs3MTD1cj8I9PQqXPs3MTD1cj8I9PQqXPgvXozwAAAA+PQqXvs3MTD1cj8I9PQqXPgvXozwAAAA+PQqXvgvXozwAAAA+ZmamvgvXo7xcj8K9PQqXvs3MTL1cj8K9PQqXvgvXo7wAAAC+ZmamvgvXo7xcj8I9PQqXvgvXo7wAAAA+PQqXvs3MTL1cj8I9ZmamvgvXozxcj8K9PQqXvgvXozwAAAC+PQqXvs3MTD1cj8K9ZmamvgvXozxcj8I9PQqXvs3MTD1cj8I9PQqXvgvXozwAAAA+ZmamPgvXo7xcj8K9PQqXPgvXo7wAAAC+PQqXPs3MTL1cj8K9ZmamPgvXo7xcj8I9PQqXPs3MTL1cj8I9PQqXPgvXo7wAAAA+ZmamPgvXozxcj8K9PQqXPs3MTD1cj8K9PQqXPgvXozwAAAC+ZmamPgvXozxcj8I9PQqXPgvXozwAAAA+PQqXPs3MTD1cj8I9AAD/f/9//78AAP9//3//vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/////f/9//7////9//3//v////3//f/+/////f/9//7////9//3//v////3//f/+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+///////9/AID//////38AgP//////fwCA//////9/AID//////38AgP//////fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/3//f/9/AID/f/9//38AgP9//3//fwCA/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//P1RVVNX/P/8/VFVU1f8//z9UVVTV/z//v1RVqar/P/+/VFWpqv8//79UVamq/z//v1RVqar/P/+/VFWpqv8//79UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//P1RVqar/v/8/VFWpqv+//z9UVamq/7//v1RVVNX/v/+/VFVU1f+//79UVVTV/7//v1RVVNX/v/+/VFVU1f+//79UVVTVAAD/v1RVqaoAAP+/VFWpqgAA/79UVamqAAD/v1RVqaoAAP+/VFWpqgAA/79UVamq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq/z//f6qqqar/P/9/qqqpqv8//3+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq////v6qqqar///+/qqqpqv///7+qqqmq/7//f1RVqar/v/9/VFWpqv+//39UVamq/7//f1RVqar/v/9/VFWpqv+//39UVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/78AAFRVqar/vwAAVFWpqv+/AABUVamq/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/3//P6oqVJX/f/8/qipUlf9//z+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/7///6oqVJX/v///qipUlf+///+qKlSV/3//v1RVqar/f/+/VFWpqv9//79UVamq/3//v1RVqar/f/+/VFWpqv9//79UVamqqiqqKv8//7+qKqoq/z//v6oqqir/P/+/VFVUVQAAAIBUVVRVAAAAgFRVVFUAAACAqipU1f8//5+qKlTV/z//n6oqVNX/P/+fVFWqqv9//59UVaqq/3//n1RVqqr/f/+fVNWqKv9//59U1aoq/3//n1TVqir/f/+fqqpUVf8//5+qqlRV/z//n6qqVFX/P/+fVNVU1QAAAIBU1VTVAAAAgFTVVNUAAACAqqqqqv8//7+qqqqq/z//v6qqqqr/P/+/")
+}]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0yxht"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ruqlu"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2ibsl"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.025
+radial_segments = 12
+rings = 1
+
+[node name="Injector" type="Node3D" unique_id=1458589848]
+metadata/model_kind = "injector"
+metadata/detail_revision = 76
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=1618131186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0)
+material_override = SubResource("StandardMaterial3D_rh3ih")
+mesh = SubResource("BoxMesh_ns6d1")
+
+[node name="Housing" type="MeshInstance3D" parent="." unique_id=1696510018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+material_override = SubResource("StandardMaterial3D_pc26v")
+mesh = SubResource("BoxMesh_dcoyo")
+
+[node name="Screen" type="MeshInstance3D" parent="." unique_id=1233701067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.43)
+material_override = SubResource("StandardMaterial3D_yb4o7")
+mesh = SubResource("BoxMesh_kll7s")
+
+[node name="Indicator" type="MeshInstance3D" parent="." unique_id=232908632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42, 1.45, 0)
+material_override = SubResource("StandardMaterial3D_j4jv0")
+mesh = SubResource("CylinderMesh_xyk7b")
+
+[node name="@Label3D@7" type="Label3D" parent="." unique_id=749314241]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.09, -0.47)
+pixel_size = 0.009
+modulate = Color(0.07450981, 0.16470589, 0.21176471, 1)
+outline_modulate = Color(0.050980393, 0.101960786, 0.15294118, 1)
+text = "LG-17"
+font_size = 30
+outline_size = 6
+
+[node name="Canister" type="MeshInstance3D" parent="." unique_id=799696767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_j4jv0")
+mesh = SubResource("CylinderMesh_6fvpd")
+
+[node name="Canister2" type="MeshInstance3D" parent="." unique_id=1459979473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.1, 0)
+material_override = SubResource("StandardMaterial3D_j4jv0")
+mesh = SubResource("CylinderMesh_4ytwk")
+
+[node name="PlinthTrim" type="MeshInstance3D" parent="." unique_id=274938244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.055, 0)
+material_override = SubResource("StandardMaterial3D_wyp7p")
+mesh = SubResource("ArrayMesh_xiwlf")
+
+[node name="ScreenSide" type="MeshInstance3D" parent="." unique_id=1216231241]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42, 1.1, -0.46)
+material_override = SubResource("StandardMaterial3D_0lp5k")
+mesh = SubResource("BoxMesh_h5sc8")
+
+[node name="ScreenSide2" type="MeshInstance3D" parent="." unique_id=1586027766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42, 1.1, -0.46)
+material_override = SubResource("StandardMaterial3D_0lp5k")
+mesh = SubResource("BoxMesh_373jt")
+
+[node name="ScreenRim" type="MeshInstance3D" parent="." unique_id=1013753971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, -0.46)
+material_override = SubResource("StandardMaterial3D_0lp5k")
+mesh = SubResource("BoxMesh_q4ve7")
+
+[node name="ScreenRim2" type="MeshInstance3D" parent="." unique_id=734542297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, -0.46)
+material_override = SubResource("StandardMaterial3D_0lp5k")
+mesh = SubResource("BoxMesh_p8drd")
+
+[node name="PressureGauge" type="Node3D" parent="." unique_id=733840007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26, 0.56, -0.43)
+
+[node name="Bezel" type="MeshInstance3D" parent="PressureGauge" unique_id=1217686537]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_nqq13")
+mesh = SubResource("CylinderMesh_1bnwq")
+
+[node name="Dial" type="MeshInstance3D" parent="PressureGauge" unique_id=1485124597]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.037)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("CylinderMesh_ep40s")
+
+[node name="ScaleMark" type="MeshInstance3D" parent="PressureGauge" unique_id=48963095]
+transform = Transform3D(-0.67546314, -0.73739374, 0, 0.73739374, -0.67546314, 0, 0, 0, 1, -0.061941072, -0.056738906, -0.05)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_b023j")
+
+[node name="ScaleMark2" type="MeshInstance3D" parent="PressureGauge" unique_id=1334110999]
+transform = Transform3D(-0.917438, -0.39787883, 0, 0.39787883, -0.917438, 0, 0, 0, 1, -0.033421826, -0.07706479, -0.05)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_whbxi")
+
+[node name="ScaleMark3" type="MeshInstance3D" parent="PressureGauge" unique_id=1456087548]
+transform = Transform3D(-0.9999417, 0.010796011, 0, -0.010796011, -0.9999417, 0, 0, 0, 1, 0.00090687384, -0.083995104, -0.05)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_s30eh")
+
+[node name="ScaleMark4" type="MeshInstance3D" parent="PressureGauge" unique_id=2139460678]
+transform = Transform3D(-0.90863353, 0.41759446, 0, -0.41759446, -0.90863353, 0, 0, 0, 1, 0.035077937, -0.076325215, -0.05)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_ublml")
+
+[node name="ScaleMark5" type="MeshInstance3D" parent="PressureGauge" unique_id=1049614740]
+transform = Transform3D(-0.6593846, 0.7518058, 0, -0.7518058, -0.6593846, 0, 0, 0, 1, 0.06315168, -0.055388313, -0.05)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_4oqk6")
+
+[node name="Needle" type="MeshInstance3D" parent="PressureGauge" unique_id=1252261922]
+transform = Transform3D(0.6585046, 0.7525767, 0, -0.7525767, 0.6585046, 0, 0, 0, 1, 0.028, 0.0245, -0.061)
+material_override = SubResource("StandardMaterial3D_xic4e")
+mesh = SubResource("CylinderMesh_lxfva")
+
+[node name="Pin" type="MeshInstance3D" parent="PressureGauge" unique_id=1274570310]
+transform = Transform3D(0.04, 0, 0, 0, 0.04, 0, 0, 0, 0.025, 0, 0, -0.065)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("SphereMesh_4y48l")
+
+[node name="Switch" type="MeshInstance3D" parent="." unique_id=2064212000]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.13, 0.57, -0.44)
+material_override = SubResource("StandardMaterial3D_piy17")
+mesh = SubResource("CylinderMesh_2xfqv")
+
+[node name="Switch2" type="MeshInstance3D" parent="." unique_id=877353009]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.29, 0.57, -0.44)
+material_override = SubResource("StandardMaterial3D_piy17")
+mesh = SubResource("CylinderMesh_npifu")
+
+[node name="Bolt" type="MeshInstance3D" parent="." unique_id=1663866759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, 0.324, -0.47)
+material_override = SubResource("StandardMaterial3D_t5uw6")
+mesh = SubResource("CylinderMesh_7dv4t")
+
+[node name="Slot" type="MeshInstance3D" parent="Bolt" unique_id=1709662221]
+transform = Transform3D(0.90044713, 0, 0.43496552, 0, 1, 0, -0.43496552, 0, 0.90044713, 0, 0.014, 0)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_sk246")
+
+[node name="Bolt2" type="MeshInstance3D" parent="." unique_id=817871334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.64, 0.324, 0.47)
+material_override = SubResource("StandardMaterial3D_t5uw6")
+mesh = SubResource("CylinderMesh_1bskv")
+
+[node name="Slot" type="MeshInstance3D" parent="Bolt2" unique_id=363248886]
+transform = Transform3D(0.90044713, 0, 0.43496552, 0, 1, 0, -0.43496552, 0, 0.90044713, 0, 0.014, 0)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_flps3")
+
+[node name="Bolt3" type="MeshInstance3D" parent="." unique_id=639901080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64, 0.324, -0.47)
+material_override = SubResource("StandardMaterial3D_t5uw6")
+mesh = SubResource("CylinderMesh_ao3vy")
+
+[node name="Slot" type="MeshInstance3D" parent="Bolt3" unique_id=1945625466]
+transform = Transform3D(0.90044713, 0, 0.43496552, 0, 1, 0, -0.43496552, 0, 0.90044713, 0, 0.014, 0)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_xl5dc")
+
+[node name="Bolt4" type="MeshInstance3D" parent="." unique_id=957787334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64, 0.324, 0.47)
+material_override = SubResource("StandardMaterial3D_t5uw6")
+mesh = SubResource("CylinderMesh_0jpok")
+
+[node name="Slot" type="MeshInstance3D" parent="Bolt4" unique_id=2004793907]
+transform = Transform3D(0.90044713, 0, 0.43496552, 0, 1, 0, -0.43496552, 0, 0.90044713, 0, 0.014, 0)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_0p41j")
+
+[node name="BaseHazard" type="MeshInstance3D" parent="." unique_id=118201571]
+transform = Transform3D(0.9393727, 0.3428978, 0, -0.3428978, 0.9393727, 0, 0, 0, 1, -0.42, 0.17, -0.611)
+material_override = SubResource("StandardMaterial3D_vwgmk")
+mesh = SubResource("BoxMesh_8gv16")
+
+[node name="BaseHazard2" type="MeshInstance3D" parent="." unique_id=1080568036]
+transform = Transform3D(0.9393727, 0.3428978, 0, -0.3428978, 0.9393727, 0, 0, 0, 1, -0.14, 0.17, -0.611)
+material_override = SubResource("StandardMaterial3D_vwgmk")
+mesh = SubResource("BoxMesh_63lr2")
+
+[node name="BaseHazard3" type="MeshInstance3D" parent="." unique_id=115117569]
+transform = Transform3D(0.9393727, 0.3428978, 0, -0.3428978, 0.9393727, 0, 0, 0, 1, 0.14, 0.17, -0.611)
+material_override = SubResource("StandardMaterial3D_vwgmk")
+mesh = SubResource("BoxMesh_qt5q0")
+
+[node name="BaseHazard4" type="MeshInstance3D" parent="." unique_id=1005127923]
+transform = Transform3D(0.9393727, 0.3428978, 0, -0.3428978, 0.9393727, 0, 0, 0, 1, 0.42, 0.17, -0.611)
+material_override = SubResource("StandardMaterial3D_vwgmk")
+mesh = SubResource("BoxMesh_oyjb7")
+
+[node name="SideServicePanel" type="MeshInstance3D" parent="." unique_id=184810648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.54, 0.73, 0.04)
+material_override = SubResource("StandardMaterial3D_omdt0")
+mesh = SubResource("ArrayMesh_g1lsh")
+
+[node name="ServiceVent" type="MeshInstance3D" parent="." unique_id=1860875030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.575, 0.59, 0.04)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_yvojj")
+
+[node name="ServiceVent2" type="MeshInstance3D" parent="." unique_id=476994132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.575, 0.72, 0.04)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_0wyos")
+
+[node name="ServiceVent3" type="MeshInstance3D" parent="." unique_id=134651342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.575, 0.85, 0.04)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_03sgh")
+
+[node name="SideServicePanel2" type="MeshInstance3D" parent="." unique_id=2046906155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54, 0.73, 0.04)
+material_override = SubResource("StandardMaterial3D_omdt0")
+mesh = SubResource("ArrayMesh_hymcm")
+
+[node name="ServiceVent4" type="MeshInstance3D" parent="." unique_id=1454742591]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0.59, 0.04)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_ptveq")
+
+[node name="ServiceVent5" type="MeshInstance3D" parent="." unique_id=1750074221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0.72, 0.04)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_gstek")
+
+[node name="ServiceVent6" type="MeshInstance3D" parent="." unique_id=1464588312]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.575, 0.85, 0.04)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("BoxMesh_eao5j")
+
+[node name="BeaconMount" type="MeshInstance3D" parent="." unique_id=1111783393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42, 1.32, 0)
+material_override = SubResource("StandardMaterial3D_lwsy3")
+mesh = SubResource("ArrayMesh_gbimp")
+
+[node name="BeaconCap" type="MeshInstance3D" parent="." unique_id=877382371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42, 1.58, 0)
+material_override = SubResource("StandardMaterial3D_e37v0")
+mesh = SubResource("CylinderMesh_i2aju")
+
+[node name="ReservoirBand" type="MeshInstance3D" parent="." unique_id=569068963]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.4, 0)
+material_override = SubResource("StandardMaterial3D_jsois")
+mesh = SubResource("CylinderMesh_rbga6")
+
+[node name="ReservoirBand2" type="MeshInstance3D" parent="." unique_id=753621940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.75, 0)
+material_override = SubResource("StandardMaterial3D_jsois")
+mesh = SubResource("CylinderMesh_dswp4")
+
+[node name="ReservoirLid" type="MeshInstance3D" parent="." unique_id=1037250702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 1.93, 0)
+material_override = SubResource("StandardMaterial3D_0hkel")
+mesh = SubResource("CylinderMesh_ksidp")
+
+[node name="ReservoirScale" type="MeshInstance3D" parent="." unique_id=1347799318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 0.7, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_nrgq3")
+
+[node name="ReservoirScale2" type="MeshInstance3D" parent="." unique_id=303909366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 0.91, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_24jgk")
+
+[node name="ReservoirScale3" type="MeshInstance3D" parent="." unique_id=513937260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 1.12, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_tr0g6")
+
+[node name="ReservoirScale4" type="MeshInstance3D" parent="." unique_id=962999603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 1.33, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_i0pkn")
+
+[node name="ChemicalHose" type="MeshInstance3D" parent="." unique_id=1440149942]
+transform = Transform3D(0.34453094, 0.8096104, -0.47521508, -0.8096104, 0, -0.5869676, -0.47521508, 0.5869676, 0.65546906, -0.6, 0.34, 0.145)
+material_override = SubResource("StandardMaterial3D_07p4o")
+mesh = SubResource("CylinderMesh_tj3wm")
+
+[node name="HoseManifold" type="MeshInstance3D" parent="." unique_id=1937891214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.58, 0.29)
+material_override = SubResource("StandardMaterial3D_07p4o")
+mesh = SubResource("CylinderMesh_ju0i5")
+
+[node name="ReservoirBand3" type="MeshInstance3D" parent="." unique_id=238592362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.4, 0)
+material_override = SubResource("StandardMaterial3D_jsois")
+mesh = SubResource("CylinderMesh_pgd3i")
+
+[node name="ReservoirBand4" type="MeshInstance3D" parent="." unique_id=1992164022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.75, 0)
+material_override = SubResource("StandardMaterial3D_jsois")
+mesh = SubResource("CylinderMesh_i3254")
+
+[node name="ReservoirLid2" type="MeshInstance3D" parent="." unique_id=1952225126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 1.93, 0)
+material_override = SubResource("StandardMaterial3D_0hkel")
+mesh = SubResource("CylinderMesh_dpco8")
+
+[node name="ReservoirScale5" type="MeshInstance3D" parent="." unique_id=1398314389]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82, 0.7, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_6c1g7")
+
+[node name="ReservoirScale6" type="MeshInstance3D" parent="." unique_id=1631221938]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82, 0.91, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_hgs7w")
+
+[node name="ReservoirScale7" type="MeshInstance3D" parent="." unique_id=1435157156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82, 1.12, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_anipn")
+
+[node name="ReservoirScale8" type="MeshInstance3D" parent="." unique_id=2101463114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82, 1.33, -0.224)
+material_override = SubResource("StandardMaterial3D_lbi48")
+mesh = SubResource("BoxMesh_pnx3s")
+
+[node name="ChemicalHose2" type="MeshInstance3D" parent="." unique_id=742356221]
+transform = Transform3D(0.34453094, -0.8096104, 0.47521508, 0.8096104, 0, -0.5869676, 0.47521508, 0.5869676, 0.65546906, 0.6, 0.34, 0.145)
+material_override = SubResource("StandardMaterial3D_07p4o")
+mesh = SubResource("CylinderMesh_8mer5")
+
+[node name="HoseManifold2" type="MeshInstance3D" parent="." unique_id=395763559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.58, 0.29)
+material_override = SubResource("StandardMaterial3D_07p4o")
+mesh = SubResource("CylinderMesh_g875l")
+
+[node name="DoseTray" type="MeshInstance3D" parent="." unique_id=1625965710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, -0.57)
+material_override = SubResource("StandardMaterial3D_4srdf")
+mesh = SubResource("ArrayMesh_ii2rg")
+
+[node name="DoseSocket" type="MeshInstance3D" parent="." unique_id=133900889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.401, -0.57)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("CylinderMesh_0yxht")
+
+[node name="DoseSocket2" type="MeshInstance3D" parent="." unique_id=756896447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.401, -0.57)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("CylinderMesh_ruqlu")
+
+[node name="DoseSocket3" type="MeshInstance3D" parent="." unique_id=886052677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.401, -0.57)
+material_override = SubResource("StandardMaterial3D_ygjcv")
+mesh = SubResource("CylinderMesh_2ibsl")

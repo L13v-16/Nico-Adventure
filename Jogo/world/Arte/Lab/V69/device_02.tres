@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V69/device_states.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(795, 87, 294, 217)
+margin = Rect2(77, 135, 154, 167)
+filter_clip = true
+metadata/ground_foot = 348
+metadata/native_clips = PackedVector4Array(888, 150, 2, 2)

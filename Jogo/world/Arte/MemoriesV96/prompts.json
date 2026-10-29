@@ -1,0 +1,97 @@
+[
+  {
+    "id": "picnic",
+    "refs": [
+      "Nico/idle_1.png",
+      "Friends/V47/remi.png",
+      "Friends/V47/turtle.png"
+    ],
+    "prompt": "Use case: illustration-story. Create one wide landscape pixel-art collectible memory illustration for Nico Adventure. Reference image 1 is the EXACT protagonist Nico: small gray raccoon, cream muzzle, black eye mask, striped bushy tail, green neck scarf and small ochre backpack. Reference 2 is brown squirrel Remi with blue neck scarf. Reference 3 is elderly olive turtle, brown segmented shell and white brows. Sprite sheets are identity/style references ONLY, draw exactly these THREE single characters, no repetitions. Scene: happy picnic on a red gingham blanket in a forest clearing beside the tree house, sharing cherries and juice. Nico laughs while Remi offers a cherry, turtle smiles. Same chibi proportions, chunky dark navy contours, sharp square pixel clusters, limited shaded palette as the game sprites. Cohesive modest-detail background, warm sunlight, attractive composition, ALL bodies and tails inside frame, no text, no logo, no borders, no UI, no collage. Landscape 1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-67d3c90d-5b1e-43d2-981c-9b5e67e5964e.png",
+    "sha256": "ce9d44de1b935513a2da9cba0bf9b5768872ef816fda1e83226a39e160fbde72"
+  },
+  {
+    "id": "beach",
+    "refs": [
+      "Nico/idle_1.png",
+      "Friends/V47/turtle.png",
+      "Friends/V47/arara.png"
+    ],
+    "prompt": "Use case: illustration-story. One landscape pixel-art unlockable friendship illustration for Nico Adventure. Style and identities strictly from references: gray raccoon Nico green scarf ochre backpack striped tail; elderly olive turtle with white brows and brown shell; blue and yellow macaw Arara Minas. Exactly THREE happy characters, no duplicates. They build an elaborate sand castle together at a sunny turquoise island beach: turtle shapes a tower, Nico adds a seashell and macaw brings a small flag in its beak. Playful relaxed friendship. Small chibi game-sprite proportions, dark navy pixel outlines, chunky square clusters, limited colors, gentle pixel shading. Full figures and all tails/wings inside image; clean readable tropical scenery. No text, no logos, no UI, no panels. Wide 1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-fb01dfdf-64cf-4cf1-8279-5f865f3839c3.png",
+    "sha256": "41d15b93ccb601ff7d223b8c6583312be874b47e473b5d5aae313dec4cd8e05c"
+  },
+  {
+    "id": "stargazing",
+    "refs": [
+      "Nico/idle_1.png",
+      "Friends/V47/remi.png",
+      "Friends/V47/urso.png"
+    ],
+    "prompt": "Use case: illustration-story. One wide pixel-art collectible memory image for Nico Adventure, using the references ONLY for character identity and style. Exactly three characters: gray raccoon Nico with green scarf ochre backpack and striped tail; Remi the brown squirrel with blue scarf; friendly large brown bear Urso cream muzzle and belly. They lie and sit together around a small picnic lantern on a grassy hill, happily pointing out shooting stars over purple magical woods. Urso uses a tiny telescope, Remi shows Nico a constellation. Warm peaceful night, violet silhouettes and golden fireflies, cute interactions. Same chibi character proportions, dark navy pixel contours and clean square pixel clusters, limited shades. Full bodies in frame, no other characters, no text, no logo, no panels or UI. Landscape1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-f7b5ea61-e124-4f48-a7be-a52e5e2802c1.png",
+    "sha256": "05bd20d9b01b656e666f302ba118911b462580a49e790c29dd03883f55308805"
+  },
+  {
+    "id": "kite",
+    "refs": [
+      "Nico/idle_1.png",
+      "Underworld/V46/jose_sprites.png",
+      "Friends/V47/arara.png"
+    ],
+    "prompt": "Use case: illustration-story. One landscape pixel-art unlockable happy memory for Nico Adventure. Reference identities: Nico small gray masked raccoon green scarf ochre backpack striped tail, JosÃ© cream and tan goat curved horns orange scarf, Arara Minas blue and yellow macaw. Exactly these three characters, once each. They fly a colorful handmade kite on a breezy meadow above the islands, Nico holding spool laughing, JosÃ© running with the kite string and macaw playfully flying beside the kite. Joyful motion and friendship, simple scenic wind-bent grass and distant islands. Match small chibi game-sprite bodies, expressive eyes, dark navy blocky outlines, clear square pixel clusters, restrained detail and colors. Keep every figure complete with space around edges. No text, no logo, no collage, no UI. Landscape1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-0e8a8497-95b1-4480-9cf1-8a57a664e023.png",
+    "sha256": "b427f2308e77cbdfb785a9cc69793315613b5fb1d51901b2e83c592ca4e3fc2f"
+  },
+  {
+    "id": "market",
+    "refs": [
+      "Nico/idle_1.png",
+      "Friends/V47/oliver.png",
+      "Friends/V47/mico.png"
+    ],
+    "prompt": "Use case: illustration-story. One landscape pixel-art friendship memory illustration for Nico Adventure. Identity references only: gray raccoon Nico green scarf ochre backpack and striped tail; Oliver Gancho gray rat red bandana black eye patch brown vest teal trousers; bright orange golden lion tamarin Mico with fluffy orange mane and long tail. Exactly these three characters once each. At a small village evening fair Oliver shares cherry pastries from his wooden caravan counter, Nico happily accepts and Mico balances a tray of tiny sweets, all laughing. Charming amber lanterns and simple woodland houses in background. Chibi game sprite anatomy dark navy pixel contours chunky clean pixel shading limited palette, full characters and tails visible, no cropped heads. No text, no prices, no logos, no UI, no panels. Landscape1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-1ea13351-1315-4b49-978f-031d6f3b5161.png",
+    "sha256": "4c48b4349989eb5c952fb11b3f5cc2ef78bffcbceb3b00f886aa3f80bc65e632"
+  },
+  {
+    "id": "festival",
+    "refs": [
+      "Nico/idle_1.png",
+      "Friends/V47/urso.png",
+      "Friends/V47/mico.png",
+      "Friends/V47/remi.png"
+    ],
+    "prompt": "Use case: illustration-story. One wide pixel-art collectible memory illustration. Characters exactly FOUR, once each from references: Nico small gray raccoon green scarf ochre backpack striped tail; Urso tall friendly brown bear; Mico bright orange golden lion tamarin fluffy mane long tail; Remi brown squirrel blue scarf. They happily play improvised music together at a woodland village celebration: Nico small drum, bear plucks a big handmade bass, tamarin shakes maracas and squirrel dances. Festive lanterns warm lights and little tree houses. Cute friendship not combat. Match chibi sprite proportions, dark navy outlines, square crisp pixel clusters, limited shades as game references. Keep full characters tails instruments within frame, uncluttered backdrop. No text no logos no UI no collage. Landscape1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-675fe678-adc1-4c76-8cf3-2421da95a20b.png",
+    "sha256": "dcdfd10ff88d634a8dd5c0242435251992e85781c0f22bee7706911db902ccb4"
+  },
+  {
+    "id": "control_room",
+    "refs": [],
+    "prompt": "Use case: stylized-concept. Original landscape side-view pixel-art game environment, a sinister corporate computer control room for a 2D animal platform game. Strict side-on orthographic side-scroller view, no isometric floor, no characters, no text, no logos. Dark navy industrial room, metallic ribs and conduits, red emergency lamps, server racks on both sides, green CRT terminals and a very large BLANK dark green projection display in the central upper wall, desk consoles below. Walkable horizontal floor line exactly at 82 percent image height, foreground unobstructed continuous steel deck, room complete from left to right with doorway left and exit doorway right. Crisp chunky pixel clusters, outlined game props, restrained colors, legibility over detail. Wide 1536x1024, use substantial horizontal composition and margin.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-bb3c9706-ab90-43c7-ae3a-b6404da3c3bc.png",
+    "sha256": "8bd9857e72833cd340f090f483d530f0bc5690ca02c4350f0f4d4b5b04e01535"
+  },
+  {
+    "id": "circus_plan",
+    "refs": [
+      "Friends/V47/urso.png",
+      "Friends/V47/turtle.png",
+      "Friends/V47/mico.png"
+    ],
+    "prompt": "Use case: illustration-story. A fictional villain's sinister construction plan displayed as one original GREEN PHOSPHOR pixel-art schematic illustration on a dark green computer screen, landscape. Three floating tropical islands linked by routes, giant striped circus tents replacing trees on islands, on right an industrial holding pen containing small simplified silhouettes of a bear, a turtle and golden lion tamarin, identities from the references. Convey animals being caged and exploited as entertainment, not joyful voluntary show. Crane with tree stump, shipping cage cart, spotlight circles and audience seating drawn as symbolic simple pictograms. CORPORATE SCIENCE-FI CRT wireframe blueprint look, crisp pixels, 3 shades of green with amber warning pixels, clear uncluttered composition. No realistic cruelty, no text, no labels, no numbers, no watermark, no UI frame. Original art. Wide 1536x1024.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-599d6306-f35c-4cf0-9b6a-62dedf8657e2.png",
+    "sha256": "5c3d511a955afb63396d7a9cbd3b3c0a50b179d8ad5c93dcbb93a07818eab156"
+  },
+  {
+    "prompt": "Use case: precise-object-edit. Image 1 is the edit target: pixel art village fair with Nico, Oliver and Mico. Image 2 is the identity reference of Nico. Change ONLY the raccoon on the LEFT: remove the red head bandana completely and remove his trousers/clothes below the scarf, restoring natural gray raccoon fur and short dark raccoon feet as the reference. Retain his green neck scarf, ochre backpack, striped tail, happy face, pastry and pose. Nico does NOT wear a head bandana or pants. Keep Oliver at the center wearing his red bandana and eye patch exactly unchanged; keep Mico on right, all scenery, warm palette, pixel style, full composition and dimensions unchanged. No added text.",
+    "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-4bed66a6-445e-4ce5-8511-30b885820dad.png",
+    "id": "market-v2",
+    "refs": [
+      "MemoriesV96/market.png",
+      "Nico/idle_1.png"
+    ],
+    "sha256": "e90df848f5638a7f7323b9c68ca2b7f43f1c13b53bd85f80d7c68fc04c85a0c5"
+  }
+]

@@ -1,0 +1,13 @@
+# Controles e interações — v92
+
+No menu inicial, abra **Opções > Configurar teclas**. Clique na tecla principal ou alternativa e pressione a nova tecla. Esc cancela a captura. Clique com o botão direito na alternativa para removê-la. Restaurar o padrão exige uma confirmação.
+
+As ações de movimento 2D e do laboratório 3D têm configurações separadas. Ataque, interação, poderes, mochila e pausa são compartilhados. Conflitos entre ações que podem acontecer na mesma fase são avisados e não são aplicados. A mesma tecla pode ser usada em contextos separados, como o pulo 2D e avançar no laboratório 3D. É possível inverter as duas teclas da mesma ação.
+
+As escolhas são salvas em `user://controls.cfg`, separadas do progresso e do áudio. A atualização usa arquivo temporário e substituição após gravação completa. Configuração inválida recebe o padrão. Mouse e eventos de controle existentes são preservados. Setas, Enter e Esc continuam disponíveis para navegar nos menus; Esc também permanece como saída de emergência da pausa. Restaurar controles não apaga cerejas, itens ou progresso.
+
+Pulo, andar, cipós, correntes, mochila, checkpoint e ações das fases passam pelo InputMap. Os avisos principais da HUD usam as teclas escolhidas. O quadro de controles é a referência completa, inclusive para as ações específicas do laboratório 3D.
+
+Na clareira do menu, cada amigo escolhe seu passeio e suas pausas. Amigos próximos podem conversar, se cumprimentar ou compartilhar cerejas. A distribuição muda a cada abertura e os painéis pausam os passeios. Os atores reutilizam os sprites do jogo e não alteram o progresso.
+
+Na fase 3, segure a tecla de interação ao se aproximar da ponta do cipó; não é necessário apertá-la no instante exato. As teclas de movimento alimentam o balanço. Pular solta Nico com impulso; interagir novamente apenas solta, preservando a velocidade do balanço. É preciso soltar a tecla antes de agarrar de novo o mesmo cipó. As correntes do Submundo preservam seus controles de subida e descida.

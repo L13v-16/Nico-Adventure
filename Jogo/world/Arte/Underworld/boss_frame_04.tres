@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/boss_sheet.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(42, 325, 263, 278)
+margin = Rect2(25.0, 35, 50, 35)
+filter_clip = true

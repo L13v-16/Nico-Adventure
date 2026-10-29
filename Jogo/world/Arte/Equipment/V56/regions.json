@@ -1,0 +1,191 @@
+{
+  "size": [
+    1254,
+    1254
+  ],
+  "regions": {
+    "straw_hat": [
+      23,
+      112,
+      271,
+      131
+    ],
+    "sunglasses": [
+      353,
+      141,
+      240,
+      83
+    ],
+    "sneakers": [
+      645,
+      123,
+      278,
+      116
+    ],
+    "claws": [
+      969,
+      127,
+      269,
+      122
+    ],
+    "cape": [
+      22,
+      363,
+      269,
+      240
+    ],
+    "pajamas": [
+      346,
+      362,
+      237,
+      239
+    ],
+    "winter": [
+      662,
+      363,
+      242,
+      238
+    ],
+    "rainbow_tail": [
+      962,
+      404,
+      265,
+      178
+    ],
+    "leaf": [
+      66,
+      703,
+      188,
+      194
+    ],
+    "lasting_ice": [
+      400,
+      677,
+      132,
+      230
+    ],
+    "swift_gloves": [
+      651,
+      738,
+      263,
+      142
+    ],
+    "jump_brooch": [
+      1006,
+      705,
+      203,
+      180
+    ],
+    "sailor_bandana": [
+      22,
+      1017,
+      279,
+      186
+    ],
+    "aviator_goggles": [
+      337,
+      1041,
+      270,
+      115
+    ],
+    "sneakers_far": [
+      645,
+      123,
+      133,
+      116
+    ],
+    "sneakers_near": [
+      795,
+      134,
+      128,
+      105
+    ],
+    "claws_far": [
+      969,
+      127,
+      126,
+      122
+    ],
+    "claws_near": [
+      1124,
+      127,
+      114,
+      119
+    ],
+    "swift_gloves_far": [
+      651,
+      738,
+      127,
+      137
+    ],
+    "swift_gloves_near": [
+      788,
+      739,
+      126,
+      141
+    ],
+    "pajamas_torso": [
+      402,
+      364,
+      126,
+      141
+    ],
+    "pajamas_sleeve_far": [
+      350,
+      408,
+      53,
+      95
+    ],
+    "pajamas_sleeve_near": [
+      529,
+      408,
+      52,
+      95
+    ],
+    "pajamas_leg_far": [
+      402,
+      509,
+      65,
+      90
+    ],
+    "pajamas_leg_near": [
+      481,
+      509,
+      64,
+      90
+    ],
+    "winter_torso": [
+      719,
+      364,
+      128,
+      157
+    ],
+    "winter_sleeve_far": [
+      663,
+      414,
+      56,
+      84
+    ],
+    "winter_sleeve_near": [
+      848,
+      414,
+      55,
+      84
+    ],
+    "winter_leg_far": [
+      719,
+      522,
+      62,
+      77
+    ],
+    "winter_leg_near": [
+      796,
+      522,
+      56,
+      77
+    ]
+  },
+  "source_sha256": "4b0747daf7826114d3740beb7a776675d24ef4f32e39d17276b716ef1fd626ce",
+  "source": "C:/Users/LEO/.codex/generated_images/01a1457e-c2c0-7f93-8f79-efdc74c5248d/exec-d4c59f44-17c6-4951-b6fd-cee61fb33839.png",
+  "logical_rendering": "Native integer-pixel attachments; AtlasTexture crops only; source PNG and alpha preserved."
+}

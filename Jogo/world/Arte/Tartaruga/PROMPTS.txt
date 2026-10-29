@@ -1,0 +1,23 @@
+Modo: imagegen integrado, edição com o corpo anterior como referência de identidade.
+Substituição solicitada: world/Arte/Tartaruga/turtle.png agora é cópia de turtle_idle_1.png, versão idosa.
+Corpo:4quadros64x48RGBA, basey45, SpriteFrames turtle.tres (idle1.5fps, walk4fps).
+Rosto:portrait_idle.png e portrait_talk.png64x64RGBA, boca alternada5fps na cutscene.
+Exportação: recorte por célula, escala comum e nearest-neighbor; alfa original preservado.
+
+CORPO IDOSO
+Use case: identity-preserve.
+Asset type: four-frame transparent pixel-art sprite sheet for the elderly sea turtle friend in Nico Adventure, native logical frame64x48pixels.
+Primary request: redesign the reference turtle as noticeably ELDERLY and serene, keeping her recognizable warm brown and muted turquoise segmented shell, olive-green sea-turtle anatomy, friendly expression and right-facing three-quarter side view. Soft subdued olive skin, gentle fine wrinkles around eyes and on the neck, pale cream weathered forehead and light bushy eyebrows, calm kind eyes rather than huge baby eyes, shell with subtle worn edges and old travel scuffs. No accessories, no walking stick, no glasses, no clothing.
+Input image: the current young turtle body is the identity/color/style reference; replace her age and expression while preserving basic turtle identity and the native pixel-art game style.
+Sheet layout: exactly4full-body frames in a regular2columns×2rows grid on actual transparent background. Row-major order: top-left idle1awake with mouth gently closed, top-right idle2blink with eyes softly closed; bottom-left walk1left front flipper advances and right flipper draws back; bottom-right walk2right front flipper advances and left draws back. The shell and head remain exactly the same size, position and proportions in all4frames; only eyelids and flippers differ. Entire body fully visible, no cropping; horizontal center registered across frames and flipper contact baseline aligned. Generous clear transparent margin between cells. Each turtle fits inside a logical58x42box within its64x48cell. The turtle is resting or crawling horizontally along the ground, never swimming in midair.
+Style/medium: crisp hand-clustered 16-bit pixel art, dark navy outline, broad readable pixel clusters, restrained4shades per material, warm sunlight. Same palette and detail density as the reference. Avoid tiny noisy details that disappear at64x48.
+Constraints: exactly4frames, no labels, no text, no numbers, no watermark, no grid lines, no platform, no background, no glow or haze, no external cast shadows. Fully transparentalpha0outside the four opaque sprites. Maintain common body scale, baseline and centerline; no arbitrary accessories.
+
+RETRATOS IDOSOS
+Use case: identity-preserve.
+Asset type: two transparent talking-head pixel-art portraits for dialogue UI, native logical frame64x64pixels.
+Reference image: four-frame body sprite sheet of the elderly olive sea turtle. Match exactly this elderly turtle's identity: cream bushy eyebrows, pale weathered forehead, small serene brown kind eyes, gentle fine eye and neck wrinkles, soft olive-green spotted skin, warm golden cream chin, a glimpse of the warm brown/turquoise worn shell behind her neck. No accessories.
+Primary request: two matching head-and-shoulder portraits of this same elderly turtle, affectionate and relieved after being rescued. The head fills most of each frame and faces three-quarter right, fully visible with comfortable transparent margin. Left portrait idle has a gentle closed-mouth smile. Right portrait talk has the same head, same expression, same eye position and size, same eyebrows and outline, but mouth slightly open as if speaking warmly. Keep eyes open in both, so the only motion between frames is the mouth. No teeth emphasis.
+Sheet layout: exactly2portraits in a regular2columns×1row sheet on actual transparency; wide2:1canvas, equal square cells, perfectly aligned face center and bottom. Both portraits share the same scale, exact palette and lighting. Each portrait fits within a60x60logical pixel box in its64x64cell.
+Style/medium: polished readable16-bit pixel art, strong dark navy nativepixel outline, broad pixel clusters, controlled4tones per material, native64x64detail density, no noisy dithering, no blur or antialiasing. The face should read as a wise old sea turtle, not a baby, and feel friendly rather than stern.
+Constraints: only the2portraits, alpha0background including all gutters, opaque sprites, no text, no labels, no watermark, no border, no scene, no cast shadow, no aura, no glow/haze. Do not add clothing, glasses, hats or props.

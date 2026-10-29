@@ -1,0 +1,127 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/Scripts/player.gd" id="1_26y2e"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/die_1.png" id="2_5f0jt"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/die_2.png" id="3_4vani"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/fall.png" id="4_ssf4d"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/hurt.png" id="5_xlv6r"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/idle_1.png" id="6_qesdq"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/idle_2.png" id="7_85ui5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/idle_3.png" id="8_wxr55"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/idle_4.png" id="9_pbmeu"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/jump.png" id="10_y3im1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/run_1.png" id="11_slxro"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/run_2.png" id="12_iwhgq"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/run_3.png" id="13_vcgm2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/run_4.png" id="14_was67"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/run_5.png" id="15_3xors"]
+[ext_resource type="Texture2D" path="res://world/Arte/Nico/run_6.png" id="16_82mrv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6ukyq"]
+height = 24.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ukyq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5f0jt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4vani")
+}],
+"loop": 0,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ssf4d")
+}],
+"loop": 0,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xlv6r")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_qesdq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_85ui5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wxr55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pbmeu")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_y3im1")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_slxro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_iwhgq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_vcgm2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_was67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_3xors")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_82mrv")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 12.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=844820811]
+z_index = 4
+position = Vector2(35, 30)
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_26y2e")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=851142387]
+offset = Vector2(64, -20)
+zoom = Vector2(2, 2)
+limit_left = -400
+limit_top = -210
+limit_right = 5320
+limit_bottom = 280
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=177273754]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_6ukyq")
+
+[node name="anim" type="AnimatedSprite2D" parent="." unique_id=700392467]
+texture_filter = 1
+position = Vector2(1, -5)
+sprite_frames = SubResource("SpriteFrames_6ukyq")
+animation = &"fall"

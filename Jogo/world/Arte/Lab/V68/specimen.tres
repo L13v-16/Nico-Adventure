@@ -1,0 +1,10 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V68/enemies_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V68/enemies_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V68/enemies_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V68/enemies_03.tres" id="f3"]
+[resource]
+animations = [{"name":&"walk","loop":true,"speed":7,"frames":[{"duration":1.0,"texture":ExtResource("f0")},{"duration":1.0,"texture":ExtResource("f1")}]},
+{"name":&"warning","loop":true,"speed":5,"frames":[{"duration":1.0,"texture":ExtResource("f1")}]},
+{"name":&"attack","loop":false,"speed":5,"frames":[{"duration":1.0,"texture":ExtResource("f2")}]},
+{"name":&"defeat","loop":false,"speed":5,"frames":[{"duration":1.0,"texture":ExtResource("f3")}]}]

@@ -1,0 +1,336 @@
+{
+  "source": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-a16dfed1-4c2d-4419-ad28-24c345ea7f0e.png",
+  "source_sha256": "a2b94551d34b09174df7969b14b5d164db6e41c4f4fea6c7568c035f267bb587",
+  "size": [
+    1536,
+    1024
+  ],
+  "alpha_preserved": true,
+  "render_alpha_cutoff": 0.94,
+  "frames": [
+    {
+      "name": "shaft_00",
+      "solid_bounds": [
+        32,
+        254,
+        382,
+        540
+      ],
+      "region": [
+        29,
+        251,
+        356,
+        292
+      ],
+      "margin": [
+        3,
+        3,
+        6,
+        6
+      ],
+      "logical_size": [
+        362,
+        298
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "shaft_01",
+      "solid_bounds": [
+        409,
+        254,
+        756,
+        540
+      ],
+      "region": [
+        406,
+        251,
+        353,
+        292
+      ],
+      "margin": [
+        4,
+        3,
+        9,
+        6
+      ],
+      "logical_size": [
+        362,
+        298
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "shaft_02",
+      "solid_bounds": [
+        784,
+        254,
+        1129,
+        540
+      ],
+      "region": [
+        781,
+        251,
+        351,
+        292
+      ],
+      "margin": [
+        5,
+        3,
+        11,
+        6
+      ],
+      "logical_size": [
+        362,
+        298
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "shaft_03",
+      "solid_bounds": [
+        1157,
+        254,
+        1506,
+        540
+      ],
+      "region": [
+        1154,
+        251,
+        355,
+        292
+      ],
+      "margin": [
+        3,
+        3,
+        7,
+        6
+      ],
+      "logical_size": [
+        362,
+        298
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "cap_00",
+      "solid_bounds": [
+        47,
+        723,
+        371,
+        865
+      ],
+      "region": [
+        44,
+        720,
+        330,
+        148
+      ],
+      "margin": [
+        5,
+        3,
+        10,
+        6
+      ],
+      "logical_size": [
+        340,
+        154
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "cap_01",
+      "solid_bounds": [
+        419,
+        723,
+        747,
+        864
+      ],
+      "region": [
+        416,
+        720,
+        334,
+        147
+      ],
+      "margin": [
+        3,
+        3,
+        6,
+        7
+      ],
+      "logical_size": [
+        340,
+        154
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "cap_02",
+      "solid_bounds": [
+        793,
+        723,
+        1121,
+        865
+      ],
+      "region": [
+        790,
+        720,
+        334,
+        148
+      ],
+      "margin": [
+        3,
+        3,
+        6,
+        6
+      ],
+      "logical_size": [
+        340,
+        154
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "cap_03",
+      "solid_bounds": [
+        1168,
+        723,
+        1494,
+        864
+      ],
+      "region": [
+        1165,
+        720,
+        332,
+        147
+      ],
+      "margin": [
+        4,
+        3,
+        8,
+        7
+      ],
+      "logical_size": [
+        340,
+        154
+      ],
+      "surface_y": 6,
+      "opaque_padding_min": 3
+    }
+  ],
+  "jet_source": "res://world/Arte/Underworld/V39/geysers.png",
+  "jet_source_sha256": "9324c0b8957e430b9387688541329892100714aa2d82d9f7a306da5d7b73a7ff",
+  "corrected_jets": [
+    {
+      "name": "jet_00",
+      "solid_bounds": [
+        140,
+        364,
+        315,
+        859
+      ],
+      "region": [
+        137,
+        361,
+        181,
+        501
+      ],
+      "margin": [
+        13,
+        30,
+        26,
+        33
+      ],
+      "logical_size": [
+        207,
+        534
+      ],
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "jet_01",
+      "solid_bounds": [
+        589,
+        337,
+        761,
+        859
+      ],
+      "region": [
+        586,
+        334,
+        178,
+        528
+      ],
+      "margin": [
+        14,
+        3,
+        29,
+        6
+      ],
+      "logical_size": [
+        207,
+        534
+      ],
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "jet_02",
+      "solid_bounds": [
+        1029,
+        338,
+        1224,
+        859
+      ],
+      "region": [
+        1026,
+        335,
+        201,
+        527
+      ],
+      "margin": [
+        3,
+        4,
+        6,
+        7
+      ],
+      "logical_size": [
+        207,
+        534
+      ],
+      "opaque_padding_min": 3
+    },
+    {
+      "name": "jet_03",
+      "solid_bounds": [
+        1471,
+        350,
+        1639,
+        859
+      ],
+      "region": [
+        1468,
+        347,
+        174,
+        515
+      ],
+      "margin": [
+        16,
+        16,
+        33,
+        19
+      ],
+      "logical_size": [
+        207,
+        534
+      ],
+      "opaque_padding_min": 3
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+	"largato": {
+		"animations": [
+			"RESET",
+			"attack",
+			"carry_idle",
+			"carry_run",
+			"cast_fire",
+			"cast_ice",
+			"death",
+			"double_jump",
+			"fall",
+			"hurt",
+			"idle",
+			"jump",
+			"melt",
+			"operate",
+			"run",
+			"slam",
+			"slide",
+			"spin",
+			"tail",
+			"talk"
+		],
+		"bones": 18,
+		"height": 2.24,
+		"lod_triangles": [
+			413902,
+			206950,
+			103474,
+			51736,
+			25868,
+			12932,
+			6464,
+			3232
+		],
+		"source_triangles": 827804,
+		"source_vertices": 443817,
+		"triangles": 51736,
+		"vertices": 36871
+	},
+	"nico": {
+		"animations": [
+			"RESET",
+			"attack",
+			"carry_idle",
+			"carry_run",
+			"cast_fire",
+			"cast_ice",
+			"death",
+			"double_jump",
+			"fall",
+			"hurt",
+			"idle",
+			"jump",
+			"melt",
+			"operate",
+			"run",
+			"slam",
+			"slide",
+			"spin",
+			"tail",
+			"talk"
+		],
+		"bones": 18,
+		"height": 1.95,
+		"lod_triangles": [
+			465270,
+			232634,
+			116316,
+			58158,
+			29078,
+			14538,
+			7268,
+			3634
+		],
+		"source_triangles": 930540,
+		"source_vertices": 498739,
+		"triangles": 58158,
+		"vertices": 40453
+	}
+}

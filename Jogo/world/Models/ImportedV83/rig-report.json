@@ -1,0 +1,73 @@
+{
+	"oliver": {
+		"anchor_source": "(0.0, -0.951985, 0.1)",
+		"animations": [
+			"RESET",
+			"attack",
+			"celebrate",
+			"hurt",
+			"idle",
+			"jump",
+			"operate",
+			"run",
+			"tail",
+			"talk"
+		],
+		"bones": 18,
+		"bounds_position": "(-0.875372, 0.0, -0.835855)",
+		"bounds_size": "(1.750833, 2.1, 1.892346)",
+		"foot_y": 0,
+		"front": "-Z",
+		"height": 2.1,
+		"lod_triangles": [
+			371474,
+			185736,
+			92868,
+			46434,
+			23216,
+			11608,
+			5804,
+			2902
+		],
+		"source_triangles": 742954,
+		"source_vertices": 395837,
+		"triangles": 46434,
+		"vertices": 32644
+	},
+	"urso": {
+		"anchor_source": "(0.0, -0.952085, -0.04)",
+		"animations": [
+			"RESET",
+			"attack",
+			"celebrate",
+			"hurt",
+			"idle",
+			"jump",
+			"operate",
+			"run",
+			"tail",
+			"talk"
+		],
+		"bones": 18,
+		"bounds_position": "(-0.867697, 0.0, -1.013809)",
+		"bounds_size": "(1.755429, 2.399707, 1.916425)",
+		"foot_y": 0,
+		"front": "-Z",
+		"height": 2.4,
+		"lod_triangles": [
+			352408,
+			176204,
+			88102,
+			44050,
+			22024,
+			11012,
+			5506,
+			2752,
+			1492
+		],
+		"source_triangles": 704816,
+		"source_vertices": 373768,
+		"triangles": 44050,
+		"vertices": 29592
+	}
+}

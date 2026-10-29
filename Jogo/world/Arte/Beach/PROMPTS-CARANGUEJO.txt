@@ -1,0 +1,14 @@
+Modo: imagegen integrado. Prancha6quadros, recorte e exportação nearest-neighbor com escala comum, canvas32x24RGBA e basey23.
+
+GERAÇÃO
+Use case: stylized-concept.
+Asset type: production-ready six-frame transparent sprite sheet for one small crab enemy in a 16-bit side-scrolling platform game, native logical frame 32x24 pixels.
+Primary request: one coherent coral-orange/red beach crab character with dark navy outline, small alert eyes, broad rounded shell, two raised threatening claws, six small sideways walking legs, expressive and charming but adversarial. No blood or injury details.
+Style/medium: crisp hand-clustered 16-bit pixel art, dark1pixel native outlines, no antialiasing, 3to4tones per material, warm sun highlights. Same palette, proportions and shell identity in every frame. Compatible with Nico Adventure raccoon and tropical island sprites.
+Sheet composition: exactly6isolated frames arranged in a perfectly regular3columns×2rows grid, row-major order, on actual transparency. Wide2:1canvas. Each cell has a full crab; centered horizontally in eachcell, feet touch the same baseline near the bottom of thecell, generous transparent gutters. No touching between neighboring frames. Each crab fits inside a logical30x22box on its32x24cell. No visible grid or labels.
+Animation sequence in reading order: top-left frame1walk poseA with left legs forward and right legs back; top-middle frame2walk poseB with legs centered, left claw half-open; top-right frame3walk poseC with left legs back and right legs forward; bottom-left frame4walk poseD returning legs and right claw closing; bottom-middle frame5defeat begins as a cartoon stomp, shell compressed down to70percent height and bothclaws recoiling sideways; bottom-right frame6defeat ends as a harmless low flattened shell,20to30percent normal height, eyes close and claws relaxed, no gore. Crabbody and shell stay registered at the same centerline and contact baseline; only legs/claws animate in walkingframes.
+Constraints: onlythese6frames, transparent background, no text, no numbers, no watermark, no stage, no props, no shadows outside the crabs, no extra frames. Walkingframes have the same body size and all frames maintain common scale; defeatframes become lower rather than shrinking uniformly.
+
+LIMPEZA DE TRANSPARÊNCIA
+Use case: background-extraction.
+Edit this six-frame crab sprite sheet. Keep every crab pose, color, silhouette, pixel outline, placement, scale and3columns×2rows layout exactly unchanged. Remove ONLY all brown/dark backdrop, glow, haze, shadow or fog around and between the6crab sprites. The full background and every gutter must be genuine transparentalpha0, clean cutout to the outer dark navy pixeloutline of each crab. Crab pixelclusters themselves should be fully opaque. Preserve all6crabs with no cropping, no additions, no pose changes, no text. Actual transparent background, no replacement background. Keep canvas1536×1024.

@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/ring_effects.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(348, 728, 269, 188)
+margin = Rect2(139, 118, 151, 232)
+filter_clip = true
+metadata/pivot = Vector2(230, 210)

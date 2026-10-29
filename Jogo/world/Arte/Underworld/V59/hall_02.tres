@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V59/forge_hall.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(4, 609, 760, 319)
+margin = Rect2(4, 193, 8, 193)
+filter_clip = true
+metadata/ground_foot = 512.0

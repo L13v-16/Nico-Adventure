@@ -1,0 +1,69 @@
+{
+  "tool": "built-in image_gen",
+  "original": "C:\\Users\\LEO\\.codex\\generated_images\\01a1457e-c2c0-7f93-8f79-efdc74c5248d\\exec-90c3a851-caee-4150-9f52-c6e59f878024.png",
+  "sha256": "23563ef16d3b5310298efcbf6386649deacf8d50420978089950917ad2e939ba",
+  "pixel_edits": false,
+  "cutoff": 0.94,
+  "sprites": [
+    {
+      "name": "ledge",
+      "rect": [
+        46,
+        314,
+        463,
+        191
+      ],
+      "walk_top": 8
+    },
+    {
+      "name": "suspended",
+      "rect": [
+        539,
+        304,
+        459,
+        193
+      ],
+      "walk_top": 18
+    },
+    {
+      "name": "rune",
+      "rect": [
+        1023,
+        312,
+        467,
+        180
+      ],
+      "walk_top": 9
+    },
+    {
+      "name": "follow",
+      "rect": [
+        53,
+        591,
+        456,
+        260
+      ],
+      "walk_top": 1
+    },
+    {
+      "name": "repel",
+      "rect": [
+        544,
+        591,
+        446,
+        260
+      ],
+      "walk_top": 1
+    },
+    {
+      "name": "shuttle",
+      "rect": [
+        1024,
+        586,
+        456,
+        265
+      ],
+      "walk_top": 2
+    }
+  ]
+}

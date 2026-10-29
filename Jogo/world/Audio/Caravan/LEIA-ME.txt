@@ -1,0 +1,7 @@
+Pixels and Trinkets — faixa fornecida pelo usuário para a loja e a mochila.
+
+pixels_and_trinkets.wav é uma cópia integral de C:/Users/LEO/Downloads/Pixels and Trinkets.wav.
+SHA256: d0eb6fc68e8b76bbdf44a67aae2b34984a7b558a90e171de70cb4566bef585c3
+Duração:135segundos. PCM16 estéreo,48000Hz. Importação sem compressão, normalização, corte ou redução de taxa.
+
+Sfx configura o loop integral em memória. A faixa usa o barramento Music e acompanha o volume/mudo do jogo. Toca durante a pausa da loja/mochila; a trilha da fase fica suspensa e retoma do mesmo ponto ao fechar. Passar da loja para a mochila não reinicia a música. Fechar o painel, liberar o nó ou trocar de cena libera a faixa temporária.

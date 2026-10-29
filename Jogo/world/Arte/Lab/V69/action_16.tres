@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V69/enemy_actions.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(1094, 561, 237, 190)
+margin = Rect2(105, 162, 211, 194)
+filter_clip = true
+metadata/ground_foot = 348
+metadata/native_clips = PackedVector4Array(1119, 623, 2, 3, 1237, 608, 4, 6, 1271, 561, 60, 95, 1271, 656, 30, 23, 1301, 656, 30, 23, 1323, 679, 8, 12)

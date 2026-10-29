@@ -1,0 +1,47 @@
+{
+  "source": "C:/Users/LEO/.codex/generated_images/01a1457e-c2c0-7f93-8f79-efdc74c5248d/exec-0e9c3535-327d-46e5-ad57-ee5e6ed0466a.png",
+  "source_sha256": "da611a783d2f314381485e978a6d33de193462fee7514c88019e358cbd9c6712",
+  "size": [
+    1536,
+    1024
+  ],
+  "regions": {
+    "pitaya_juice": [
+      100,
+      87,
+      367,
+      406
+    ],
+    "first_aid_kit": [
+      567,
+      153,
+      396,
+      327
+    ],
+    "bark_shield": [
+      1088,
+      85,
+      403,
+      408
+    ],
+    "mint_tea": [
+      77,
+      533,
+      414,
+      414
+    ],
+    "cherry_magnet": [
+      600,
+      596,
+      365,
+      348
+    ],
+    "courage_medallion": [
+      1111,
+      554,
+      292,
+      409
+    ]
+  },
+  "method": "Original imagegen PNG preserved; native AtlasTexture crops and alpha shader."
+}

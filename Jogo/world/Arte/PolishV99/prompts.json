@@ -1,0 +1,34 @@
+[
+  {
+    "id": "wolf",
+    "ref": "Corporacao/V22/wolf_actions_v22.png",
+    "prompt": "Use case: illustration-story. Game production animation spritesheet, genuine transparent RGBA. Use attached reference ONLY as character identity and pixel-art style reference: same gray wolf in navy corporate suit, white shirt, red tie, pointed ears, golden badge, cream tail and muzzle. Create EIGHT NEW full-body animation poses, evenly spaced in FOUR COLUMNS and TWO ROWS, all facing LEFT, consistent size and baseline inside each cell, entire ears/tail/hands visible with generous empty margin. Row 1: crouching anticipation, forward dash foot A, forward dash foot B, braking skid. Row 2: drawing a golden pen projectile, forceful pen throw follow-through, exhausted recovery hands on knees, recoil hit leaning back. Match the low-resolution chunky pixels, dark contour, flat 3-tone shading of reference exactly. No realism, no text, no labels, no panels, no ground or shadows, NO thin painterly edges. Canvas 1536x1024; usable by runtime atlas crop.",
+    "file": "exec-7ffb7f83-b95e-4542-81b4-32ffccb9b8c2.png",
+    "tool": "image_gen built-in",
+    "sha256": "280d21aa0c2910edae7bfe25f382942433788f9c42bd2fd29f03656d1e573105"
+  },
+  {
+    "id": "warden",
+    "ref": "Underworld/V44/guardian_actions.png",
+    "prompt": "Use case: illustration-story. Transparent pixel-art spritesheet animation expansion for the EXACT horned black basalt guardian in attached reference. Preserve broad muscular silhouette, purplish horns, black stone armor, orange lava cracks, diamond chest core, wrist chains, compact pixel contours and limited palette. TWELVE full-body poses in FOUR COLUMNS and THREE ROWS, fixed cell grid, ample margins, no clipping, LEFT-facing 3/4 view consistent scale. Row1: step left A, step left B, chain sweep anticipation, chain sweep followthrough. Row2: shielding glowing chest, armor heated with red plates, ice cracks glowing cyan on chest and chains, exposed core stagger. Row3: enraged crouch, leap anticipation, landing with knees bent, stunned exhausted kneel. All chains kept inside each cell. Genuine transparency, no ground, text, labels, frames or lighting backdrop. Native looking 16-bit pixel art, absolutely same character design as reference.",
+    "file": "exec-6f492b83-bb73-4462-9413-db49b6fc870f.png",
+    "tool": "image_gen built-in",
+    "sha256": "d8db7c211ad375742ed78bae37d6c50d77b5324c57801fadbb2497f54a4c1f34"
+  },
+  {
+    "id": "magic",
+    "ref": "Magic/magic_enemies_sheet.png",
+    "prompt": "Use case: illustration-story. Production pixel art enemy spritesheet for purple magical forest, matching attached beetle and moth reference style, dark pixel contours, lavender/magenta shells and turquoise eyes. EXACT grid FOUR COLUMNS by FOUR ROWS, SIXTEEN isolated sprites, true transparent background. Each row a species, columns walk/idle A, walk/idle B, clearly telegraphed attack anticipation, attack execution. Row1: reference low quadrupedal armored rhinoceros beetle, horn lowers to charge, preserve actual anatomy and side view facing LEFT. Row2: reference furry purple moth, two wing flap frames, bright wing warning, diving attack folded wings, faces LEFT. Row3 NEW: small mischievous walking violet mushroom imp with pink cap and turquoise eyes, stem feet, cap inflates warning, spits one glowing spore in execution. Row4 NEW: small bramble porcupine with purple leaf spines, four stubby feet, coils up warning, short rolling attack with curled thorn silhouette. Similar enemy world size to reference, no giant bosses. All bodies complete with generous transparent margins inside each cell, fixed scale per row, NO cutting limbs. No words, labels, ground or grid lines. 1536x1024.",
+    "file": "exec-b5f0160a-aca7-446e-b2a0-d55e50d02dbf.png",
+    "tool": "image_gen built-in",
+    "sha256": "8e05f2cfe3701860143a58fe8b5b96a34d4dff5ce68d30d4046282cdf233b029"
+  },
+  {
+    "id": "presentation",
+    "ref": "Underworld/V46/nico-reference.png",
+    "prompt": "Use case: illustration-story. A single 4 COLUMN x 4 ROW production PIXEL ART atlas on genuine transparent RGBA. Upper two rows are EIGHT full-body Nico poses, preserving EXACT character of reference: small gray raccoon, cream muzzle, black eye mask, amber eyes, GREEN neckerchief, little brown backpack, striped tail, short cute proportions. Faces RIGHT, same body proportions/size inside every cell, complete tail/ears/feet. Row1: relaxed smile, broad proud smile fist raised, jump celebration, land celebration. Row2: thinking hand chin, tired but smiling hands knees, relieved wave, surprised reaction. Bottom two rows EIGHT different old industrial computer props fitting a 16-bit adventure corporate laboratory: green CRT terminal on floor pedestal; pedestal terminal open panel and wires; twin-screen terminal; archive terminal with tiny monochrome raccoon screen; wide wall screen; red alarm terminal; cyan elemental console; LG-17 dose dispenser with a bright emerald ampoule visible under glass and small downward lamp. Complete props, bases flat; NO words, NO labels, NO background, NO UI layout. All sixteen cells isolated with generous transparent margins. Hard chunky pixel clusters and 3-tone shading, dark outlines, avoid glossy 3D or smooth illustration. Canvas 1536x1536.",
+    "file": "exec-19482ab6-182e-449f-9c41-136402d53af6.png",
+    "tool": "image_gen built-in",
+    "sha256": "dad1c9332c57965ab0dbff38ee824025da89b9f24220723e5b429a847815af24"
+  }
+]

@@ -1,0 +1,10 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Underworld/V53/guardian_ring.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(437, 150, 441, 287)
+margin = Rect2(115, 417, 279, 433)
+filter_clip = true
+metadata/ground_foot = 700.0
+metadata/seal_left = Vector2(-160, -151)
+metadata/seal_right = Vector2(124, -130)

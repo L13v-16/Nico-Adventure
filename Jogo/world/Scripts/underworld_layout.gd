@@ -1,0 +1,113 @@
+extends RefCounted
+const Art=preload("res://world/Scripts/underworld_art.gd")
+const Terrain=preload("res://world/Scripts/underworld_terrain.gd")
+const GROUND:=[Vector3(-128,100,1032),Vector3(1320,100,880),Vector3(2540,36,640),Vector3(3376,-40,400),Vector3(3904,100,1040),Vector3(5200,100,704),Vector3(6144,100,1888)]
+static func build(level:Node2D) -> void:
+	var terrain:=Node2D.new()
+	terrain.name="Level"
+	level.add_child(terrain)
+	for info in GROUND:_ground(terrain,Vector2(info.x,info.y),info.z,440,false)
+	_ground(terrain,Vector2(8000,-620),384,1160,false)
+	terrain.get_child(terrain.get_child_count()-1).name="ArenaEndWall"
+	var scenery:=Node2D.new()
+	scenery.name="Scenery"
+	scenery.z_index=-1
+	level.add_child(scenery)
+	var cage:=preload("res://world/Scripts/jose_rescue_cage.gd").new()
+	cage.name="JoseCage";cage.position=Vector2(275,100)
+	level.add_child(cage)
+	var temple:=preload("res://world/Scripts/magic_art.gd").actor(preload("res://world/Arte/Underworld/V44/sanctuary.tres"),300)
+	temple.material.set_shader_parameter("alpha_cutoff",0.94)
+	temple.name="Temple"
+	temple.position+=Vector2(3555,-36)
+	temple.play(&"temple_dormant")
+	scenery.add_child(temple)
+	var radiance:=preload("res://world/Scripts/sanctuary_radiance.gd").new()
+	radiance.position=Vector2(3555,-38)
+	radiance.z_index=-1
+	scenery.add_child(radiance)
+	preload("res://world/Scripts/underworld_scenery.gd").build(scenery)
+	var jose:=preload("res://world/Scripts/jose_companion.gd").new()
+	jose.name="Jose"
+	jose.position=Vector2(275,100)
+	level.add_child(jose)
+	jose.hide() # Aparece primeiro dentro da jaula suspensa.
+	for info in [[Vector2(1000,84),"follow",50.0],[Vector2(1190,84),"repel",45.0],[Vector2(2320,40),"shuttle",45.0],[Vector2(2465,36),"follow",30.0],[Vector2(5070,82),"follow",38.0],[Vector2(5530,42),"repel",50.0]]:
+		var rock:=preload("res://world/Scripts/gravity_rock.gd").new()
+		rock.position=info[0]
+		rock.behavior=info[1]
+		rock.travel=info[2]
+		level.add_child(rock)
+	for info in [[Vector2(700,100),false,0.0],[Vector2(1530,100),false,1.5],[Vector2(2100,100),true,0.3],[Vector2(2830,36),false,2.0],[Vector2(3070,36),true,1.2],[Vector2(5360,100),false,2.3]]:
+		var geyser:=preload("res://world/Scripts/lava_geyser.gd").new()
+		geyser.position=info[0]
+		geyser.launch_geyser=info[1]
+		geyser.phase=info[2]
+		level.add_child(geyser)
+	for info in [[Vector2(530,100),"wall"],[Vector2(1810,100),"pillar"],[Vector2(5840,100),"pillar"]]:
+		var obstacle:=preload("res://world/Scripts/underworld_obstacle.gd").new()
+		obstacle.position=info[0]
+		obstacle.kind=info[1]
+		level.add_child(obstacle)
+	for point in [Vector2(760,100),Vector2(1670,100),Vector2(2750,36),Vector2(4900,100),Vector2(5680,100),Vector2(6320,100)]:
+		var enemy:=preload("res://world/Scripts/underworld_enemy.gd").new()
+		enemy.position=point
+		enemy.patrol_width=104
+		level.add_child(enemy)
+	for point in [Vector2(1410,13),Vector2(2650,-45),Vector2(5290,14),Vector2(5710,30),Vector2(6160,10)]:
+		var enemy:=preload("res://world/Scripts/underworld_enemy.gd").new()
+		enemy.species="imp"
+		enemy.position=point
+		enemy.patrol_width=66
+		level.add_child(enemy)
+	for point in [Vector2(610,100),Vector2(1390,100),Vector2(2030,100),Vector2(2630,36),Vector2(3440,-40),Vector2(3940,100),Vector2(4850,100),Vector2(5240,100),Vector2(6200,100),Vector2(6385,100)]:
+		preload("res://world/Scripts/magic_layout.gd")._checkpoint(level.get_node("Checkpoints"),point)
+	var forge:=preload("res://world/Scripts/inverted_forge.gd").new()
+	forge.name="Forge"
+	forge.position=Vector2(4410,100)
+	level.add_child(forge)
+	var gate:=StaticBody2D.new()
+	gate.name="ForgeGate"
+	gate.collision_layer=1
+	gate.collision_mask=0
+	gate.position=Vector2(4684,-110)
+	var shape:=RectangleShape2D.new()
+	shape.size=Vector2(24,420)
+	var collider:=CollisionShape2D.new()
+	collider.shape=shape
+	gate.add_child(collider)
+	level.add_child(gate)
+	forge.gate=gate
+	# A arena usa somente o piso inteiro; a torre final monta sua própria rota.
+	var boss:=preload("res://world/Scripts/depth_warden.gd").new()
+	boss.name="Boss"
+	boss.position=Vector2(7100,100)
+	boss.z_index=3
+	level.add_child(boss)
+	var caravan:=preload("res://prefabs/caravan_shop.tscn").instantiate()
+	caravan.position=Vector2(400,100)
+	caravan.travel_offset=Vector2(8,0)
+	level.add_child(caravan)
+	var item_scene:=preload("res://prefabs/item.tscn")
+	for info in GROUND:
+		for x in range(int(info.x+70),int(info.x+info.z-35),85):
+			if x<350 or x>6350:continue
+			var item:=item_scene.instantiate()
+			item.cherry_id="depth:ground:%d"%x
+			item.position=Vector2(x,info.y-28)
+			level.get_node("items").add_child(item)
+	for i in 6:
+		var rock:Node2D=level.get_tree().get_nodes_in_group("gravity_rocks")[i]
+		var item:=item_scene.instantiate()
+		item.cherry_id="depth:rock:%d"%i
+		item.position=rock.position+Vector2(0,-28)
+		level.get_node("items").add_child(item)
+		rock.set_meta("cherry",weakref(item))
+static func _ground(parent:Node,at:Vector2,width:float,depth:float,one_way:bool) -> void:
+	var ground:=Terrain.new()
+	ground.position=at
+	ground.width=width
+	ground.depth=depth
+	ground.one_way=one_way
+	ground.platform=one_way
+	parent.add_child(ground)

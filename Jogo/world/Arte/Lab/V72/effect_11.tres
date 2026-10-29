@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V72/effects.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(1197, 557, 273, 184)
+margin = Rect2(28.5, 36, 57, 72)
+filter_clip = true
+metadata/surface_y = 128.0
+metadata/visible_width = 322.0

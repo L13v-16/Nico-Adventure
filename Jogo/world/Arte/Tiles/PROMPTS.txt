@@ -1,0 +1,24 @@
+ARTES DE NICO ADVENTURE — TILESETS E PROPS
+
+Modo: ferramenta integrada imagegen. As revisões finais usam as imagens geradas anteriormente como alvo de edição.
+
+Arquivos finais do jogo
+world/Arte/Tiles/forest_terrain_v2.png — atlas nativo64x64, tiles16x16.
+world/Arte/Props/Forest/fern.png —24x16.
+world/Arte/Props/Forest/grass_pebbles.png —16x10.
+world/Arte/Props/Forest/hanging_roots.png —16x22.
+world/Arte/Props/Forest/cave_gravel.png —24x6.
+world/Arte/Props/Forest/dry_leaves.png —24x7.
+world/Arte/Props/Forest/moss_fence.png —40x20.
+
+As fontes maiores estão em terrain-source.png e props-source.png. As imagens foram recortadas e reduzidas por vizinho mais próximo. A transparência gerada dos props foi preservada; o material scenery_cutout.gdshader faz o recorte e a dessaturação na renderização. As cores individuais ficam nos Sprites da cena, em EnvironmentDetails.
+
+PROMPT FINAL DO TILESET
+Imagem de entrada: terrain-initial.png. transparent_background=false.
+
+Edit target: this exact 4x4 pixel terrain atlas. Preserve the exact square canvas, exact4columns4rows equal cells, full opaque coverage, position/content roles of EVERY tile, grass-top alignment at y0 and palette families. One targeted art correction: make the INTERIOR TEXTURES CALMER so repeated16x16 tiles do not look like noisy wallpaper. Row1 grass+soil: keep grass top4logicalpixels but make lower soil quieter. Row2 four seamless soil tiles: reduce internal value contrast about40%, fewer larger broad patches of warm brown, only1tiny pebble per tile at most, no diagonal streaks, no light borders or grid seams. Row3 four seamless rock fill tiles: reduce internal contrast about40%, make medium broad blue-slate material planes with a few understated cracks, NO heavily outlined boulders, NO dark diagonal stripes repeating across tiles, NO crystal/moss. Row4 preserve top/bottom/left/right rock edge variants, with obvious but thin bevel ONLY at the relevant exposed edge, quieter interior matching row3. This is a playable terrain texture, not a scene: quiet interior makes the hero readable, sharper exposed silhouettes identify physical collision surfaces. Keep strict HARD PIXEL ART and limited colors, exactly16x16 logical pixels in each enlarged cell, no blur, no antialias, no perspective, no text/labels, no gridlines, no gutters, no outside margin.
+
+PROMPT FINAL DOS PROPS
+Imagem de entrada: props-initial.png. transparent_background=true.
+
+Edit target: this exact 3x2 prop sprite sheet. Keep all six objects and their positions, colors, pixel art, size and composition unchanged: fern, short grass with pebbles, hanging mossy roots, gravel, dry leaf pile, fence. Remove ALL fuzzy colored glow, haze, soft shadows and semi-transparent background pixels surrounding them. Make a clean PRODUCTION sprite sheet with fully transparent background and crisp hard alpha cutouts. All object pixels fully opaque; all empty pixels alpha0. Preserve hard square pixel clusters and dark blue outlines. No checkerboard, no replacement background, no text, no borders. Keep exact1536x1024 canvas and six separated sprites in same cells. This is a background cleanup only, no redesign.

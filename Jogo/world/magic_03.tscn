@@ -1,0 +1,93 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://world/Scripts/magic_level.gd" id="level"]
+[ext_resource type="PackedScene" path="res://prefabs/nico.tscn" id="nico"]
+[ext_resource type="PackedScene" path="res://prefabs/game_hud.tscn" id="hud"]
+[ext_resource type="Script" path="res://world/Scripts/magic_backdrop.gd" id="sky"]
+[ext_resource type="Script" path="res://world/Scripts/magic_music.gd" id="music"]
+
+[sub_resource type="RectangleShape2D" id="finish"]
+size = Vector2(110,90)
+
+[node name="MagicForest" type="Node2D"]
+texture_filter = 1
+script = ExtResource("level")
+level_id = "fase_3"
+level_name = "Fase 3 — Floresta Violeta"
+par_time = 240.0
+finish_floor_y = 64.0
+next_level_scene = "res://world/underworld_04.tscn"
+intro_title = "FLORESTA VIOLETA"
+intro_act = 3
+
+[node name="Player" parent="." instance=ExtResource("nico")]
+position = Vector2(110,82)
+coyote_time = 0.13
+jump_buffer_time = 0.16
+move_acceleration = 1800.0
+braking = 2200.0
+ground_snap = 8.0
+
+[node name="Camera2D" parent="Player" index="0"]
+zoom = Vector2(1.5,1.5)
+offset = Vector2(55,-38)
+limit_left = -128
+limit_top = -570
+limit_right = 6256
+limit_bottom = 290
+
+[node name="items" type="Node2D" parent="."]
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Finish" type="Area2D" parent="."]
+position = Vector2(6096,26)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Finish"]
+shape = SubResource("finish")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="GameHUD" parent="HUD" instance=ExtResource("hud")]
+process_mode = 3
+
+[node name="HintShade" type="ColorRect" parent="HUD"]
+offset_top = 334.0
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+color = Color(0.10,0.055,0.17,0.92)
+
+[node name="Hint" type="Label" parent="HUD"]
+offset_left = 12.0
+offset_top = 337.0
+offset_right = 628.0
+offset_bottom = 358.0
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+
+[node name="Notice" type="Label" parent="HUD"]
+offset_left = 128.0
+offset_top = 56.0
+offset_right = 610.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1,0.92,0.78,1)
+theme_override_colors/font_shadow_color = Color(0.08,0.04,0.16,1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+horizontal_alignment = 1
+
+[node name="Sky" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Panorama" type="Control" parent="Sky"]
+script = ExtResource("sky")
+
+[node name="MagicMusic" type="Node" parent="."]
+script = ExtResource("music")
+
+[editable path="Player"]

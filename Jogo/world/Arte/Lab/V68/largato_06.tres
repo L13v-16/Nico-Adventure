@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Lab/V68/largato.png" id="1"]
+[resource]
+atlas = ExtResource("1")
+region = Rect2(815, 278, 311, 219)
+margin = Rect2(68, 70, 137, 133)
+filter_clip = true
+metadata/ground_foot = 286
+metadata/walk_top = 3

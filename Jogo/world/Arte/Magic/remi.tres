@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" format=3]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_00.tres" id="f0"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_01.tres" id="f1"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_02.tres" id="f2"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_03.tres" id="f3"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_04.tres" id="f4"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_05.tres" id="f5"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_06.tres" id="f6"]
+[ext_resource type="Texture2D" path="res://world/Arte/Friends/V47/remi_body_07.tres" id="f7"]
+[resource]
+animations = [
+{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f1")}], "loop": true, "name": &"idle", "speed": 3.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f2")}, {"duration": 1.0, "texture": ExtResource("f3")}], "loop": true, "name": &"walk", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f0")}, {"duration": 1.0, "texture": ExtResource("f4")}], "loop": true, "name": &"talk", "speed": 5.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f5")}, {"duration": 1.0, "texture": ExtResource("f0")}], "loop": true, "name": &"happy", "speed": 3.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f6")}], "loop": true, "name": &"jump", "speed": 4.0},
+{"frames": [{"duration": 1.0, "texture": ExtResource("f7")}], "loop": true, "name": &"fall", "speed": 4.0}
+]
